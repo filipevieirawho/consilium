@@ -1,0 +1,16 @@
+.env
+.git
+.gitattributes
+.github
+.gitignore
+artisan
+phpunit.xml
+README.md
+tests
+storage/framework/cache
+storage/framework/sessions
+storage/framework/views
+storage/logs
+
+# Force include vendor directory (override .gitignore)
+!vendor
