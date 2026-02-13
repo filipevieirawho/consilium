@@ -1,9 +1,9 @@
 {
     "version": 2,
     "functions": {
-        "api/index.php": {
+        "api/**/*.php": {
             "runtime": "vercel-php@0.7.3",
-            "includeFiles": "vendor/**"
+            "maxDuration": 30
         }
     },
     "routes": [
