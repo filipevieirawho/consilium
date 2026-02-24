@@ -55,7 +55,6 @@ class TursoConnection extends Connection
     protected function getDefaultQueryGrammar(): TursoQueryGrammar
     {
         $grammar = new TursoQueryGrammar($this);
-        $grammar->setConnection($this);
 
         $this->withTablePrefix($grammar);
 
@@ -65,7 +64,6 @@ class TursoConnection extends Connection
     protected function getDefaultSchemaGrammar(): TursoSchemaGrammar
     {
         $grammar = new TursoSchemaGrammar($this);
-        $grammar->setConnection($this);
 
         $this->withTablePrefix($grammar);
 
