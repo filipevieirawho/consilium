@@ -16,9 +16,16 @@ class Contact extends Model
         'message',
         'opt_in',
         'status',
+        'user_id',
+        'notes',
     ];
 
     protected $casts = [
         'opt_in' => 'boolean',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

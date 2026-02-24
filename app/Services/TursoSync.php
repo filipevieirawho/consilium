@@ -78,10 +78,10 @@ class TursoSync
             }
 
             // Sync contacts
-            $contacts = self::query('SELECT id, name, email, phone, message, opt_in, status, created_at, updated_at FROM contacts');
+            $contacts = self::query('SELECT id, name, email, phone, message, opt_in, status, user_id, notes, created_at, updated_at FROM contacts');
             if (!empty($contacts)) {
                 $pdo = $pdo ?? new \PDO('sqlite:' . (getenv('DB_DATABASE') ?: '/tmp/database.sqlite'));
-                $stmt = $pdo->prepare('INSERT OR REPLACE INTO contacts (id, name, email, phone, message, opt_in, status, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)');
+                $stmt = $pdo->prepare('INSERT OR REPLACE INTO contacts (id, name, email, phone, message, opt_in, status, user_id, notes, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
                 foreach ($contacts as $contact) {
                     $stmt->execute([
                         $contact['id'],
@@ -91,6 +91,8 @@ class TursoSync
                         $contact['message'],
                         $contact['opt_in'],
                         $contact['status'] ?? 'novo',
+                        $contact['user_id'],
+                        $contact['notes'],
                         $contact['created_at'],
                         $contact['updated_at'],
                     ]);
@@ -112,13 +114,13 @@ class TursoSync
 
             if (!empty($existing)) {
                 self::execute(
-                    'UPDATE contacts SET name = ?, email = ?, phone = ?, message = ?, opt_in = ?, status = ?, updated_at = ? WHERE id = ?',
-                    [$contact->name, $contact->email, $contact->phone, $contact->message, $contact->opt_in ? 1 : 0, $contact->status ?? 'novo', $contact->updated_at?->toDateTimeString(), $contact->id]
+                    'UPDATE contacts SET name = ?, email = ?, phone = ?, message = ?, opt_in = ?, status = ?, user_id = ?, notes = ?, updated_at = ? WHERE id = ?',
+                    [$contact->name, $contact->email, $contact->phone, $contact->message, $contact->opt_in ? 1 : 0, $contact->status ?? 'novo', $contact->user_id, $contact->notes, $contact->updated_at?->toDateTimeString(), $contact->id]
                 );
             } else {
                 self::execute(
-                    'INSERT INTO contacts (name, email, phone, message, opt_in, status, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
-                    [$contact->name, $contact->email, $contact->phone, $contact->message, $contact->opt_in ? 1 : 0, $contact->status ?? 'novo', $contact->created_at?->toDateTimeString(), $contact->updated_at?->toDateTimeString()]
+                    'INSERT INTO contacts (name, email, phone, message, opt_in, status, user_id, notes, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                    [$contact->name, $contact->email, $contact->phone, $contact->message, $contact->opt_in ? 1 : 0, $contact->status ?? 'novo', $contact->user_id, $contact->notes, $contact->created_at?->toDateTimeString(), $contact->updated_at?->toDateTimeString()]
                 );
             }
         } catch (\Exception $e) {

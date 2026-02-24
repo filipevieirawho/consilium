@@ -77,4 +77,26 @@ class ContactController extends Controller
 
         return response()->json(['message' => 'Status atualizado com sucesso!']);
     }
+
+    public function show(Contact $contact)
+    {
+        $users = \App\Models\User::all();
+        return view('contacts.show', compact('contact', 'users'));
+    }
+
+    public function updateDetails(Request $request, Contact $contact)
+    {
+        $validated = $request->validate([
+            'status' => 'required|in:novo,contactado,perdido,ganho',
+            'user_id' => 'nullable|exists:users,id',
+            'notes' => 'nullable|string',
+        ]);
+
+        $contact->update($validated);
+
+        // Sync to Turso for persistence
+        TursoSync::upsertContact($contact);
+
+        return redirect()->route('contacts.show', $contact)->with('success', 'Detalhes atualizados com sucesso!');
+    }
 }
