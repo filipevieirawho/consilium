@@ -36,6 +36,10 @@ class TursoClient
         ));
         $this->baseUrl = (string) $this->config->get('db_url', '');
 
+        if (\Illuminate\Support\Str::startsWith($this->baseUrl, 'libsql:')) {
+            $this->baseUrl = \Illuminate\Support\Str::replaceFirst('libsql:', 'https:', $this->baseUrl);
+        }
+
         $this->connectionStore = new ArrayStore();
 
         $this->queryLog = new Collection();
@@ -142,8 +146,8 @@ class TursoClient
 
         if ($this->loggingQueries) {
             $this->queryLog->push([
-                'request'   => $requestBody->toArray(),
-                'response'  => $responseBody->getRawResponse(),
+                'request' => $requestBody->toArray(),
+                'response' => $responseBody->getRawResponse(),
             ]);
         }
 
