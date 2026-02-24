@@ -34,7 +34,7 @@
     ],
     "env": {
         "APP_ENV": "production",
-        "APP_DEBUG": "true",
+        "APP_DEBUG": "false",
         "APP_NAME": "Consilium",
         "APP_KEY": "base64:wzAp+VrL72+Q5zbSyDxUXWp5BfU5PI8ExNhwjVi8q2A=",
         "APP_URL": "https://consilium-beta.vercel.app",
