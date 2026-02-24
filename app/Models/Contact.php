@@ -15,10 +15,10 @@ class Contact extends Model
         'phone',
         'message',
         'opt_in',
+        'status',
     ];
 
     protected $casts = [
         'opt_in' => 'boolean',
     ];
-    //
 }

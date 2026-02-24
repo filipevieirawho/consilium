@@ -1,11 +1,15 @@
 {
     "version": 2,
-    "functions": {
-        "api/index.php": {
-            "runtime": "vercel-php@0.7.4",
-            "maxDuration": 30
+    "builds": [
+        {
+            "src": "api/index.php",
+            "use": "vercel-php@0.6.2"
+        },
+        {
+            "src": "public/**",
+            "use": "@vercel/static"
         }
-    },
+    ],
     "routes": [
         {
             "src": "/build/(.*)",
@@ -31,6 +35,23 @@
     "env": {
         "APP_ENV": "production",
         "APP_DEBUG": "false",
-        "APP_URL": "https://consilium-beta.vercel.app"
+        "APP_NAME": "Consilium",
+        "APP_KEY": "base64:wzAp+VrL72+Q5zbSyDxUXWp5BfU5PI8ExNhwjVi8q2A=",
+        "APP_URL": "https://consilium-beta.vercel.app",
+        "ASSET_URL": "https://consilium-beta.vercel.app",
+        "TRUSTED_PROXIES": "*",
+        "DB_CONNECTION": "sqlite",
+        "DB_DATABASE": "/tmp/database.sqlite",
+        "TURSO_DATABASE_URL": "libsql://consilium-filipevieirawho.aws-us-east-1.turso.io",
+        "TURSO_AUTH_TOKEN": "eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3NzE5MDIwNTQsImlkIjoiODJkNzU2NDMtNGIxYy00ZjkwLWFjNWUtMjgzZDdiNWFiNWUyIiwicmlkIjoiODZhZTUyZGItMDJjZi00M2M3LTgxNzYtY2VjYjA3ZmMxOTBhIn0.ACPfUTlk8GVTsdA_Xx6ua7mw0_2sF9bf_GW7cPToP1Sdpz-2z4PVQmaT2GZIdvHO0bHiksr5ERmV7e3s_YSfCw",
+        "APP_CONFIG_CACHE": "/tmp/config.php",
+        "APP_EVENTS_CACHE": "/tmp/events.php",
+        "APP_PACKAGES_CACHE": "/tmp/packages.php",
+        "APP_ROUTES_CACHE": "/tmp/routes.php",
+        "APP_SERVICES_CACHE": "/tmp/services.php",
+        "CACHE_DRIVER": "array",
+        "LOG_CHANNEL": "stderr",
+        "SESSION_DRIVER": "cookie",
+        "VIEW_COMPILED_PATH": "/tmp/views"
     }
 }

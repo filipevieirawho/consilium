@@ -11,6 +11,5 @@ storage/framework/cache
 storage/framework/sessions
 storage/framework/views
 storage/logs
-
-# Force include vendor directory (override .gitignore)
-!vendor
+node_modules
+vendor

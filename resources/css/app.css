@@ -12,6 +12,23 @@
     body {
         @apply antialiased text-gray-100 bg-black;
     }
+
+    /* Form inputs inherit body text-gray-100 (for dark landing page).
+       Override to dark text so they're readable on white backgrounds. */
+    input,
+    select,
+    textarea {
+        color: #111827;
+        /* gray-900 */
+    }
+
+    /* Override indigo focus color to gold (#D0AE6D) */
+    input:focus,
+    select:focus,
+    textarea:focus {
+        --tw-ring-color: #D0AE6D !important;
+        border-color: #D0AE6D !important;
+    }
 }
 
 /* Custom Utilities if needed */

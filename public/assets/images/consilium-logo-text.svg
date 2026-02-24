@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Camada_2" data-name="Camada 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1939.13 326.05">
+  <defs>
+    <style>
+      .cls-1, .cls-2 {
+        fill: #232323;
+        font-family: PolySansTrial-BulkyWide, 'PolySans Trial';
+        font-size: 307.6px;
+      }
+
+      .cls-2 {
+        isolation: isolate;
+      }
+    </style>
+  </defs>
+  <g id="Camada_1-2" data-name="Camada 1">
+    <g>
+      <text class="cls-2" transform="translate(0 262.07)"><tspan x="0" y="0">CO</tspan></text>
+      <text class="cls-2" transform="translate(504.47 262.07)"><tspan x="0" y="0">N</tspan></text>
+      <text class="cls-1" transform="translate(765.32 262.07)"><tspan x="0" y="0">SIL</tspan></text>
+      <text class="cls-2" transform="translate(1282.1 262.07)"><tspan x="0" y="0">I</tspan></text>
+      <text class="cls-1" transform="translate(1368.23 262.07)"><tspan x="0" y="0">UM</tspan></text>
+    </g>
+  </g>
+</svg>
