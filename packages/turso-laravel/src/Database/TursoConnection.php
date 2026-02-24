@@ -29,7 +29,7 @@ class TursoConnection extends Connection
     {
         $replicaPath = (string) data_get($config, 'db_replica');
 
-        if (($replicaPath === '') || ! file_exists($replicaPath)) {
+        if (($replicaPath === '') || !file_exists($replicaPath)) {
             return null;
         }
 
@@ -54,7 +54,7 @@ class TursoConnection extends Connection
 
     protected function getDefaultQueryGrammar(): TursoQueryGrammar
     {
-        $grammar = new TursoQueryGrammar();
+        $grammar = new TursoQueryGrammar($this);
         $grammar->setConnection($this);
 
         $this->withTablePrefix($grammar);
@@ -64,7 +64,7 @@ class TursoConnection extends Connection
 
     protected function getDefaultSchemaGrammar(): TursoSchemaGrammar
     {
-        $grammar = new TursoSchemaGrammar();
+        $grammar = new TursoSchemaGrammar($this);
         $grammar->setConnection($this);
 
         $this->withTablePrefix($grammar);
@@ -130,7 +130,7 @@ class TursoConnection extends Connection
 
     public function tursoPdo(): TursoPDO
     {
-        if (! $this->pdo instanceof TursoPDO) {
+        if (!$this->pdo instanceof TursoPDO) {
             throw new Exception('The current PDO instance is not an instance of TursoPDO.');
         }
 
