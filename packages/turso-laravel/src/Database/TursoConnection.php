@@ -54,20 +54,12 @@ class TursoConnection extends Connection
 
     protected function getDefaultQueryGrammar(): TursoQueryGrammar
     {
-        $grammar = new TursoQueryGrammar($this);
-
-        $this->withTablePrefix($grammar);
-
-        return $grammar;
+        return new TursoQueryGrammar($this);
     }
 
     protected function getDefaultSchemaGrammar(): TursoSchemaGrammar
     {
-        $grammar = new TursoSchemaGrammar($this);
-
-        $this->withTablePrefix($grammar);
-
-        return $grammar;
+        return new TursoSchemaGrammar($this);
     }
 
     public function getSchemaBuilder(): TursoSchemaBuilder
