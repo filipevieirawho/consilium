@@ -45,7 +45,7 @@ return [
 
         'turso' => [
             'driver' => 'turso',
-            'url' => env('TURSO_DATABASE_URL'),
+            'db_url' => env('TURSO_DATABASE_URL'),
             'access_token' => env('TURSO_AUTH_TOKEN'),
             'db_replica' => '',
             'prefix' => '',
