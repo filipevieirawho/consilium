@@ -30,50 +30,8 @@
             @endif
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <!-- Data Overview (Left Col, 2/3 width) -->
-                <div class="md:col-span-2 space-y-6">
-                    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                        <div class="p-6 text-gray-900">
-                            <h3 class="text-lg font-semibold border-b pb-2 mb-4">Dados do Formulário</h3>
 
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                <div>
-                                    <span class="block text-sm font-medium text-gray-500">Nome</span>
-                                    <span class="block text-base text-gray-900">{{ $contact->name }}</span>
-                                </div>
-                                <div>
-                                    <span class="block text-sm font-medium text-gray-500">E-mail</span>
-                                    <a href="mailto:{{ $contact->email }}"
-                                        class="block text-base text-indigo-600 hover:underline">{{ $contact->email }}</a>
-                                </div>
-                                <div>
-                                    <span class="block text-sm font-medium text-gray-500">Telefone</span>
-                                    <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $contact->phone) }}"
-                                        target="_blank"
-                                        class="block text-base text-indigo-600 hover:underline">{{ $contact->phone }}</a>
-                                </div>
-                                <div>
-                                    <span class="block text-sm font-medium text-gray-500">Opt-in Novidades</span>
-                                    <span
-                                        class="block text-base {{ $contact->opt_in ? 'text-[#D0AE6D] font-bold' : 'text-gray-500' }}">
-                                        {{ $contact->opt_in ? 'Sim' : 'Não' }}
-                                    </span>
-                                </div>
-                                <div class="sm:col-span-2 mt-2">
-                                    <span class="block text-sm font-medium text-gray-500 mb-1">Mensagem Recebida</span>
-                                    <div class="p-4 bg-gray-50 rounded-md text-gray-700 whitespace-pre-line border">
-                                        {{ $contact->message }}</div>
-                                </div>
-                                <div class="sm:col-span-2 mt-2">
-                                    <span class="block text-sm text-gray-400">Enviado em:
-                                        {{ $contact->created_at->format('d/m/Y H:i') }}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Assignment and Status Forms (Right Col, 1/3 width) -->
+                <!-- Assignment and Status Forms (Left Col, 1/3 width) -->
                 <div class="md:col-span-1 space-y-6">
                     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div class="p-6 text-gray-900">
@@ -128,6 +86,50 @@
                                     Salvar Alterações
                                 </button>
                             </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Data Overview (Right Col, 2/3 width) -->
+                <div class="md:col-span-2 space-y-6">
+                    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                        <div class="p-6 text-gray-900">
+                            <h3 class="text-lg font-semibold border-b pb-2 mb-4">Dados do Formulário</h3>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <span class="block text-sm font-medium text-gray-500">Nome</span>
+                                    <span class="block text-base text-gray-900">{{ $contact->name }}</span>
+                                </div>
+                                <div>
+                                    <span class="block text-sm font-medium text-gray-500">E-mail</span>
+                                    <a href="mailto:{{ $contact->email }}"
+                                        class="block text-base text-[#D0AE6D] hover:text-[#b89555] hover:underline transition-colors">{{ $contact->email }}</a>
+                                </div>
+                                <div>
+                                    <span class="block text-sm font-medium text-gray-500">Telefone</span>
+                                    <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $contact->phone) }}"
+                                        target="_blank"
+                                        class="block text-base text-[#D0AE6D] hover:text-[#b89555] hover:underline transition-colors">{{ $contact->phone }}</a>
+                                </div>
+                                <div>
+                                    <span class="block text-sm font-medium text-gray-500">Opt-in Novidades</span>
+                                    <span
+                                        class="block text-base {{ $contact->opt_in ? 'text-[#D0AE6D] font-bold' : 'text-gray-500' }}">
+                                        {{ $contact->opt_in ? 'Sim' : 'Não' }}
+                                    </span>
+                                </div>
+                                <div class="sm:col-span-2 mt-2">
+                                    <span class="block text-sm font-medium text-gray-500 mb-1">Mensagem Recebida</span>
+                                    <div class="p-4 bg-gray-50 rounded-md text-gray-700 whitespace-pre-line border">
+                                        {{ $contact->message }}
+                                    </div>
+                                </div>
+                                <div class="sm:col-span-2 mt-2">
+                                    <span class="block text-sm text-gray-400">Enviado em:
+                                        {{ $contact->created_at->format('d/m/Y H:i') }}</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
