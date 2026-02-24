@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Services\TursoSync;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -30,8 +29,6 @@ class UserController extends Controller
 
         $user = User::create($validated);
 
-        TursoSync::upsertUser($user);
-
         return redirect()->route('usuarios.index')->with('success', 'Usuário criado com sucesso!');
     }
 
@@ -42,7 +39,6 @@ class UserController extends Controller
         ]);
 
         $user->update($validated);
-        TursoSync::upsertUser($user);
 
         return response()->json(['message' => 'Role atualizada com sucesso!']);
     }
@@ -58,7 +54,6 @@ class UserController extends Controller
         }
 
         $user->update(['active' => $validated['active']]);
-        TursoSync::upsertUser($user);
 
         return response()->json(['message' => 'Status atualizado com sucesso!']);
     }
@@ -69,7 +64,6 @@ class UserController extends Controller
             return redirect()->route('usuarios.index')->with('error', 'Você não pode excluir seu próprio usuário.');
         }
 
-        TursoSync::execute('DELETE FROM users WHERE id = ?', [$user->id]);
         $user->delete();
 
         return redirect()->route('usuarios.index')->with('success', 'Usuário excluído com sucesso!');

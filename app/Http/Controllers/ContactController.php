@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Contact;
-use App\Services\TursoSync;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\NewContactAlert;
 
@@ -51,9 +50,6 @@ class ContactController extends Controller
 
         $contact = Contact::create($validated);
 
-        // Sync to Turso for persistence
-        TursoSync::upsertContact($contact);
-
         // Send email alert
         try {
             Mail::to('filipe@consilium.eng.br')->send(new NewContactAlert($contact));
@@ -71,9 +67,6 @@ class ContactController extends Controller
         ]);
 
         $contact->update($validated);
-
-        // Sync to Turso for persistence
-        TursoSync::upsertContact($contact);
 
         return response()->json(['message' => 'Status atualizado com sucesso!']);
     }
@@ -93,9 +86,6 @@ class ContactController extends Controller
         ]);
 
         $contact->update($validated);
-
-        // Sync to Turso for persistence
-        TursoSync::upsertContact($contact);
 
         return redirect()->route('contacts.show', $contact)->with('success', 'Detalhes atualizados com sucesso!');
     }
