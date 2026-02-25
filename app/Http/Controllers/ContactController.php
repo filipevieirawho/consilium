@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Contact;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\NewContactAlert;
+use App\Models\ContactNote;
 
 class ContactController extends Controller
 {
@@ -75,7 +76,7 @@ class ContactController extends Controller
     {
         $contact->load([
             'contactNotes' => function ($query) {
-                $query->latest();
+                $query->orderBy('is_pinned', 'desc')->latest();
             },
             'contactNotes.user'
         ]);
@@ -108,5 +109,38 @@ class ContactController extends Controller
         ]);
 
         return redirect()->route('contacts.show', $contact)->with('success', 'Anotação adicionada com sucesso!');
+    }
+    public function updateNote(Request $request, Contact $contact, ContactNote $note)
+    {
+        if ($note->contact_id !== $contact->id)
+            abort(404);
+
+        $validated = $request->validate([
+            'note' => 'required|string',
+        ]);
+
+        $note->update(['note' => $validated['note']]);
+
+        return redirect()->route('contacts.show', $contact)->with('success', 'Anotação atualizada.');
+    }
+
+    public function togglePinNote(Contact $contact, ContactNote $note)
+    {
+        if ($note->contact_id !== $contact->id)
+            abort(404);
+
+        $note->update(['is_pinned' => !$note->is_pinned]);
+
+        return redirect()->route('contacts.show', $contact)->with('success', 'Status de fixação alterado.');
+    }
+
+    public function destroyNote(Contact $contact, ContactNote $note)
+    {
+        if ($note->contact_id !== $contact->id)
+            abort(404);
+
+        $note->delete();
+
+        return redirect()->route('contacts.show', $contact)->with('success', 'Anotação excluída.');
     }
 }

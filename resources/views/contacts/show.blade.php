@@ -140,19 +140,98 @@
                             <!-- Timeline of Notes -->
                             <div class="space-y-4">
                                 @foreach($contact->contactNotes as $note)
-                                    <div class="bg-gray-50 border rounded-md p-4">
-                                        <p class="text-gray-800 whitespace-pre-line mb-2">{{ $note->note }}</p>
-                                        <p class="text-xs text-gray-500">
-                                            @php
-                                                $date = $note->created_at->isToday()
-                                                    ? 'Hoje às ' . $note->created_at->format('H:i')
-                                                    : ($note->created_at->isYesterday()
-                                                        ? 'Ontem às ' . $note->created_at->format('H:i')
-                                                        : $note->created_at->format('d/m/Y \à\s H:i'));
-                                            @endphp
-                                            {{ $date }} &middot; <span
-                                                class="font-medium text-gray-700">{{ $note->user->name ?? 'Usuário Desconhecido' }}</span>
-                                        </p>
+                                    <div x-data="{ editing: false, open: false }"
+                                        class="bg-gray-50 border {{ $note->is_pinned ? 'border-[#D0AE6D] shadow-sm' : 'border-gray-200' }} rounded-md p-4 relative transition-all">
+
+                                        <!-- Modo Visualização -->
+                                        <div x-show="!editing">
+                                            <div class="flex justify-between items-start mb-2">
+                                                <div class="text-gray-800 whitespace-pre-line pr-8 w-full">
+                                                    @if($note->is_pinned)
+                                                        <ion-icon name="pin"
+                                                            class="text-[#D0AE6D] mr-1 align-text-bottom text-lg"
+                                                            title="Anotação Fixada"></ion-icon>
+                                                    @endif
+                                                    <span>{{ $note->note }}</span>
+                                                </div>
+
+                                                <!-- Dropdown Menu de Ações -->
+                                                <div class="relative ml-2 shrink-0">
+                                                    <button @click="open = !open" @click.away="open = false"
+                                                        class="text-gray-400 hover:text-gray-700 transition-colors p-1 rounded-full hover:bg-gray-200 focus:outline-none">
+                                                        <ion-icon name="ellipsis-horizontal-sharp"
+                                                            class="text-xl block"></ion-icon>
+                                                    </button>
+
+                                                    <div x-show="open" x-cloak
+                                                        class="absolute right-0 mt-1 w-48 bg-white rounded-md shadow-lg border border-gray-100 z-10 py-1"
+                                                        style="display: none;">
+
+                                                        <button @click="editing = true; open = false"
+                                                            class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
+                                                            Editar
+                                                        </button>
+
+                                                        <form
+                                                            action="{{ route('contacts.togglePinNote', [$contact, $note]) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            @method('PATCH')
+                                                            <button type="submit"
+                                                                class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
+                                                                {{ $note->is_pinned ? 'Desafixar esta anotação' : 'Fixar esta anotação' }}
+                                                            </button>
+                                                        </form>
+
+                                                        <form
+                                                            action="{{ route('contacts.destroyNote', [$contact, $note]) }}"
+                                                            method="POST"
+                                                            onsubmit="return confirm('Tem certeza que deseja excluir esta anotação permanentemente?');">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit"
+                                                                class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors">
+                                                                Excluir
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Rodapé da Nota -->
+                                            <p class="text-xs text-gray-500">
+                                                @php
+                                                    $date = $note->created_at->isToday()
+                                                        ? 'Hoje às ' . $note->created_at->format('H:i')
+                                                        : ($note->created_at->isYesterday()
+                                                            ? 'Ontem às ' . $note->created_at->format('H:i')
+                                                            : $note->created_at->format('d/m/Y \à\s H:i'));
+                                                @endphp
+                                                {{ $date }} &middot; <span
+                                                    class="font-medium text-gray-700">{{ $note->user->name ?? 'Usuário Desconhecido' }}</span>
+                                                @if($note->created_at->ne($note->updated_at))
+                                                    <span class="text-gray-400 italic ml-1">(editado)</span>
+                                                @endif
+                                            </p>
+                                        </div>
+
+                                        <!-- Modo Edição -->
+                                        <div x-show="editing" x-cloak style="display: none;">
+                                            <form action="{{ route('contacts.updateNote', [$contact, $note]) }}"
+                                                method="POST">
+                                                @csrf
+                                                @method('PATCH')
+                                                <textarea name="note" rows="3" required
+                                                    class="w-full rounded-md border-gray-300 shadow-sm focus:border-[#D0AE6D] focus:ring-[#D0AE6D] mb-3 text-sm">{{ $note->note }}</textarea>
+                                                <div class="flex justify-end gap-3 items-center">
+                                                    <button type="button" @click="editing = false"
+                                                        class="text-sm text-gray-500 hover:text-gray-700 font-medium transition-colors">Cancelar</button>
+                                                    <button type="submit"
+                                                        class="bg-[#D0AE6D] text-white text-sm font-medium py-1.5 px-4 rounded-md hover:bg-[#b89555] transition-colors shadow-sm">Salvar
+                                                        Alteração</button>
+                                                </div>
+                                            </form>
+                                        </div>
                                     </div>
                                 @endforeach
 
