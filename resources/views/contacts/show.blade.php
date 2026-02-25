@@ -172,7 +172,10 @@
                                             $dateStr = $contact->created_at->format('d/m/Y \à\s H:i');
                                         }
                                     @endphp
-                                    <p class="text-sm font-bold text-[#D0AE6D] mb-1">Negócio criado: {{ $dateStr }}</p>
+                                    <p class="text-sm font-bold text-[#D0AE6D] mb-1 flex items-center gap-1">
+                                        Negócio criado <ion-icon name="checkmark-done-outline"
+                                            class="text-lg"></ion-icon>
+                                    </p>
                                     <p class="text-xs text-gray-500">
                                         {{ $dateStr }} &middot; <span class="font-medium text-gray-700">Sistema</span>
                                     </p>
