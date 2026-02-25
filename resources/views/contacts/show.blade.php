@@ -117,7 +117,7 @@
                 <div class="md:col-span-2 space-y-6">
 
                     <!-- History and Notes Section -->
-                    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mt-6">
+                    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div class="p-6 text-gray-900">
                             <h3 class="text-lg font-semibold border-b pb-2 mb-4">Histórico do Lead</h3>
 
