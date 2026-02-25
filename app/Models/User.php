@@ -63,4 +63,9 @@ class User extends Authenticatable
     {
         return $this->role === 'representante';
     }
+
+    public function contactNotes()
+    {
+        return $this->hasMany(ContactNote::class);
+    }
 }

@@ -73,6 +73,13 @@ class ContactController extends Controller
 
     public function show(Contact $contact)
     {
+        $contact->load([
+            'contactNotes' => function ($query) {
+                $query->latest();
+            },
+            'contactNotes.user'
+        ]);
+
         $users = \App\Models\User::all();
         return view('contacts.show', compact('contact', 'users'));
     }
@@ -82,11 +89,24 @@ class ContactController extends Controller
         $validated = $request->validate([
             'status' => 'required|in:novo,contactado,perdido,ganho',
             'user_id' => 'nullable|exists:users,id',
-            'notes' => 'nullable|string',
         ]);
 
         $contact->update($validated);
 
         return redirect()->route('contacts.show', $contact)->with('success', 'Detalhes atualizados com sucesso!');
+    }
+
+    public function storeNote(Request $request, Contact $contact)
+    {
+        $validated = $request->validate([
+            'note' => 'required|string',
+        ]);
+
+        $contact->contactNotes()->create([
+            'user_id' => auth()->id(),
+            'note' => $validated['note'],
+        ]);
+
+        return redirect()->route('contacts.show', $contact)->with('success', 'Anotação adicionada com sucesso!');
     }
 }

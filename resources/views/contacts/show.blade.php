@@ -45,7 +45,7 @@
                                 <div class="mb-4">
                                     <label for="status" class="block text-sm font-medium text-gray-700 mb-1">Status do
                                         Lead</label>
-                                    <select name="status" id="status"
+                                    <select name="status" id="status" onchange="this.form.submit()"
                                         class="w-full rounded-md border-gray-300 shadow-sm focus:border-[#D0AE6D] focus:ring-[#D0AE6D]">
                                         <option value="novo" {{ $contact->status === 'novo' ? 'selected' : '' }}>🔵 Novo
                                         </option>
@@ -61,7 +61,7 @@
                                 <div class="mb-4">
                                     <label for="user_id" class="block text-sm font-medium text-gray-700 mb-1">Dono
                                         (Responsável)</label>
-                                    <select name="user_id" id="user_id"
+                                    <select name="user_id" id="user_id" onchange="this.form.submit()"
                                         class="w-full rounded-md border-gray-300 shadow-sm focus:border-[#D0AE6D] focus:ring-[#D0AE6D]">
                                         <option value="">-- Não atribuído --</option>
                                         @foreach($users as $user)
@@ -71,20 +71,6 @@
                                         @endforeach
                                     </select>
                                 </div>
-
-                                <!-- Internal Notes -->
-                                <div class="mb-5">
-                                    <label for="notes" class="block text-sm font-medium text-gray-700 mb-1">Anotações
-                                        Internas</label>
-                                    <textarea name="notes" id="notes" rows="4"
-                                        class="w-full rounded-md border-gray-300 shadow-sm focus:border-[#D0AE6D] focus:ring-[#D0AE6D]"
-                                        placeholder="Adicione notas sobre reuniões, interesses, propostas...">{{ old('notes', $contact->notes) }}</textarea>
-                                </div>
-
-                                <button type="submit"
-                                    class="w-full bg-gray-900 text-white font-semibold py-2 px-4 rounded-md hover:bg-gray-800 transition-colors">
-                                    Salvar Alterações
-                                </button>
                             </form>
                         </div>
                     </div>
@@ -130,6 +116,52 @@
                                         {{ $contact->created_at->format('d/m/Y H:i') }}</span>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+
+                    <!-- History and Notes Section -->
+                    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mt-6">
+                        <div class="p-6 text-gray-900">
+                            <h3 class="text-lg font-semibold border-b pb-2 mb-4">Anotações Internas</h3>
+
+                            <!-- Note Input Form -->
+                            <form action="{{ route('contacts.storeNote', $contact) }}" method="POST" class="mb-6">
+                                @csrf
+                                <div class="mb-3">
+                                    <textarea name="note" id="note" rows="3" required
+                                        class="w-full rounded-md border-gray-300 shadow-sm focus:border-[#D0AE6D] focus:ring-[#D0AE6D]"
+                                        placeholder="Adicione observações sobre reuniões, negociações ou interesses relativas a este lead..."></textarea>
+                                </div>
+                                <div class="flex justify-end">
+                                    <button type="submit"
+                                        class="bg-[#D0AE6D] text-white font-medium py-2 px-4 rounded-md hover:bg-[#b89555] transition-colors">
+                                        Adicionar Anotação
+                                    </button>
+                                </div>
+                            </form>
+
+                            <!-- Timeline of Notes -->
+                            <div class="space-y-4">
+                                @forelse($contact->contactNotes as $note)
+                                    <div class="bg-gray-50 border rounded-md p-4">
+                                        <p class="text-gray-800 whitespace-pre-line mb-2">{{ $note->note }}</p>
+                                        <p class="text-xs text-gray-500">
+                                            @php
+                                                $date = $note->created_at->isToday()
+                                                    ? 'Hoje às ' . $note->created_at->format('H:i')
+                                                    : ($note->created_at->isYesterday()
+                                                        ? 'Ontem às ' . $note->created_at->format('H:i')
+                                                        : $note->created_at->format('d/m/Y \à\s H:i'));
+                                            @endphp
+                                            {{ $date }} &middot; <span
+                                                class="font-medium text-gray-700">{{ $note->user->name ?? 'Usuário Desconhecido' }}</span>
+                                        </p>
+                                    </div>
+                                @empty
+                                    <p class="text-sm text-gray-500 italic">Nenhuma anotação registrada ainda.</p>
+                                @endforelse
+                            </div>
+
                         </div>
                     </div>
                 </div>
