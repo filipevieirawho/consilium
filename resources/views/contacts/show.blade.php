@@ -119,7 +119,7 @@
                     <!-- History and Notes Section -->
                     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mt-6">
                         <div class="p-6 text-gray-900">
-                            <h3 class="text-lg font-semibold border-b pb-2 mb-4">Anotações Internas</h3>
+                            <h3 class="text-lg font-semibold border-b pb-2 mb-4">Histórico do Lead</h3>
 
                             <!-- Note Input Form -->
                             <form action="{{ route('contacts.storeNote', $contact) }}" method="POST" class="mb-6">
@@ -139,7 +139,7 @@
 
                             <!-- Timeline of Notes -->
                             <div class="space-y-4">
-                                @forelse($contact->contactNotes as $note)
+                                @foreach($contact->contactNotes as $note)
                                     <div class="bg-gray-50 border rounded-md p-4">
                                         <p class="text-gray-800 whitespace-pre-line mb-2">{{ $note->note }}</p>
                                         <p class="text-xs text-gray-500">
@@ -154,9 +154,29 @@
                                                 class="font-medium text-gray-700">{{ $note->user->name ?? 'Usuário Desconhecido' }}</span>
                                         </p>
                                     </div>
-                                @empty
-                                    <p class="text-sm text-gray-500 italic">Nenhuma anotação registrada ainda.</p>
-                                @endforelse
+                                @endforeach
+
+                                <div class="bg-gray-50 border rounded-md p-4">
+                                    @php
+                                        $diffDays = $contact->created_at->diffInDays(now());
+                                        if ($contact->created_at->isToday()) {
+                                            $dateStr = 'Hoje às ' . $contact->created_at->format('H:i');
+                                        } elseif ($contact->created_at->isYesterday()) {
+                                            $dateStr = 'Ontem às ' . $contact->created_at->format('H:i');
+                                        } elseif ($diffDays < 7) {
+                                            $dayName = $contact->created_at->locale('pt_BR')->translatedFormat('l');
+                                            $isMasculine = in_array($contact->created_at->dayOfWeekIso, [6, 7]);
+                                            $prefix = $isMasculine ? 'Último ' : 'Última ';
+                                            $dateStr = $prefix . $dayName . ' às ' . $contact->created_at->format('H:i');
+                                        } else {
+                                            $dateStr = $contact->created_at->format('d/m/Y \à\s H:i');
+                                        }
+                                    @endphp
+                                    <p class="text-sm font-bold text-[#D0AE6D] mb-1">Negócio criado: {{ $dateStr }}</p>
+                                    <p class="text-xs text-gray-500">
+                                        {{ $dateStr }} &middot; <span class="font-medium text-gray-700">Sistema</span>
+                                    </p>
+                                </div>
                             </div>
 
                         </div>
