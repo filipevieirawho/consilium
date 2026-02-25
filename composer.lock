@@ -3298,7 +3298,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/turso-laravel",
-                "reference": "333f8adb44e4da2e8fb8dc7fa58d42c7182a35c0"
+                "reference": "cdb2a150c52f209cb6d9b52add8e4b6d9af3823b"
             },
             "require": {
                 "illuminate/bus": "^11.0|^12.0",

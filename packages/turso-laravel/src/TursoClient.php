@@ -77,8 +77,8 @@ class TursoClient
 
         return Http::withHeaders([
             'Content-Type' => 'application/json',
-        ])->connectTimeout((int) Arr::get($this->config, 'client.connect_timeout', 2))
-            ->timeout((int) Arr::get($this->config, 'client.timeout', 5))
+        ])->connectTimeout((int) Arr::get($this->config, 'client.connect_timeout', 10))
+            ->timeout((int) Arr::get($this->config, 'client.timeout', 30))
             ->withToken($accessToken)
             ->acceptJson();
     }
