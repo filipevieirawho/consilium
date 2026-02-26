@@ -199,8 +199,8 @@
 
                             <div class="relative pl-14">
                                 <!-- Dot Marker -->
-                                <div class="absolute left-4 top-2 md:top-3 w-4 h-4 rounded-full border-4 border-white z-10 
-                                    {{ $isNote ? 'bg-[#D0AE6D]' : 'bg-gray-300' }} shadow-sm"></div>
+                                <div class="absolute left-4 w-4 h-4 rounded-full border-4 border-white z-10 shadow-sm
+                                    {{ $isNote ? 'top-2 md:top-3 bg-[#D0AE6D]' : 'top-1.5 bg-gray-300' }}"></div>
 
                                 @if($isNote)
                                     <!-- Note Card -->
@@ -314,7 +314,7 @@
                         
                         <!-- Timeline Start (Creation) -->
                         <div class="relative pl-14 pb-8">
-                            <div class="absolute left-4 top-2 w-4 h-4 rounded-full border-4 border-white bg-gray-300 z-10 shadow-sm"></div>
+                            <div class="absolute left-4 top-1.5 w-4 h-4 rounded-full border-4 border-white bg-gray-300 z-10 shadow-sm"></div>
                             <div class="pt-1 text-sm text-gray-600 font-medium flex items-center gap-2">
                                 <ion-icon name="flag-outline" class="text-gray-400 text-lg"></ion-icon> Início do Histórico
                             </div>
