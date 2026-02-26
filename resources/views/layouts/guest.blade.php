@@ -27,6 +27,20 @@
         <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
             {{ $slot }}
         </div>
+
+        <!-- Footer -->
+        <footer class="py-6 mt-auto w-full">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-500">
+                    <div>
+                        <strong class="text-gray-800">Consilium.</strong> 2026 &copy; Todos os direitos reservados.
+                    </div>
+                    <div>
+                        1.0.21
+                    </div>
+                </div>
+            </div>
+        </footer>
     </div>
 </body>
 
