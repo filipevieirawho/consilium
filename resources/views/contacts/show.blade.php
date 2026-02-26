@@ -79,7 +79,7 @@
 
                                     <!-- Status -->
                                     <div class="mb-4">
-                                        <label for="status" class="block text-sm font-medium text-gray-700 mb-1">Status
+                                        <label for="status" class="block text-sm font-medium text-gray-500 mb-1">Status
                                             do
                                             Lead</label>
                                         <select name="status" id="status" onchange="this.form.submit()"
@@ -97,7 +97,7 @@
 
                                     <!-- Owner -->
                                     <div class="mb-4">
-                                        <label for="user_id" class="block text-sm font-medium text-gray-700 mb-1">Dono
+                                        <label for="user_id" class="block text-sm font-medium text-gray-500 mb-1">Dono
                                             (Responsável)</label>
                                         <select name="user_id" id="user_id" onchange="this.form.submit()"
                                             class="w-full rounded-md border-gray-300 shadow-sm focus:border-[#D0AE6D] focus:ring-[#D0AE6D]">
