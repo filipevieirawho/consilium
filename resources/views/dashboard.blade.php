@@ -79,7 +79,7 @@
                             <button type="button" x-data="" @click.prevent="$dispatch('open-modal', 'add-manual-lead')"
                                 class="px-4 py-2 text-white font-medium rounded-md shadow-sm transition-colors flex items-center gap-2"
                                 style="background-color: #D0AE6D; hover:background-color: #b5955a;">
-                                <ion-icon name="add-outline" class="text-xl"></ion-icon> Novo Lead
+                                <ion-icon name="receipt-outline" class="text-xl"></ion-icon> Novo Lead
                             </button>
                         </div>
 
@@ -116,7 +116,8 @@
                                         onclick="window.location='{{ route('contacts.show', $contact) }}'">
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                             <div>{{ $contact->created_at->format('d/m/y') }}</div>
-                                            <div class="text-xs text-gray-400 mt-0.5">{{ $contact->created_at->format('H:i') }}</div>
+                                            <div class="text-xs text-gray-400 mt-0.5">
+                                                {{ $contact->created_at->format('H:i') }}</div>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                                             {{ $contact->name }}
@@ -135,11 +136,11 @@
                                         <td class="px-6 py-4 whitespace-nowrap text-sm" onclick="event.stopPropagation()">
                                             <select data-contact-id="{{ $contact->id }}" onchange="updateStatus(this)"
                                                 class="status-select rounded-md border-gray-300 text-sm shadow-sm focus:border-indigo-500 focus:ring-indigo-500
-                                                                                                {{ $contact->status === 'novo' ? 'bg-blue-50 text-blue-700' : '' }}
-                                                                                                {{ $contact->status === 'contactado' ? 'bg-yellow-50 text-yellow-700' : '' }}
-                                                                                                {{ $contact->status === 'perdido' ? 'bg-red-50 text-red-700' : '' }}
-                                                                                                {{ $contact->status === 'ganho' ? 'bg-green-50 text-green-700' : '' }}
-                                                                                            ">
+                                                                                                    {{ $contact->status === 'novo' ? 'bg-blue-50 text-blue-700' : '' }}
+                                                                                                    {{ $contact->status === 'contactado' ? 'bg-yellow-50 text-yellow-700' : '' }}
+                                                                                                    {{ $contact->status === 'perdido' ? 'bg-red-50 text-red-700' : '' }}
+                                                                                                    {{ $contact->status === 'ganho' ? 'bg-green-50 text-green-700' : '' }}
+                                                                                                ">
                                                 <option value="novo" {{ $contact->status === 'novo' ? 'selected' : '' }}>🔵
                                                     Novo</option>
                                                 <option value="contactado" {{ $contact->status === 'contactado' ? 'selected' : '' }}>🟡 Contactado</option>
