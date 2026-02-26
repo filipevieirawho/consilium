@@ -15,20 +15,19 @@
                         x-data="{ showNewLeadModal: false }">
 
                         <!-- Search & Filters Form -->
-                        <form method="GET" action="{{ route('dashboard') }}"
-                            class="w-full lg:w-auto flex-grow flex items-center">
-                            <div
-                                class="flex flex-col md:flex-row w-full bg-white border border-gray-300 rounded-md overflow-hidden shadow-sm focus-within:ring-1 focus-within:ring-indigo-500 focus-within:border-indigo-500">
-
+                        <form method="GET" action="{{ route('dashboard') }}" class="w-full lg:w-auto flex-grow">
+                            <div class="flex flex-col md:flex-row gap-4 items-start md:items-center">
+                                
                                 <!-- Search -->
                                 <input type="text" name="search" placeholder="Buscar por nome, email ou mensagem..."
                                     value="{{ request('search') }}"
-                                    class="w-full md:w-96 border-none focus:ring-0 px-4 py-2">
+                                    class="w-full md:w-96 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 px-4 py-2">
 
-                                <!-- Year Select -->
-                                <div class="relative border-t md:border-t-0 md:border-l border-gray-300 flex-shrink-0">
+                                <!-- Filters and buttons -->
+                                <div class="flex gap-3 items-center w-full md:w-auto">
+                                    <!-- Year Select -->
                                     <select name="year"
-                                        class="w-full md:w-auto appearance-none border-none focus:ring-0 px-4 py-2 pr-8 bg-transparent cursor-pointer">
+                                        class="rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 px-4 py-2">
                                         <option value="">Todos os anos</option>
                                         @for($year = date('Y'); $year >= 2026; $year--)
                                             <option value="{{ $year }}" {{ request('year') == $year ? 'selected' : '' }}>
@@ -36,45 +35,38 @@
                                             </option>
                                         @endfor
                                     </select>
-                                </div>
 
-                                <!-- Month Select -->
-                                <div class="relative border-t md:border-t-0 md:border-l border-gray-300 flex-shrink-0">
+                                    <!-- Month Select -->
                                     <select name="month"
-                                        class="w-full md:w-auto appearance-none border-none focus:ring-0 px-4 py-2 pr-8 bg-transparent cursor-pointer">
+                                        class="rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 px-4 py-2">
                                         <option value="">Todos os meses</option>
                                         <option value="1" {{ request('month') == '1' ? 'selected' : '' }}>Janeiro</option>
-                                        <option value="2" {{ request('month') == '2' ? 'selected' : '' }}>Fevereiro
-                                        </option>
+                                        <option value="2" {{ request('month') == '2' ? 'selected' : '' }}>Fevereiro</option>
                                         <option value="3" {{ request('month') == '3' ? 'selected' : '' }}>Março</option>
                                         <option value="4" {{ request('month') == '4' ? 'selected' : '' }}>Abril</option>
                                         <option value="5" {{ request('month') == '5' ? 'selected' : '' }}>Maio</option>
                                         <option value="6" {{ request('month') == '6' ? 'selected' : '' }}>Junho</option>
                                         <option value="7" {{ request('month') == '7' ? 'selected' : '' }}>Julho</option>
                                         <option value="8" {{ request('month') == '8' ? 'selected' : '' }}>Agosto</option>
-                                        <option value="9" {{ request('month') == '9' ? 'selected' : '' }}>Setembro
-                                        </option>
-                                        <option value="10" {{ request('month') == '10' ? 'selected' : '' }}>Outubro
-                                        </option>
-                                        <option value="11" {{ request('month') == '11' ? 'selected' : '' }}>Novembro
-                                        </option>
-                                        <option value="12" {{ request('month') == '12' ? 'selected' : '' }}>Dezembro
-                                        </option>
+                                        <option value="9" {{ request('month') == '9' ? 'selected' : '' }}>Setembro</option>
+                                        <option value="10" {{ request('month') == '10' ? 'selected' : '' }}>Outubro</option>
+                                        <option value="11" {{ request('month') == '11' ? 'selected' : '' }}>Novembro</option>
+                                        <option value="12" {{ request('month') == '12' ? 'selected' : '' }}>Dezembro</option>
                                     </select>
+
+                                    <!-- Search Button -->
+                                    <button type="submit"
+                                        class="bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-700 whitespace-nowrap font-medium transition-colors">
+                                        Buscar
+                                    </button>
+
+                                    <!-- Clear Filters -->
+                                    @if(request('search') || request('year') || request('month'))
+                                        <a href="{{ route('dashboard') }}"
+                                            class="ml-2 text-sm text-gray-500 hover:text-gray-900 whitespace-nowrap transition-colors">Limpar</a>
+                                    @endif
                                 </div>
-
-                                <!-- Search Button -->
-                                <button type="submit"
-                                    class="w-full md:w-auto bg-gray-900 border-l border-gray-900 text-white px-6 py-2 hover:bg-gray-800 transition-colors font-medium">
-                                    Buscar
-                                </button>
                             </div>
-
-                            <!-- Clear Filters -->
-                            @if(request('search') || request('year') || request('month'))
-                                <a href="{{ route('dashboard') }}"
-                                    class="ml-4 text-sm text-gray-500 hover:text-gray-900 whitespace-nowrap transition-colors">Limpar</a>
-                            @endif
                         </form>
 
                         <!-- Add Lead Button -->
