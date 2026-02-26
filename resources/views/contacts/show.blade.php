@@ -120,23 +120,27 @@
                         <!-- History and Notes Section -->
                         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                             <div class="p-6 text-gray-900">
-                                <div class="flex items-center justify-between border-b pb-2 mb-4 relative" x-data="{ openOptions: false }" @click.outside="openOptions = false">
+                                <div class="flex items-center justify-between border-b pb-2 mb-4">
                                     <h3 class="text-lg font-semibold text-gray-900">Histórico do Lead</h3>
-                                    <button @click="openOptions = !openOptions" type="button" class="text-gray-400 hover:text-gray-700 transition-colors p-1 rounded-full hover:bg-gray-200 focus:outline-none flex items-center" title="Opções do Lead">
-                                        <ion-icon name="ellipsis-horizontal-sharp" class="text-xl block"></ion-icon>
-                                    </button>
-                                    <div x-show="openOptions" style="display: none;" x-cloak
-                                        x-transition:enter="transition ease-out duration-100"
-                                        x-transition:enter-start="transform opacity-0 scale-95"
-                                        x-transition:enter-end="transform opacity-100 scale-100"
-                                        x-transition:leave="transition ease-in duration-75"
-                                        x-transition:leave-start="transform opacity-100 scale-100"
-                                        x-transition:leave-end="transform opacity-0 scale-95"
-                                        class="absolute right-0 mt-2 top-full w-48 bg-white rounded-md shadow-lg border border-gray-100 z-10 py-1">
-                                        <button type="button" @click="openOptions = false; $dispatch('open-modal', 'confirm-lead-deletion')"
-                                            class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors">
-                                            Excluir
+                                    
+                                    <div class="relative" x-data="{ openOptions: false }" @click.outside="openOptions = false">
+                                        <button @click="openOptions = !openOptions" type="button" class="text-gray-400 hover:text-gray-700 transition-colors p-1 rounded-full hover:bg-gray-200 focus:outline-none flex items-center" title="Opções do Lead">
+                                            <ion-icon name="ellipsis-horizontal-sharp" class="text-xl block"></ion-icon>
                                         </button>
+                                        
+                                        <div x-show="openOptions" style="display: none;" x-cloak
+                                            x-transition:enter="transition ease-out duration-100"
+                                            x-transition:enter-start="transform opacity-0 scale-95"
+                                            x-transition:enter-end="transform opacity-100 scale-100"
+                                            x-transition:leave="transition ease-in duration-75"
+                                            x-transition:leave-start="transform opacity-100 scale-100"
+                                            x-transition:leave-end="transform opacity-0 scale-95"
+                                            class="absolute right-0 mt-1 w-48 bg-white rounded-md shadow-lg border border-gray-100 z-10 py-1">
+                                            <button type="button" @click="openOptions = false; $dispatch('open-modal', 'confirm-lead-deletion')"
+                                                class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors">
+                                                Excluir
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
 
