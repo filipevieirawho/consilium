@@ -117,7 +117,8 @@
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                             <div>{{ $contact->created_at->format('d/m/y') }}</div>
                                             <div class="text-xs text-gray-400 mt-0.5">
-                                                {{ $contact->created_at->format('H:i') }}</div>
+                                                {{ $contact->created_at->format('H:i') }}
+                                            </div>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                                             {{ $contact->name }}
@@ -136,11 +137,11 @@
                                         <td class="px-6 py-4 whitespace-nowrap text-sm" onclick="event.stopPropagation()">
                                             <select data-contact-id="{{ $contact->id }}" onchange="updateStatus(this)"
                                                 class="status-select rounded-md border-gray-300 text-sm shadow-sm focus:border-indigo-500 focus:ring-indigo-500
-                                                                                                    {{ $contact->status === 'novo' ? 'bg-blue-50 text-blue-700' : '' }}
-                                                                                                    {{ $contact->status === 'contactado' ? 'bg-yellow-50 text-yellow-700' : '' }}
-                                                                                                    {{ $contact->status === 'perdido' ? 'bg-red-50 text-red-700' : '' }}
-                                                                                                    {{ $contact->status === 'ganho' ? 'bg-green-50 text-green-700' : '' }}
-                                                                                                ">
+                                                                                                        {{ $contact->status === 'novo' ? 'bg-blue-50 text-blue-700' : '' }}
+                                                                                                        {{ $contact->status === 'contactado' ? 'bg-yellow-50 text-yellow-700' : '' }}
+                                                                                                        {{ $contact->status === 'perdido' ? 'bg-red-50 text-red-700' : '' }}
+                                                                                                        {{ $contact->status === 'ganho' ? 'bg-green-50 text-green-700' : '' }}
+                                                                                                    ">
                                                 <option value="novo" {{ $contact->status === 'novo' ? 'selected' : '' }}>🔵
                                                     Novo</option>
                                                 <option value="contactado" {{ $contact->status === 'contactado' ? 'selected' : '' }}>🟡 Contactado</option>
@@ -252,7 +253,7 @@
                 <!-- Opt-in -->
                 <div class="flex items-center">
                     <input id="opt_in" name="opt_in" type="checkbox" value="1"
-                        class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                        class="h-4 w-4 rounded border-gray-300 text-[#D0AE6D] focus:ring-[#D0AE6D]">
                     <label for="opt_in" class="ml-2 block text-sm text-gray-900">
                         Aceita receber novidades (Opt-in)
                     </label>
