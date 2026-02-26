@@ -17,7 +17,7 @@
                         <!-- Search & Filters Form -->
                         <form method="GET" action="{{ route('dashboard') }}" class="flex-grow">
                             <div class="flex flex-wrap gap-4 items-center">
-                                
+
                                 <!-- Search -->
                                 <input type="text" name="search" placeholder="Buscar por nome, email ou mensagem..."
                                     value="{{ request('search') }}"
@@ -27,7 +27,7 @@
                                 <div class="flex gap-3 items-center flex-wrap">
                                     <!-- Year Select -->
                                     <select name="year"
-                                        class="rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 px-4 py-2">
+                                        class="rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 pl-4 pr-10 py-2">
                                         <option value="">Todos os anos</option>
                                         @for($year = date('Y'); $year >= 2026; $year--)
                                             <option value="{{ $year }}" {{ request('year') == $year ? 'selected' : '' }}>
@@ -38,20 +38,25 @@
 
                                     <!-- Month Select -->
                                     <select name="month"
-                                        class="rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 px-4 py-2">
+                                        class="rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 pl-4 pr-10 py-2">
                                         <option value="">Todos os meses</option>
                                         <option value="1" {{ request('month') == '1' ? 'selected' : '' }}>Janeiro</option>
-                                        <option value="2" {{ request('month') == '2' ? 'selected' : '' }}>Fevereiro</option>
+                                        <option value="2" {{ request('month') == '2' ? 'selected' : '' }}>Fevereiro
+                                        </option>
                                         <option value="3" {{ request('month') == '3' ? 'selected' : '' }}>Março</option>
                                         <option value="4" {{ request('month') == '4' ? 'selected' : '' }}>Abril</option>
                                         <option value="5" {{ request('month') == '5' ? 'selected' : '' }}>Maio</option>
                                         <option value="6" {{ request('month') == '6' ? 'selected' : '' }}>Junho</option>
                                         <option value="7" {{ request('month') == '7' ? 'selected' : '' }}>Julho</option>
                                         <option value="8" {{ request('month') == '8' ? 'selected' : '' }}>Agosto</option>
-                                        <option value="9" {{ request('month') == '9' ? 'selected' : '' }}>Setembro</option>
-                                        <option value="10" {{ request('month') == '10' ? 'selected' : '' }}>Outubro</option>
-                                        <option value="11" {{ request('month') == '11' ? 'selected' : '' }}>Novembro</option>
-                                        <option value="12" {{ request('month') == '12' ? 'selected' : '' }}>Dezembro</option>
+                                        <option value="9" {{ request('month') == '9' ? 'selected' : '' }}>Setembro
+                                        </option>
+                                        <option value="10" {{ request('month') == '10' ? 'selected' : '' }}>Outubro
+                                        </option>
+                                        <option value="11" {{ request('month') == '11' ? 'selected' : '' }}>Novembro
+                                        </option>
+                                        <option value="12" {{ request('month') == '12' ? 'selected' : '' }}>Dezembro
+                                        </option>
                                     </select>
 
                                     <!-- Search Button -->
@@ -133,11 +138,11 @@
                                         <td class="px-6 py-4 whitespace-nowrap text-sm" onclick="event.stopPropagation()">
                                             <select data-contact-id="{{ $contact->id }}" onchange="updateStatus(this)"
                                                 class="status-select rounded-md border-gray-300 text-sm shadow-sm focus:border-indigo-500 focus:ring-indigo-500
-                                                                                {{ $contact->status === 'novo' ? 'bg-blue-50 text-blue-700' : '' }}
-                                                                                {{ $contact->status === 'contactado' ? 'bg-yellow-50 text-yellow-700' : '' }}
-                                                                                {{ $contact->status === 'perdido' ? 'bg-red-50 text-red-700' : '' }}
-                                                                                {{ $contact->status === 'ganho' ? 'bg-green-50 text-green-700' : '' }}
-                                                                            ">
+                                                                                    {{ $contact->status === 'novo' ? 'bg-blue-50 text-blue-700' : '' }}
+                                                                                    {{ $contact->status === 'contactado' ? 'bg-yellow-50 text-yellow-700' : '' }}
+                                                                                    {{ $contact->status === 'perdido' ? 'bg-red-50 text-red-700' : '' }}
+                                                                                    {{ $contact->status === 'ganho' ? 'bg-green-50 text-green-700' : '' }}
+                                                                                ">
                                                 <option value="novo" {{ $contact->status === 'novo' ? 'selected' : '' }}>🔵
                                                     Novo</option>
                                                 <option value="contactado" {{ $contact->status === 'contactado' ? 'selected' : '' }}>🟡 Contactado</option>
@@ -176,8 +181,7 @@
                 <div class="flex items-center gap-4">
                     <div class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full"
                         style="background-color: #fdf8ed;">
-                        <ion-icon name="person-add-outline" class="text-2xl"
-                            style="color: #D0AE6D;"></ion-icon>
+                        <ion-icon name="person-add-outline" class="text-2xl" style="color: #D0AE6D;"></ion-icon>
                     </div>
                     <h3 class="text-xl font-semibold leading-6 text-gray-900 text-left" id="modal-title">
                         Novo Lead
@@ -185,14 +189,15 @@
                 </div>
 
                 <!-- Close Button (X) -->
-                <button type="button" x-on:click="$dispatch('close')" 
+                <button type="button" x-on:click="$dispatch('close')"
                     class="text-gray-400 hover:text-gray-600 transition-colors focus:outline-none -mt-1 -mr-2 p-2">
                     <ion-icon name="close-outline" class="text-3xl"></ion-icon>
                 </button>
             </div>
 
             <!-- Form -->
-            <form id="new-lead-form" method="POST" action="{{ route('contacts.storeManual') }}" class="space-y-6 text-left">
+            <form id="new-lead-form" method="POST" action="{{ route('contacts.storeManual') }}"
+                class="space-y-6 text-left">
                 @csrf
 
                 <!-- Nome -->
@@ -224,17 +229,15 @@
                     } 
                 }">
                     <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Telefone / WhatsApp</label>
-                    <input type="text" name="phone" id="phone"
-                        x-model="phone"
-                        @input="formatPhone"
-                        maxlength="15"
+                    <input type="text" name="phone" id="phone" x-model="phone" @input="formatPhone" maxlength="15"
                         class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-2"
                         placeholder="(11) 99999-9999">
                 </div>
 
                 <!-- Mensagem (Optional) -->
                 <div>
-                    <label for="message" class="block text-sm font-medium text-gray-700 mb-1">Observação Inicial / Detalhes</label>
+                    <label for="message" class="block text-sm font-medium text-gray-700 mb-1">Observação Inicial /
+                        Detalhes</label>
                     <textarea name="message" id="message" rows="3"
                         class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-2"
                         placeholder="Como esse lead chegou ou o que ele precisa..."></textarea>
