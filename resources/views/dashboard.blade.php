@@ -209,9 +209,22 @@
                 </div>
 
                 <!-- Telefone/WhatsApp -->
-                <div>
+                <div x-data="{ 
+                    phone: '', 
+                    formatPhone() {
+                        let x = this.phone.replace(/\D/g, '').match(/(\d{0,2})(\d{0,5})(\d{0,4})/);
+                        if (!x[2]) {
+                            this.phone = x[1];
+                        } else {
+                            this.phone = !x[3] ? '(' + x[1] + ') ' + x[2] : '(' + x[1] + ') ' + x[2] + '-' + x[3];
+                        }
+                    } 
+                }">
                     <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Telefone / WhatsApp</label>
                     <input type="text" name="phone" id="phone"
+                        x-model="phone"
+                        @input="formatPhone"
+                        maxlength="15"
                         class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-2"
                         placeholder="(11) 99999-9999">
                 </div>
