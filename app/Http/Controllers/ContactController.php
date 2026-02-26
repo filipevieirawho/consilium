@@ -109,6 +109,25 @@ class ContactController extends Controller
         return redirect()->route('dashboard')->with('success', 'Lead adicionado com sucesso!');
     }
 
+    public function updateData(Request $request, Contact $contact)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'company' => 'nullable|string|max:255',
+            'email' => 'nullable|email|max:255',
+            'phone' => 'nullable|string|max:20',
+            'message' => 'nullable|string',
+        ]);
+
+        $data = array_merge($validated, [
+            'opt_in' => $request->has('opt_in')
+        ]);
+
+        $contact->update($data);
+
+        return redirect()->route('contacts.show', $contact)->with('success', 'Dados do lead atualizados com sucesso!');
+    }
+
     public function updateStatus(Request $request, Contact $contact)
     {
         $validated = $request->validate([

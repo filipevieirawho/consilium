@@ -35,7 +35,29 @@
                 <div class="md:col-span-1 space-y-6">
                     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div class="p-6 text-gray-900">
-                            <h3 class="text-lg font-semibold border-b pb-2 mb-4">Dados do Lead</h3>
+                            <div class="flex items-center justify-between border-b pb-2 mb-4">
+                                <h3 class="text-lg font-semibold text-gray-900">Dados do Lead</h3>
+                                
+                                <div class="relative" x-data="{ openOptions: false }" @click.outside="openOptions = false">
+                                    <button @click="openOptions = !openOptions" type="button" class="text-gray-400 hover:text-gray-700 transition-colors p-1 rounded-full hover:bg-gray-200 focus:outline-none flex items-center" title="Opções do Lead">
+                                        <ion-icon name="ellipsis-horizontal-sharp" class="text-xl block"></ion-icon>
+                                    </button>
+                                    
+                                    <div x-show="openOptions" style="display: none;" x-cloak
+                                        x-transition:enter="transition ease-out duration-100"
+                                        x-transition:enter-start="transform opacity-0 scale-95"
+                                        x-transition:enter-end="transform opacity-100 scale-100"
+                                        x-transition:leave="transition ease-in duration-75"
+                                        x-transition:leave-start="transform opacity-100 scale-100"
+                                        x-transition:leave-end="transform opacity-0 scale-95"
+                                        class="absolute left-0 mt-1 w-48 bg-white rounded-md shadow-lg border border-gray-100 z-10 py-1">
+                                        <button type="button" @click="openOptions = false; $dispatch('open-modal', 'edit-lead-data')"
+                                            class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
+                                            Editar Dados
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
 
                             <div class="space-y-4 mb-6">
                                 <div>
@@ -376,6 +398,102 @@
             </div>
         </div>
     </div>
+
+    <!-- Edit Lead Data Modal -->
+    <x-modal name="edit-lead-data" focusable>
+        <div class="px-6 py-6 sm:p-8">
+            <!-- Header Area -->
+            <div class="flex items-start justify-between mb-6">
+                <!-- Title & Icon -->
+                <div class="flex items-center gap-4">
+                    <div class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full"
+                        style="background-color: #fdf8ed;">
+                        <ion-icon name="pencil-outline" class="text-2xl" style="color: #D0AE6D;"></ion-icon>
+                    </div>
+                    <h3 class="text-xl font-semibold leading-6 text-gray-900 text-left" id="modal-title">
+                        Editar Lead
+                    </h3>
+                </div>
+
+                <!-- Close Button (X) -->
+                <button type="button" x-on:click="$dispatch('close')"
+                    class="text-gray-400 hover:text-gray-600 transition-colors focus:outline-none -mt-1 -mr-2 p-2">
+                    <ion-icon name="close-outline" class="text-3xl"></ion-icon>
+                </button>
+            </div>
+
+            <!-- Form -->
+            <form id="edit-lead-form" method="POST" action="{{ route('contacts.updateData', $contact) }}"
+                class="space-y-6 text-left">
+                @csrf
+                @method('PATCH')
+
+                <!-- Nome -->
+                <div>
+                    <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Nome</label>
+                    <input type="text" name="name" id="name" required value="{{ $contact->name }}"
+                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-[#D0AE6D] focus:ring-[#D0AE6D] sm:text-sm px-4 py-2">
+                </div>
+
+                <!-- Empresa -->
+                <div>
+                    <label for="company" class="block text-sm font-medium text-gray-700 mb-1">Empresa</label>
+                    <input type="text" name="company" id="company" value="{{ $contact->company }}"
+                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-[#D0AE6D] focus:ring-[#D0AE6D] sm:text-sm px-4 py-2">
+                </div>
+
+                <!-- Email -->
+                <div>
+                    <label for="email" class="block text-sm font-medium text-gray-700 mb-1">E-mail</label>
+                    <input type="email" name="email" id="email" value="{{ $contact->email }}"
+                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-[#D0AE6D] focus:ring-[#D0AE6D] sm:text-sm px-4 py-2">
+                </div>
+
+                <!-- Telefone/WhatsApp -->
+                <div x-data="{ 
+                    phone: '{{ $contact->phone }}', 
+                    formatPhone() {
+                        let x = this.phone.replace(/\D/g, '').match(/(\d{0,2})(\d{0,5})(\d{0,4})/);
+                        if (!x[2]) {
+                            this.phone = x[1];
+                        } else {
+                            this.phone = !x[3] ? '(' + x[1] + ') ' + x[2] : '(' + x[1] + ') ' + x[2] + '-' + x[3];
+                        }
+                    } 
+                }" x-init="formatPhone">
+                    <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Telefone / WhatsApp</label>
+                    <input type="text" name="phone" id="phone" x-model="phone" @input="formatPhone" maxlength="15"
+                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-[#D0AE6D] focus:ring-[#D0AE6D] sm:text-sm px-4 py-2">
+                </div>
+
+                <!-- Mensagem -->
+                <div>
+                    <label for="message" class="block text-sm font-medium text-gray-700 mb-1">Observação Inicial / Detalhes</label>
+                    <textarea name="message" id="message" rows="3"
+                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-[#D0AE6D] focus:ring-[#D0AE6D] sm:text-sm px-4 py-2">{{ $contact->message }}</textarea>
+                </div>
+
+                <!-- Opt-in -->
+                <div class="flex items-center">
+                    <input id="opt_in" name="opt_in" type="checkbox" value="1" {{ $contact->opt_in ? 'checked' : '' }}
+                        class="h-4 w-4 rounded border-gray-300 text-[#D0AE6D] focus:ring-[#D0AE6D]">
+                    <label for="opt_in" class="ml-2 block text-sm text-gray-900">
+                        Aceita receber novidades (Opt-in)
+                    </label>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="pt-2 flex justify-end gap-3 items-center">
+                    <button type="button" x-on:click="$dispatch('close')"
+                        class="text-sm font-medium text-gray-500 hover:text-gray-700 transition-colors">Cancelar</button>
+                    <button type="submit" form="edit-lead-form"
+                        class="px-4 py-2 text-white font-medium rounded-md shadow-sm transition-colors inline-flex items-center justify-center bg-[#D0AE6D] hover:bg-[#b89555]">
+                        Salvar Alterações
+                    </button>
+                </div>
+            </form>
+        </div>
+    </x-modal>
 
     {{-- Delete Lead Confirmation Modal --}}
     <x-modal name="confirm-lead-deletion" focusable>

@@ -24,6 +24,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/lead/{contact}', [ContactController::class, 'destroy'])->name('contacts.destroy');
     Route::post('/lead/manual', [ContactController::class, 'storeManual'])->name('contacts.storeManual');
     Route::patch('/lead/{contact}/details', [ContactController::class, 'updateDetails'])->name('contacts.updateDetails');
+    Route::patch('/lead/{contact}/data', [ContactController::class, 'updateData'])->name('contacts.updateData');
     Route::patch('/lead/{contact}/status', [ContactController::class, 'updateStatus'])->name('contacts.updateStatus');
     Route::post('/lead/{contact}/notes', [ContactController::class, 'storeNote'])->name('contacts.storeNote');
     Route::patch('/lead/{contact}/notes/{note}', [ContactController::class, 'updateNote'])->name('contacts.updateNote');
