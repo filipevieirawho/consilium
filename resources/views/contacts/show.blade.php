@@ -174,7 +174,7 @@
                             <!-- Vertical Line connecting everything -->
                             <div class="absolute left-6 top-3 bottom-0 w-px bg-gray-200" style="margin-left: -1px;"></div>
 
-                            <div class="space-y-6 pr-8">
+                            <div class="space-y-6 pr-8 mr-8">
                         @foreach($timeline as $item)
                             @if(class_basename($item) !== 'ContactNote' && $item->type === 'lead_created')
                                 @continue
@@ -336,7 +336,7 @@
                         @endphp
 
                         <!-- Timeline Start (Creation) -->
-                        <div class="relative pl-14 pb-8">
+                        <div class="relative pl-14">
                             <div class="absolute left-4 top-1.5 w-4 h-4 rounded-full border-4 border-white bg-gray-300 z-10 shadow-sm"></div>
                             <div class="pt-1 flex flex-col md:flex-row md:items-center gap-1 md:gap-3 text-sm">
                                 <div class="text-gray-600 font-medium flex items-center gap-2">
