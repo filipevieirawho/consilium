@@ -179,7 +179,7 @@
                 <div class="flex items-center gap-4">
                     <div class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full"
                         style="background-color: #fdf8ed;">
-                        <ion-icon name="person-add-outline" class="text-2xl" style="color: #D0AE6D;"></ion-icon>
+                        <ion-icon name="receipt-outline" class="text-2xl" style="color: #D0AE6D;"></ion-icon>
                     </div>
                     <h3 class="text-xl font-semibold leading-6 text-gray-900 text-left" id="modal-title">
                         Novo Lead
