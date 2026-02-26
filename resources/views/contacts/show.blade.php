@@ -43,6 +43,10 @@
                                     <span class="block text-base text-gray-900">{{ $contact->name }}</span>
                                 </div>
                                 <div>
+                                    <span class="block text-sm font-medium text-gray-500">Empresa</span>
+                                    <span class="block text-base text-gray-900">{{ $contact->company ?: '-' }}</span>
+                                </div>
+                                <div>
                                     <span class="block text-sm font-medium text-gray-500">E-mail</span>
                                     <a href="mailto:{{ $contact->email }}"
                                         class="block text-base text-[#D0AE6D] hover:text-[#b89555] hover:underline transition-colors">{{ $contact->email }}</a>

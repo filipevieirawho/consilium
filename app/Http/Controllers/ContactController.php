@@ -68,6 +68,7 @@ class ContactController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
+            'company' => 'nullable|string|max:255',
             'email' => 'nullable|email|max:255',
             'phone' => 'nullable|string|max:20',
             'message' => 'nullable|string',
@@ -75,7 +76,7 @@ class ContactController extends Controller
 
         // Merge default values for manual creation
         $data = array_merge($validated, [
-            'opt_in' => false,
+            'opt_in' => $request->has('opt_in'),
             'status' => 'novo'
         ]);
 
