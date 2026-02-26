@@ -323,9 +323,9 @@
                                                 @endif
                                             @elseif($item->type === 'owner_change')
                                                 @if(is_null($item->old_value))
-                                                    Proprietário: <strong>{{ \App\Models\User::find($item->new_value)?->name ?? 'Não atribuído' }}</strong>
+                                                    Proprietário : <strong>{{ \App\Models\User::find($item->new_value)?->name ?? 'Não atribuído' }}</strong>
                                                 @else
-                                                    Proprietário: <strong>{{ \App\Models\User::find($item->old_value)?->name ?? 'Não atribuído' }}</strong> 
+                                                    Proprietário : <strong>{{ \App\Models\User::find($item->old_value)?->name ?? 'Não atribuído' }}</strong> 
                                                     <ion-icon name="arrow-forward-outline" class="align-middle text-gray-400 mx-0.5"></ion-icon> 
                                                     <strong>{{ \App\Models\User::find($item->new_value)?->name ?? 'Não atribuído' }}</strong>
                                                 @endif
