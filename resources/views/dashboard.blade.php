@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight flex items-center gap-2">
-            <ion-icon name="receipt-outline"></ion-icon> {{ __('Dashboard de Leads') }}
+            <ion-icon name="receipt-outline" class="text-[#D0AE6D] text-2xl"></ion-icon> {{ __('Dashboard de Leads') }}
         </h2>
     </x-slot>
 
