@@ -1,8 +1,8 @@
 <x-app-layout>
     <x-slot name="header">
         <div class="flex items-center justify-between">
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ __('Lead: ') }} {{ $contact->name }}
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight flex items-center gap-2">
+                <ion-icon name="receipt-outline"></ion-icon> {{ $contact->name }}
             </h2>
             <a href="{{ route('dashboard') }}" class="text-sm text-gray-500 hover:text-gray-700">
                 &larr; Voltar para Dashboard
