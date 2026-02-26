@@ -315,19 +315,19 @@
                                         <div class="text-gray-800 font-medium">
                                             @if($item->type === 'status_change')
                                                 @if(is_null($item->old_value))
-                                                    Etapa : <strong class="text-[#D0AE6D]">{{ ucfirst($item->new_value) }}</strong>
+                                                    Etapa : <strong>{{ ucfirst($item->new_value) }}</strong>
                                                 @else
                                                     Etapa : <strong>{{ ucfirst($item->old_value) }}</strong> 
-                                                    <ion-icon name="arrow-forward-outline" class="align-middle text-gray-400 mx-0.5"></ion-icon> 
-                                                    <strong class="text-[#D0AE6D]">{{ ucfirst($item->new_value) }}</strong>
+                                                    <ion-icon name="arrow-forward-outline" class="align-middle text-[#D0AE6D] mx-0.5"></ion-icon> 
+                                                    <strong>{{ ucfirst($item->new_value) }}</strong>
                                                 @endif
                                             @elseif($item->type === 'owner_change')
                                                 @if(is_null($item->old_value))
-                                                    Proprietário : <strong class="text-[#D0AE6D]">{{ \App\Models\User::find($item->new_value)?->name ?? 'Não atribuído' }}</strong>
+                                                    Proprietário : <strong>{{ \App\Models\User::find($item->new_value)?->name ?? 'Não atribuído' }}</strong>
                                                 @else
                                                     Proprietário : <strong>{{ \App\Models\User::find($item->old_value)?->name ?? 'Não atribuído' }}</strong> 
-                                                    <ion-icon name="arrow-forward-outline" class="align-middle text-gray-400 mx-0.5"></ion-icon> 
-                                                    <strong class="text-[#D0AE6D]">{{ \App\Models\User::find($item->new_value)?->name ?? 'Não atribuído' }}</strong>
+                                                    <ion-icon name="arrow-forward-outline" class="align-middle text-[#D0AE6D] mx-0.5"></ion-icon> 
+                                                    <strong>{{ \App\Models\User::find($item->new_value)?->name ?? 'Não atribuído' }}</strong>
                                                 @endif
                                             @endif
                                         </div>
