@@ -171,13 +171,12 @@
                                 </div>
 
                                 <!-- Note Input Form -->
-                                <form action="{{ route('contacts.storeNote', $contact) }}" method="POST" class="" x-data="{ noteFocused: false, noteText: '' }">
+                                <form action="{{ route('contacts.storeNote', $contact) }}" method="POST" class="" x-data="{ noteFocused: false, noteText: '' }" @click.outside="noteFocused = false">
                                     @csrf
                                     <div class="mb-3">
                                         <textarea name="note" id="note" rows="3" required
                                             x-model="noteText"
                                             @focus="noteFocused = true"
-                                            @blur="setTimeout(() => noteFocused = false, 200)"
                                             class="w-full rounded-md border-gray-300 shadow-sm focus:border-[#D0AE6D] focus:ring-[#D0AE6D]"
                                             placeholder="Adicione observações sobre reuniões, negociações ou interesses relativas a este lead..."></textarea>
                                     </div>
