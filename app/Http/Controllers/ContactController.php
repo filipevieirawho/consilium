@@ -232,6 +232,9 @@ class ContactController extends Controller
         if ($note->contact_id !== $contact->id)
             abort(404);
 
+        if ($note->user_id !== auth()->id())
+            abort(403, 'Unauthorized action.');
+
         $validated = $request->validate([
             'note' => 'required|string',
         ]);
@@ -246,6 +249,9 @@ class ContactController extends Controller
         if ($note->contact_id !== $contact->id)
             abort(404);
 
+        if ($note->user_id !== auth()->id())
+            abort(403, 'Unauthorized action.');
+
         $note->update(['is_pinned' => !$note->is_pinned]);
 
         return redirect()->route('contacts.show', $contact)->with('success', 'Status de fixação alterado.');
@@ -255,6 +261,9 @@ class ContactController extends Controller
     {
         if ($note->contact_id !== $contact->id)
             abort(404);
+
+        if ($note->user_id !== auth()->id())
+            abort(403, 'Unauthorized action.');
 
         $note->delete();
 

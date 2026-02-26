@@ -243,6 +243,7 @@
                                                 <div class="text-sm text-gray-800 whitespace-pre-wrap leading-relaxed pr-8"
                                                     style="word-break: break-word;">{!! nl2br(e(trim($item->note))) !!}</div>
 
+                                                @if(auth()->id() === $item->user_id)
                                                 <div class="relative opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0"
                                                     x-data="{ open: false }" @click.outside="open = false">
                                                     <button @click="open = !open" type="button"
@@ -279,6 +280,7 @@
                                                         </button>
                                                     </div>
                                                 </div>
+                                                @endif
                                             </div>
 
                                             <div class="flex items-center gap-2 text-xs text-gray-500">
