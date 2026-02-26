@@ -71,7 +71,7 @@
 
                         <!-- Add Lead Button -->
                         <div class="w-full lg:w-auto flex justify-end flex-shrink-0">
-                            <button type="button" @click="showNewLeadModal = true"
+                            <button type="button" @click="$dispatch('open-new-lead-modal')"
                                 class="px-4 py-2 text-white font-medium rounded-md shadow-sm transition-colors flex items-center gap-2"
                                 style="background-color: #D0AE6D; hover:background-color: #b5955a;">
                                 <ion-icon name="add-outline" class="text-xl"></ion-icon> Lead
