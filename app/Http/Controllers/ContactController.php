@@ -59,6 +59,13 @@ class ContactController extends Controller
             'type' => 'lead_created',
         ]);
 
+        $contact->activities()->create([
+            'user_id' => auth()->check() ? auth()->id() : null,
+            'type' => 'status_change',
+            'old_value' => null,
+            'new_value' => 'novo',
+        ]);
+
         // Send email alert
         try {
             Mail::to('filipe@consilium.eng.br')->send(new NewContactAlert($contact));
@@ -90,6 +97,13 @@ class ContactController extends Controller
         $contact->activities()->create([
             'user_id' => auth()->id(),
             'type' => 'lead_created',
+        ]);
+
+        $contact->activities()->create([
+            'user_id' => auth()->id(),
+            'type' => 'status_change',
+            'old_value' => null,
+            'new_value' => 'novo',
         ]);
 
         return redirect()->route('dashboard')->with('success', 'Lead adicionado com sucesso!');

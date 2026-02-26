@@ -289,9 +289,13 @@
                                     <div class="pt-1 pb-2 flex flex-col md:flex-row md:items-center gap-1 md:gap-3 text-sm">
                                         <div class="text-gray-800 font-medium">
                                             @if($item->type === 'status_change')
-                                                Status alterado de <span class="text-gray-500">{{ ucfirst($item->old_value) }}</span> 
-                                                <ion-icon name="arrow-forward-outline" class="align-middle text-gray-400 mx-0.5"></ion-icon> 
-                                                <strong class="text-[#D0AE6D]">{{ ucfirst($item->new_value) }}</strong>
+                                                @if(is_null($item->old_value))
+                                                    Status inicial definido como <strong class="text-[#D0AE6D]">{{ ucfirst($item->new_value) }}</strong>
+                                                @else
+                                                    Status alterado de <span class="text-gray-500">{{ ucfirst($item->old_value) }}</span> 
+                                                    <ion-icon name="arrow-forward-outline" class="align-middle text-gray-400 mx-0.5"></ion-icon> 
+                                                    <strong class="text-[#D0AE6D]">{{ ucfirst($item->new_value) }}</strong>
+                                                @endif
                                             @elseif($item->type === 'owner_change')
                                                 Proprietário: <span class="text-gray-500">{{ \App\Models\User::find($item->old_value)->name ?? 'Não atribuído' }}</span> 
                                                 <ion-icon name="arrow-forward-outline" class="align-middle text-gray-400 mx-0.5"></ion-icon> 
