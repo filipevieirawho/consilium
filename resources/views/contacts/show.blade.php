@@ -174,16 +174,17 @@
                                 <form action="{{ route('contacts.storeNote', $contact) }}" method="POST" class="" x-data="{ noteFocused: false, noteText: '' }" @click.outside="noteFocused = false">
                                     @csrf
                                     <div class="mb-3">
-                                        <textarea name="note" id="note" rows="3" required
+                                        <textarea name="note" id="note" rows="3" required maxlength="500"
                                             x-model="noteText"
                                             @focus="noteFocused = true"
                                             class="w-full rounded-md border-gray-300 shadow-sm focus:border-[#D0AE6D] focus:ring-[#D0AE6D]"
                                             placeholder="Adicione observações sobre reuniões, negociações ou interesses relativas a este lead..."></textarea>
                                     </div>
-                                    <div class="flex justify-end" x-show="noteFocused || noteText.trim() !== ''" x-cloak style="display: none;"
+                                    <div class="flex justify-between items-center" x-show="noteFocused || noteText.trim() !== ''" x-cloak style="display: none;"
                                         x-transition:enter="transition ease-out duration-200"
                                         x-transition:enter-start="opacity-0 transform -translate-y-2"
                                         x-transition:enter-end="opacity-100 transform translate-y-0">
+                                        <span class="text-xs text-gray-500" x-text="noteText.length + '/500'"></span>
                                         <button type="submit"
                                             class="bg-[#D0AE6D] text-white font-medium py-2 px-4 rounded-md hover:bg-[#b89555] transition-colors">
                                             Adicionar Nota
