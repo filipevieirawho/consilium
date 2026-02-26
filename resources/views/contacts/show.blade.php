@@ -168,16 +168,13 @@
 
                             </div>
                         </div>
-                    </div>
 
-                </div>
+                        <!-- Timeline Section -->
+                        <div class="pt-2 relative">
+                            <!-- Vertical Line connecting everything -->
+                            <div class="absolute left-6 top-3 bottom-0 w-px bg-gray-200" style="margin-left: -1px;"></div>
 
-                <!-- Timeline Section -->
-                <div class="mt-8 relative">
-                    <!-- Vertical Line connecting everything -->
-                    <div class="absolute left-6 top-3 bottom-0 w-px bg-gray-200" style="margin-left: -1px;"></div>
-
-                    <div class="space-y-6">
+                            <div class="space-y-6">
                         @foreach($timeline as $item)
                             @php
                                 $isNote = class_basename($item) === 'ContactNote';
@@ -326,6 +323,8 @@
                     </div>
                 </div>
 
+                    </div>
+                </div>
             </div>
         </div>
     {{-- Delete Note Confirmation Modal --}}
