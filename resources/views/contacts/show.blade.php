@@ -110,14 +110,11 @@
                                             Lead</label>
                                         <select name="status" id="status" onchange="this.form.submit()"
                                             class="w-full rounded-md border-gray-300 shadow-sm focus:border-[#D0AE6D] focus:ring-[#D0AE6D]">
-                                            <option value="novo" {{ $contact->status === 'novo' ? 'selected' : '' }}>🔵
-                                                Novo
-                                            </option>
-                                            <option value="contactado" {{ $contact->status === 'contactado' ? 'selected' : '' }}>🟡 Contactado</option>
-                                            <option value="ganho" {{ $contact->status === 'ganho' ? 'selected' : '' }}>🟢
-                                                Ganho</option>
-                                            <option value="perdido" {{ $contact->status === 'perdido' ? 'selected' : '' }}>🔴
-                                                Perdido</option>
+                                            <option value="Cliente Potencial" {{ $contact->status === 'Cliente Potencial' ? 'selected' : '' }}>🔵 Cliente Potencial</option>
+                                            <option value="Contactado" {{ $contact->status === 'Contactado' ? 'selected' : '' }}>🟡 Contactado</option>
+                                            <option value="Proposta Enviada" {{ $contact->status === 'Proposta Enviada' ? 'selected' : '' }}>🟣 Proposta Enviada</option>
+                                            <option value="Negociação" {{ $contact->status === 'Negociação' ? 'selected' : '' }}>🟠 Negociação</option>
+                                            <option value="Stand By" {{ $contact->status === 'Stand By' ? 'selected' : '' }}>⚪️ Stand By</option>
                                         </select>
                                     </div>
 

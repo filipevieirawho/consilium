@@ -137,17 +137,17 @@
                                         <td class="px-6 py-4 whitespace-nowrap text-sm" onclick="event.stopPropagation()">
                                             <select data-contact-id="{{ $contact->id }}" onchange="updateStatus(this)"
                                                 class="status-select rounded-md border-gray-300 text-sm shadow-sm focus:border-indigo-500 focus:ring-indigo-500
-                                                                                                        {{ $contact->status === 'novo' ? 'bg-blue-50 text-blue-700' : '' }}
-                                                                                                        {{ $contact->status === 'contactado' ? 'bg-yellow-50 text-yellow-700' : '' }}
-                                                                                                        {{ $contact->status === 'perdido' ? 'bg-red-50 text-red-700' : '' }}
-                                                                                                        {{ $contact->status === 'ganho' ? 'bg-green-50 text-green-700' : '' }}
-                                                                                                    ">
-                                                <option value="novo" {{ $contact->status === 'novo' ? 'selected' : '' }}>🔵
-                                                    Novo</option>
-                                                <option value="contactado" {{ $contact->status === 'contactado' ? 'selected' : '' }}>🟡 Contactado</option>
-                                                <option value="perdido" {{ $contact->status === 'perdido' ? 'selected' : '' }}>🔴 Perdido</option>
-                                                <option value="ganho" {{ $contact->status === 'ganho' ? 'selected' : '' }}>🟢
-                                                    Ganho</option>
+                                                            {{ $contact->status === 'Cliente Potencial' ? 'bg-blue-50 text-blue-700' : '' }}
+                                                            {{ $contact->status === 'Contactado' ? 'bg-yellow-50 text-yellow-700' : '' }}
+                                                            {{ $contact->status === 'Proposta Enviada' ? 'bg-purple-50 text-purple-700' : '' }}
+                                                            {{ $contact->status === 'Negociação' ? 'bg-orange-50 text-orange-700' : '' }}
+                                                            {{ $contact->status === 'Stand By' ? 'bg-gray-50 text-gray-700' : '' }}
+                                                        ">
+                                                <option value="Cliente Potencial" {{ $contact->status === 'Cliente Potencial' ? 'selected' : '' }}>🔵 Cliente Potencial</option>
+                                                <option value="Contactado" {{ $contact->status === 'Contactado' ? 'selected' : '' }}>🟡 Contactado</option>
+                                                <option value="Proposta Enviada" {{ $contact->status === 'Proposta Enviada' ? 'selected' : '' }}>🟣 Proposta Enviada</option>
+                                                <option value="Negociação" {{ $contact->status === 'Negociação' ? 'selected' : '' }}>🟠 Negociação</option>
+                                                <option value="Stand By" {{ $contact->status === 'Stand By' ? 'selected' : '' }}>⚪️ Stand By</option>
                                             </select>
                                         </td>
                                     </tr>
@@ -281,10 +281,11 @@
                 // Update colors immediately
                 selectElement.className = selectElement.className.replace(/bg-\w+-50|text-\w+-700/g, '');
                 const colorMap = {
-                    'novo': 'bg-blue-50 text-blue-700',
-                    'contactado': 'bg-yellow-50 text-yellow-700',
-                    'perdido': 'bg-red-50 text-red-700',
-                    'ganho': 'bg-green-50 text-green-700'
+                    'Cliente Potencial': 'bg-blue-50 text-blue-700',
+                    'Contactado': 'bg-yellow-50 text-yellow-700',
+                    'Proposta Enviada': 'bg-purple-50 text-purple-700',
+                    'Negociação': 'bg-orange-50 text-orange-700',
+                    'Stand By': 'bg-gray-50 text-gray-700'
                 };
                 selectElement.classList.add(...colorMap[status].split(' '));
 

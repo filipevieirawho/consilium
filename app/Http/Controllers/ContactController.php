@@ -63,7 +63,7 @@ class ContactController extends Controller
             'user_id' => auth()->check() ? auth()->id() : null,
             'type' => 'status_change',
             'old_value' => null,
-            'new_value' => 'novo',
+            'new_value' => 'Cliente Potencial',
         ]);
 
         // Send email alert
@@ -89,7 +89,7 @@ class ContactController extends Controller
         // Merge default values for manual creation
         $data = array_merge($validated, [
             'opt_in' => $request->has('opt_in'),
-            'status' => 'novo'
+            'status' => 'Cliente Potencial'
         ]);
 
         $contact = Contact::create($data);
@@ -103,7 +103,7 @@ class ContactController extends Controller
             'user_id' => auth()->id(),
             'type' => 'status_change',
             'old_value' => null,
-            'new_value' => 'novo',
+            'new_value' => 'Cliente Potencial',
         ]);
 
         return redirect()->route('dashboard')->with('success', 'Lead adicionado com sucesso!');
@@ -131,7 +131,7 @@ class ContactController extends Controller
     public function updateStatus(Request $request, Contact $contact)
     {
         $validated = $request->validate([
-            'status' => 'required|in:novo,contactado,perdido,ganho',
+            'status' => 'required|in:Cliente Potencial,Contactado,Proposta Enviada,Negociação,Stand By',
         ]);
 
         $oldStatus = $contact->status;
@@ -181,7 +181,7 @@ class ContactController extends Controller
     public function updateDetails(Request $request, Contact $contact)
     {
         $validated = $request->validate([
-            'status' => 'required|in:novo,contactado,perdido,ganho',
+            'status' => 'required|in:Cliente Potencial,Contactado,Proposta Enviada,Negociação,Stand By',
             'user_id' => 'nullable|exists:users,id',
         ]);
 
