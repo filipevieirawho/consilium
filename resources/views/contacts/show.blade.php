@@ -295,12 +295,12 @@
                                                 @if(is_null($item->old_value))
                                                     Status inicial: <strong class="text-[#D0AE6D]">{{ ucfirst($item->new_value) }}</strong>
                                                 @else
-                                                    Status alterado de <span class="text-gray-500">{{ ucfirst($item->old_value) }}</span> 
+                                                    Status alterado de <strong class="text-gray-500">{{ ucfirst($item->old_value) }}</strong> 
                                                     <ion-icon name="arrow-forward-outline" class="align-middle text-gray-400 mx-0.5"></ion-icon> 
                                                     <strong class="text-[#D0AE6D]">{{ ucfirst($item->new_value) }}</strong>
                                                 @endif
                                             @elseif($item->type === 'owner_change')
-                                                Proprietário: <span class="text-gray-500">{{ \App\Models\User::find($item->old_value)->name ?? 'Não atribuído' }}</span> 
+                                                Proprietário: <strong class="text-gray-500">{{ \App\Models\User::find($item->old_value)->name ?? 'Não atribuído' }}</strong> 
                                                 <ion-icon name="arrow-forward-outline" class="align-middle text-gray-400 mx-0.5"></ion-icon> 
                                                 <strong>{{ \App\Models\User::find($item->new_value)->name ?? 'Não atribuído' }}</strong>
                                             @endif
