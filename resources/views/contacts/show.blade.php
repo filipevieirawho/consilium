@@ -171,7 +171,7 @@
                                 </div>
 
                                 <!-- Note Input Form -->
-                                <form action="{{ route('contacts.storeNote', $contact) }}" method="POST" class="mb-6" x-data="{ noteFocused: false, noteText: '' }">
+                                <form action="{{ route('contacts.storeNote', $contact) }}" method="POST" class="" x-data="{ noteFocused: false, noteText: '' }">
                                     @csrf
                                     <div class="mb-3">
                                         <textarea name="note" id="note" rows="3" required
