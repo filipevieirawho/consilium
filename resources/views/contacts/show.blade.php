@@ -174,7 +174,7 @@
                             <!-- Vertical Line connecting everything -->
                             <div class="absolute left-6 top-3 bottom-0 w-px bg-gray-200" style="margin-left: -1px;"></div>
 
-                            <div class="space-y-6">
+                            <div class="space-y-6 pr-8">
                         @foreach($timeline as $item)
                             @php
                                 $isNote = class_basename($item) === 'ContactNote';
