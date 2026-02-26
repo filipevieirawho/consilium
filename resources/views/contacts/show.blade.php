@@ -67,7 +67,7 @@
                                     </div>
                                 </div>
                                     <div>
-                                        <span class="block text-xs text-gray-400">Enviado em:
+                                        <span class="block text-xs text-gray-400">Recebido em:
                                             {{ $contact->created_at->format('d/m/Y H:i') }}</span>
                                     </div>
                                 </div>
