@@ -21,6 +21,7 @@ Route::get('/debug-views', function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/lead/{contact}', [ContactController::class, 'show'])->name('contacts.show');
+    Route::post('/lead/manual', [ContactController::class, 'storeManual'])->name('contacts.storeManual');
     Route::patch('/lead/{contact}/details', [ContactController::class, 'updateDetails'])->name('contacts.updateDetails');
     Route::patch('/lead/{contact}/status', [ContactController::class, 'updateStatus'])->name('contacts.updateStatus');
     Route::post('/lead/{contact}/notes', [ContactController::class, 'storeNote'])->name('contacts.storeNote');

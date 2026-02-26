@@ -61,6 +61,26 @@ class ContactController extends Controller
         return response()->json(['message' => 'Contato enviado com sucesso!'], 201);
     }
 
+    public function storeManual(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'nullable|email|max:255',
+            'phone' => 'nullable|string|max:20',
+            'message' => 'nullable|string',
+        ]);
+
+        // Merge default values for manual creation
+        $data = array_merge($validated, [
+            'opt_in' => false,
+            'status' => 'novo'
+        ]);
+
+        Contact::create($data);
+
+        return redirect()->route('dashboard')->with('success', 'Lead adicionado com sucesso!');
+    }
+
     public function updateStatus(Request $request, Contact $contact)
     {
         $validated = $request->validate([
