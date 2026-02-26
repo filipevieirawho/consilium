@@ -120,7 +120,27 @@
                         <!-- History and Notes Section -->
                         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                             <div class="p-6 text-gray-900">
-                                <h3 class="text-lg font-semibold border-b pb-2 mb-4">Histórico do Lead</h3>
+                                <div class="flex items-center justify-between border-b pb-2 mb-4 relative" x-data="{ openOptions: false }" @click.outside="openOptions = false">
+                                    <h3 class="text-lg font-semibold text-gray-900">Histórico do Lead</h3>
+                                    <button @click="openOptions = !openOptions" type="button" class="text-gray-400 hover:text-gray-600 focus:outline-none p-1 rounded-md hover:bg-gray-100 transition-colors flex items-center" title="Opções do Lead">
+                                        <ion-icon name="ellipsis-horizontal" class="text-xl"></ion-icon>
+                                    </button>
+                                    <div x-show="openOptions" style="display: none;"
+                                        x-transition:enter="transition ease-out duration-100"
+                                        x-transition:enter-start="transform opacity-0 scale-95"
+                                        x-transition:enter-end="transform opacity-100 scale-100"
+                                        x-transition:leave="transition ease-in duration-75"
+                                        x-transition:leave-start="transform opacity-100 scale-100"
+                                        x-transition:leave-end="transform opacity-0 scale-95"
+                                        class="absolute right-0 top-10 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10 focus:outline-none">
+                                        <div class="py-1">
+                                            <button type="button" onclick="openDeleteLeadModal()"
+                                                class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 flex items-center gap-2 transition-colors">
+                                                <ion-icon name="trash-outline" class="text-lg"></ion-icon> Excluir Lead
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
 
                                 <!-- Note Input Form -->
                                 <form action="{{ route('contacts.storeNote', $contact) }}" method="POST" class="mb-6">
@@ -284,8 +304,28 @@
         </div>
     </div>
 
+    {{-- Delete Lead Confirmation Modal --}}
+    <div id="deleteLeadModal" class="fixed inset-0 z-50 hidden items-center justify-center">
+        <div class="fixed inset-0 bg-black bg-opacity-50" onclick="closeDeleteLeadModal()"></div>
+        <div class="relative bg-white rounded-lg shadow-xl p-6 mx-4 max-w-sm w-full">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">Excluir Lead</h3>
+            <p class="text-sm text-gray-600 mb-6">Tem certeza que deseja excluir <strong>{{ $contact->name }}</strong> permanentemente? Todo o histórico de notas e informações serão apagados. Esta ação não pode ser desfeita.</p>
+            <div class="flex justify-end gap-3">
+                <button type="button" onclick="closeDeleteLeadModal()"
+                    class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200 transition-colors">Cancelar</button>
+                <form id="deleteLeadForm" action="{{ route('contacts.destroy', $contact) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit"
+                        class="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-700 transition-colors">Excluir</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
     @push('scripts')
         <script>
+            // Note Delete Modal
             function openDeleteNoteModal(actionUrl) {
                 document.getElementById('deleteNoteForm').action = actionUrl;
                 const modal = document.getElementById('deleteNoteModal');
@@ -299,9 +339,25 @@
                 modal.classList.remove('flex');
             }
 
+            // Lead Delete Modal
+            function openDeleteLeadModal() {
+                const modal = document.getElementById('deleteLeadModal');
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            }
+
+            function closeDeleteLeadModal() {
+                const modal = document.getElementById('deleteLeadModal');
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
+
             // Close on Escape key
             document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape') closeDeleteNoteModal();
+                if (e.key === 'Escape') {
+                    closeDeleteNoteModal();
+                    closeDeleteLeadModal();
+                }
             });
         </script>
     @endpush

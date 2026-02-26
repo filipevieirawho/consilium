@@ -20,7 +20,10 @@ class ContactController extends Controller
             $query->where(function ($q) use ($search) {
                 $q->where('name', 'like', "%{$search}%")
                     ->orWhere('email', 'like', "%{$search}%")
-                    ->orWhere('message', 'like', "%{$search}%");
+                    ->orWhere('message', 'like', "%{$search}%")
+                    ->orWhereHas('contactNotes', function ($noteQuery) use ($search) {
+                        $noteQuery->where('note', 'like', "%{$search}%");
+                    });
             });
         }
 
@@ -162,5 +165,12 @@ class ContactController extends Controller
         $note->delete();
 
         return redirect()->route('contacts.show', $contact)->with('success', 'Anotação excluída.');
+    }
+
+    public function destroy(Contact $contact)
+    {
+        $contact->delete();
+
+        return redirect()->route('dashboard')->with('success', 'Lead excluído com sucesso.');
     }
 }
