@@ -20,13 +20,13 @@ Route::get('/debug-views', function () {
 });
 
 Route::middleware('auth')->group(function () {
-    Route::get('/contacts/{contact}', [ContactController::class, 'show'])->name('contacts.show');
-    Route::patch('/contacts/{contact}/details', [ContactController::class, 'updateDetails'])->name('contacts.updateDetails');
-    Route::patch('/contacts/{contact}/status', [ContactController::class, 'updateStatus'])->name('contacts.updateStatus');
-    Route::post('/contacts/{contact}/notes', [ContactController::class, 'storeNote'])->name('contacts.storeNote');
-    Route::patch('/contacts/{contact}/notes/{note}', [ContactController::class, 'updateNote'])->name('contacts.updateNote');
-    Route::patch('/contacts/{contact}/notes/{note}/pin', [ContactController::class, 'togglePinNote'])->name('contacts.togglePinNote');
-    Route::delete('/contacts/{contact}/notes/{note}', [ContactController::class, 'destroyNote'])->name('contacts.destroyNote');
+    Route::get('/lead/{contact}', [ContactController::class, 'show'])->name('contacts.show');
+    Route::patch('/lead/{contact}/details', [ContactController::class, 'updateDetails'])->name('contacts.updateDetails');
+    Route::patch('/lead/{contact}/status', [ContactController::class, 'updateStatus'])->name('contacts.updateStatus');
+    Route::post('/lead/{contact}/notes', [ContactController::class, 'storeNote'])->name('contacts.storeNote');
+    Route::patch('/lead/{contact}/notes/{note}', [ContactController::class, 'updateNote'])->name('contacts.updateNote');
+    Route::patch('/lead/{contact}/notes/{note}/pin', [ContactController::class, 'togglePinNote'])->name('contacts.togglePinNote');
+    Route::delete('/lead/{contact}/notes/{note}', [ContactController::class, 'destroyNote'])->name('contacts.destroyNote');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
