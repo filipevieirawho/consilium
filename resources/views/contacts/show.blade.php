@@ -108,7 +108,7 @@
                                             <option value="">-- Não atribuído --</option>
                                             @foreach($users as $user)
                                                 <option value="{{ $user->id }}" {{ $contact->user_id == $user->id ? 'selected' : '' }}>
-                                                    {{ $user->name }} ({{ ucfirst($user->role) }})
+                                                    {{ $user->name }}
                                                 </option>
                                             @endforeach
                                         </select>
