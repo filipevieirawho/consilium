@@ -172,7 +172,7 @@
         <div class="relative px-6 py-6 sm:p-8">
             <!-- Close Button (X) -->
             <button type="button" x-on:click="$dispatch('close')" 
-                class="absolute top-6 right-6 text-gray-400 hover:text-gray-600 transition-colors focus:outline-none">
+                class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors focus:outline-none">
                 <ion-icon name="close-outline" class="text-3xl"></ion-icon>
             </button>
 
@@ -189,7 +189,7 @@
             </div>
 
             <!-- Form -->
-            <form id="new-lead-form" method="POST" action="{{ route('contacts.storeManual') }}" class="space-y-5 text-left">
+            <form id="new-lead-form" method="POST" action="{{ route('contacts.storeManual') }}" class="space-y-6 text-left">
                 @csrf
 
                 <!-- Nome -->
@@ -225,9 +225,9 @@
                 </div>
 
                 <!-- Submit Button -->
-                <div class="pt-4 flex justify-end">
+                <div class="pt-2 flex justify-end">
                     <button type="submit" form="new-lead-form"
-                        class="w-full sm:w-auto inline-flex justify-center rounded-md border border-transparent px-6 py-2.5 text-sm font-semibold shadow-sm text-white transition-colors"
+                        class="inline-flex justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium shadow-sm text-white transition-colors"
                         style="background-color: #D0AE6D; hover:background-color: #b5955a;">
                         Salvar Lead
                     </button>
