@@ -303,7 +303,7 @@
                                         
                                         <div class="flex items-center gap-1.5 text-xs text-gray-400">
                                             <span class="hidden md:inline">&middot;</span>
-                                            <span>Por {{ $userName }}</span>
+                                            <span>{{ $userName }}</span>
                                             <span>&middot;</span>
                                             <span class="whitespace-nowrap">{{ $dateStr }}</span>
                                         </div>
