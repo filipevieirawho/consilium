@@ -133,7 +133,7 @@
                                         x-transition:leave-start="transform opacity-100 scale-100"
                                         x-transition:leave-end="transform opacity-0 scale-95"
                                         class="absolute right-0 mt-2 top-full w-48 bg-white rounded-md shadow-lg border border-gray-100 z-10 py-1">
-                                        <button type="button" @click="openOptions = false; openDeleteLeadModal()"
+                                        <button type="button" @click="openOptions = false; $dispatch('open-modal', 'confirm-lead-deletion')"
                                             class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors">
                                             Excluir
                                         </button>
@@ -303,23 +303,30 @@
     </div>
 
     {{-- Delete Lead Confirmation Modal --}}
-    <div id="deleteLeadModal" class="fixed inset-0 z-50 hidden items-center justify-center">
-        <div class="fixed inset-0 bg-black bg-opacity-50" onclick="closeDeleteLeadModal()"></div>
-        <div class="relative bg-white rounded-lg shadow-xl p-6 mx-4 max-w-sm w-full">
-            <h3 class="text-lg font-semibold text-gray-900 mb-2">Excluir Lead</h3>
-            <p class="text-sm text-gray-600 mb-6">Tem certeza que deseja excluir <strong>{{ $contact->name }}</strong> permanentemente? Todo o histórico de notas e informações serão apagados. Esta ação não pode ser desfeita.</p>
-            <div class="flex justify-end gap-3">
-                <button type="button" onclick="closeDeleteLeadModal()"
-                    class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200 transition-colors">Cancelar</button>
-                <form id="deleteLeadForm" action="{{ route('contacts.destroy', $contact) }}" method="POST">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit"
-                        class="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-700 transition-colors">Excluir</button>
-                </form>
+    <x-modal name="confirm-lead-deletion" focusable>
+        <form method="POST" action="{{ route('contacts.destroy', $contact) }}" class="p-6 text-left">
+            @csrf
+            @method('DELETE')
+
+            <h2 class="text-lg font-medium text-gray-900">
+                Excluir Lead
+            </h2>
+
+            <p class="mt-1 text-sm text-gray-600 mb-6">
+                Tem certeza que deseja excluir <strong>{{ $contact->name }}</strong> permanentemente? Todo o histórico de notas e informações serão apagados. Esta ação não pode ser desfeita.
+            </p>
+
+            <div class="mt-6 flex justify-end gap-3">
+                <x-secondary-button x-on:click="$dispatch('close')" class="px-4 py-2 text-sm font-medium">
+                    Cancelar
+                </x-secondary-button>
+
+                <x-danger-button class="px-4 py-2 text-sm font-medium">
+                    Excluir
+                </x-danger-button>
             </div>
-        </div>
-    </div>
+        </form>
+    </x-modal>
 
     @push('scripts')
         <script>
@@ -337,24 +344,10 @@
                 modal.classList.remove('flex');
             }
 
-            // Lead Delete Modal
-            function openDeleteLeadModal() {
-                const modal = document.getElementById('deleteLeadModal');
-                modal.classList.remove('hidden');
-                modal.classList.add('flex');
-            }
-
-            function closeDeleteLeadModal() {
-                const modal = document.getElementById('deleteLeadModal');
-                modal.classList.add('hidden');
-                modal.classList.remove('flex');
-            }
-
             // Close on Escape key
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape') {
                     closeDeleteNoteModal();
-                    closeDeleteLeadModal();
                 }
             });
         </script>
