@@ -169,23 +169,26 @@
 
     <!-- Manual Lead Creation Modal -->
     <x-modal name="add-manual-lead" focusable>
-        <div class="relative px-6 py-6 sm:p-8">
-            <!-- Close Button (X) -->
-            <button type="button" x-on:click="$dispatch('close')" 
-                class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors focus:outline-none">
-                <ion-icon name="close-outline" class="text-3xl"></ion-icon>
-            </button>
-
-            <!-- Title Area -->
-            <div class="flex items-center gap-4 mb-6">
-                <div class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full"
-                    style="background-color: #fdf8ed;">
-                    <ion-icon name="person-add-outline" class="text-2xl"
-                        style="color: #D0AE6D;"></ion-icon>
+        <div class="px-6 py-6 sm:p-8">
+            <!-- Header Area -->
+            <div class="flex items-start justify-between mb-6">
+                <!-- Title & Icon -->
+                <div class="flex items-center gap-4">
+                    <div class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full"
+                        style="background-color: #fdf8ed;">
+                        <ion-icon name="person-add-outline" class="text-2xl"
+                            style="color: #D0AE6D;"></ion-icon>
+                    </div>
+                    <h3 class="text-xl font-semibold leading-6 text-gray-900 text-left" id="modal-title">
+                        Novo Lead
+                    </h3>
                 </div>
-                <h3 class="text-xl font-semibold leading-6 text-gray-900 text-left" id="modal-title">
-                    Novo Lead
-                </h3>
+
+                <!-- Close Button (X) -->
+                <button type="button" x-on:click="$dispatch('close')" 
+                    class="text-gray-400 hover:text-gray-600 transition-colors focus:outline-none -mt-1 -mr-2 p-2">
+                    <ion-icon name="close-outline" class="text-3xl"></ion-icon>
+                </button>
             </div>
 
             <!-- Form -->
