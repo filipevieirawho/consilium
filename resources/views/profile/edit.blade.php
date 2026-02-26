@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight flex items-center gap-2">
-            <ion-icon name="people-outline"></ion-icon> {{ __('Perfil') }}
+            <ion-icon name="people-outline" class="text-[#D0AE6D] text-2xl"></ion-icon> {{ __('Perfil') }}
         </h2>
     </x-slot>
 
