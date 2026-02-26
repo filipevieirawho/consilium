@@ -115,7 +115,8 @@
                                     <tr class="hover:bg-gray-50 transition-colors cursor-pointer"
                                         onclick="window.location='{{ route('contacts.show', $contact) }}'">
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                            {{ $contact->created_at->format('d/m/Y H:i') }}
+                                            <div>{{ $contact->created_at->format('d/m/y') }}</div>
+                                            <div class="text-xs text-gray-400 mt-0.5">{{ $contact->created_at->format('H:i') }}</div>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                                             {{ $contact->name }}
