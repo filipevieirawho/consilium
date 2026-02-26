@@ -11,12 +11,12 @@
                 <div class="p-6 text-gray-900">
 
                     <!-- Top Actions Bar -->
-                    <div class="flex flex-col lg:flex-row gap-4 justify-between items-start lg:items-center mb-6"
+                    <div class="flex justify-between items-center mb-6 gap-4 flex-wrap"
                         x-data="{ showNewLeadModal: false }">
 
                         <!-- Search & Filters Form -->
-                        <form method="GET" action="{{ route('dashboard') }}" class="w-full lg:w-auto flex-grow">
-                            <div class="flex flex-col md:flex-row gap-4 items-start md:items-center">
+                        <form method="GET" action="{{ route('dashboard') }}" class="flex-grow">
+                            <div class="flex flex-wrap gap-4 items-center">
                                 
                                 <!-- Search -->
                                 <input type="text" name="search" placeholder="Buscar por nome, email ou mensagem..."
@@ -24,7 +24,7 @@
                                     class="w-full md:w-96 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 px-4 py-2">
 
                                 <!-- Filters and buttons -->
-                                <div class="flex gap-3 items-center w-full md:w-auto">
+                                <div class="flex gap-3 items-center flex-wrap">
                                     <!-- Year Select -->
                                     <select name="year"
                                         class="rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 px-4 py-2">
