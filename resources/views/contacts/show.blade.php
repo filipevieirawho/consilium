@@ -214,7 +214,7 @@
                                         @endif
 
                                         <div x-show="!editing">
-                                            <div class="flex justify-between items-start mb-3 group">
+                                            <div class="flex justify-between items-start group">
                                                 <div class="text-sm text-gray-800 whitespace-pre-wrap leading-relaxed pr-8"
                                                     style="word-break: break-word;">{!! nl2br(e(trim($item->note))) !!}</div>
 
@@ -256,7 +256,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="flex items-center gap-2 mt-4 text-xs text-gray-500">
+                                            <div class="flex items-center gap-2 text-xs text-gray-500">
                                                 <div class="flex items-center gap-1.5">
                                                     <ion-icon name="document-text-outline" class="text-gray-400 text-sm"></ion-icon>
                                                     <span class="font-medium text-gray-700">{{ $userName }}</span>
