@@ -176,6 +176,9 @@
 
                             <div class="space-y-6 pr-8">
                         @foreach($timeline as $item)
+                            @if(class_basename($item) !== 'ContactNote' && $item->type === 'lead_created')
+                                @continue
+                            @endif
                             @php
                                 $isNote = class_basename($item) === 'ContactNote';
                                 
@@ -300,8 +303,6 @@
                                                 Proprietário: <span class="text-gray-500">{{ \App\Models\User::find($item->old_value)->name ?? 'Não atribuído' }}</span> 
                                                 <ion-icon name="arrow-forward-outline" class="align-middle text-gray-400 mx-0.5"></ion-icon> 
                                                 <strong>{{ \App\Models\User::find($item->new_value)->name ?? 'Não atribuído' }}</strong>
-                                            @elseif($item->type === 'lead_created')
-                                                Lead registrado e incluído no sistema
                                             @endif
                                         </div>
                                         
