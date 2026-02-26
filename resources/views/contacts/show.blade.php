@@ -301,7 +301,7 @@
                                                 <ion-icon name="arrow-forward-outline" class="align-middle text-gray-400 mx-0.5"></ion-icon> 
                                                 <strong>{{ \App\Models\User::find($item->new_value)->name ?? 'Não atribuído' }}</strong>
                                             @elseif($item->type === 'lead_created')
-                                                <span class="flex items-center gap-1.5 text-gray-600"><ion-icon name="flag-outline" class="text-gray-400 text-lg flex-shrink-0"></ion-icon> Início do Histórico</span>
+                                                Lead registrado e incluído no sistema
                                             @endif
                                         </div>
                                         
@@ -316,6 +316,39 @@
                             </div>
                         @endforeach
                         
+                        @php
+                            $dateStrStart = '';
+                            $diffDaysStart = $contact->created_at->diffInDays(now());
+                            if ($contact->created_at->isToday()) {
+                                $dateStrStart = 'Hoje às ' . $contact->created_at->format('H:i');
+                            } elseif ($contact->created_at->isYesterday()) {
+                                $dateStrStart = 'Ontem às ' . $contact->created_at->format('H:i');
+                            } elseif ($diffDaysStart < 7) {
+                                $dayNameStart = $contact->created_at->locale('pt_BR')->translatedFormat('l');
+                                $isMasculStart = in_array($contact->created_at->dayOfWeekIso, [6, 7]);
+                                $prefixStart = $isMasculStart ? 'Último ' : 'Última ';
+                                $dateStrStart = $prefixStart . $dayNameStart . ' às ' . $contact->created_at->format('H:i');
+                            } else {
+                                $dateStrStart = $contact->created_at->format('d/m/Y \à\s H:i');
+                            }
+                            $startUserName = $contact->user->name ?? 'Sistema';
+                        @endphp
+
+                        <!-- Timeline Start (Creation) -->
+                        <div class="relative pl-14 pb-8">
+                            <div class="absolute left-4 top-1.5 w-4 h-4 rounded-full border-4 border-white bg-gray-300 z-10 shadow-sm"></div>
+                            <div class="pt-1 flex flex-col md:flex-row md:items-center gap-1 md:gap-3 text-sm">
+                                <div class="text-gray-600 font-medium flex items-center gap-2">
+                                    <ion-icon name="flag-outline" class="text-gray-400 text-lg"></ion-icon> Início do Histórico
+                                </div>
+                                <div class="flex items-center gap-1.5 text-xs text-gray-400">
+                                    <span class="hidden md:inline">&middot;</span>
+                                    <span>{{ $startUserName }}</span>
+                                    <span>&middot;</span>
+                                    <span class="whitespace-nowrap">{{ $dateStrStart }}</span>
+                                </div>
+                            </div>
+                        </div>
 
                     </div>
                 </div>
