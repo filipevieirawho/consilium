@@ -164,129 +164,166 @@
                                     </div>
                                 </form>
 
-                                <!-- Timeline of Notes -->
-                                <div class="space-y-4">
-                                    @foreach($contact->contactNotes as $note)
-                                        <div x-data="{ editing: false, open: false }"
-                                            class="bg-gray-50 border {{ $note->is_pinned ? 'border-[#D0AE6D] shadow-sm' : 'border-gray-200' }} rounded-md p-4 relative transition-all">
 
-                                            <!-- Modo Visualização -->
-                                            <div x-show="!editing">
-                                                <div class="flex justify-between items-start mb-2">
-                                                    <div class="text-gray-800 pr-8 w-full">
-                                                        @if($note->is_pinned)
-                                                            <ion-icon name="pin"
-                                                                class="text-[#D0AE6D] mr-1 align-text-bottom text-lg"
-                                                                title="Nota Fixada"></ion-icon>
-                                                        @endif
-                                                        <span>{!! nl2br(e(trim($note->note))) !!}</span>
-                                                    </div>
-
-                                                    <!-- Dropdown Menu de Ações -->
-                                                    <div class="relative ml-2 shrink-0">
-                                                        <button @click="open = !open" @click.away="open = false"
-                                                            class="text-gray-400 hover:text-gray-700 transition-colors p-1 rounded-full hover:bg-gray-200 focus:outline-none">
-                                                            <ion-icon name="ellipsis-horizontal-sharp"
-                                                                class="text-xl block"></ion-icon>
-                                                        </button>
-
-                                                        <div x-show="open" x-cloak
-                                                            class="absolute right-0 mt-1 w-48 bg-white rounded-md shadow-lg border border-gray-100 z-10 py-1"
-                                                            style="display: none;">
-
-                                                            <button @click="editing = true; open = false"
-                                                                class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
-                                                                Editar
-                                                            </button>
-
-                                                            <form
-                                                                action="{{ route('contacts.togglePinNote', [$contact, $note]) }}"
-                                                                method="POST">
-                                                                @csrf
-                                                                @method('PATCH')
-                                                                <button type="submit"
-                                                                    class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
-                                                                    {{ $note->is_pinned ? 'Desafixar esta nota' : 'Fixar esta nota' }}
-                                                                </button>
-                                                            </form>
-
-                                                            <button type="button"
-                                                                @click="open = false; openDeleteNoteModal('{{ route('contacts.destroyNote', [$contact, $note]) }}')"
-                                                                class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors">
-                                                                Excluir
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <!-- Rodapé da Nota -->
-                                                <p class="text-xs text-gray-500">
-                                                    @php
-                                                        $date = $note->created_at->isToday()
-                                                            ? 'Hoje às ' . $note->created_at->format('H:i')
-                                                            : ($note->created_at->isYesterday()
-                                                                ? 'Ontem às ' . $note->created_at->format('H:i')
-                                                                : $note->created_at->format('d/m/Y \à\s H:i'));
-                                                    @endphp
-                                                    {{ $date }} &middot; <span
-                                                        class="font-medium text-gray-700">{{ $note->user->name ?? 'Usuário Desconhecido' }}</span>
-                                                    @if($note->created_at->ne($note->updated_at))
-                                                        <span class="text-gray-400 italic ml-1">(editado)</span>
-                                                    @endif
-                                                </p>
-                                            </div>
-
-                                            <!-- Modo Edição -->
-                                            <div x-show="editing" x-cloak style="display: none;">
-                                                <form action="{{ route('contacts.updateNote', [$contact, $note]) }}"
-                                                    method="POST">
-                                                    @csrf
-                                                    @method('PATCH')
-                                                    <textarea name="note" rows="3" required
-                                                        class="w-full rounded-md border-gray-300 shadow-sm focus:border-[#D0AE6D] focus:ring-[#D0AE6D] mb-3 text-sm">{{ $note->note }}</textarea>
-                                                    <div class="flex justify-end gap-3 items-center">
-                                                        <button type="button" @click="editing = false"
-                                                            class="text-sm text-gray-500 hover:text-gray-700 font-medium transition-colors">Cancelar</button>
-                                                        <button type="submit"
-                                                            class="bg-[#D0AE6D] text-white text-sm font-medium py-1.5 px-4 rounded-md hover:bg-[#b89555] transition-colors shadow-sm">Salvar
-                                                            Alteração</button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    @endforeach
-
-                                    <div class="bg-gray-50 border rounded-md p-4">
-                                        @php
-                                            $diffDays = $contact->created_at->diffInDays(now());
-                                            if ($contact->created_at->isToday()) {
-                                                $dateStr = 'Hoje às ' . $contact->created_at->format('H:i');
-                                            } elseif ($contact->created_at->isYesterday()) {
-                                                $dateStr = 'Ontem às ' . $contact->created_at->format('H:i');
-                                            } elseif ($diffDays < 7) {
-                                                $dayName = $contact->created_at->locale('pt_BR')->translatedFormat('l');
-                                                $isMasculine = in_array($contact->created_at->dayOfWeekIso, [6, 7]);
-                                                $prefix = $isMasculine ? 'Último ' : 'Última ';
-                                                $dateStr = $prefix . $dayName . ' às ' . $contact->created_at->format('H:i');
-                                            } else {
-                                                $dateStr = $contact->created_at->format('d/m/Y \à\s H:i');
-                                            }
-                                        @endphp
-                                        <p class="text-sm font-bold text-[#D0AE6D] mb-1 flex items-center gap-1">
-                                            Negócio criado <ion-icon name="checkmark-done-outline"
-                                                class="text-lg"></ion-icon>
-                                        </p>
-                                        <p class="text-xs text-gray-500">
-                                            {{ $dateStr }} &middot; <span
-                                                class="font-medium text-gray-700">Sistema</span>
-                                        </p>
-                                    </div>
-                                </div>
 
                             </div>
                         </div>
                     </div>
 
+                </div>
+
+                <!-- Timeline Section -->
+                <div class="mt-8 relative">
+                    <!-- Vertical Line connecting everything -->
+                    <div class="absolute left-6 top-3 bottom-0 w-px bg-gray-200" style="margin-left: -1px;"></div>
+
+                    <div class="space-y-6">
+                        @foreach($timeline as $item)
+                            @php
+                                $isNote = class_basename($item) === 'ContactNote';
+                                
+                                $dateStr = '';
+                                $diffDays = $item->created_at->diffInDays(now());
+                                if ($item->created_at->isToday()) {
+                                    $dateStr = 'Hoje às ' . $item->created_at->format('H:i');
+                                } elseif ($item->created_at->isYesterday()) {
+                                    $dateStr = 'Ontem às ' . $item->created_at->format('H:i');
+                                } elseif ($diffDays < 7) {
+                                    $dayName = $item->created_at->locale('pt_BR')->translatedFormat('l');
+                                    $isMasculine = in_array($item->created_at->dayOfWeekIso, [6, 7]);
+                                    $prefix = $isMasculine ? 'Último ' : 'Última ';
+                                    $dateStr = $prefix . $dayName . ' às ' . $item->created_at->format('H:i');
+                                } else {
+                                    $dateStr = $item->created_at->format('d/m/Y \à\s H:i');
+                                }
+
+                                $userName = $item->user->name ?? 'Sistema';
+                            @endphp
+
+                            <div class="relative pl-14">
+                                <!-- Dot Marker -->
+                                <div class="absolute left-4 top-2 md:top-3 w-4 h-4 rounded-full border-4 border-white z-10 
+                                    {{ $isNote ? 'bg-[#D0AE6D]' : 'bg-gray-300' }} shadow-sm"></div>
+
+                                @if($isNote)
+                                    <!-- Note Card -->
+                                    <div x-data="{ editing: false, note: @js($item) }"
+                                        class="bg-[#fdf8ed] border border-[#eaddc5] rounded-lg p-5 transition-all relative group shadow-sm {{ $item->is_pinned ? 'ring-2 ring-[#D0AE6D]' : '' }}">
+                                        
+                                        @if($item->is_pinned)
+                                            <div class="absolute -top-3 -right-3 bg-white rounded-full p-1.5 shadow-sm border border-gray-100" title="Fixado no topo">
+                                                <ion-icon name="pin" class="text-[#D0AE6D] text-lg block"></ion-icon>
+                                            </div>
+                                        @endif
+
+                                        <div x-show="!editing">
+                                            <div class="flex justify-between items-start mb-3 group">
+                                                <div class="text-sm text-gray-800 whitespace-pre-wrap leading-relaxed pr-8"
+                                                    style="word-break: break-word;">{!! nl2br(e(trim($item->note))) !!}</div>
+
+                                                <div class="relative opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0"
+                                                    x-data="{ open: false }" @click.outside="open = false">
+                                                    <button @click="open = !open" type="button"
+                                                        class="text-gray-400 hover:text-gray-600 focus:outline-none p-1 rounded-full hover:bg-[#f5ebd3] transition-colors" title="Opções">
+                                                        <ion-icon name="ellipsis-horizontal-sharp" class="text-lg block"></ion-icon>
+                                                    </button>
+
+                                                    <div x-show="open" style="display: none;" x-cloak
+                                                        x-transition:enter="transition ease-out duration-100"
+                                                        x-transition:enter-start="transform opacity-0 scale-95"
+                                                        x-transition:enter-end="transform opacity-100 scale-100"
+                                                        x-transition:leave="transition ease-in duration-75"
+                                                        x-transition:leave-start="transform opacity-100 scale-100"
+                                                        x-transition:leave-end="transform opacity-0 scale-95"
+                                                        class="absolute right-0 mt-1 w-48 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 z-20 overflow-hidden">
+                                                        
+                                                        <button type="button" @click="editing = true; open = false;"
+                                                            class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
+                                                            Editar
+                                                        </button>
+
+                                                        <form action="{{ route('contacts.togglePinNote', [$contact, $item->id]) }}" method="POST">
+                                                            @csrf
+                                                            @method('PATCH')
+                                                            <button type="submit" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
+                                                                {{ $item->is_pinned ? 'Desafixar esta nota' : 'Fixar esta nota' }}
+                                                            </button>
+                                                        </form>
+
+                                                        <button type="button"
+                                                            @click="open = false; openDeleteNoteModal('{{ route('contacts.destroyNote', [$contact, $item->id]) }}')"
+                                                            class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors">
+                                                            Excluir
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="flex items-center gap-2 mt-4 text-xs text-gray-500 border-t border-[#eaddc5]/40 pt-3">
+                                                <div class="flex items-center gap-1.5 bg-white px-2 py-1 rounded-md border border-gray-100 shadow-sm">
+                                                    <ion-icon name="document-text-outline" class="text-gray-400"></ion-icon>
+                                                    <span class="font-medium text-gray-700">{{ $userName }}</span>
+                                                </div>
+                                                <span>{{ $dateStr }}</span>
+                                                @if($item->created_at->ne($item->updated_at))
+                                                    <span class="italic text-gray-400">&middot; editado</span>
+                                                @endif
+                                            </div>
+                                        </div>
+
+                                        <div x-show="editing" x-cloak style="display: none;">
+                                            <form action="{{ route('contacts.updateNote', [$contact, $item->id]) }}" method="POST">
+                                                @csrf
+                                                @method('PATCH')
+                                                <textarea name="note" rows="3" required
+                                                    class="w-full rounded-md border-[#eaddc5] shadow-sm focus:border-[#D0AE6D] focus:ring-[#D0AE6D] mb-3 text-sm bg-white"
+                                                    x-model="note.note"></textarea>
+                                                <div class="flex justify-end gap-3 items-center">
+                                                    <button type="button" @click="editing = false"
+                                                        class="text-sm text-gray-500 hover:text-gray-700 font-medium transition-colors">Cancelar</button>
+                                                    <button type="submit"
+                                                        class="bg-[#D0AE6D] text-white text-sm font-medium py-1.5 px-4 rounded-md hover:bg-[#b89555] transition-colors shadow-sm">Salvar Alteração</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                @else
+                                    <!-- Activity Item -->
+                                    <div class="pt-1 pb-2 flex flex-col md:flex-row md:items-center gap-1 md:gap-3 text-sm">
+                                        <div class="text-gray-800 font-medium">
+                                            @if($item->type === 'status_change')
+                                                Status alterado de <span class="text-gray-500">{{ ucfirst($item->old_value) }}</span> 
+                                                <ion-icon name="arrow-forward-outline" class="align-middle text-gray-400 mx-0.5"></ion-icon> 
+                                                <strong class="text-[#D0AE6D]">{{ ucfirst($item->new_value) }}</strong>
+                                            @elseif($item->type === 'owner_change')
+                                                Proprietário: <span class="text-gray-500">{{ \App\Models\User::find($item->old_value)->name ?? 'Não atribuído' }}</span> 
+                                                <ion-icon name="arrow-forward-outline" class="align-middle text-gray-400 mx-0.5"></ion-icon> 
+                                                <strong>{{ \App\Models\User::find($item->new_value)->name ?? 'Não atribuído' }}</strong>
+                                            @elseif($item->type === 'lead_created')
+                                                Lead registrado e incluído no sistema
+                                            @endif
+                                        </div>
+                                        
+                                        <div class="flex items-center gap-1.5 text-xs text-gray-400">
+                                            <span class="hidden md:inline">&middot;</span>
+                                            <span>Por {{ $userName }}</span>
+                                            <span>&middot;</span>
+                                            <span class="whitespace-nowrap">{{ $dateStr }}</span>
+                                        </div>
+                                    </div>
+                                @endif
+                            </div>
+                        @endforeach
+                        
+                        <!-- Timeline Start (Creation) -->
+                        <div class="relative pl-14 pb-8">
+                            <div class="absolute left-4 top-2 w-4 h-4 rounded-full border-4 border-white bg-gray-300 z-10 shadow-sm"></div>
+                            <div class="pt-1 text-sm text-gray-600 font-medium flex items-center gap-2">
+                                <ion-icon name="flag-outline" class="text-gray-400 text-lg"></ion-icon> Início do Histórico
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
 
             </div>

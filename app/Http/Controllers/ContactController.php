@@ -54,6 +54,11 @@ class ContactController extends Controller
 
         $contact = Contact::create($validated);
 
+        $contact->activities()->create([
+            'user_id' => auth()->check() ? auth()->id() : null,
+            'type' => 'lead_created',
+        ]);
+
         // Send email alert
         try {
             Mail::to('filipe@consilium.eng.br')->send(new NewContactAlert($contact));
@@ -80,7 +85,12 @@ class ContactController extends Controller
             'status' => 'novo'
         ]);
 
-        Contact::create($data);
+        $contact = Contact::create($data);
+
+        $contact->activities()->create([
+            'user_id' => auth()->id(),
+            'type' => 'lead_created',
+        ]);
 
         return redirect()->route('dashboard')->with('success', 'Lead adicionado com sucesso!');
     }
@@ -91,7 +101,19 @@ class ContactController extends Controller
             'status' => 'required|in:novo,contactado,perdido,ganho',
         ]);
 
+        $oldStatus = $contact->status;
+        $newStatus = $validated['status'];
+
         $contact->update($validated);
+
+        if ($oldStatus !== $newStatus) {
+            $contact->activities()->create([
+                'user_id' => auth()->id(),
+                'type' => 'status_change',
+                'old_value' => $oldStatus,
+                'new_value' => $newStatus,
+            ]);
+        }
 
         return response()->json(['message' => 'Status atualizado com sucesso!']);
     }
@@ -100,13 +122,27 @@ class ContactController extends Controller
     {
         $contact->load([
             'contactNotes' => function ($query) {
+                // Pin logic can be handled in memory or just sort it all
                 $query->orderBy('is_pinned', 'desc')->latest();
             },
-            'contactNotes.user'
+            'contactNotes.user',
+            'activities.user'
         ]);
 
+        $notes = $contact->contactNotes;
+        $activities = $contact->activities;
+
+        $timeline = $notes->concat($activities)->sortByDesc(function ($item) {
+            // Keep pinned notes at top? That might break the timeline flow. 
+            // If they want a pure timeline, pinned notes might just have a visual indicator but stay in chronological order, 
+            // or we pin them artificially at the top of the timeline.
+            // Let's sort by is_pinned first (if it exists), then by created_at.
+            $isPinned = isset($item->is_pinned) ? $item->is_pinned : false;
+            return sprintf('%d%s', $isPinned ? 1 : 0, $item->created_at->timestamp);
+        });
+
         $users = \App\Models\User::all();
-        return view('contacts.show', compact('contact', 'users'));
+        return view('contacts.show', compact('contact', 'users', 'timeline'));
     }
 
     public function updateDetails(Request $request, Contact $contact)
@@ -116,7 +152,31 @@ class ContactController extends Controller
             'user_id' => 'nullable|exists:users,id',
         ]);
 
+        $oldStatus = $contact->status;
+        $newStatus = $validated['status'];
+
+        $oldOwner = $contact->user_id;
+        $newOwner = $validated['user_id'] ?? null;
+
         $contact->update($validated);
+
+        if ($oldStatus !== $newStatus) {
+            $contact->activities()->create([
+                'user_id' => auth()->id(),
+                'type' => 'status_change',
+                'old_value' => $oldStatus,
+                'new_value' => $newStatus,
+            ]);
+        }
+
+        if ($oldOwner != $newOwner) {
+            $contact->activities()->create([
+                'user_id' => auth()->id(),
+                'type' => 'owner_change',
+                'old_value' => $oldOwner,
+                'new_value' => $newOwner,
+            ]);
+        }
 
         return redirect()->route('contacts.show', $contact)->with('success', 'Detalhes atualizados com sucesso!');
     }

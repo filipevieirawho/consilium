@@ -34,4 +34,9 @@ class Contact extends Model
     {
         return $this->hasMany(ContactNote::class);
     }
+
+    public function activities()
+    {
+        return $this->hasMany(ContactActivity::class);
+    }
 }
