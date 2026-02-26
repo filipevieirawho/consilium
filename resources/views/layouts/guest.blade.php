@@ -36,7 +36,7 @@
                         <strong class="text-gray-800">Consilium.</strong> 2026 &copy; Todos os direitos reservados.
                     </div>
                     <div>
-                        1.0.21
+                        v.1.0
                     </div>
                 </div>
             </div>
