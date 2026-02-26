@@ -151,7 +151,7 @@
                                     <div class="flex justify-end">
                                         <button type="submit"
                                             class="bg-[#D0AE6D] text-white font-medium py-2 px-4 rounded-md hover:bg-[#b89555] transition-colors">
-                                            Adicionar Anotação
+                                            Adicionar Nota
                                         </button>
                                     </div>
                                 </form>
@@ -169,7 +169,7 @@
                                                         @if($note->is_pinned)
                                                             <ion-icon name="pin"
                                                                 class="text-[#D0AE6D] mr-1 align-text-bottom text-lg"
-                                                                title="Anotação Fixada"></ion-icon>
+                                                                title="Nota Fixada"></ion-icon>
                                                         @endif
                                                         <span>{!! nl2br(e(trim($note->note))) !!}</span>
                                                     </div>
@@ -198,7 +198,7 @@
                                                                 @method('PATCH')
                                                                 <button type="submit"
                                                                     class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
-                                                                    {{ $note->is_pinned ? 'Desafixar esta anotação' : 'Fixar esta anotação' }}
+                                                                    {{ $note->is_pinned ? 'Desafixar esta nota' : 'Fixar esta nota' }}
                                                                 </button>
                                                             </form>
 
