@@ -300,9 +300,9 @@
                                                     <strong class="text-[#D0AE6D]">{{ ucfirst($item->new_value) }}</strong>
                                                 @endif
                                             @elseif($item->type === 'owner_change')
-                                                Proprietário: <strong class="text-gray-500">{{ \App\Models\User::find($item->old_value)->name ?? 'Não atribuído' }}</strong> 
+                                                Proprietário: <strong class="text-gray-500">{{ \App\Models\User::find($item->old_value)?->name ?? 'Não atribuído' }}</strong> 
                                                 <ion-icon name="arrow-forward-outline" class="align-middle text-gray-400 mx-0.5"></ion-icon> 
-                                                <strong>{{ \App\Models\User::find($item->new_value)->name ?? 'Não atribuído' }}</strong>
+                                                <strong>{{ \App\Models\User::find($item->new_value)?->name ?? 'Não atribuído' }}</strong>
                                             @endif
                                         </div>
                                         
