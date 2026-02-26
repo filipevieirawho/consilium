@@ -50,7 +50,7 @@
                                         x-transition:leave="transition ease-in duration-75"
                                         x-transition:leave-start="transform opacity-100 scale-100"
                                         x-transition:leave-end="transform opacity-0 scale-95"
-                                        class="absolute left-0 mt-1 w-48 bg-white rounded-md shadow-lg border border-gray-100 z-10 py-1">
+                                        class="absolute right-0 mt-1 w-48 bg-white rounded-md shadow-lg border border-gray-100 z-10 py-1">
                                         <button type="button" @click="openOptions = false; $dispatch('open-modal', 'edit-lead-data')"
                                             class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
                                             Editar Dados
