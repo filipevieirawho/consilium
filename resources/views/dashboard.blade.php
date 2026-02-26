@@ -135,20 +135,20 @@
                                             {{ $contact->message }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm" onclick="event.stopPropagation()">
-                                            <select data-contact-id="{{ $contact->id }}" onchange="updateStatus(this)"
-                                                class="status-select rounded-md border-gray-300 text-sm shadow-sm focus:border-indigo-500 focus:ring-indigo-500
-                                                            {{ $contact->status === 'Cliente Potencial' ? 'bg-blue-50 text-blue-700' : '' }}
-                                                            {{ $contact->status === 'Contactado' ? 'bg-yellow-50 text-yellow-700' : '' }}
-                                                            {{ $contact->status === 'Proposta Enviada' ? 'bg-purple-50 text-purple-700' : '' }}
-                                                            {{ $contact->status === 'Negociação' ? 'bg-orange-50 text-orange-700' : '' }}
-                                                            {{ $contact->status === 'Stand By' ? 'bg-gray-50 text-gray-700' : '' }}
-                                                        ">
-                                                <option value="Cliente Potencial" {{ $contact->status === 'Cliente Potencial' ? 'selected' : '' }}>🔵 Cliente Potencial</option>
-                                                <option value="Contactado" {{ $contact->status === 'Contactado' ? 'selected' : '' }}>🟡 Contactado</option>
-                                                <option value="Proposta Enviada" {{ $contact->status === 'Proposta Enviada' ? 'selected' : '' }}>🟣 Proposta Enviada</option>
-                                                <option value="Negociação" {{ $contact->status === 'Negociação' ? 'selected' : '' }}>🟠 Negociação</option>
-                                                <option value="Stand By" {{ $contact->status === 'Stand By' ? 'selected' : '' }}>⚪️ Stand By</option>
-                                            </select>
+                                            @php
+                                                $statusColors = [
+                                                    'Cliente Potencial' => 'text-[#98DFEA] border-[#98DFEA] bg-[#98DFEA]/10',
+                                                    'Contactado' => 'text-[#cfad6d] border-[#cfad6d] bg-[#cfad6d]/10',
+                                                    'Proposta Enviada' => 'text-[#00c49a] border-[#00c49a] bg-[#00c49a]/10',
+                                                    'Negociação' => 'text-[#ff5666] border-[#ff5666] bg-[#ff5666]/10',
+                                                    'Stand By' => 'text-[#232323] border-[#232323] bg-[#232323]/10',
+                                                ];
+                                                $statusClass = $statusColors[$contact->status] ?? 'text-gray-500 border-gray-300 bg-gray-50';
+                                            @endphp
+                                            <div
+                                                class="inline-flex items-center justify-center px-3 py-1 rounded-md text-xs font-semibold tracking-wider uppercase border {{ $statusClass }}">
+                                                {{ $contact->status }}
+                                            </div>
                                         </td>
                                     </tr>
                                 @empty
@@ -271,47 +271,5 @@
         </div>
     </x-modal>
 
-    @push('scripts')
-        <script>
-            function updateStatus(selectElement) {
-                const contactId = selectElement.dataset.contactId;
-                const status = selectElement.value;
-                const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 
-                // Update colors immediately
-                selectElement.className = selectElement.className.replace(/bg-\w+-50|text-\w+-700/g, '');
-                const colorMap = {
-                    'Cliente Potencial': 'bg-blue-50 text-blue-700',
-                    'Contactado': 'bg-yellow-50 text-yellow-700',
-                    'Proposta Enviada': 'bg-purple-50 text-purple-700',
-                    'Negociação': 'bg-orange-50 text-orange-700',
-                    'Stand By': 'bg-gray-50 text-gray-700'
-                };
-                selectElement.classList.add(...colorMap[status].split(' '));
-
-                fetch(`/lead/${contactId}/status`, {
-                    method: 'PATCH',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': csrfToken,
-                        'Accept': 'application/json'
-                    },
-                    body: JSON.stringify({ status })
-                })
-                    .then(response => {
-                        if (!response.ok) throw new Error('Erro ao atualizar status');
-                        return response.json();
-                    })
-                    .then(data => {
-                        // Brief visual feedback
-                        selectElement.style.outline = '2px solid #D0AE6D';
-                        setTimeout(() => selectElement.style.outline = '', 1000);
-                    })
-                    .catch(error => {
-                        alert('Erro ao atualizar o status. Tente novamente.');
-                        location.reload();
-                    });
-            }
-        </script>
-    @endpush
 </x-app-layout>
