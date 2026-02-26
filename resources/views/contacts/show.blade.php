@@ -242,49 +242,49 @@
                                         @endif
 
                                         <div x-show="!editing">
-                                            <div class="flex justify-between items-start group">
+                                            <div class="mb-3">
                                                 <div class="text-sm text-gray-800 whitespace-pre-wrap leading-relaxed pr-8"
                                                     style="word-break: break-word;">{!! nl2br(e(trim($item->note))) !!}</div>
+                                            </div>
 
-                                                @if(auth()->id() === $item->user_id)
-                                                <div class="relative opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0"
-                                                    x-data="{ open: false }" @click.outside="open = false">
-                                                    <button @click="open = !open" type="button"
-                                                        class="text-gray-400 hover:text-gray-600 focus:outline-none p-1 rounded-full hover:bg-[#f5ebd3] transition-colors" title="Opções">
-                                                        <ion-icon name="ellipsis-horizontal-sharp" class="text-lg block"></ion-icon>
+                                            @if(auth()->id() === $item->user_id)
+                                            <div class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity z-10"
+                                                x-data="{ open: false }" @click.outside="open = false">
+                                                <button @click="open = !open" type="button"
+                                                    class="text-gray-400 hover:text-gray-600 focus:outline-none p-1 rounded-full hover:bg-[#f5ebd3] transition-colors" title="Opções">
+                                                    <ion-icon name="ellipsis-horizontal-sharp" class="text-lg block"></ion-icon>
+                                                </button>
+
+                                                <div x-show="open" style="display: none;" x-cloak
+                                                    x-transition:enter="transition ease-out duration-100"
+                                                    x-transition:enter-start="transform opacity-0 scale-95"
+                                                    x-transition:enter-end="transform opacity-100 scale-100"
+                                                    x-transition:leave="transition ease-in duration-75"
+                                                    x-transition:leave-start="transform opacity-100 scale-100"
+                                                    x-transition:leave-end="transform opacity-0 scale-95"
+                                                    class="absolute right-0 mt-1 w-48 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 z-20 overflow-hidden">
+                                                    
+                                                    <button type="button" @click="editing = true; open = false;"
+                                                        class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
+                                                        Editar
                                                     </button>
 
-                                                    <div x-show="open" style="display: none;" x-cloak
-                                                        x-transition:enter="transition ease-out duration-100"
-                                                        x-transition:enter-start="transform opacity-0 scale-95"
-                                                        x-transition:enter-end="transform opacity-100 scale-100"
-                                                        x-transition:leave="transition ease-in duration-75"
-                                                        x-transition:leave-start="transform opacity-100 scale-100"
-                                                        x-transition:leave-end="transform opacity-0 scale-95"
-                                                        class="absolute right-0 mt-1 w-48 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 z-20 overflow-hidden">
-                                                        
-                                                        <button type="button" @click="editing = true; open = false;"
-                                                            class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
-                                                            Editar
+                                                    <form action="{{ route('contacts.togglePinNote', [$contact, $item->id]) }}" method="POST">
+                                                        @csrf
+                                                        @method('PATCH')
+                                                        <button type="submit" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
+                                                            {{ $item->is_pinned ? 'Desafixar esta nota' : 'Fixar esta nota' }}
                                                         </button>
+                                                    </form>
 
-                                                        <form action="{{ route('contacts.togglePinNote', [$contact, $item->id]) }}" method="POST">
-                                                            @csrf
-                                                            @method('PATCH')
-                                                            <button type="submit" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
-                                                                {{ $item->is_pinned ? 'Desafixar esta nota' : 'Fixar esta nota' }}
-                                                            </button>
-                                                        </form>
-
-                                                        <button type="button"
-                                                            @click="open = false; openDeleteNoteModal('{{ route('contacts.destroyNote', [$contact, $item->id]) }}')"
-                                                            class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors">
-                                                            Excluir
-                                                        </button>
-                                                    </div>
+                                                    <button type="button"
+                                                        @click="open = false; openDeleteNoteModal('{{ route('contacts.destroyNote', [$contact, $item->id]) }}')"
+                                                        class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors">
+                                                        Excluir
+                                                    </button>
                                                 </div>
-                                                @endif
                                             </div>
+                                            @endif
 
                                             <div class="flex items-center gap-2 text-xs text-gray-500">
                                                 <div class="flex items-center gap-1.5">
