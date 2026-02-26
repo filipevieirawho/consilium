@@ -256,14 +256,14 @@
                                                 </div>
                                             </div>
 
-                                            <div class="flex items-center gap-2 mt-4 text-sm text-gray-500">
+                                            <div class="flex items-center gap-2 mt-4 text-xs text-gray-500">
                                                 <div class="flex items-center gap-1.5">
-                                                    <ion-icon name="document-text-outline" class="text-gray-400 text-base"></ion-icon>
+                                                    <ion-icon name="document-text-outline" class="text-gray-400 text-sm"></ion-icon>
                                                     <span class="font-medium text-gray-700">{{ $userName }}</span>
                                                 </div>
                                                 <span class="text-gray-500">{{ $dateStr }}</span>
                                                 @if($item->created_at->ne($item->updated_at))
-                                                    <span class="italic text-gray-400 text-xs">&middot; editado</span>
+                                                    <span class="italic text-gray-400">&middot; editado</span>
                                                 @endif
                                             </div>
                                         </div>
