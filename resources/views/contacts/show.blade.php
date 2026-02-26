@@ -366,7 +366,7 @@
                             <div class="absolute left-4 top-1.5 w-4 h-4 rounded-full border-4 border-white bg-gray-300 z-10 shadow-sm"></div>
                             <div class="pt-1 flex flex-col md:flex-row md:items-center gap-1 md:gap-3 text-sm">
                                 <div class="text-gray-600 font-medium flex items-center gap-2">
-                                    <ion-icon name="flag-outline" class="text-gray-400 text-lg"></ion-icon> Início do Histórico
+                                    <ion-icon name="flag-outline" class="text-[#D0AE6D] text-lg"></ion-icon> Início do Histórico
                                 </div>
                                 <div class="flex items-center gap-1.5 text-xs text-gray-400">
                                     <span class="hidden md:inline">&middot;</span>
