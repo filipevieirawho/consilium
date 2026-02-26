@@ -33,7 +33,7 @@
 
                 <!-- Sidebar (Left Col, 1/3 width) -->
                 <div class="md:col-span-1 space-y-6">
-                    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                    <div class="bg-white shadow-sm sm:rounded-lg">
                         <div class="p-6 text-gray-900">
                             <div class="flex items-center justify-between border-b pb-2 mb-4">
                                 <h3 class="text-lg font-semibold text-gray-900">Dados do Lead</h3>
