@@ -182,12 +182,9 @@
                                             placeholder="Adicione observações sobre reuniões, negociações ou interesses relativas a este lead..."></textarea>
                                     </div>
                                     <div class="flex justify-end" x-show="noteFocused || noteText.trim() !== ''" x-cloak style="display: none;"
-                                        x-transition:enter="transition ease-out duration-300"
-                                        x-transition:enter-start="opacity-0 transform -translate-y-4"
+                                        x-transition:enter="transition ease-out duration-200"
+                                        x-transition:enter-start="opacity-0 transform -translate-y-2"
                                         x-transition:enter-end="opacity-100 transform translate-y-0"
-                                        x-transition:leave="transition ease-in duration-75"
-                                        x-transition:leave-start="opacity-100 transform translate-y-0"
-                                        x-transition:leave-end="opacity-0 transform -translate-y-4">
                                         <button type="submit"
                                             class="bg-[#D0AE6D] text-white font-medium py-2 px-4 rounded-md hover:bg-[#b89555] transition-colors">
                                             Adicionar Nota
