@@ -293,7 +293,7 @@
                                         <div class="text-gray-800 font-medium">
                                             @if($item->type === 'status_change')
                                                 @if(is_null($item->old_value))
-                                                    Status inicial definido como <strong class="text-[#D0AE6D]">{{ ucfirst($item->new_value) }}</strong>
+                                                    Status inicial: <strong class="text-[#D0AE6D]">{{ ucfirst($item->new_value) }}</strong>
                                                 @else
                                                     Status alterado de <span class="text-gray-500">{{ ucfirst($item->old_value) }}</span> 
                                                     <ion-icon name="arrow-forward-outline" class="align-middle text-gray-400 mx-0.5"></ion-icon> 
