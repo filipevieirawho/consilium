@@ -301,7 +301,7 @@
                                                 <ion-icon name="arrow-forward-outline" class="align-middle text-gray-400 mx-0.5"></ion-icon> 
                                                 <strong>{{ \App\Models\User::find($item->new_value)->name ?? 'Não atribuído' }}</strong>
                                             @elseif($item->type === 'lead_created')
-                                                Lead registrado e incluído no sistema
+                                                <span class="flex items-center gap-1.5 text-gray-600"><ion-icon name="flag-outline" class="text-gray-400 text-lg flex-shrink-0"></ion-icon> Início do Histórico</span>
                                             @endif
                                         </div>
                                         
@@ -316,13 +316,6 @@
                             </div>
                         @endforeach
                         
-                        <!-- Timeline Start (Creation) -->
-                        <div class="relative pl-14 pb-8">
-                            <div class="absolute left-4 top-1.5 w-4 h-4 rounded-full border-4 border-white bg-gray-300 z-10 shadow-sm"></div>
-                            <div class="pt-1 text-sm text-gray-600 font-medium flex items-center gap-2">
-                                <ion-icon name="flag-outline" class="text-gray-400 text-lg"></ion-icon> Início do Histórico
-                            </div>
-                        </div>
 
                     </div>
                 </div>
