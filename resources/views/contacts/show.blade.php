@@ -184,7 +184,7 @@
                                     <div class="flex justify-end" x-show="noteFocused || noteText.trim() !== ''" x-cloak style="display: none;"
                                         x-transition:enter="transition ease-out duration-200"
                                         x-transition:enter-start="opacity-0 transform -translate-y-2"
-                                        x-transition:enter-end="opacity-100 transform translate-y-0"
+                                        x-transition:enter-end="opacity-100 transform translate-y-0">
                                         <button type="submit"
                                             class="bg-[#D0AE6D] text-white font-medium py-2 px-4 rounded-md hover:bg-[#b89555] transition-colors">
                                             Adicionar Nota
