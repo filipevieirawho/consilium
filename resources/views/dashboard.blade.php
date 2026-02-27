@@ -146,7 +146,7 @@
                                                 $statusClass = $statusColors[$contact->status] ?? 'text-gray-500 border-gray-300 bg-gray-50';
                                             @endphp
                                             <div
-                                                class="inline-flex items-center justify-center px-3 py-1 rounded-md text-xs font-semibold tracking-wider uppercase border {{ $statusClass }}">
+                                                class="inline-flex items-center justify-center px-2 py-0.5 rounded-md text-[10px] font-bold tracking-wider uppercase border {{ $statusClass }}">
                                                 {{ $contact->status }}
                                             </div>
                                         </td>
