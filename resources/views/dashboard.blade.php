@@ -137,11 +137,11 @@
                                         <td class="px-6 py-4 whitespace-nowrap text-sm">
                                             @php
                                                 $statusColors = [
-                                                    'Cliente Potencial' => 'text-[#98DFEA] border-[#98DFEA] bg-[#98DFEA]/10',
-                                                    'Contactado' => 'text-[#cfad6d] border-[#cfad6d] bg-[#cfad6d]/10',
-                                                    'Proposta Enviada' => 'text-[#00c49a] border-[#00c49a] bg-[#00c49a]/10',
-                                                    'Negociação' => 'text-[#ff5666] border-[#ff5666] bg-[#ff5666]/10',
-                                                    'Stand By' => 'text-[#232323] border-[#232323] bg-[#232323]/10',
+                                                    'Cliente Potencial' => 'text-[#2892D7] border-[#2892D7] bg-[#2892D7]/10',
+                                                    'Contactado' => 'text-[#618985] border-[#618985] bg-[#618985]/10',
+                                                    'Proposta Enviada' => 'text-[#D0AE6D] border-[#D0AE6D] bg-[#D0AE6D]/10',
+                                                    'Negociação' => 'text-[#D0AE6D] border-[#D0AE6D] bg-[#D0AE6D]/10',
+                                                    'Stand By' => 'text-[#6b7280] border-[#6b7280] bg-[#6b7280]/10',
                                                 ];
                                                 $statusClass = $statusColors[$contact->status] ?? 'text-gray-500 border-gray-300 bg-gray-50';
                                             @endphp
