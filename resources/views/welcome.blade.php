@@ -9,6 +9,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Outfit:wght@200;300;400;500;600&display=swap"
         rel="stylesheet">
+    <link rel="icon" type="image/png" href="{{ asset('assets/images/consilium-logo-icon.png') }}">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
@@ -533,7 +534,8 @@
                 .finally(() => {
                     btn.disabled = false;
                     btn.innerText = originalBtnText;
-                }); });
+                });
+        });
     </script>
 </body>
 
