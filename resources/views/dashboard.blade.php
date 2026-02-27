@@ -134,7 +134,7 @@
                                             title="{{ $contact->message }}">
                                             {{ $contact->message }}
                                         </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm" onclick="event.stopPropagation()">
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm">
                                             @php
                                                 $statusColors = [
                                                     'Cliente Potencial' => 'text-[#98DFEA] border-[#98DFEA] bg-[#98DFEA]/10',

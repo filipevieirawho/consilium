@@ -108,14 +108,28 @@
                                         <label for="status" class="block text-sm font-medium text-gray-500 mb-1">Status
                                             do
                                             Lead</label>
-                                        <select name="status" id="status" onchange="this.form.submit()"
-                                            class="w-full rounded-md border-gray-300 shadow-sm focus:border-[#D0AE6D] focus:ring-[#D0AE6D]">
-                                            <option value="Cliente Potencial" {{ $contact->status === 'Cliente Potencial' ? 'selected' : '' }}>🔵 Cliente Potencial</option>
-                                            <option value="Contactado" {{ $contact->status === 'Contactado' ? 'selected' : '' }}>🟡 Contactado</option>
-                                            <option value="Proposta Enviada" {{ $contact->status === 'Proposta Enviada' ? 'selected' : '' }}>🟣 Proposta Enviada</option>
-                                            <option value="Negociação" {{ $contact->status === 'Negociação' ? 'selected' : '' }}>🟠 Negociação</option>
-                                            <option value="Stand By" {{ $contact->status === 'Stand By' ? 'selected' : '' }}>⚪️ Stand By</option>
-                                        </select>
+                                        <div class="relative">
+                                            @php
+                                                $statusClass = [
+                                                    'Cliente Potencial' => 'text-[#98DFEA] bg-[#98DFEA]/10 border-[#98DFEA]',
+                                                    'Contactado' => 'text-[#cfad6d] bg-[#cfad6d]/10 border-[#cfad6d]',
+                                                    'Proposta Enviada' => 'text-[#00c49a] bg-[#00c49a]/10 border-[#00c49a]',
+                                                    'Negociação' => 'text-[#ff5666] bg-[#ff5666]/10 border-[#ff5666]',
+                                                    'Stand By' => 'text-[#232323] bg-[#232323]/10 border-[#232323]',
+                                                ][$contact->status] ?? 'text-gray-500 bg-gray-50 border-gray-300';
+                                            @endphp
+                                            <select name="status" id="status" onchange="this.form.submit()"
+                                                class="w-full rounded-md border text-xs font-bold tracking-wider uppercase shadow-sm focus:border-[#D0AE6D] focus:ring-[#D0AE6D] appearance-none py-2 px-3 {{ $statusClass }}">
+                                                <option value="Cliente Potencial" {{ $contact->status === 'Cliente Potencial' ? 'selected' : '' }}>Cliente Potencial</option>
+                                                <option value="Contactado" {{ $contact->status === 'Contactado' ? 'selected' : '' }}>Contactado</option>
+                                                <option value="Proposta Enviada" {{ $contact->status === 'Proposta Enviada' ? 'selected' : '' }}>Proposta Enviada</option>
+                                                <option value="Negociação" {{ $contact->status === 'Negociação' ? 'selected' : '' }}>Negociação</option>
+                                                <option value="Stand By" {{ $contact->status === 'Stand By' ? 'selected' : '' }}>Stand By</option>
+                                            </select>
+                                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-500">
+                                                <ion-icon name="chevron-down-outline"></ion-icon>
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <!-- Owner -->
@@ -207,6 +221,13 @@
                             @php
                                 $isNote = class_basename($item) === 'ContactNote';
                                 
+                                $statusColors = [
+                                    'Cliente Potencial' => 'text-[#98DFEA] border-[#98DFEA] bg-[#98DFEA]/10',
+                                    'Contactado' => 'text-[#cfad6d] border-[#cfad6d] bg-[#cfad6d]/10',
+                                    'Proposta Enviada' => 'text-[#00c49a] border-[#00c49a] bg-[#00c49a]/10',
+                                    'Negociação' => 'text-[#ff5666] border-[#ff5666] bg-[#ff5666]/10',
+                                    'Stand By' => 'text-[#232323] border-[#232323] bg-[#232323]/10',
+                                ];
                                 $dateStr = '';
                                 $diffDays = $item->created_at->diffInDays(now());
                                 if ($item->created_at->isToday()) {
@@ -319,12 +340,16 @@
                                     <div class="pt-1 pb-2 flex flex-col md:flex-row md:items-center gap-1 md:gap-3 text-sm">
                                         <div class="text-gray-800 font-medium">
                                             @if($item->type === 'status_change')
+                                                @php 
+                                                    $oldClass = $statusColors[$item->old_value] ?? 'text-gray-500 border-gray-300 bg-gray-50';
+                                                    $newClass = $statusColors[$item->new_value] ?? 'text-gray-500 border-gray-300 bg-gray-50';
+                                                @endphp
                                                 @if(is_null($item->old_value))
-                                                    Etapa : <strong>{{ ucfirst($item->new_value) }}</strong>
+                                                    Etapa: <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold tracking-wider uppercase border {{ $newClass }}">{{ $item->new_value }}</span>
                                                 @else
-                                                    Etapa : <strong>{{ ucfirst($item->old_value) }}</strong> 
+                                                    Etapa: <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold tracking-wider uppercase border {{ $oldClass }}">{{ $item->old_value }}</span> 
                                                     <ion-icon name="arrow-forward-outline" class="align-middle text-[#D0AE6D] mx-0.5"></ion-icon> 
-                                                    <strong>{{ ucfirst($item->new_value) }}</strong>
+                                                    <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold tracking-wider uppercase border {{ $newClass }}">{{ $item->new_value }}</span>
                                                 @endif
                                             @elseif($item->type === 'owner_change')
                                                 @if(is_null($item->old_value))
