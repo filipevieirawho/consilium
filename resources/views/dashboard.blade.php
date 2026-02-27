@@ -138,7 +138,7 @@
                                             @php
                                                 $statusColors = [
                                                     'Cliente Potencial' => 'text-[#2892D7] border-[#2892D7] bg-[#2892D7]/10',
-                                                    'Contactado' => 'text-[#618985] border-[#618985] bg-[#618985]/10',
+                                                    'Contactado' => 'text-[#00c49a] border-[#00c49a] bg-[#00c49a]/10',
                                                     'Proposta Enviada' => 'text-[#D0AE6D] border-[#D0AE6D] bg-[#D0AE6D]/10',
                                                     'Negociação' => 'text-[#D0AE6D] border-[#D0AE6D] bg-[#D0AE6D]/10',
                                                     'Stand By' => 'text-[#6b7280] border-[#6b7280] bg-[#6b7280]/10',
