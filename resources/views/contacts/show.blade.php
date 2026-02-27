@@ -340,16 +340,12 @@
                                     <div class="pt-1 pb-2 flex flex-col md:flex-row md:items-center gap-1 md:gap-3 text-sm">
                                         <div class="text-gray-800 font-medium">
                                             @if($item->type === 'status_change')
-                                                @php 
-                                                    $oldClass = $statusColors[$item->old_value] ?? 'text-gray-500 border-gray-300 bg-gray-50';
-                                                    $newClass = $statusColors[$item->new_value] ?? 'text-gray-500 border-gray-300 bg-gray-50';
-                                                @endphp
                                                 @if(is_null($item->old_value))
-                                                    Etapa: <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold tracking-wider uppercase border {{ $newClass }}">{{ $item->new_value }}</span>
+                                                    Etapa : <strong>{{ ucfirst($item->new_value) }}</strong>
                                                 @else
-                                                    Etapa: <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold tracking-wider uppercase border {{ $oldClass }}">{{ $item->old_value }}</span> 
+                                                    Etapa : <strong>{{ ucfirst($item->old_value) }}</strong> 
                                                     <ion-icon name="arrow-forward-outline" class="align-middle text-[#D0AE6D] mx-0.5"></ion-icon> 
-                                                    <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold tracking-wider uppercase border {{ $newClass }}">{{ $item->new_value }}</span>
+                                                    <strong>{{ ucfirst($item->new_value) }}</strong>
                                                 @endif
                                             @elseif($item->type === 'owner_change')
                                                 @if(is_null($item->old_value))
