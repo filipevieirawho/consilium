@@ -1,0 +1,216 @@
+@php
+$ipm = $resultado['ipm'];
+$faixa = $resultado['faixa'];
+$texto = $resultado['texto'];
+$dimensoes = $resultado['dimensoes'];
+$dimensoesFracas = $resultado['dimensoes_fracas'];
+
+$faixaConfig = [
+    'red'    => ['bg' => '#fef2f2', 'border' => '#ef4444', 'text' => '#dc2626', 'label' => 'Previsibilidade Comprometida', 'icon' => 'alert-circle-outline'],
+    'yellow' => ['bg' => '#fffbeb', 'border' => '#f59e0b', 'text' => '#d97706', 'label' => 'Previsibilidade Instável', 'icon' => 'warning-outline'],
+    'green'  => ['bg' => '#f0fdf4', 'border' => '#22c55e', 'text' => '#16a34a', 'label' => 'Previsibilidade Consistente', 'icon' => 'checkmark-circle-outline'],
+];
+$cfg = $faixaConfig[$faixa];
+@endphp
+
+<x-diagnosticos.layout :progressPct="100" progressLabel="Resultado">
+    <!-- Top row: IPM & Radar Chart -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <!-- IPM Card -->
+        <div class="sm:rounded-lg border-2 p-8 text-center flex flex-col items-center justify-center h-full"
+             style="background-color: {{ $cfg['bg'] }}; border-color: {{ $cfg['border'] }};">
+            <h3 class="text-xs font-bold uppercase tracking-widest mb-4 w-full" style="color: {{ $cfg['text'] }}; opacity: 0.8;">Previsibilidade de Margem</h3>
+            <div class="flex justify-center mb-4">
+                <div class="w-20 h-20 rounded-full border flex items-center justify-center"
+                     style="border-color: {{ $cfg['border'] }}; background: white;">
+                    <ion-icon name="{{ $cfg['icon'] }}" style="font-size: 2.5rem; color: {{ $cfg['text'] }};"></ion-icon>
+                </div>
+            </div>
+            <div class="text-6xl font-extrabold mb-1" style="color: {{ $cfg['text'] }};">{{ $ipm }}</div>
+            <div class="text-lg font-bold uppercase tracking-widest mb-2" style="color: {{ $cfg['text'] }};">IPM</div>
+            <div class="text-base font-semibold" style="color: {{ $cfg['text'] }};">{{ $cfg['label'] }}</div>
+        </div>
+
+        <!-- Radar Chart Card -->
+        <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg border border-gray-100 p-8 flex flex-col items-center justify-center h-full">
+            <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-6 text-center w-full">Desempenho por Dimensão</h3>
+            <div class="w-full relative flex-1 flex items-center justify-center" style="max-height: 250px; aspect-ratio: 1;">
+                <canvas id="radarChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Interpretive text -->
+    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg border border-gray-100 p-6 mb-6">
+        <h3 class="font-semibold text-gray-900 mb-3 flex items-center gap-2">
+            <ion-icon name="reader-outline" style="color: #D0AE6D;"></ion-icon>
+            Análise do resultado
+        </h3>
+        <p class="text-gray-700 leading-relaxed text-sm">{{ $texto }}</p>
+    </div>
+
+    <!-- Dimension scores -->
+    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg border border-gray-100 p-6 mb-6">
+        <h3 class="font-semibold text-gray-900 mb-5 flex items-center gap-2">
+            <ion-icon name="bar-chart-outline" style="color: #D0AE6D;"></ion-icon>
+            Pontuação por dimensão
+        </h3>
+
+        <div class="space-y-4">
+            @foreach($dimensoes as $d => $dim)
+            <div>
+                <div class="flex justify-between items-center mb-1">
+                    <div class="flex items-center gap-2">
+                        <span class="text-sm font-medium text-gray-800">{{ $dim['nome'] }}</span>
+                        @if($dim['fraca'])
+                        <span class="text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-md bg-red-100 text-red-600">Atenção</span>
+                        @endif
+                    </div>
+                    <span class="text-sm font-bold" style="{{ $dim['fraca'] ? 'color: #dc2626;' : 'color: #16a34a;' }}">{{ $dim['score'] }}/100</span>
+                </div>
+                <div class="w-full bg-gray-100 rounded-full h-2.5">
+                    <div class="h-2.5 rounded-full transition-all duration-700"
+                         style="width: {{ $dim['score'] }}%; background-color: {{ $dim['fraca'] ? '#ef4444' : ($dim['score'] >= 70 ? '#22c55e' : '#f59e0b') }};"></div>
+                </div>
+                <div class="text-xs text-gray-400 mt-0.5">Peso: {{ ($dim['peso'] * 100) }}%</div>
+            </div>
+            @endforeach
+        </div>
+    </div>
+
+    <!-- Weak dimensions callout -->
+    @if(!empty($dimensoesFracas))
+    <div class="bg-red-50 border border-red-200 overflow-hidden sm:rounded-lg p-6 mb-6">
+        <h3 class="font-semibold text-red-700 mb-3 flex items-center gap-2">
+            <ion-icon name="alert-circle-outline" class="text-lg"></ion-icon>
+            Dimensões com maior fragilidade
+        </h3>
+        <ul class="space-y-1">
+            @foreach($dimensoesFracas as $fraca)
+            <li class="flex items-center gap-2 text-sm text-red-700">
+                <ion-icon name="chevron-forward-outline"></ion-icon>
+                {{ $fraca }}
+            </li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
+
+    <!-- Connection phrase -->
+    <div class="bg-gray-50 border border-gray-200 overflow-hidden sm:rounded-lg p-6 mb-6">
+        <p class="text-sm text-gray-600 italic leading-relaxed">
+            "Este resultado representa um retrato do momento atual do empreendimento. Assim como um exame, sua validade está associada ao momento em que foi realizado. Recomenda-se sua reaplicação periódica ou em marcos relevantes da obra."
+        </p>
+    </div>
+
+    <!-- Commercial trigger -->
+    <div class="bg-white overflow-hidden sm:rounded-lg border-2 p-6 mb-8" style="border-color: #D0AE6D;">
+        <h3 class="font-bold text-gray-900 mb-2 flex items-center gap-2">
+            <ion-icon name="analytics-outline" style="color: #D0AE6D;"></ion-icon>
+            Próximo passo
+        </h3>
+        <p class="text-sm text-gray-600 mb-4">
+            Aprofundar a análise dessas fragilidades permite identificar causas e definir ações concretas para proteção da margem.
+        </p>
+        <a href="https://consilium.eng.br/contato" target="_blank"
+            class="inline-flex items-center gap-2 px-6 py-3 text-white font-semibold rounded-xl transition-all hover:shadow-md text-sm"
+            style="background-color: #D0AE6D;">
+            Falar com um especialista
+            <ion-icon name="arrow-forward-outline"></ion-icon>
+        </a>
+    </div>
+
+    <!-- Enterprise data summary -->
+    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg border border-gray-100 p-6 mb-6">
+        <h3 class="font-semibold text-gray-700 mb-4 text-sm uppercase tracking-wide">Dados do diagnóstico</h3>
+        <dl class="grid grid-cols-2 gap-x-4 gap-y-3 text-sm">
+            <div><dt class="text-gray-400 text-xs">Respondente</dt><dd class="font-medium text-gray-800">{{ $diagnostico->nome }}</dd></div>
+            <div><dt class="text-gray-400 text-xs">Empresa</dt><dd class="font-medium text-gray-800">{{ $diagnostico->empresa }}</dd></div>
+            <div><dt class="text-gray-400 text-xs">Empreendimento</dt><dd class="font-medium text-gray-800">{{ $diagnostico->nome_empreendimento }}</dd></div>
+            @if($diagnostico->cidade)<div><dt class="text-gray-400 text-xs">Cidade</dt><dd class="font-medium text-gray-800">{{ $diagnostico->cidade }}</dd></div>@endif
+            @if($diagnostico->estagio_obra !== null)<div><dt class="text-gray-400 text-xs">Estágio da obra</dt><dd class="font-medium text-gray-800">{{ $diagnostico->estagio_obra }}%</dd></div>@endif
+            <div><dt class="text-gray-400 text-xs">Data</dt><dd class="font-medium text-gray-800">{{ $diagnostico->updated_at->format('d/m/Y') }}</dd></div>
+        </dl>
+    </div>
+    </div>
+
+    @push('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const ctx = document.getElementById('radarChart');
+        if (!ctx) return;
+
+        @php
+        $radarLabels = [];
+        $radarData = [];
+        $radarFullNames = [];
+        $dimNames = ['','Viabl.','Proj.','Orçam.','Plan.','Fin.','Conf.'];
+        $dimFullNames = ['','Viabilidade','Projetos','Orçamento','Planejamento','Financeiro','Conformidade'];
+        foreach($dimensoes as $d => $dim) {
+            $radarLabels[] = $dimNames[$d];
+            $radarFullNames[] = $dimFullNames[$d];
+            $radarData[] = $dim['score'];
+        }
+        @endphp
+
+        new Chart(ctx, {
+            type: 'radar',
+            data: {
+                labels: @json($radarLabels),
+                datasets: [{
+                    label: 'Pontuação',
+                    data: @json($radarData),
+                    backgroundColor: 'rgba(208, 174, 109, 0.2)',
+                    borderColor: '#D0AE6D',
+                    pointBackgroundColor: '#D0AE6D',
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: '#D0AE6D',
+                    borderWidth: 2,
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    r: {
+                        angleLines: { color: 'rgba(0, 0, 0, 0.05)' },
+                        grid: { color: 'rgba(0, 0, 0, 0.05)' },
+                        pointLabels: {
+                            font: { size: 10, family: "'Inter', sans-serif", weight: '600' },
+                            color: '#6b7280'
+                        },
+                        ticks: {
+                            display: false,
+                            min: 0,
+                            max: 100,
+                            stepSize: 25
+                        }
+                    }
+                },
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        backgroundColor: 'rgba(17, 24, 39, 0.9)',
+                        padding: 10,
+                        titleFont: { size: 12, family: "'Inter', sans-serif" },
+                        bodyFont: { size: 13, family: "'Inter', sans-serif", weight: 'bold' },
+                        displayColors: false,
+                        callbacks: {
+                            title: function(context) {
+                                const fullNames = @json($radarFullNames);
+                                return fullNames[context[0].dataIndex];
+                            },
+                            label: function(context) {
+                                return context.raw + '/100';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    });
+    </script>
+    @endpush
+</x-diagnosticos.layout>

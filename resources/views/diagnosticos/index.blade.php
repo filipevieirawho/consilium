@@ -1,0 +1,331 @@
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight flex items-center gap-2">
+            <ion-icon name="analytics-outline" class="text-[#D0AE6D] text-2xl"></ion-icon>
+            Diagnósticos
+        </h2>
+    </x-slot>
+
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+
+            <!-- Flash -->
+            @if(session('success'))
+            <div class="mb-4 px-4 py-3 bg-green-50 border border-green-200 text-green-800 rounded-lg text-sm">
+                {{ session('success') }}
+            </div>
+            @endif
+
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900">
+
+                    <!-- Top Bar -->
+                    <div class="flex justify-between items-center mb-6 gap-4 flex-wrap">
+                        <!-- Search & Filter -->
+                        <form method="GET" action="{{ route('diagnosticos.index') }}" class="flex gap-3 flex-wrap flex-grow">
+                            <input type="text" name="search" placeholder="Buscar por nome, empresa ou empreendimento..."
+                                value="{{ request('search') }}"
+                                class="w-full md:w-80 rounded-md border-gray-300 shadow-sm focus:border-[#D0AE6D] focus:ring-[#D0AE6D] px-4 py-2 text-sm">
+                            <select name="status" onchange="this.form.submit()"
+                                class="rounded-md border-gray-300 shadow-sm focus:border-[#D0AE6D] focus:ring-[#D0AE6D] pl-3 pr-8 py-2 text-sm">
+                                <option value="">Todos os status</option>
+                                <option value="em_andamento" {{ request('status') == 'em_andamento' ? 'selected' : '' }}>Em andamento</option>
+                                <option value="concluido" {{ request('status') == 'concluido' ? 'selected' : '' }}>Concluído</option>
+                            </select>
+                            <button type="submit" class="bg-gray-800 text-white px-3 py-2 rounded-md hover:bg-gray-700 transition-colors flex items-center" title="Buscar">
+                                <ion-icon name="search-outline" class="text-base"></ion-icon>
+                            </button>
+                            @if(request('search') || request('status'))
+                            <a href="{{ route('diagnosticos.index') }}" class="text-sm text-gray-500 hover:text-gray-900 self-center">Limpar</a>
+                            @endif
+                        </form>
+
+                        <!-- Generate link button -->
+                        <button id="btn-gerar-link"
+                            class="px-4 py-2 text-white font-medium rounded-md shadow-sm transition-colors flex items-center gap-2 text-sm"
+                            style="background-color: #D0AE6D;">
+                            <ion-icon name="link-outline" class="text-xl"></ion-icon> Gerar Link
+                        </button>
+                    </div>
+
+                    <!-- Table -->
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Data</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Empresa / Responsável</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Empreendimento</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">IPM</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Lead</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                @forelse($diagnosticos as $d)
+                                <tr class="hover:bg-gray-50 cursor-pointer transition-colors"
+                                    onclick="window.location='{{ route('diagnosticos.show', $d) }}'">
+                                    <td class="px-4 py-4 whitespace-nowrap">
+                                        <div class="text-xs text-gray-500">{{ $d->created_at->format('d/m/y') }}</div>
+                                        <div class="text-xs text-gray-400">{{ $d->created_at->format('H:i') }}</div>
+                                    </td>
+                                    <td class="px-4 py-4">
+                                        <div class="text-sm font-medium text-gray-900">{{ $d->empresa ?: '—' }}</div>
+                                        <div class="text-xs text-gray-500">{{ $d->nome ?: '—' }}</div>
+                                    </td>
+                                    <td class="px-4 py-4">
+                                        <div class="text-sm text-gray-700">{{ $d->nome_empreendimento ?: '—' }}</div>
+                                        @if($d->cidade)<div class="text-xs text-gray-400">{{ $d->cidade }}</div>@endif
+                                    </td>
+                                    <td class="px-4 py-4 whitespace-nowrap">
+                                        @if($d->ipm !== null)
+                                        @php
+                                            $faixaColors = [
+                                                'red'    => 'text-red-700 border-red-300 bg-red-50',
+                                                'yellow' => 'text-yellow-700 border-yellow-300 bg-yellow-50',
+                                                'green'  => 'text-green-700 border-green-300 bg-green-50',
+                                            ];
+                                            $fc = $faixaColors[$d->ipmFaixa()] ?? 'text-gray-500 border-gray-200 bg-gray-50';
+                                        @endphp
+                                        <span class="inline-flex items-center px-2.5 py-1 rounded-lg border text-sm font-bold {{ $fc }}">
+                                            {{ number_format($d->ipm, 1) }}
+                                        </span>
+                                        @else
+                                        <span class="text-xs text-gray-400">—</span>
+                                        @endif
+                                    </td>
+                                    <td class="px-4 py-4 whitespace-nowrap">
+                                        @if($d->status === 'concluido')
+                                        <span class="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider border text-green-700 border-green-300 bg-green-50">Concluído</span>
+                                        @else
+                                        <span class="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider border text-yellow-700 border-yellow-300 bg-yellow-50">Em andamento</span>
+                                        @endif
+                                    </td>
+                                    <td class="px-4 py-4 whitespace-nowrap">
+                                        @if($d->contact)
+                                        <a href="{{ route('contacts.show', $d->contact) }}" onclick="event.stopPropagation()"
+                                            class="text-xs text-[#D0AE6D] hover:underline">{{ $d->contact->name }}</a>
+                                        @else
+                                        <span class="text-xs text-gray-400">Avulso</span>
+                                        @endif
+                                    </td>
+                                </tr>
+                                @empty
+                                <tr>
+                                    <td colspan="6" class="px-6 py-10 text-center text-gray-400 text-sm">
+                                        Nenhum diagnóstico encontrado.
+                                    </td>
+                                </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Pagination -->
+                    <div class="mt-4">
+                        {{ $diagnosticos->links() }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Generate Link Modal -->
+    <div id="modal-gerar-link" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/40 backdrop-blur-sm p-4">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md p-8">
+            <div class="flex items-center justify-between mb-6">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full flex items-center justify-center" style="background-color: #fdf8ed;">
+                        <ion-icon name="link-outline" style="color: #D0AE6D; font-size: 1.25rem;"></ion-icon>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900">Gerar Link de Diagnóstico</h3>
+                </div>
+                <button id="btn-fechar-modal" class="text-gray-400 hover:text-gray-700">
+                    <ion-icon name="close-outline" class="text-2xl"></ion-icon>
+                </button>
+            </div>
+
+            <p class="text-sm text-gray-500 mb-5">
+                Gere um link único para o diagnóstico. Opcionalmente, vincule a um lead existente.
+            </p>
+
+            <div class="mb-5 relative" id="combo-box-container">
+                <label class="block text-sm font-medium text-gray-700 mb-1">Vincular a um lead <span class="text-gray-400 font-normal">(opcional)</span></label>
+                
+                <!-- Hidden input to store selected ID -->
+                <input type="hidden" id="select-contact" value="">
+
+                <!-- Search Input -->
+                <div class="relative">
+                    <input type="text" id="combo-search" autocomplete="off"
+                        placeholder="Buscar pelo nome ou empresa..."
+                        class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-[#D0AE6D] focus:ring-[#D0AE6D] pl-4 pr-11 py-2.5 text-sm cursor-text transition-colors"
+                    >
+                    <div class="absolute inset-y-0 right-3 flex items-center pointer-events-none">
+                        <ion-icon name="search-outline" class="text-gray-400 text-lg"></ion-icon>
+                    </div>
+                </div>
+
+                <!-- Dropdown list -->
+                <ul id="combo-dropdown" class="absolute z-50 w-full bg-white border border-gray-200 shadow-xl max-h-60 rounded-lg py-1 text-base overflow-auto focus:outline-none sm:text-sm hidden mt-1">
+                    <li class="combo-option cursor-pointer select-none relative py-2.5 pl-4 pr-4 hover:bg-gray-50 text-gray-900 border-b border-gray-100" data-value="">
+                        <span class="block truncate font-medium text-[#D0AE6D]">Diagnóstico avulso (sem lead)</span>
+                    </li>
+                    @foreach($contacts as $c)
+                    <li class="combo-option cursor-pointer select-none relative py-2.5 pl-4 pr-4 hover:bg-gray-50 text-gray-900" data-value="{{ $c->id }}">
+                        <span class="block font-medium lead-name">{{ $c->name }}</span>
+                        @if($c->company)
+                        <span class="block text-xs text-gray-500 mt-0.5">{{ $c->company }}</span>
+                        @endif
+                    </li>
+                    @endforeach
+                    <li id="combo-empty" class="hidden cursor-default select-none relative py-3 pl-4 pr-4 text-gray-500 text-sm text-center">
+                        Nenhum lead encontrado.
+                    </li>
+                </ul>
+                <p class="text-xs text-gray-500 mt-2">Dica: Deixe em branco se desejar gerar um link avulso para envio geral.</p>
+            </div>
+
+            <div id="link-resultado" class="hidden mb-5 p-4 bg-gray-50 rounded-xl border border-gray-200">
+                <p class="text-xs text-gray-500 mb-2 font-medium uppercase tracking-wide">Link gerado:</p>
+                <div class="flex items-center gap-2">
+                    <input type="text" id="link-gerado" readonly
+                        class="block flex-1 text-sm text-gray-800 bg-white border border-gray-200 rounded-lg px-3 py-2">
+                    <button id="btn-copiar"
+                        class="px-3 py-2 rounded-lg text-white text-sm font-medium"
+                        style="background-color: #D0AE6D;">
+                        Copiar
+                    </button>
+                </div>
+                <p id="copy-feedback" class="text-xs text-green-600 mt-2 hidden">✓ Link copiado!</p>
+            </div>
+
+            <div class="flex gap-3">
+                <button id="btn-gerar" class="flex-1 py-3 text-white font-semibold rounded-xl transition-all"
+                    style="background-color: #D0AE6D;">
+                    Gerar Link
+                </button>
+                <button id="btn-cancelar" class="flex-1 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold rounded-xl transition-all">
+                    Cancelar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    @push('scripts')
+    <script>
+    (function () {
+        const modal = document.getElementById('modal-gerar-link');
+        const btnAbrir = document.getElementById('btn-gerar-link');
+        const btnFechar = document.getElementById('btn-fechar-modal');
+        const btnCancelar = document.getElementById('btn-cancelar');
+        const btnGerar = document.getElementById('btn-gerar');
+        const btnCopiar = document.getElementById('btn-copiar');
+        const selectContact = document.getElementById('select-contact');
+        const linkResultado = document.getElementById('link-resultado');
+        const linkGerado = document.getElementById('link-gerado');
+        const copyFeedback = document.getElementById('copy-feedback');
+
+        // Combobox logic
+        const searchInput = document.getElementById('combo-search');
+        const dropdown = document.getElementById('combo-dropdown');
+        const options = dropdown.querySelectorAll('.combo-option');
+        const emptyMsg = document.getElementById('combo-empty');
+        const comboContainer = document.getElementById('combo-box-container');
+
+        searchInput.addEventListener('focus', () => dropdown.classList.remove('hidden'));
+        document.addEventListener('click', (e) => {
+            if (!comboContainer.contains(e.target)) dropdown.classList.add('hidden');
+        });
+
+        searchInput.addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            dropdown.classList.remove('hidden');
+            let hasVisible = false;
+            
+            options.forEach(opt => {
+                const text = opt.textContent.toLowerCase();
+                if (text.includes(term)) {
+                    opt.style.display = 'block';
+                    hasVisible = true;
+                } else {
+                    opt.style.display = 'none';
+                }
+            });
+            
+            emptyMsg.classList.toggle('hidden', hasVisible);
+        });
+
+        options.forEach(opt => {
+            opt.addEventListener('click', () => {
+                const val = opt.getAttribute('data-value');
+                selectContact.value = val;
+                
+                if(val === "") {
+                    searchInput.value = "";
+                } else {
+                    const nameSpan = opt.querySelector('.lead-name');
+                    searchInput.value = nameSpan ? nameSpan.textContent.trim() : opt.textContent.trim();
+                }
+                
+                dropdown.classList.add('hidden');
+            });
+        });
+
+        function abrirModal() { 
+            modal.classList.remove('hidden'); 
+            modal.classList.add('flex'); 
+        }
+        function fecharModal() { 
+            modal.classList.add('hidden'); 
+            modal.classList.remove('flex'); 
+            linkResultado.classList.add('hidden'); 
+            // Reset modal state
+            selectContact.value = "";
+            searchInput.value = "";
+            options.forEach(opt => opt.style.display = 'block');
+            emptyMsg.classList.add('hidden');
+        }
+
+        btnAbrir.addEventListener('click', abrirModal);
+        btnFechar.addEventListener('click', fecharModal);
+        btnCancelar.addEventListener('click', fecharModal);
+        modal.addEventListener('click', e => { if (e.target === modal) fecharModal(); });
+
+        btnGerar.addEventListener('click', function () {
+            btnGerar.disabled = true;
+            btnGerar.textContent = 'Gerando...';
+
+            fetch(@json(route('diagnosticos.generateLink')), {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                },
+                body: JSON.stringify({ contact_id: selectContact.value || null }),
+            })
+            .then(r => r.json())
+            .then(data => {
+                linkGerado.value = data.url;
+                linkResultado.classList.remove('hidden');
+                btnGerar.disabled = false;
+                btnGerar.textContent = 'Gerar Novo';
+            })
+            .catch(() => {
+                alert('Erro ao gerar link. Tente novamente.');
+                btnGerar.disabled = false;
+                btnGerar.textContent = 'Gerar Link';
+            });
+        });
+
+        btnCopiar.addEventListener('click', function () {
+            linkGerado.select();
+            document.execCommand('copy');
+            copyFeedback.classList.remove('hidden');
+            setTimeout(() => copyFeedback.classList.add('hidden'), 2500);
+        });
+    })();
+    </script>
+    @endpush
+</x-app-layout>

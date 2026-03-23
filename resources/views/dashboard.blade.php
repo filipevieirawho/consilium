@@ -26,8 +26,8 @@
                                 <!-- Filters and buttons -->
                                 <div class="flex gap-3 items-center flex-wrap">
                                     <!-- Year Select -->
-                                    <select name="year"
-                                        class="rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 pl-4 pr-10 py-2">
+                                    <select name="year" onchange="this.form.submit()"
+                                        class="w-36 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 pl-3 pr-8 py-2 text-sm">
                                         <option value="">Todos os anos</option>
                                         @for($year = date('Y'); $year >= 2026; $year--)
                                             <option value="{{ $year }}" {{ request('year') == $year ? 'selected' : '' }}>
@@ -37,8 +37,8 @@
                                     </select>
 
                                     <!-- Month Select -->
-                                    <select name="month"
-                                        class="rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 pl-4 pr-10 py-2">
+                                    <select name="month" onchange="this.form.submit()"
+                                        class="w-36 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 pl-3 pr-8 py-2 text-sm">
                                         <option value="">Todos os meses</option>
                                         <option value="1" {{ request('month') == '1' ? 'selected' : '' }}>Janeiro</option>
                                         <option value="2" {{ request('month') == '2' ? 'selected' : '' }}>Fevereiro
@@ -59,14 +59,27 @@
                                         </option>
                                     </select>
 
+                                    <!-- Status Select -->
+                                    <select name="status" onchange="this.form.submit()"
+                                        class="w-36 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 pl-3 pr-8 py-2 text-sm">
+                                        <option value="">Todos os status</option>
+                                        <option value="Cliente Potencial" {{ request('status') == 'Cliente Potencial' ? 'selected' : '' }}>Cliente Potencial</option>
+                                        <option value="Contactado" {{ request('status') == 'Contactado' ? 'selected' : '' }}>Contactado</option>
+                                        <option value="Proposta Enviada" {{ request('status') == 'Proposta Enviada' ? 'selected' : '' }}>Proposta Enviada</option>
+                                        <option value="Negociação" {{ request('status') == 'Negociação' ? 'selected' : '' }}>Negociação</option>
+                                        <option value="Stand By" {{ request('status') == 'Stand By' ? 'selected' : '' }}>
+                                            Stand By</option>
+                                    </select>
+
                                     <!-- Search Button -->
                                     <button type="submit"
-                                        class="bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-700 whitespace-nowrap font-medium transition-colors">
-                                        Buscar
+                                        class="bg-gray-800 text-white px-3 py-2 rounded-md hover:bg-gray-700 font-medium transition-colors flex items-center justify-center flex-shrink-0"
+                                        title="Buscar">
+                                        <ion-icon name="search-outline" class="text-base"></ion-icon>
                                     </button>
 
                                     <!-- Clear Filters -->
-                                    @if(request('search') || request('year') || request('month'))
+                                    @if(request('search') || request('year') || request('month') || request('status'))
                                         <a href="{{ route('dashboard') }}"
                                             class="ml-2 text-sm text-gray-500 hover:text-gray-900 whitespace-nowrap transition-colors">Limpar</a>
                                     @endif
@@ -78,7 +91,7 @@
                         <div class="w-full lg:w-auto flex justify-end flex-shrink-0">
                             <button type="button" x-data="" @click.prevent="$dispatch('open-modal', 'add-manual-lead')"
                                 class="px-4 py-2 text-white font-medium rounded-md shadow-sm transition-colors flex items-center gap-2"
-                                style="background-color: #D0AE6D; hover:background-color: #b5955a;">
+                                style="background-color: #D0AE6D;">
                                 <ion-icon name="receipt-outline" class="text-xl"></ion-icon> Novo Lead
                             </button>
                         </div>
@@ -137,11 +150,11 @@
                                         <td class="px-6 py-4 whitespace-nowrap text-sm">
                                             @php
                                                 $statusColors = [
-                                                    'Cliente Potencial' => 'text-[#2892D7] border-[#2892D7] bg-[#2892D7]/10',
-                                                    'Contactado' => 'text-[#00c49a] border-[#00c49a] bg-[#00c49a]/10',
-                                                    'Proposta Enviada' => 'text-[#D0AE6D] border-[#D0AE6D] bg-[#D0AE6D]/10',
-                                                    'Negociação' => 'text-[#D0AE6D] border-[#D0AE6D] bg-[#D0AE6D]/10',
-                                                    'Stand By' => 'text-[#6b7280] border-[#6b7280] bg-[#6b7280]/10',
+                                                    'Cliente Potencial' => 'text-[#2892D7] border-[#2892D7] bg-[#2892D7]/05',
+                                                    'Contactado' => 'text-[#00c49a] border-[#00c49a] bg-[#00c49a]/05',
+                                                    'Proposta Enviada' => 'text-[#D0AE6D] border-[#D0AE6D] bg-[#D0AE6D]/05',
+                                                    'Negociação' => 'text-[#D0AE6D] border-[#D0AE6D] bg-[#D0AE6D]/05',
+                                                    'Stand By' => 'text-[#6b7280] border-[#6b7280] bg-[#6b7280]/05',
                                                 ];
                                                 $statusClass = $statusColors[$contact->status] ?? 'text-gray-500 border-gray-300 bg-gray-50';
                                             @endphp

@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\DiagnosticoController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -42,6 +43,24 @@ Route::middleware('auth')->group(function () {
         Route::patch('/usuarios/{user}/active', [UserController::class, 'updateActive'])->name('usuarios.updateActive');
         Route::delete('/usuarios/{user}', [UserController::class, 'destroy'])->name('usuarios.destroy');
     });
+
+    // Diagnostico admin area
+    Route::get('/diagnosticos', [DiagnosticoController::class, 'index'])->name('diagnosticos.index');
+    Route::post('/diagnosticos/gerar-link', [DiagnosticoController::class, 'generateLink'])->name('diagnosticos.generateLink');
+    Route::get('/diagnosticos/{diagnostico}', [DiagnosticoController::class, 'show'])->name('diagnosticos.show');
+    Route::patch('/diagnosticos/{diagnostico}/vincular', [DiagnosticoController::class, 'vincular'])->name('diagnosticos.vincular');
 });
+
+// ── Public diagnostic form (no auth) ──────────────────────────────────────────
+Route::get('/diagnostico/{token}', [DiagnosticoController::class, 'landing'])->name('diagnostico.landing');
+Route::get('/diagnostico/{token}/dados', [DiagnosticoController::class, 'showForm'])->name('diagnostico.form');
+Route::post('/diagnostico/{token}/dados', [DiagnosticoController::class, 'saveForm'])->name('diagnostico.saveForm');
+Route::get('/diagnostico/{token}/dados/empreendimento', [DiagnosticoController::class, 'showForm2'])->name('diagnostico.form2');
+Route::post('/diagnostico/{token}/dados/empreendimento', [DiagnosticoController::class, 'saveForm2'])->name('diagnostico.saveForm2');
+Route::get('/diagnostico/{token}/instrucoes', [DiagnosticoController::class, 'showInstrucoes'])->name('diagnostico.instrucoes');
+Route::get('/diagnostico/{token}/pergunta/{num}', [DiagnosticoController::class, 'showPergunta'])->name('diagnostico.pergunta');
+Route::post('/diagnostico/{token}/resposta', [DiagnosticoController::class, 'saveAnswer'])->name('diagnostico.saveAnswer');
+Route::get('/diagnostico/{token}/finalizar', [DiagnosticoController::class, 'finalizar'])->name('diagnostico.finalizar');
+Route::get('/diagnostico/{token}/resultado', [DiagnosticoController::class, 'result'])->name('diagnostico.result');
 
 require __DIR__ . '/auth.php';

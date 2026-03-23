@@ -37,6 +37,11 @@ class ContactController extends Controller
             $query->whereMonth('created_at', $request->input('month'));
         }
 
+        // Status filter
+        if ($request->filled('status')) {
+            $query->where('status', $request->input('status'));
+        }
+
         $contacts = $query->latest()->paginate(10);
 
         return view('dashboard', compact('contacts'));
