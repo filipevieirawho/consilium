@@ -4,9 +4,21 @@
             <h2 class="font-semibold text-xl text-gray-800 leading-tight flex items-center gap-2">
                 <ion-icon name="receipt-outline" class="text-[#D0AE6D] text-2xl"></ion-icon> {{ $contact->name }}
             </h2>
-            <a href="{{ route('dashboard') }}" class="text-sm text-gray-500 hover:text-gray-700">
-                &larr; Voltar para Dashboard
-            </a>
+            <div class="flex items-center gap-4">
+                <!-- Generate Diagnostic for this Lead -->
+                <form action="{{ route('diagnosticos.generateLink') }}" method="POST" target="_blank">
+                    @csrf
+                    <input type="hidden" name="contact_id" value="{{ $contact->id }}">
+                    <button type="submit" class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#D0AE6D] text-white text-sm font-medium rounded-md hover:bg-[#b89555] transition-colors shadow-sm">
+                        <ion-icon name="link-outline" class="text-lg"></ion-icon>
+                        Gerar Diagnóstico
+                    </button>
+                </form>
+
+                <a href="{{ route('dashboard') }}" class="text-sm text-gray-500 hover:text-gray-700 flex items-center gap-1">
+                    <ion-icon name="arrow-back-outline"></ion-icon> Voltar
+                </a>
+            </div>
         </div>
     </x-slot>
 
