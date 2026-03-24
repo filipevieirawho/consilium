@@ -43,6 +43,8 @@
         "DB_CONNECTION": "turso",
         "TURSO_DATABASE_URL": "libsql://consilium-filipevieirawho.aws-us-east-1.turso.io",
         "TURSO_AUTH_TOKEN": "eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3NzE5MDIwNTQsImlkIjoiODJkNzU2NDMtNGIxYy00ZjkwLWFjNWUtMjgzZDdiNWFiNWUyIiwicmlkIjoiODZhZTUyZGItMDJjZi00M2M3LTgxNzYtY2VjYjA3ZmMxOTBhIn0.ACPfUTlk8GVTsdA_Xx6ua7mw0_2sF9bf_GW7cPToP1Sdpz-2z4PVQmaT2GZIdvHO0bHiksr5ERmV7e3s_YSfCw",
+        "TURSO_CONNECT_TIMEOUT": "10",
+        "TURSO_REQUEST_TIMEOUT": "30",
         "APP_CONFIG_CACHE": "/tmp/config.php",
         "APP_EVENTS_CACHE": "/tmp/events.php",
         "APP_PACKAGES_CACHE": "/tmp/packages.php",
