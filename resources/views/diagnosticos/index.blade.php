@@ -40,12 +40,19 @@
                             @endif
                         </form>
 
-                        <!-- Generate link button -->
-                        <button id="btn-gerar-link"
-                            class="px-4 py-2 text-white font-medium rounded-md shadow-sm transition-colors flex items-center gap-2 text-sm"
-                            style="background-color: #D0AE6D;">
-                            <ion-icon name="link-outline" class="text-xl"></ion-icon> Gerar Link
-                        </button>
+                        <!-- Generate link buttons -->
+                        <div class="flex gap-3">
+                            <button id="btn-copiar-campanha"
+                                onclick="navigator.clipboard.writeText('{{ url(route('diagnostico.novo')) }}').then(() => alert('Estrela copiada! O link fixo de campanha foi copiado para sua área de transferência.'))"
+                                class="px-4 py-2 bg-white text-gray-700 font-medium rounded-md border border-gray-300 shadow-sm hover:bg-gray-50 transition-colors flex items-center gap-2 text-sm">
+                                <ion-icon name="flash-outline" class="text-xl text-yellow-500"></ion-icon> Link de Campanha
+                            </button>
+                            <button id="btn-gerar-link"
+                                class="px-4 py-2 text-white font-medium rounded-md shadow-sm transition-colors flex items-center gap-2 text-sm"
+                                style="background-color: #D0AE6D;">
+                                <ion-icon name="add-outline" class="text-xl"></ion-icon> Link Específico
+                            </button>
+                        </div>
                     </div>
 
                     <!-- Table -->

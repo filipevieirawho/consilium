@@ -14,6 +14,22 @@ class DiagnosticoController extends Controller
     // ─── Public flow ─────────────────────────────────────────────────────
 
     /**
+     * Start a fresh generic diagnostic (Campaign Link)
+     * GET /diagnostico/novo
+     */
+    public function startNovo()
+    {
+        $token = Str::random(32);
+        
+        Diagnostico::create([
+            'token' => $token,
+            'status' => 'em_andamento',
+        ]);
+
+        return redirect()->route('diagnostico.landing', $token);
+    }
+
+    /**
      * BLOCK 0 — Landing screen.
      * GET /diagnostico/{token}
      */

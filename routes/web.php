@@ -52,6 +52,7 @@ Route::middleware('auth')->group(function () {
 });
 
 // ── Public diagnostic form (no auth) ──────────────────────────────────────────
+Route::get('/diagnostico/novo', [DiagnosticoController::class, 'startNovo'])->name('diagnostico.novo');
 Route::get('/diagnostico/{token}', [DiagnosticoController::class, 'landing'])->name('diagnostico.landing');
 Route::get('/diagnostico/{token}/dados', [DiagnosticoController::class, 'showForm'])->name('diagnostico.form');
 Route::post('/diagnostico/{token}/dados', [DiagnosticoController::class, 'saveForm'])->name('diagnostico.saveForm');
