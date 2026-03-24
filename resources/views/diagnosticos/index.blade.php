@@ -66,6 +66,7 @@
                                     <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">IPM</th>
                                     <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
                                     <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Lead</th>
+                                    <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Ações</th>
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
@@ -116,10 +117,19 @@
                                         <span class="text-xs text-gray-400">Avulso</span>
                                         @endif
                                     </td>
+                                    <td class="px-4 py-4 whitespace-nowrap text-right">
+                                        <form action="{{ route('diagnosticos.destroy', $d) }}" method="POST" class="inline-block" onsubmit="return confirm('Tem certeza que deseja apagar permanentemente este diagnóstico?');">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" onclick="event.stopPropagation()" class="text-gray-400 hover:text-red-600 transition-colors p-1" title="Excluir">
+                                                <ion-icon name="trash-outline" class="text-lg"></ion-icon>
+                                            </button>
+                                        </form>
+                                    </td>
                                 </tr>
                                 @empty
                                 <tr>
-                                    <td colspan="6" class="px-6 py-10 text-center text-gray-400 text-sm">
+                                    <td colspan="7" class="px-6 py-10 text-center text-gray-400 text-sm">
                                         Nenhum diagnóstico encontrado.
                                     </td>
                                 </tr>

@@ -334,6 +334,19 @@ class DiagnosticoController extends Controller
     }
 
     /**
+     * DELETE /diagnosticos/{diagnostico}
+     * Admin deleting a diagnostic
+     */
+    public function destroy(Diagnostico $diagnostico)
+    {
+        $diagnostico->respostas()->delete();
+        $diagnostico->delete();
+
+        return redirect()->route('diagnosticos.index')
+            ->with('success', 'Diagnóstico excluído com sucesso!');
+    }
+
+    /**
      * Generate a new diagnostic link (admin).
      * POST /diagnosticos/gerar-link
      */

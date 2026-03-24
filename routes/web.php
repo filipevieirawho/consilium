@@ -48,6 +48,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/diagnosticos', [DiagnosticoController::class, 'index'])->name('diagnosticos.index');
     Route::post('/diagnosticos/gerar-link', [DiagnosticoController::class, 'generateLink'])->name('diagnosticos.generateLink');
     Route::get('/diagnosticos/{diagnostico}', [DiagnosticoController::class, 'show'])->name('diagnosticos.show');
+    Route::delete('/diagnosticos/{diagnostico}', [DiagnosticoController::class, 'destroy'])->name('diagnosticos.destroy');
     Route::patch('/diagnosticos/{diagnostico}/vincular', [DiagnosticoController::class, 'vincular'])->name('diagnosticos.vincular');
 });
 
