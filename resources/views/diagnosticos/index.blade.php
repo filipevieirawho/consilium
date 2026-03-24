@@ -118,13 +118,25 @@
                                         @endif
                                     </td>
                                     <td class="px-4 py-4 whitespace-nowrap text-right">
-                                        <form action="{{ route('diagnosticos.destroy', $d) }}" method="POST" class="inline-block" onsubmit="return confirm('Tem certeza que deseja apagar permanentemente este diagnóstico?');">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" onclick="event.stopPropagation()" class="text-gray-400 hover:text-red-600 transition-colors p-1" title="Excluir">
-                                                <ion-icon name="trash-outline" class="text-lg"></ion-icon>
+                                        <div class="relative inline-block text-left" x-data="{ open: false }" @click.outside="open = false">
+                                            <button @click.stop="open = !open" type="button" class="text-gray-400 hover:text-gray-700 transition-colors p-1 rounded-full hover:bg-gray-100 focus:outline-none" title="Opções">
+                                                <ion-icon name="ellipsis-horizontal-sharp" class="text-lg block"></ion-icon>
                                             </button>
-                                        </form>
+                                            
+                                            <div x-show="open" style="display: none;" x-cloak
+                                                x-transition:enter="transition ease-out duration-100"
+                                                x-transition:enter-start="transform opacity-0 scale-95"
+                                                x-transition:enter-end="transform opacity-100 scale-100"
+                                                x-transition:leave="transition ease-in duration-75"
+                                                x-transition:leave-start="transform opacity-100 scale-100"
+                                                x-transition:leave-end="transform opacity-0 scale-95"
+                                                class="absolute right-0 mt-1 w-36 bg-white rounded-md shadow-lg border border-gray-100 z-10 py-1">
+                                                <button type="button" @click.stop="open = false; openDeleteModal('{{ route('diagnosticos.destroy', $d) }}')"
+                                                    class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors">
+                                                    Excluir
+                                                </button>
+                                            </div>
+                                        </div>
                                     </td>
                                 </tr>
                                 @empty
@@ -229,8 +241,47 @@
         </div>
     </div>
 
+    {{-- Delete Diagnostic Confirmation Modal --}}
+    <div id="deleteDiagnosticModal" class="fixed inset-0 z-50 hidden items-center justify-center">
+        <div class="fixed inset-0 bg-black bg-opacity-50" onclick="closeDeleteModal()"></div>
+        <div class="relative bg-white rounded-lg shadow-xl p-6 mx-4 max-w-sm w-full">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">Confirmar exclusão</h3>
+            <p class="text-sm text-gray-600 mb-6">Tem certeza que deseja excluir permanentemente este diagnóstico? Esta ação não pode ser desfeita.</p>
+            <div class="flex justify-end gap-3">
+                <button type="button" onclick="closeDeleteModal()"
+                    class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200">Cancelar</button>
+                <form id="deleteDiagnosticForm" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit"
+                        class="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-700">Excluir</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
     @push('scripts')
     <script>
+        // Modal Logic para exclusão
+        function openDeleteModal(actionUrl) {
+            document.getElementById('deleteDiagnosticForm').action = actionUrl;
+            const modal = document.getElementById('deleteDiagnosticModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeDeleteModal() {
+            const modal = document.getElementById('deleteDiagnosticModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeDeleteModal();
+            }
+        });
+
     (function () {
         const modal = document.getElementById('modal-gerar-link');
         const btnAbrir = document.getElementById('btn-gerar-link');
