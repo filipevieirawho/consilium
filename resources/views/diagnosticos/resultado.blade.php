@@ -66,7 +66,7 @@ $cfg = $faixaConfig[$faixa];
                         <span class="text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-md bg-red-100 text-red-600">Atenção</span>
                         @endif
                     </div>
-                    <span class="text-sm font-bold" style="{{ $dim['fraca'] ? 'color: #dc2626;' : 'color: #16a34a;' }}">{{ $dim['score'] }}/100</span>
+                    <span class="text-sm font-bold" style="color: {{ $dim['fraca'] ? '#ef4444' : ($dim['score'] >= 70 ? '#22c55e' : '#f59e0b') }};">{{ $dim['score'] }}/100</span>
                 </div>
                 <div class="w-full bg-gray-100 rounded-full h-2.5">
                     <div class="h-2.5 rounded-full transition-all duration-700"
