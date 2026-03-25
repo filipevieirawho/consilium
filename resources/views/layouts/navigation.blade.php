@@ -16,8 +16,14 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('empresas.index')" :active="request()->routeIs('empresas.*')">
+                        {{ __('Empresas') }}
+                    </x-nav-link>
                     <x-nav-link :href="route('diagnosticos.index')" :active="request()->routeIs('diagnosticos.*')">
                         {{ __('Diagnóstico') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('questionarios.index')" :active="request()->routeIs('questionarios.*')">
+                        {{ __('Questionários') }}
                     </x-nav-link>
                 </div>
             </div>
@@ -87,8 +93,14 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('empresas.index')" :active="request()->routeIs('empresas.*')">
+                {{ __('Empresas') }}
+            </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('diagnosticos.index')" :active="request()->routeIs('diagnosticos.*')">
                 {{ __('Diagnóstico') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('questionarios.index')" :active="request()->routeIs('questionarios.*')">
+                {{ __('Questionários') }}
             </x-responsive-nav-link>
         </div>
 

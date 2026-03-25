@@ -4,6 +4,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DiagnosticoController;
+use App\Http\Controllers\EmpresaController;
+use App\Http\Controllers\QuestionarioController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -50,6 +52,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/diagnosticos/{diagnostico}', [DiagnosticoController::class, 'show'])->name('diagnosticos.show');
     Route::delete('/diagnosticos/{diagnostico}', [DiagnosticoController::class, 'destroy'])->name('diagnosticos.destroy');
     Route::patch('/diagnosticos/{diagnostico}/vincular', [DiagnosticoController::class, 'vincular'])->name('diagnosticos.vincular');
+
+    // Empresas
+    Route::resource('/empresas', EmpresaController::class);
+    Route::post('/empresas/cnpj-lookup', [EmpresaController::class, 'cnpjLookup'])->name('empresas.cnpjLookup');
+
+    // Questionários
+    Route::resource('/questionarios', QuestionarioController::class);
 });
 
 // ── Public diagnostic form (no auth) ──────────────────────────────────────────
