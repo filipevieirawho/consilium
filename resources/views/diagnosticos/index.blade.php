@@ -177,38 +177,57 @@
                 Gere um link único para o diagnóstico. Opcionalmente, vincule a um lead existente.
             </p>
 
-            <div class="mb-5">
-                <label class="block text-sm font-medium text-gray-700 mb-1">Empresa <span class="text-red-500">*</span></label>
-                <select id="select-empresa-modal" class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-[#D0AE6D] focus:ring-[#D0AE6D] py-2.5 text-sm">
-                    <option value="">Selecione a empresa...</option>
+            <div class="relative mb-5">
+                <x-custom-combobox 
+                    id="select-empresa" 
+                    label="Empresa" 
+                    placeholder="Selecione a empresa..." 
+                    icon="business-outline"
+                    emptyMessage="Nenhuma empresa encontrada.">
                     @foreach(\App\Models\Empresa::orderBy('nome_fantasia')->get() as $emp)
-                        <option value="{{ $emp->id }}">{{ $emp->nome_fantasia }}</option>
+                        <li class="combo-option cursor-pointer select-none relative py-2.5 pl-4 pr-4 hover:bg-gray-50 text-gray-900" 
+                            data-value="{{ $emp->id }}">
+                            <span class="block font-medium item-name">{{ $emp->nome_fantasia }}</span>
+                        </li>
                     @endforeach
-                </select>
-                <p class="text-[10px] text-gray-400 mt-1">Obrigatório para a escala B2B.</p>
+                </x-custom-combobox>
+                <p class="text-[10px] text-gray-400 mt-1 absolute -bottom-5 left-0">Obrigatório para a escala B2B.</p>
             </div>
 
-            <div class="mb-5">
-                <label class="block text-sm font-medium text-gray-700 mb-1">Lead / Contato <span class="text-gray-400 font-normal">(opcional)</span></label>
-                <select id="select-contact" class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-[#D0AE6D] focus:ring-[#D0AE6D] py-2.5 text-sm" placeholder="Buscar pelo nome...">
-                    <option value="">Sem lead vinculado</option>
-                    @foreach($contacts as $c)
-                        <option value="{{ $c->id }}" data-empresa-id="{{ $c->empresa_id }}">
-                            {{ $c->name }} {!! $c->company ? ' - <span class="text-xs text-gray-500">'.$c->company.'</span>' : '' !!}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
+            <x-custom-combobox 
+                id="select-contact" 
+                label="Lead / Contato" 
+                optional="true"
+                placeholder="Buscar pelo nome..." 
+                icon="person-outline"
+                emptyMessage="Nenhum lead encontrado."
+                onSelect="onContactSelect">
+                @foreach($contacts as $c)
+                    <li class="combo-option cursor-pointer select-none relative py-2.5 pl-4 pr-4 hover:bg-gray-50 text-gray-900" 
+                        data-value="{{ $c->id }}" 
+                        data-empresa-id="{{ $c->empresa_id }}">
+                        <span class="block font-medium item-name">{{ $c->name }}</span>
+                        @if($c->company)
+                        <span class="block text-xs text-gray-500 mt-0.5">{{ $c->company }}</span>
+                        @endif
+                    </li>
+                @endforeach
+            </x-custom-combobox>
 
-            <div class="mb-5">
-                <label class="block text-sm font-medium text-gray-700 mb-1">Modelo de Questionário</label>
-                <select id="select-questionario" class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-[#D0AE6D] focus:ring-[#D0AE6D] py-2.5 text-sm">
-                    <option value="">Padrão (18 questões estáticas)</option>
-                    @foreach($questionarios as $q)
-                        <option value="{{ $q->id }}">{{ $q->titulo }} ({{ $q->questoes_count }} questões)</option>
-                    @endforeach
-                </select>
-            </div>
+            <x-custom-combobox 
+                id="select-questionario" 
+                label="Modelo de Questionário" 
+                optional="true"
+                placeholder="Padrão (18 questões estáticas)" 
+                icon="list-outline"
+                emptyMessage="Nenhum questionário encontrado.">
+                @foreach($questionarios as $q)
+                    <li class="combo-option cursor-pointer select-none relative py-2.5 pl-4 pr-4 hover:bg-gray-50 text-gray-900" 
+                        data-value="{{ $q->id }}">
+                        <span class="block font-medium item-name">{{ $q->titulo }} ({{ $q->questoes_count }} questões)</span>
+                    </li>
+                @endforeach
+            </x-custom-combobox>
 
             <div id="link-resultado" class="hidden mb-5 p-4 bg-gray-50 rounded-xl border border-gray-200">
                 <p class="text-xs text-gray-500 mb-2 font-medium uppercase tracking-wide">Link gerado:</p>
@@ -256,13 +275,20 @@
             </p>
 
             <div class="mb-5">
-                <label class="block text-sm font-medium text-gray-700 mb-1">Modelo de Questionário</label>
-                <select id="select-questionario-campanha" class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-[#D0AE6D] focus:ring-[#D0AE6D] py-2.5 text-sm">
-                    <option value="">Padrão (18 questões estáticas)</option>
+                <x-custom-combobox 
+                    id="select-questionario-campanha" 
+                    label="Modelo de Questionário" 
+                    optional="true"
+                    placeholder="Padrão (18 questões estáticas)" 
+                    icon="list-outline"
+                    emptyMessage="Nenhum questionário encontrado.">
                     @foreach($questionarios as $q)
-                        <option value="{{ $q->id }}">{{ $q->titulo }} ({{ $q->questoes_count }} questões)</option>
+                        <li class="combo-option cursor-pointer select-none relative py-2.5 pl-4 pr-4 hover:bg-gray-50 text-gray-900" 
+                            data-value="{{ $q->id }}">
+                            <span class="block font-medium item-name">{{ $q->titulo }} ({{ $q->questoes_count }} questões)</span>
+                        </li>
                     @endforeach
-                </select>
+                </x-custom-combobox>
             </div>
 
             <div id="link-resultado-campanha" class="hidden mb-5 p-4 bg-gray-50 rounded-xl border border-gray-200">
@@ -334,26 +360,37 @@
         const btnCancelar = document.getElementById('btn-cancelar');
         const btnGerar = document.getElementById('btn-gerar');
         const btnCopiar = document.getElementById('btn-copiar');
+        const selectContact = document.getElementById('select-contact');
+        const selectEmpresa = document.getElementById('select-empresa-modal');
+        const selectQuestionario = document.getElementById('select-questionario');
         const linkResultado = document.getElementById('link-resultado');
         const linkGerado = document.getElementById('link-gerado');
         const copyFeedback = document.getElementById('copy-feedback');
 
-        // Initialize TomSelect for all dropdowns
-        const tsEmpresa = new TomSelect('#select-empresa-modal', { create: false, placeholder: 'Selecione a empresa...' });
-        const tsContact = new TomSelect('#select-contact', { create: false, placeholder: 'Buscar pelo nome...' });
-        const tsQuestionario = new TomSelect('#select-questionario', { create: false });
-        const tsQuestionarioCampanha = new TomSelect('#select-questionario-campanha', { create: false });
-
-        // Auto-select Empresa if contact belongs to one
-        tsContact.on('change', function(value) {
-            if (value) {
-                const option = tsContact.options[value];
-                const empId = option.dataset ? option.dataset.empresaId : option.getAttribute('data-empresa-id');
-                if (empId && empId !== "null" && empId !== "") {
-                    tsEmpresa.setValue(empId);
+        // Define global callback for Contact selection to auto-fill Empresa
+        window.onContactSelect = function(val, opt) {
+            const empId = opt.getAttribute('data-empresa-id');
+            if (empId && empId !== "null" && empId !== "") {
+                const selectEmpresa = document.getElementById('select-empresa');
+                if (selectEmpresa) {
+                    selectEmpresa.value = empId;
+                    const empNameSpan = opt.querySelector('.text-xs');
+                    
+                    // We need to trigger the UI update for the Empresa combobox
+                    const empContainer = document.getElementById('combo-container-select-empresa');
+                    if (empContainer) {
+                        const searchInput = empContainer.querySelector('.combo-search-input');
+                        // Find the option in the Empresa combobox
+                        const empOptions = empContainer.querySelectorAll('.combo-option');
+                        empOptions.forEach(eOpt => {
+                            if (eOpt.getAttribute('data-value') === empId) {
+                                searchInput.value = eOpt.querySelector('.item-name').textContent.trim();
+                            }
+                        });
+                    }
                 }
             }
-        });
+        };
 
         function abrirModal() { 
             modal.classList.remove('hidden'); 
@@ -363,10 +400,21 @@
             modal.classList.add('hidden'); 
             modal.classList.remove('flex'); 
             linkResultado.classList.add('hidden'); 
+            
             // Reset modal state
-            tsContact.clear();
-            tsEmpresa.clear();
-            tsQuestionario.clear();
+            document.getElementById('select-contact').value = "";
+            document.getElementById('combo-search-select-contact').value = "";
+            
+            document.getElementById('select-empresa').value = "";
+            document.getElementById('combo-search-select-empresa').value = "";
+            
+            document.getElementById('select-questionario').value = "";
+            document.getElementById('combo-search-select-questionario').value = "";
+            
+            // Show all options
+            document.querySelectorAll('#modal-gerar-link .combo-option').forEach(opt => opt.style.display = 'block');
+            document.querySelectorAll('#modal-gerar-link .combo-empty').forEach(msg => msg.classList.add('hidden'));
+            
             btnGerar.disabled = false;
             btnGerar.textContent = 'Gerar Link';
         }
@@ -377,7 +425,8 @@
         modal.addEventListener('click', e => { if (e.target === modal) fecharModal(); });
 
         btnGerar.addEventListener('click', function () {
-            if (!tsEmpresa.getValue()) {
+            const empId = document.getElementById('select-empresa').value;
+            if (!empId) {
                 alert('Por favor, selecione uma Empresa. Esta é uma exigência do novo modelo B2B.');
                 return;
             }
@@ -393,9 +442,9 @@
                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
                 },
                 body: JSON.stringify({ 
-                    contact_id: tsContact.getValue() || null,
-                    empresa_id: tsEmpresa.getValue() || null,
-                    questionario_id: tsQuestionario.getValue() || null
+                    contact_id: document.getElementById('select-contact').value || null,
+                    empresa_id: empId || null,
+                    questionario_id: document.getElementById('select-questionario').value || null
                 }),
             })
             .then(r => r.json())
@@ -441,7 +490,7 @@
             modalCampanha.classList.add('hidden');
             modalCampanha.classList.remove('flex');
             linkResultadoCampanha.classList.add('hidden');
-            tsQuestionarioCampanha.clear();
+            selectQuestionarioCampanha.value = "";
             btnGerarCampanha.classList.remove('hidden');
         }
 
@@ -450,7 +499,7 @@
         modalCampanha.addEventListener('click', e => { if (e.target === modalCampanha) fecharModalCampanha(); });
 
         btnGerarCampanha.addEventListener('click', function() {
-            const qId = tsQuestionarioCampanha.getValue();
+            const qId = document.getElementById('select-questionario-campanha').value;
             let finalUrl = baseUrlCampanha;
             if (qId) {
                 finalUrl += '?q=' + qId;

@@ -593,25 +593,39 @@
                 Gere um link único para o diagnóstico vinculado a este lead.
             </p>
 
-            <div class="mb-5 text-left">
-                <label class="block text-sm font-medium text-gray-700 mb-1">Empresa <span class="text-red-500">*</span></label>
-                <select id="diag-select-empresa" class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-[#D0AE6D] focus:ring-[#D0AE6D] py-2.5 text-sm">
-                    <option value="">Selecione a empresa...</option>
+            <div class="mb-5 text-left relative">
+                <x-custom-combobox 
+                    id="diag-select-empresa" 
+                    label="Empresa" 
+                    placeholder="Selecione a empresa..." 
+                    icon="business-outline"
+                    emptyMessage="Nenhuma empresa encontrada."
+                    selectedValue="{{ $contact->empresa_id ?? '' }}">
                     @foreach(\App\Models\Empresa::orderBy('nome_fantasia')->get() as $emp)
-                        <option value="{{ $emp->id }}" {{ $contact->empresa_id == $emp->id ? 'selected' : '' }}>{{ $emp->nome_fantasia }}</option>
+                        <li class="combo-option cursor-pointer select-none relative py-2.5 pl-4 pr-4 hover:bg-gray-50 text-gray-900" 
+                            data-value="{{ $emp->id }}">
+                            <span class="block font-medium item-name">{{ $emp->nome_fantasia }}</span>
+                        </li>
                     @endforeach
-                </select>
-                <p class="text-[10px] text-gray-400 mt-1">Obrigatório para a escala B2B.</p>
+                </x-custom-combobox>
+                <p class="text-[10px] text-gray-400 mt-1 absolute -bottom-5 left-0">Obrigatório para a escala B2B.</p>
             </div>
 
             <div class="mb-5 text-left">
-                <label class="block text-sm font-medium text-gray-700 mb-1">Modelo de Questionário</label>
-                <select id="diag-select-questionario" class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-[#D0AE6D] focus:ring-[#D0AE6D] py-2.5 text-sm">
-                    <option value="">Padrão (18 questões estáticas)</option>
+                <x-custom-combobox 
+                    id="diag-select-questionario" 
+                    label="Modelo de Questionário" 
+                    optional="true"
+                    placeholder="Padrão (18 questões estáticas)" 
+                    icon="list-outline"
+                    emptyMessage="Nenhum questionário encontrado.">
                     @foreach($questionarios as $q)
-                        <option value="{{ $q->id }}">{{ $q->titulo }} ({{ $q->questoes_count }} questões)</option>
+                        <li class="combo-option cursor-pointer select-none relative py-2.5 pl-4 pr-4 hover:bg-gray-50 text-gray-900" 
+                            data-value="{{ $q->id }}">
+                            <span class="block font-medium item-name">{{ $q->titulo }} ({{ $q->questoes_count }} questões)</span>
+                        </li>
                     @endforeach
-                </select>
+                </x-custom-combobox>
             </div>
 
             <div id="diag-link-resultado" class="hidden mb-5 p-4 bg-gray-50 rounded-xl border border-gray-200 text-left">
@@ -672,20 +686,10 @@
             const linkGeradoDiag = document.getElementById('diag-link-gerado');
             const copyFeedbackDiag = document.getElementById('diag-copy-feedback');
 
-            // Initialize TomSelect
-            const tsEmpresaDiag = new TomSelect('#diag-select-empresa', { create: false, placeholder: 'Selecione a empresa...' });
-            const tsQuestionarioDiag = new TomSelect('#diag-select-questionario', { create: false });
-
-            // Listen for modal open event from Alpine to sync UI if needed, but TomSelect works fine hidden.
-            window.addEventListener('open-modal', event => {
-                if(event.detail === 'gerar-diagnostico-modal') {
-                    // Reset if needed
-                }
-            });
-
             if (btnGerarDiag) {
                 btnGerarDiag.addEventListener('click', function () {
-                    if (!tsEmpresaDiag.getValue()) {
+                    const empId = document.getElementById('diag-select-empresa').value;
+                    if (!empId) {
                         alert('Por favor, selecione uma Empresa. Esta é uma exigência do novo modelo B2B.');
                         return;
                     }
@@ -702,8 +706,8 @@
                         },
                         body: JSON.stringify({ 
                             contact_id: '{{ $contact->id }}',
-                            empresa_id: tsEmpresaDiag.getValue() || null,
-                            questionario_id: tsQuestionarioDiag.getValue() || null
+                            empresa_id: empId || null,
+                            questionario_id: document.getElementById('diag-select-questionario').value || null
                         }),
                     })
                     .then(r => r.json())
