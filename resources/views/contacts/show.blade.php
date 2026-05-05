@@ -477,9 +477,23 @@
                         class="block w-full rounded-md border-gray-300 shadow-sm focus:border-[#D0AE6D] focus:ring-[#D0AE6D] sm:text-sm px-4 py-2">
                 </div>
 
-                <!-- Empresa -->
+                <!-- Empresa Vinculada (Sistema) -->
                 <div>
-                    <label for="company" class="block text-sm font-medium text-gray-700 mb-1">Empresa</label>
+                    <label for="empresa_id" class="block text-sm font-medium text-gray-700 mb-1">Empresa Vinculada no Sistema</label>
+                    <select name="empresa_id" id="empresa_id"
+                        class="w-full rounded-md border-gray-300 shadow-sm focus:border-[#D0AE6D] focus:ring-[#D0AE6D] sm:text-sm px-4 py-2">
+                        <option value="">-- Nenhuma / Avulso --</option>
+                        @foreach(\App\Models\Empresa::orderBy('nome_fantasia')->get() as $emp)
+                            <option value="{{ $emp->id }}" {{ $contact->empresa_id == $emp->id ? 'selected' : '' }}>
+                                {{ $emp->nome_fantasia }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <!-- Empresa (Texto Original) -->
+                <div>
+                    <label for="company" class="block text-sm font-medium text-gray-700 mb-1">Nome da Empresa (Texto Original do Lead)</label>
                     <input type="text" name="company" id="company" value="{{ $contact->company }}"
                         class="block w-full rounded-md border-gray-300 shadow-sm focus:border-[#D0AE6D] focus:ring-[#D0AE6D] sm:text-sm px-4 py-2">
                 </div>

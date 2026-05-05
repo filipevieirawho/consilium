@@ -125,9 +125,9 @@ class ContactController extends Controller
      * Try to link contact to an existing Empresa by company name or corporate email domain.
      * If no match, create a new Empresa automatically if company name is provided.
      */
-    protected function vinculateEmpresa(Contact $contact): void
+    protected function vinculateEmpresa(Contact $contact, $force = false): void
     {
-        if ($contact->empresa_id) return; // already linked
+        if ($contact->empresa_id && !$force) return; // already linked
 
         $empresa = null;
 
@@ -170,6 +170,7 @@ class ContactController extends Controller
             'email' => 'nullable|email|max:255',
             'phone' => 'nullable|string|max:20',
             'message' => 'nullable|string',
+            'empresa_id' => 'nullable|exists:empresas,id',
         ]);
 
         $data = array_merge($validated, [
@@ -177,6 +178,11 @@ class ContactController extends Controller
         ]);
 
         $contact->update($data);
+
+        // Se o usuário não setou uma empresa manualmente, tenta vincular pelo nome
+        if (!$request->filled('empresa_id') && $contact->company) {
+            $this->vinculateEmpresa($contact, true);
+        }
 
         return redirect()->route('contacts.show', $contact)->with('success', 'Dados do lead atualizados com sucesso!');
     }
