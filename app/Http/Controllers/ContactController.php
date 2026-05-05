@@ -56,6 +56,7 @@ class ContactController extends Controller
             'phone' => 'required|string|max:20',
             'message' => 'required|string',
             'opt_in' => 'boolean',
+            'company' => 'nullable|string|max:255',
         ]);
 
         $contact = Contact::create($validated);

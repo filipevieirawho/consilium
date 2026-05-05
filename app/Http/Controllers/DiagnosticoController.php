@@ -75,7 +75,64 @@ class DiagnosticoController extends Controller
             'telefone' => 'nullable|string|max:30',
         ]);
 
-        $diagnostico->update($validated);
+        // Auto-link or create Empresa
+        $empresa = null;
+        if ($diagnostico->empresa_id) {
+            $empresa = \App\Models\Empresa::find($diagnostico->empresa_id);
+        }
+        
+        if (!$empresa && !empty($validated['empresa'])) {
+            $empresa = \App\Models\Empresa::whereRaw('LOWER(nome_fantasia) = ?', [strtolower($validated['empresa'])])
+                ->orWhereRaw('LOWER(razao_social) = ?', [strtolower($validated['empresa'])])
+                ->first();
+            
+            if (!$empresa) {
+                $empresa = \App\Models\Empresa::create(['nome_fantasia' => $validated['empresa']]);
+            }
+        }
+
+        // Auto-link or create Contact (Lead)
+        $contact = null;
+        if ($diagnostico->contact_id) {
+            $contact = \App\Models\Contact::find($diagnostico->contact_id);
+        }
+
+        if (!$contact && !empty($validated['email'])) {
+            $contact = \App\Models\Contact::where('email', $validated['email'])->first();
+            
+            if (!$contact) {
+                $contact = \App\Models\Contact::create([
+                    'name' => $validated['nome'],
+                    'email' => $validated['email'],
+                    'phone' => $validated['telefone'],
+                    'company' => $validated['empresa'],
+                    'empresa_id' => $empresa ? $empresa->id : null,
+                    'status' => 'Cliente Potencial',
+                    'message' => 'Lead gerado automaticamente pelo formulário de Diagnóstico.',
+                ]);
+                
+                $contact->activities()->create([
+                    'user_id' => null,
+                    'type' => 'lead_created',
+                ]);
+                $contact->activities()->create([
+                    'user_id' => null,
+                    'type' => 'status_change',
+                    'old_value' => null,
+                    'new_value' => 'Cliente Potencial',
+                ]);
+            }
+        }
+
+        // If contact exists but has no empresa_id, link it now
+        if ($contact && !$contact->empresa_id && $empresa) {
+            $contact->update(['empresa_id' => $empresa->id]);
+        }
+
+        $diagnostico->update(array_merge($validated, [
+            'empresa_id' => $empresa ? $empresa->id : null,
+            'contact_id' => $contact ? $contact->id : null,
+        ]));
 
         return redirect()->route('diagnostico.form2', $token);
     }
