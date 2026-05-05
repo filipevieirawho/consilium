@@ -13,6 +13,7 @@ class DiagnosticoResposta extends Model
         'dimensao',
         'pergunta',
         'resposta',
+        'questao_id',
     ];
 
     public function diagnostico()

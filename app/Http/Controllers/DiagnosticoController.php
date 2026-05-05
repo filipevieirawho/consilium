@@ -220,7 +220,11 @@ class DiagnosticoController extends Controller
 
             DiagnosticoResposta::updateOrCreate(
                 ['diagnostico_id' => $diagnostico->id, 'questao_id' => $validated['questao_id']],
-                ['resposta' => $validated['resposta'], 'dimensao'  => null]
+                [
+                    'resposta' => $validated['resposta'], 
+                    'dimensao' => 0,
+                    'pergunta' => $validated['num']
+                ]
             );
 
             $diagnostico->loadMissing('questionario.questoes');
