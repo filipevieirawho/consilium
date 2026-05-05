@@ -99,7 +99,8 @@ class ContactController extends Controller
         // Merge default values for manual creation
         $data = array_merge($validated, [
             'opt_in' => $request->has('opt_in'),
-            'status' => 'Cliente Potencial'
+            'status' => 'Cliente Potencial',
+            'message' => $validated['message'] ?? 'Lead cadastrado manualmente pelo painel.'
         ]);
 
         $contact = Contact::create($data);
