@@ -188,42 +188,16 @@
                 <p class="text-[10px] text-gray-400 mt-1">Obrigatório para a escala B2B.</p>
             </div>
 
-            <div class="mb-5 relative" id="combo-box-container">
+            <div class="mb-5">
                 <label class="block text-sm font-medium text-gray-700 mb-1">Lead / Contato <span class="text-gray-400 font-normal">(opcional)</span></label>
-                
-                <!-- Hidden input to store selected ID -->
-                <input type="hidden" id="select-contact" value="">
-
-                <!-- Search Input -->
-                <div class="relative">
-                    <input type="text" id="combo-search" autocomplete="off"
-                        placeholder="Buscar pelo nome..."
-                        class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-[#D0AE6D] focus:ring-[#D0AE6D] pl-4 pr-11 py-2.5 text-sm cursor-text transition-colors"
-                    >
-                    <div class="absolute inset-y-0 right-3 flex items-center pointer-events-none">
-                        <ion-icon name="person-outline" class="text-gray-400 text-lg"></ion-icon>
-                    </div>
-                </div>
-
-                <!-- Dropdown list -->
-                <ul id="combo-dropdown" class="absolute z-50 w-full bg-white border border-gray-200 shadow-xl max-h-60 rounded-lg py-1 text-base overflow-auto focus:outline-none sm:text-sm hidden mt-1">
-                    <li class="combo-option cursor-pointer select-none relative py-2.5 pl-4 pr-4 hover:bg-gray-50 text-gray-900 border-b border-gray-100" data-value="">
-                        <span class="block truncate font-medium text-gray-400 italic">Sem lead vinculado</span>
-                    </li>
+                <select id="select-contact" class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-[#D0AE6D] focus:ring-[#D0AE6D] py-2.5 text-sm" placeholder="Buscar pelo nome...">
+                    <option value="">Sem lead vinculado</option>
                     @foreach($contacts as $c)
-                    <li class="combo-option cursor-pointer select-none relative py-2.5 pl-4 pr-4 hover:bg-gray-50 text-gray-900" 
-                        data-value="{{ $c->id }}" 
-                        data-empresa-id="{{ $c->empresa_id }}">
-                        <span class="block font-medium lead-name">{{ $c->name }}</span>
-                        @if($c->company)
-                        <span class="block text-xs text-gray-500 mt-0.5">{{ $c->company }}</span>
-                        @endif
-                    </li>
+                        <option value="{{ $c->id }}" data-empresa-id="{{ $c->empresa_id }}">
+                            {{ $c->name }} {!! $c->company ? ' - <span class="text-xs text-gray-500">'.$c->company.'</span>' : '' !!}
+                        </option>
                     @endforeach
-                    <li id="combo-empty" class="hidden cursor-default select-none relative py-3 pl-4 pr-4 text-gray-500 text-sm text-center">
-                        Nenhum lead encontrado.
-                    </li>
-                </ul>
+                </select>
             </div>
 
             <div class="mb-5">
@@ -360,62 +334,25 @@
         const btnCancelar = document.getElementById('btn-cancelar');
         const btnGerar = document.getElementById('btn-gerar');
         const btnCopiar = document.getElementById('btn-copiar');
-        const selectContact = document.getElementById('select-contact');
-        const selectEmpresa = document.getElementById('select-empresa-modal');
-        const selectQuestionario = document.getElementById('select-questionario');
         const linkResultado = document.getElementById('link-resultado');
         const linkGerado = document.getElementById('link-gerado');
         const copyFeedback = document.getElementById('copy-feedback');
 
-        // Combobox logic
-        const searchInput = document.getElementById('combo-search');
-        const dropdown = document.getElementById('combo-dropdown');
-        const options = dropdown.querySelectorAll('.combo-option');
-        const emptyMsg = document.getElementById('combo-empty');
-        const comboContainer = document.getElementById('combo-box-container');
+        // Initialize TomSelect for all dropdowns
+        const tsEmpresa = new TomSelect('#select-empresa-modal', { create: false, placeholder: 'Selecione a empresa...' });
+        const tsContact = new TomSelect('#select-contact', { create: false, placeholder: 'Buscar pelo nome...' });
+        const tsQuestionario = new TomSelect('#select-questionario', { create: false });
+        const tsQuestionarioCampanha = new TomSelect('#select-questionario-campanha', { create: false });
 
-        searchInput.addEventListener('focus', () => dropdown.classList.remove('hidden'));
-        document.addEventListener('click', (e) => {
-            if (!comboContainer.contains(e.target)) dropdown.classList.add('hidden');
-        });
-
-        searchInput.addEventListener('input', (e) => {
-            const term = e.target.value.toLowerCase();
-            dropdown.classList.remove('hidden');
-            let hasVisible = false;
-            
-            options.forEach(opt => {
-                const text = opt.textContent.toLowerCase();
-                if (text.includes(term)) {
-                    opt.style.display = 'block';
-                    hasVisible = true;
-                } else {
-                    opt.style.display = 'none';
+        // Auto-select Empresa if contact belongs to one
+        tsContact.on('change', function(value) {
+            if (value) {
+                const option = tsContact.options[value];
+                const empId = option.dataset ? option.dataset.empresaId : option.getAttribute('data-empresa-id');
+                if (empId && empId !== "null" && empId !== "") {
+                    tsEmpresa.setValue(empId);
                 }
-            });
-            
-            emptyMsg.classList.toggle('hidden', hasVisible);
-        });
-
-        options.forEach(opt => {
-            opt.addEventListener('click', () => {
-                const val = opt.getAttribute('data-value');
-                const empId = opt.getAttribute('data-empresa-id');
-                selectContact.value = val;
-                
-                if(val === "") {
-                    searchInput.value = "";
-                } else {
-                    const nameSpan = opt.querySelector('.lead-name');
-                    searchInput.value = nameSpan ? nameSpan.textContent.trim() : opt.textContent.trim();
-                    // Auto-select Empresa if it belongs to one
-                    if (empId && empId !== "null") {
-                        selectEmpresa.value = empId;
-                    }
-                }
-                
-                dropdown.classList.add('hidden');
-            });
+            }
         });
 
         function abrirModal() { 
@@ -427,12 +364,9 @@
             modal.classList.remove('flex'); 
             linkResultado.classList.add('hidden'); 
             // Reset modal state
-            selectContact.value = "";
-            searchInput.value = "";
-            selectEmpresa.value = "";
-            selectQuestionario.value = "";
-            options.forEach(opt => opt.style.display = 'block');
-            emptyMsg.classList.add('hidden');
+            tsContact.clear();
+            tsEmpresa.clear();
+            tsQuestionario.clear();
             btnGerar.disabled = false;
             btnGerar.textContent = 'Gerar Link';
         }
@@ -443,7 +377,7 @@
         modal.addEventListener('click', e => { if (e.target === modal) fecharModal(); });
 
         btnGerar.addEventListener('click', function () {
-            if (!selectEmpresa.value) {
+            if (!tsEmpresa.getValue()) {
                 alert('Por favor, selecione uma Empresa. Esta é uma exigência do novo modelo B2B.');
                 return;
             }
@@ -459,9 +393,9 @@
                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
                 },
                 body: JSON.stringify({ 
-                    contact_id: selectContact.value || null,
-                    empresa_id: selectEmpresa.value || null, // Ensure empresa_id is sent
-                    questionario_id: selectQuestionario.value || null
+                    contact_id: tsContact.getValue() || null,
+                    empresa_id: tsEmpresa.getValue() || null,
+                    questionario_id: tsQuestionario.getValue() || null
                 }),
             })
             .then(r => r.json())
@@ -507,7 +441,7 @@
             modalCampanha.classList.add('hidden');
             modalCampanha.classList.remove('flex');
             linkResultadoCampanha.classList.add('hidden');
-            selectQuestionarioCampanha.value = "";
+            tsQuestionarioCampanha.clear();
             btnGerarCampanha.classList.remove('hidden');
         }
 
@@ -516,7 +450,7 @@
         modalCampanha.addEventListener('click', e => { if (e.target === modalCampanha) fecharModalCampanha(); });
 
         btnGerarCampanha.addEventListener('click', function() {
-            const qId = selectQuestionarioCampanha.value;
+            const qId = tsQuestionarioCampanha.getValue();
             let finalUrl = baseUrlCampanha;
             if (qId) {
                 finalUrl += '?q=' + qId;

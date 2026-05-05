@@ -672,9 +672,20 @@
             const linkGeradoDiag = document.getElementById('diag-link-gerado');
             const copyFeedbackDiag = document.getElementById('diag-copy-feedback');
 
+            // Initialize TomSelect
+            const tsEmpresaDiag = new TomSelect('#diag-select-empresa', { create: false, placeholder: 'Selecione a empresa...' });
+            const tsQuestionarioDiag = new TomSelect('#diag-select-questionario', { create: false });
+
+            // Listen for modal open event from Alpine to sync UI if needed, but TomSelect works fine hidden.
+            window.addEventListener('open-modal', event => {
+                if(event.detail === 'gerar-diagnostico-modal') {
+                    // Reset if needed
+                }
+            });
+
             if (btnGerarDiag) {
                 btnGerarDiag.addEventListener('click', function () {
-                    if (!selectEmpresaDiag.value) {
+                    if (!tsEmpresaDiag.getValue()) {
                         alert('Por favor, selecione uma Empresa. Esta é uma exigência do novo modelo B2B.');
                         return;
                     }
@@ -691,8 +702,8 @@
                         },
                         body: JSON.stringify({ 
                             contact_id: '{{ $contact->id }}',
-                            empresa_id: selectEmpresaDiag.value || null,
-                            questionario_id: selectQuestionarioDiag.value || null
+                            empresa_id: tsEmpresaDiag.getValue() || null,
+                            questionario_id: tsQuestionarioDiag.getValue() || null
                         }),
                     })
                     .then(r => r.json())

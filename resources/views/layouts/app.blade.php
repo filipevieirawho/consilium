@@ -19,6 +19,17 @@
     <!-- Ionicons -->
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+    <!-- TomSelect -->
+    <link href="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/css/tom-select.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.complete.min.js"></script>
+    <style>
+        .ts-control { border-radius: 0.5rem; padding: 0.625rem 1rem; border-color: #d1d5db; box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05); }
+        .ts-control.focus { border-color: #D0AE6D; box-shadow: 0 0 0 1px #D0AE6D; }
+        .ts-dropdown { border-radius: 0.5rem; border-color: #d1d5db; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); }
+        .ts-dropdown .option { padding: 0.5rem 1rem; }
+        .ts-dropdown .active { background-color: #fdf8ed; color: #b5955a; }
+    </style>
 </head>
 
 <body class="font-sans antialiased">
