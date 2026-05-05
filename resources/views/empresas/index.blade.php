@@ -1,14 +1,9 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex items-center justify-between">
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Empresas</h2>
-            <a href="{{ route('empresas.create') }}"
-               class="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-semibold text-white rounded-lg transition"
-               style="background-color: #D0AE6D;">
-                <ion-icon name="add-outline" class="text-base"></ion-icon>
-                Nova Empresa
-            </a>
-        </div>
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight flex items-center gap-2">
+            <ion-icon name="business-outline" class="text-[#D0AE6D] text-2xl"></ion-icon>
+            Empresas
+        </h2>
     </x-slot>
 
     <div class="py-8">
@@ -43,6 +38,14 @@
                             <a href="{{ route('empresas.index') }}" class="text-sm text-gray-500 hover:text-gray-900 self-center">Limpar</a>
                             @endif
                         </form>
+
+                        <div class="flex gap-3">
+                            <a href="{{ route('empresas.create') }}"
+                               class="px-4 py-2 text-white font-medium rounded-md shadow-sm transition-colors flex items-center gap-2 text-sm"
+                               style="background-color: #D0AE6D;">
+                                <ion-icon name="add-outline" class="text-xl"></ion-icon> Nova Empresa
+                            </a>
+                        </div>
                     </div>
 
                     <!-- Table -->
