@@ -42,8 +42,7 @@
 
                         <!-- Generate link buttons -->
                         <div class="flex gap-3">
-                            <button id="btn-copiar-campanha"
-                                onclick="navigator.clipboard.writeText('{{ url(route('diagnostico.novo')) }}').then(() => alert('Estrela copiada! O link fixo de campanha foi copiado para sua área de transferência.'))"
+                            <button id="btn-abrir-campanha"
                                 class="px-4 py-2 bg-white text-gray-700 font-medium rounded-md border border-gray-300 shadow-sm hover:bg-gray-50 transition-colors flex items-center gap-2 text-sm">
                                 <ion-icon name="flash-outline" class="text-xl text-yellow-500"></ion-icon> Link de Campanha
                             </button>
@@ -263,6 +262,56 @@
         </div>
     </div>
 
+    <!-- Modal Link de Campanha -->
+    <div id="modal-campanha" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/40 backdrop-blur-sm p-4">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md p-8">
+            <div class="flex items-center justify-between mb-6">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full flex items-center justify-center" style="background-color: #fdf8ed;">
+                        <ion-icon name="flash-outline" style="color: #D0AE6D; font-size: 1.25rem;"></ion-icon>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900">Link de Campanha</h3>
+                </div>
+                <button id="btn-fechar-campanha" class="text-gray-400 hover:text-gray-700">
+                    <ion-icon name="close-outline" class="text-2xl"></ion-icon>
+                </button>
+            </div>
+
+            <p class="text-sm text-gray-500 mb-5">
+                Gere um link público genérico. Os respondentes preencherão os dados da empresa e de contato na primeira etapa do check-up.
+            </p>
+
+            <div class="mb-5">
+                <label class="block text-sm font-medium text-gray-700 mb-1">Modelo de Questionário</label>
+                <select id="select-questionario-campanha" class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-[#D0AE6D] focus:ring-[#D0AE6D] py-2.5 text-sm">
+                    <option value="">Padrão (18 questões estáticas)</option>
+                    @foreach($questionarios as $q)
+                        <option value="{{ $q->id }}">{{ $q->titulo }} ({{ $q->questoes_count }} questões)</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div id="link-resultado-campanha" class="hidden mb-5 p-4 bg-gray-50 rounded-xl border border-gray-200">
+                <p class="text-xs text-gray-500 mb-2 font-medium uppercase tracking-wide">Link de Campanha:</p>
+                <div class="flex items-center gap-2">
+                    <input type="text" id="link-gerado-campanha" readonly
+                        class="block flex-1 text-sm text-gray-800 bg-white border border-gray-200 rounded-lg px-3 py-2">
+                    <button id="btn-copiar-campanha-resultado"
+                        class="px-3 py-2 rounded-lg text-white text-sm font-medium"
+                        style="background-color: #D0AE6D;">
+                        Copiar
+                    </button>
+                </div>
+            </div>
+
+            <button id="btn-gerar-link-campanha-action"
+                class="w-full flex justify-center items-center gap-2 py-3 px-4 border border-transparent rounded-xl shadow-sm text-sm font-medium text-white transition-all focus:outline-none"
+                style="background-color: #D0AE6D;">
+                Gerar Link de Campanha
+            </button>
+        </div>
+    </div>
+
     {{-- Delete Diagnostic Confirmation Modal --}}
     <div id="deleteDiagnosticModal" class="fixed inset-0 z-50 hidden items-center justify-center">
         <div class="fixed inset-0 bg-black bg-opacity-50" onclick="closeDeleteModal()"></div>
@@ -435,6 +484,55 @@
             copyFeedback.classList.remove('hidden');
             setTimeout(() => copyFeedback.classList.add('hidden'), 2500);
         });
+
+        // ==========================================
+        // Modal de Campanha Logic
+        // ==========================================
+        const modalCampanha = document.getElementById('modal-campanha');
+        const btnAbrirCampanha = document.getElementById('btn-abrir-campanha');
+        const btnFecharCampanha = document.getElementById('btn-fechar-campanha');
+        const btnGerarCampanha = document.getElementById('btn-gerar-link-campanha-action');
+        const selectQuestionarioCampanha = document.getElementById('select-questionario-campanha');
+        const linkResultadoCampanha = document.getElementById('link-resultado-campanha');
+        const linkGeradoCampanha = document.getElementById('link-gerado-campanha');
+        const btnCopiarCampanhaResult = document.getElementById('btn-copiar-campanha-resultado');
+        const baseUrlCampanha = "{{ url(route('diagnostico.novo')) }}";
+
+        function abrirModalCampanha() {
+            modalCampanha.classList.remove('hidden');
+            modalCampanha.classList.add('flex');
+        }
+
+        function fecharModalCampanha() {
+            modalCampanha.classList.add('hidden');
+            modalCampanha.classList.remove('flex');
+            linkResultadoCampanha.classList.add('hidden');
+            selectQuestionarioCampanha.value = "";
+            btnGerarCampanha.classList.remove('hidden');
+        }
+
+        if (btnAbrirCampanha) btnAbrirCampanha.addEventListener('click', abrirModalCampanha);
+        if (btnFecharCampanha) btnFecharCampanha.addEventListener('click', fecharModalCampanha);
+        modalCampanha.addEventListener('click', e => { if (e.target === modalCampanha) fecharModalCampanha(); });
+
+        btnGerarCampanha.addEventListener('click', function() {
+            const qId = selectQuestionarioCampanha.value;
+            let finalUrl = baseUrlCampanha;
+            if (qId) {
+                finalUrl += '?q=' + qId;
+            }
+            
+            linkGeradoCampanha.value = finalUrl;
+            linkResultadoCampanha.classList.remove('hidden');
+            btnGerarCampanha.classList.add('hidden');
+        });
+
+        btnCopiarCampanhaResult.addEventListener('click', function() {
+            linkGeradoCampanha.select();
+            document.execCommand('copy');
+            alert('Link de campanha copiado com sucesso!');
+        });
+
     })();
     </script>
     @endpush

@@ -18,13 +18,14 @@ class DiagnosticoController extends Controller
      * Start a fresh generic diagnostic (Campaign Link)
      * GET /diagnostico/novo
      */
-    public function startNovo()
+    public function startNovo(Request $request)
     {
         $token = Str::random(32);
         
         Diagnostico::create([
             'token' => $token,
             'status' => 'em_andamento',
+            'questionario_id' => $request->query('q'),
         ]);
 
         return redirect()->route('diagnostico.landing', $token);
