@@ -1,14 +1,9 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex items-center justify-between">
-            <h2 class="font-semibold text-xl text-gray-800">Modelos de Questionário</h2>
-            <a href="{{ route('questionarios.create') }}"
-               class="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-semibold text-white rounded-lg"
-               style="background-color: #D0AE6D;">
-                <ion-icon name="add-outline" class="text-base"></ion-icon>
-                Novo Modelo
-            </a>
-        </div>
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight flex items-center gap-2">
+            <ion-icon name="file-tray-full-outline" class="text-[#D0AE6D] text-2xl"></ion-icon>
+            Modelos de Questionário
+        </h2>
     </x-slot>
 
     <div class="py-8">
@@ -17,6 +12,32 @@
             @if(session('success'))
             <div class="mb-4 px-4 py-3 bg-green-50 border border-green-200 rounded-lg text-sm text-green-700">{{ session('success') }}</div>
             @endif
+
+            <!-- Top Actions Bar -->
+            <div class="flex justify-between items-center mb-6 gap-4 flex-wrap">
+                <!-- Search -->
+                <form method="GET" action="{{ route('questionarios.index') }}" class="flex gap-3 flex-wrap flex-grow">
+                    <input type="text" name="search" placeholder="Buscar por título ou código..."
+                        value="{{ request('search') }}"
+                        class="w-full md:w-80 rounded-md border-gray-300 shadow-sm focus:border-[#D0AE6D] focus:ring-[#D0AE6D] px-4 py-2 text-sm">
+                    <button type="submit" class="bg-gray-800 text-white px-3 py-2 rounded-md hover:bg-gray-700 transition-colors flex items-center" title="Buscar">
+                        <ion-icon name="search-outline" class="text-base"></ion-icon>
+                    </button>
+                    @if(request('search'))
+                    <a href="{{ route('questionarios.index') }}" class="text-sm text-gray-500 hover:text-gray-900 self-center">Limpar</a>
+                    @endif
+                </form>
+
+                <!-- Action buttons -->
+                <div class="flex gap-3">
+                    <a href="{{ route('questionarios.create') }}"
+                       class="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-white rounded-md shadow-sm transition-colors"
+                       style="background-color: #D0AE6D; hover:background-color: #b5955a;">
+                        <ion-icon name="add-outline" class="text-xl"></ion-icon>
+                        Novo Modelo
+                    </a>
+                </div>
+            </div>
 
             <div class="space-y-3">
                 @forelse($questionarios as $q)
@@ -67,6 +88,11 @@
                     <a href="{{ route('questionarios.create') }}" class="text-sm font-medium" style="color: #D0AE6D;">Criar primeiro modelo →</a>
                 </div>
                 @endforelse
+            </div>
+
+            <!-- Pagination -->
+            <div class="mt-6">
+                {{ $questionarios->links() }}
             </div>
         </div>
     </div>

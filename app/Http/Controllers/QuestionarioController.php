@@ -9,9 +9,19 @@ use Illuminate\Support\Str;
 
 class QuestionarioController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $questionarios = Questionario::withCount('questoes')->latest()->get();
+        $query = Questionario::withCount('questoes')->latest();
+
+        if ($request->filled('search')) {
+            $s = $request->input('search');
+            $query->where(function ($q) use ($s) {
+                $q->where('titulo', 'like', "%{$s}%")
+                  ->orWhere('modelo_id', 'like', "%{$s}%");
+            });
+        }
+
+        $questionarios = $query->paginate(20)->withQueryString();
         return view('questionarios.index', compact('questionarios'));
     }
 
