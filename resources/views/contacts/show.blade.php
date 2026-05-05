@@ -5,15 +5,12 @@
                 <ion-icon name="receipt-outline" class="text-[#D0AE6D] text-2xl"></ion-icon> {{ $contact->name }}
             </h2>
             <div class="flex items-center gap-4">
-                <!-- Generate Diagnostic for this Lead -->
-                <form action="{{ route('diagnosticos.generateLink') }}" method="POST" target="_blank">
-                    @csrf
-                    <input type="hidden" name="contact_id" value="{{ $contact->id }}">
-                    <button type="submit" class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#D0AE6D] text-white text-sm font-medium rounded-md hover:bg-[#b89555] transition-colors shadow-sm">
-                        <ion-icon name="link-outline" class="text-lg"></ion-icon>
-                        Gerar Diagnóstico
-                    </button>
-                </form>
+                <!-- Generate Diagnostic for this Lead (Opens Modal) -->
+                <button type="button" x-data="" x-on:click="$dispatch('open-modal', 'gerar-diagnostico-modal')"
+                    class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#D0AE6D] text-white text-sm font-medium rounded-md hover:bg-[#b89555] transition-colors shadow-sm">
+                    <ion-icon name="link-outline" class="text-lg"></ion-icon>
+                    Gerar Diagnóstico
+                </button>
 
                 <a href="{{ route('dashboard') }}" class="text-sm text-gray-500 hover:text-gray-700 flex items-center gap-1">
                     <ion-icon name="arrow-back-outline"></ion-icon> Voltar
@@ -577,6 +574,72 @@
         </form>
     </x-modal>
 
+    <!-- Generate Link Modal -->
+    <x-modal name="gerar-diagnostico-modal" focusable>
+        <div class="px-6 py-6 sm:p-8">
+            <div class="flex items-center justify-between mb-6">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full flex items-center justify-center" style="background-color: #fdf8ed;">
+                        <ion-icon name="link-outline" style="color: #D0AE6D; font-size: 1.25rem;"></ion-icon>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900 text-left">Gerar Link de Diagnóstico</h3>
+                </div>
+                <button type="button" x-on:click="$dispatch('close')" class="text-gray-400 hover:text-gray-700">
+                    <ion-icon name="close-outline" class="text-2xl"></ion-icon>
+                </button>
+            </div>
+
+            <p class="text-sm text-gray-500 mb-5 text-left">
+                Gere um link único para o diagnóstico vinculado a este lead.
+            </p>
+
+            <div class="mb-5 text-left">
+                <label class="block text-sm font-medium text-gray-700 mb-1">Empresa <span class="text-red-500">*</span></label>
+                <select id="diag-select-empresa" class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-[#D0AE6D] focus:ring-[#D0AE6D] py-2.5 text-sm">
+                    <option value="">Selecione a empresa...</option>
+                    @foreach(\App\Models\Empresa::orderBy('nome_fantasia')->get() as $emp)
+                        <option value="{{ $emp->id }}" {{ $contact->empresa_id == $emp->id ? 'selected' : '' }}>{{ $emp->nome_fantasia }}</option>
+                    @endforeach
+                </select>
+                <p class="text-[10px] text-gray-400 mt-1">Obrigatório para a escala B2B.</p>
+            </div>
+
+            <div class="mb-5 text-left">
+                <label class="block text-sm font-medium text-gray-700 mb-1">Modelo de Questionário</label>
+                <select id="diag-select-questionario" class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-[#D0AE6D] focus:ring-[#D0AE6D] py-2.5 text-sm">
+                    <option value="">Padrão (18 questões estáticas)</option>
+                    @foreach($questionarios as $q)
+                        <option value="{{ $q->id }}">{{ $q->titulo }} ({{ $q->questoes_count }} questões)</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div id="diag-link-resultado" class="hidden mb-5 p-4 bg-gray-50 rounded-xl border border-gray-200 text-left">
+                <p class="text-xs text-gray-500 mb-2 font-medium uppercase tracking-wide">Link gerado:</p>
+                <div class="flex items-center gap-2">
+                    <input type="text" id="diag-link-gerado" readonly
+                        class="block flex-1 text-sm text-gray-800 bg-white border border-gray-200 rounded-lg px-3 py-2">
+                    <button id="diag-btn-copiar"
+                        class="px-3 py-2 rounded-lg text-white text-sm font-medium"
+                        style="background-color: #D0AE6D;">
+                        Copiar
+                    </button>
+                </div>
+                <p id="diag-copy-feedback" class="text-xs text-green-600 mt-2 hidden">✓ Link copiado!</p>
+            </div>
+
+            <div class="flex gap-3">
+                <button id="diag-btn-gerar" class="flex-1 py-3 text-white font-semibold rounded-xl transition-all"
+                    style="background-color: #D0AE6D;">
+                    Gerar Link
+                </button>
+                <button type="button" x-on:click="$dispatch('close')" class="flex-1 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold rounded-xl transition-all">
+                    Cancelar
+                </button>
+            </div>
+        </div>
+    </x-modal>
+
     @push('scripts')
         <script>
             // Note Delete Modal
@@ -599,6 +662,60 @@
                     closeDeleteNoteModal();
                 }
             });
+
+            // Modal Gerar Diagnóstico
+            const btnGerarDiag = document.getElementById('diag-btn-gerar');
+            const btnCopiarDiag = document.getElementById('diag-btn-copiar');
+            const selectEmpresaDiag = document.getElementById('diag-select-empresa');
+            const selectQuestionarioDiag = document.getElementById('diag-select-questionario');
+            const linkResultadoDiag = document.getElementById('diag-link-resultado');
+            const linkGeradoDiag = document.getElementById('diag-link-gerado');
+            const copyFeedbackDiag = document.getElementById('diag-copy-feedback');
+
+            if (btnGerarDiag) {
+                btnGerarDiag.addEventListener('click', function () {
+                    if (!selectEmpresaDiag.value) {
+                        alert('Por favor, selecione uma Empresa. Esta é uma exigência do novo modelo B2B.');
+                        return;
+                    }
+
+                    btnGerarDiag.disabled = true;
+                    btnGerarDiag.textContent = 'Gerando...';
+
+                    fetch(@json(route('diagnosticos.generateLink')), {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                        },
+                        body: JSON.stringify({ 
+                            contact_id: '{{ $contact->id }}',
+                            empresa_id: selectEmpresaDiag.value || null,
+                            questionario_id: selectQuestionarioDiag.value || null
+                        }),
+                    })
+                    .then(r => r.json())
+                    .then(data => {
+                        linkGeradoDiag.value = data.url;
+                        linkResultadoDiag.classList.remove('hidden');
+                        btnGerarDiag.disabled = false;
+                        btnGerarDiag.textContent = 'Gerar Novo';
+                    })
+                    .catch(() => {
+                        alert('Erro ao gerar link. Tente novamente.');
+                        btnGerarDiag.disabled = false;
+                        btnGerarDiag.textContent = 'Gerar Link';
+                    });
+                });
+
+                btnCopiarDiag.addEventListener('click', function () {
+                    linkGeradoDiag.select();
+                    document.execCommand('copy');
+                    copyFeedbackDiag.classList.remove('hidden');
+                    setTimeout(() => copyFeedbackDiag.classList.add('hidden'), 2500);
+                });
+            }
         </script>
     @endpush
 </x-app-layout>

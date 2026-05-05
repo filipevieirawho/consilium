@@ -50,7 +50,7 @@
                             <button id="btn-gerar-link"
                                 class="px-4 py-2 text-white font-medium rounded-md shadow-sm transition-colors flex items-center gap-2 text-sm"
                                 style="background-color: #D0AE6D;">
-                                <ion-icon name="add-outline" class="text-xl"></ion-icon> Link Específico
+                                <ion-icon name="add-outline" class="text-xl"></ion-icon> Gerar Diagnóstico
                             </button>
                         </div>
                     </div>

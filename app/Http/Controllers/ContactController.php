@@ -234,7 +234,8 @@ class ContactController extends Controller
         });
 
         $users = \App\Models\User::all();
-        return view('contacts.show', compact('contact', 'users', 'timeline'));
+        $questionarios = \App\Models\Questionario::where('is_active', true)->orderBy('titulo')->get();
+        return view('contacts.show', compact('contact', 'users', 'timeline', 'questionarios'));
     }
 
     public function updateDetails(Request $request, Contact $contact)
