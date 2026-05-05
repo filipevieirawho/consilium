@@ -57,7 +57,7 @@
                             <tbody class="bg-white divide-y divide-gray-200">
                                 @forelse($questionarios as $q)
                                 <tr class="hover:bg-gray-50 transition-colors cursor-pointer" onclick="window.location='{{ route('questionarios.show', $q) }}'">
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-700">
+                                    <td class="px-6 py-4 whitespace-nowrap text-xs text-gray-500 font-mono">
                                         {{ $q->modelo_id }}
                                     </td>
                                     <td class="px-6 py-4 text-sm font-medium text-gray-900">
