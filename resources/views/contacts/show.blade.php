@@ -593,23 +593,21 @@
                 Gere um link único para o diagnóstico vinculado a este lead.
             </p>
 
-            <div class="mb-5 text-left relative">
-                <x-custom-combobox 
-                    id="diag-select-empresa" 
-                    label="Empresa" 
-                    placeholder="Selecione a empresa..." 
-                    icon="business-outline"
-                    emptyMessage="Nenhuma empresa encontrada."
-                    selectedValue="{{ $contact->empresa_id ?? '' }}">
-                    @foreach(\App\Models\Empresa::orderBy('nome_fantasia')->get() as $emp)
-                        <li class="combo-option cursor-pointer select-none relative py-2.5 pl-4 pr-4 hover:bg-gray-50 text-gray-900" 
-                            data-value="{{ $emp->id }}">
-                            <span class="block font-medium item-name">{{ $emp->nome_fantasia }}</span>
-                        </li>
-                    @endforeach
-                </x-custom-combobox>
-                <p class="text-[10px] text-gray-400 mt-1 absolute -bottom-5 left-0">Obrigatório para a escala B2B.</p>
-            </div>
+            <x-custom-combobox 
+                id="diag-select-empresa" 
+                label="Empresa" 
+                placeholder="Selecione a empresa..." 
+                icon="business-outline"
+                emptyMessage="Nenhuma empresa encontrada."
+                helperText="Obrigatório para a escala B2B."
+                selectedValue="{{ $contact->empresa_id ?? '' }}">
+                @foreach(\App\Models\Empresa::orderBy('nome_fantasia')->get() as $emp)
+                    <li class="combo-option cursor-pointer select-none relative py-2.5 pl-4 pr-4 hover:bg-gray-50 text-gray-900" 
+                        data-value="{{ $emp->id }}">
+                        <span class="block font-medium item-name">{{ $emp->nome_fantasia }}</span>
+                    </li>
+                @endforeach
+            </x-custom-combobox>
 
             <div class="mb-5 text-left">
                 <x-custom-combobox 

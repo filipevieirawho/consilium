@@ -177,22 +177,20 @@
                 Gere um link único para o diagnóstico. Opcionalmente, vincule a um lead existente.
             </p>
 
-            <div class="relative mb-5">
-                <x-custom-combobox 
-                    id="select-empresa" 
-                    label="Empresa" 
-                    placeholder="Selecione a empresa..." 
-                    icon="business-outline"
-                    emptyMessage="Nenhuma empresa encontrada.">
-                    @foreach(\App\Models\Empresa::orderBy('nome_fantasia')->get() as $emp)
-                        <li class="combo-option cursor-pointer select-none relative py-2.5 pl-4 pr-4 hover:bg-gray-50 text-gray-900" 
-                            data-value="{{ $emp->id }}">
-                            <span class="block font-medium item-name">{{ $emp->nome_fantasia }}</span>
-                        </li>
-                    @endforeach
-                </x-custom-combobox>
-                <p class="text-[10px] text-gray-400 mt-1 absolute -bottom-5 left-0">Obrigatório para a escala B2B.</p>
-            </div>
+            <x-custom-combobox 
+                id="select-empresa" 
+                label="Empresa" 
+                placeholder="Selecione a empresa..." 
+                icon="business-outline"
+                emptyMessage="Nenhuma empresa encontrada."
+                helperText="Obrigatório para a escala B2B.">
+                @foreach(\App\Models\Empresa::orderBy('nome_fantasia')->get() as $emp)
+                    <li class="combo-option cursor-pointer select-none relative py-2.5 pl-4 pr-4 hover:bg-gray-50 text-gray-900" 
+                        data-value="{{ $emp->id }}">
+                        <span class="block font-medium item-name">{{ $emp->nome_fantasia }}</span>
+                    </li>
+                @endforeach
+            </x-custom-combobox>
 
             <x-custom-combobox 
                 id="select-contact" 
@@ -281,7 +279,8 @@
                     optional="true"
                     placeholder="Padrão (18 questões estáticas)" 
                     icon="list-outline"
-                    emptyMessage="Nenhum questionário encontrado.">
+                    emptyMessage="Nenhum questionário encontrado."
+                    helperText="Selecione um questionário específico para esta campanha.">
                     @foreach($questionarios as $q)
                         <li class="combo-option cursor-pointer select-none relative py-2.5 pl-4 pr-4 hover:bg-gray-50 text-gray-900" 
                             data-value="{{ $q->id }}">

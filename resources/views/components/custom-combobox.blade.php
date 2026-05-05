@@ -5,7 +5,8 @@
     'placeholder' => 'Buscar...',
     'icon' => 'search-outline',
     'emptyMessage' => 'Nenhum item encontrado.',
-    'onSelect' => '' // JS callback
+    'onSelect' => '', // JS callback
+    'helperText' => '' // Text below the input
 ])
 
 <div class="mb-5 relative custom-combobox-container" id="combo-container-{{ $id }}">
@@ -46,4 +47,8 @@
             {{ $emptyMessage }}
         </li>
     </ul>
+
+    @if($helperText)
+        <p class="text-[10px] text-gray-400 mt-1">{{ $helperText }}</p>
+    @endif
 </div>
