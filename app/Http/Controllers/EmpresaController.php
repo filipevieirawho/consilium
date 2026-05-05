@@ -25,9 +25,19 @@ class EmpresaController extends Controller
             });
         }
 
+        if ($request->filled('segmento')) {
+            $query->where('segmento', $request->segmento);
+        }
+
         $empresas = $query->paginate(20)->withQueryString();
 
-        return view('empresas.index', compact('empresas'));
+        $segmentos = Empresa::whereNotNull('segmento')
+            ->where('segmento', '!=', '')
+            ->distinct()
+            ->orderBy('segmento')
+            ->pluck('segmento');
+
+        return view('empresas.index', compact('empresas', 'segmentos'));
     }
 
     public function create()
