@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Contact;
+use App\Models\Empresa;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\NewContactAlert;
 use App\Models\ContactNote;
@@ -59,6 +60,9 @@ class ContactController extends Controller
 
         $contact = Contact::create($validated);
 
+        // Auto-link to Empresa by email domain or company name
+        $this->vinculateEmpresa($contact);
+
         $contact->activities()->create([
             'user_id' => auth()->check() ? auth()->id() : null,
             'type' => 'lead_created',
@@ -99,6 +103,9 @@ class ContactController extends Controller
 
         $contact = Contact::create($data);
 
+        // Auto-link to Empresa by company name or email domain
+        $this->vinculateEmpresa($contact);
+
         $contact->activities()->create([
             'user_id' => auth()->id(),
             'type' => 'lead_created',
@@ -112,6 +119,47 @@ class ContactController extends Controller
         ]);
 
         return redirect()->route('dashboard')->with('success', 'Lead adicionado com sucesso!');
+    }
+
+    /**
+     * Try to link contact to an existing Empresa by company name or corporate email domain.
+     * If no match, create a new Empresa automatically if company name is provided.
+     */
+    protected function vinculateEmpresa(Contact $contact): void
+    {
+        if ($contact->empresa_id) return; // already linked
+
+        $empresa = null;
+
+        // 1. Match by company name (exact, case-insensitive)
+        if ($contact->company) {
+            $empresa = Empresa::whereRaw('LOWER(nome_fantasia) = ?', [strtolower($contact->company)])
+                ->orWhereRaw('LOWER(razao_social) = ?', [strtolower($contact->company)])
+                ->first();
+        }
+
+        // 2. Match by corporate email domain
+        if (!$empresa && $contact->email) {
+            $domain = Contact::corporateDomain($contact->email);
+            if ($domain) {
+                // Find any contact with same domain that has an empresa
+                $sameEmail = Contact::where('email', 'like', "%@{$domain}")
+                    ->whereNotNull('empresa_id')
+                    ->first();
+                if ($sameEmail) {
+                    $empresa = $sameEmail->empresa;
+                }
+            }
+        }
+
+        // 3. Auto-create Empresa if we have a company name but no match
+        if (!$empresa && $contact->company) {
+            $empresa = Empresa::create(['nome_fantasia' => $contact->company]);
+        }
+
+        if ($empresa) {
+            $contact->update(['empresa_id' => $empresa->id]);
+        }
     }
 
     public function updateData(Request $request, Contact $contact)

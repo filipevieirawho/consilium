@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Contact;
 use App\Models\Diagnostico;
 use App\Models\DiagnosticoResposta;
+use App\Models\Questionario;
 use App\Services\IpmCalculator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -156,29 +157,48 @@ class DiagnosticoController extends Controller
             return redirect()->route('diagnostico.result', $token);
         }
 
-        if ($num < 1 || $num > 18) {
-            abort(404);
+        // --- Dynamic mode: Questionario linked ---
+        if ($diagnostico->questionario_id) {
+            $diagnostico->loadMissing('questionario.questoes');
+            $questoes = $diagnostico->questionario->questoes->values();
+            $total = $questoes->count();
+
+            if ($num < 1 || $num > $total) abort(404);
+
+            $questaoObj   = $questoes[$num - 1];   // 0-indexed collection
+            $perguntaAtual = [
+                'texto'   => $questaoObj->texto,
+                'dimensao' => $questaoObj->dimensao_nome,
+                'questao_id' => $questaoObj->id,
+            ];
+            $dimensaoNome  = $questaoObj->dimensao_nome;
+            $dimensaoAtual = $questaoObj->dimensao_nome;
+
+            $respostaAtual = $diagnostico->respostas()->where('questao_id', $questaoObj->id)->first();
+            $respondidas   = $diagnostico->respostas()->count();
+
+            return view('diagnosticos.pergunta', compact(
+                'diagnostico', 'token', 'num', 'total',
+                'perguntaAtual', 'dimensaoAtual', 'dimensaoNome',
+                'respostaAtual', 'respondidas'
+            ));
         }
 
-        $perguntas = $this->getPerguntas();
+        // --- Legacy static mode ---
+        if ($num < 1 || $num > 18) abort(404);
+
+        $total         = 18;
+        $perguntas     = $this->getPerguntas();
         $perguntaAtual = $perguntas[$num];
         $dimensaoAtual = $perguntaAtual['dimensao'];
         $dimensaoNome  = IpmCalculator::NOMES_DIMENSAO[$dimensaoAtual];
-
-        // Load previously saved answer for this question (if any)
         $respostaAtual = $diagnostico->respostas()->where('pergunta', $num)->first();
-
-        $respondidas = $diagnostico->respostas()->count();
+        $respondidas   = $diagnostico->respostas()->count();
 
         return view('diagnosticos.pergunta', compact(
-            'diagnostico',
-            'token',
-            'num',
-            'perguntaAtual',
-            'dimensaoAtual',
-            'dimensaoNome',
-            'respostaAtual',
-            'respondidas'
+            'diagnostico', 'token', 'num', 'total',
+            'perguntaAtual', 'dimensaoAtual', 'dimensaoNome',
+            'respostaAtual', 'respondidas'
         ));
     }
 
@@ -190,6 +210,35 @@ class DiagnosticoController extends Controller
     {
         $diagnostico = Diagnostico::where('token', $token)->firstOrFail();
 
+        // --- Dynamic mode ---
+        if ($diagnostico->questionario_id) {
+            $validated = $request->validate([
+                'questao_id' => 'required|integer|exists:questionario_questoes,id',
+                'resposta'   => 'required|integer|min:0|max:3',
+                'num'        => 'required|integer|min:1',
+            ]);
+
+            DiagnosticoResposta::updateOrCreate(
+                ['diagnostico_id' => $diagnostico->id, 'questao_id' => $validated['questao_id']],
+                ['resposta' => $validated['resposta'], 'dimensao'  => null]
+            );
+
+            $diagnostico->loadMissing('questionario.questoes');
+            $total       = $diagnostico->questionario->questoes->count();
+            $respondidas = $diagnostico->respostas()->count();
+            $next        = $validated['num'] < $total ? $validated['num'] + 1 : null;
+
+            return response()->json([
+                'ok'          => true,
+                'respondidas' => $respondidas,
+                'total'       => $total,
+                'next_url'    => $next
+                    ? route('diagnostico.pergunta', [$token, $next])
+                    : route('diagnostico.finalizar', $token),
+            ]);
+        }
+
+        // --- Legacy static mode ---
         $validated = $request->validate([
             'pergunta' => 'required|integer|min:1|max:18',
             'resposta' => 'required|integer|min:0|max:3',
@@ -230,23 +279,35 @@ class DiagnosticoController extends Controller
     {
         $diagnostico = Diagnostico::where('token', $token)->with('respostas')->firstOrFail();
 
-        if ($diagnostico->respostas->count() < 18) {
-            // Find first unanswered question
-            $respondidas = $diagnostico->respostas->pluck('pergunta')->toArray();
-            for ($i = 1; $i <= 18; $i++) {
-                if (!in_array($i, $respondidas)) {
-                    return redirect()->route('diagnostico.pergunta', [$token, $i]);
+        // Dynamic mode: check all questoes answered
+        if ($diagnostico->questionario_id) {
+            $diagnostico->loadMissing('questionario.questoes');
+            $total       = $diagnostico->questionario->questoes->count();
+            $respondidas = $diagnostico->respostas->count();
+
+            if ($respondidas < $total) {
+                $answeredQuestaoIds = $diagnostico->respostas->pluck('questao_id')->toArray();
+                foreach ($diagnostico->questionario->questoes as $i => $q) {
+                    if (!in_array($q->id, $answeredQuestaoIds)) {
+                        return redirect()->route('diagnostico.pergunta', [$token, $i + 1]);
+                    }
+                }
+            }
+        } else {
+            // Legacy: 18 questions
+            if ($diagnostico->respostas->count() < 18) {
+                $respondidas = $diagnostico->respostas->pluck('pergunta')->toArray();
+                for ($i = 1; $i <= 18; $i++) {
+                    if (!in_array($i, $respondidas)) {
+                        return redirect()->route('diagnostico.pergunta', [$token, $i]);
+                    }
                 }
             }
         }
 
-        // Calculate IPM
-        $resultado = IpmCalculator::calcular($diagnostico->respostas);
+        $resultado = IpmCalculator::calcular($diagnostico->respostas, $diagnostico);
 
-        $diagnostico->update([
-            'ipm'    => $resultado['ipm'],
-            'status' => 'concluido',
-        ]);
+        $diagnostico->update(['ipm' => $resultado['ipm'], 'status' => 'concluido']);
 
         return redirect()->route('diagnostico.result', $token);
     }
@@ -263,7 +324,7 @@ class DiagnosticoController extends Controller
             return redirect()->route('diagnostico.landing', $token);
         }
 
-        $resultado = IpmCalculator::calcular($diagnostico->respostas);
+        $resultado = IpmCalculator::calcular($diagnostico->respostas, $diagnostico);
 
         return view('diagnosticos.resultado', compact('diagnostico', 'token', 'resultado'));
     }
@@ -276,7 +337,7 @@ class DiagnosticoController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Diagnostico::query()->latest();
+        $query = Diagnostico::query()->with('questionario')->latest();
 
         if ($request->filled('search')) {
             $s = $request->input('search');
@@ -293,9 +354,10 @@ class DiagnosticoController extends Controller
         }
 
         $diagnosticos = $query->paginate(15);
-        $contacts = Contact::orderBy('name')->get();
+        $contacts     = Contact::orderBy('name')->get();
+        $questionarios = Questionario::where('is_active', true)->orderBy('titulo')->get();
 
-        return view('diagnosticos.index', compact('diagnosticos', 'contacts'));
+        return view('diagnosticos.index', compact('diagnosticos', 'contacts', 'questionarios'));
     }
 
     /**
@@ -304,17 +366,18 @@ class DiagnosticoController extends Controller
      */
     public function show(Diagnostico $diagnostico)
     {
-        $diagnostico->load(['respostas', 'contact']);
+        $diagnostico->load(['respostas', 'contact', 'questionario.questoes']);
         $resultado = null;
 
         if ($diagnostico->status === 'concluido') {
-            $resultado = IpmCalculator::calcular($diagnostico->respostas()->get());
+            $resultado = IpmCalculator::calcular($diagnostico->respostas()->get(), $diagnostico);
         }
 
-        $contacts = Contact::orderBy('name')->get();
-        $perguntas = $this->getPerguntas();
+        $contacts     = Contact::orderBy('name')->get();
+        $questionarios = Questionario::where('is_active', true)->orderBy('titulo')->get();
+        $perguntas    = $this->getPerguntas();
 
-        return view('diagnosticos.show', compact('diagnostico', 'resultado', 'contacts', 'perguntas'));
+        return view('diagnosticos.show', compact('diagnostico', 'resultado', 'contacts', 'questionarios', 'perguntas'));
     }
 
     /**
@@ -324,13 +387,14 @@ class DiagnosticoController extends Controller
     public function vincular(Request $request, Diagnostico $diagnostico)
     {
         $validated = $request->validate([
-            'contact_id' => 'nullable|exists:contacts,id',
+            'contact_id'      => 'nullable|exists:contacts,id',
+            'questionario_id' => 'nullable|exists:questionarios,id',
         ]);
 
-        $diagnostico->update(['contact_id' => $validated['contact_id']]);
+        $diagnostico->update($validated);
 
         return redirect()->route('diagnosticos.show', $diagnostico)
-            ->with('success', 'Lead vinculado ao diagnóstico com sucesso!');
+            ->with('success', 'Vínculos de lead e modelo atualizados com sucesso!');
     }
 
     /**
@@ -353,31 +417,43 @@ class DiagnosticoController extends Controller
     public function generateLink(Request $request)
     {
         $request->validate([
-            'contact_id' => 'nullable|exists:contacts,id',
+            'contact_id'      => 'nullable|exists:contacts,id',
+            'empresa_id'      => 'nullable|exists:empresas,id',
+            'questionario_id' => 'nullable|exists:questionarios,id',
         ]);
 
-        $contact = null;
-        $defaults = [];
+        $contact   = null;
+        $empresaId = $request->empresa_id;
+        $defaults  = [];
 
         if ($request->filled('contact_id')) {
             $contact = Contact::find($request->contact_id);
-            $defaults = [
-                'nome'    => $contact->name ?? null,
-                'empresa' => $contact->company ?? null,
-                'email'   => $contact->email ?? null,
-                'telefone'=> $contact->phone ?? null,
-            ];
+            if ($contact) {
+                $empresaId = $empresaId ?? $contact->empresa_id;
+                $defaults = [
+                    'nome'    => $contact->name ?? null,
+                    'empresa' => $contact->company ?? null,
+                    'email'   => $contact->email ?? null,
+                    'telefone' => $contact->phone ?? null,
+                ];
+            }
         }
 
         $diagnostico = Diagnostico::create(array_merge([
-            'token'      => Str::random(40),
-            'contact_id' => $request->contact_id ?? null,
-            'status'     => 'em_andamento',
+            'token'           => Str::random(40),
+            'contact_id'      => $request->contact_id ?? null,
+            'empresa_id'      => $empresaId,
+            'questionario_id' => $request->questionario_id ?? null,
+            'status'          => 'em_andamento',
         ], $defaults));
 
         $url = route('diagnostico.landing', $diagnostico->token);
 
-        return response()->json(['url' => $url, 'token' => $diagnostico->token]);
+        if ($request->expectsJson()) {
+            return response()->json(['url' => $url, 'token' => $diagnostico->token]);
+        }
+
+        return redirect()->away($url);
     }
 
     // ─── Data ─────────────────────────────────────────────────────────────

@@ -125,9 +125,16 @@ class EmpresaController extends Controller
             $response = Http::timeout(8)->get("https://brasilapi.com.br/api/cnpj/v1/{$cnpj}");
             if ($response->successful()) {
                 $data = $response->json();
+                // 1 = MATRIZ, 2 = FILIAL according to typical Brazilian API standards
+                $tipoUnidade = null;
+                if (isset($data['identificador_matriz_filial'])) {
+                    $tipoUnidade = $data['identificador_matriz_filial'] == 1 ? 'Matriz' : 'Filial';
+                }
+
                 return response()->json([
                     'nome_fantasia' => $data['nome_fantasia'] ?: $data['razao_social'] ?? '',
                     'razao_social'  => $data['razao_social'] ?? '',
+                    'tipo_unidade'  => $tipoUnidade,
                     'cep'           => $data['cep'] ?? '',
                     'rua'           => $data['logradouro'] ?? '',
                     'numero'        => $data['numero'] ?? '',

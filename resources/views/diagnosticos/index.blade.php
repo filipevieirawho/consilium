@@ -178,8 +178,19 @@
                 Gere um link único para o diagnóstico. Opcionalmente, vincule a um lead existente.
             </p>
 
+            <div class="mb-5">
+                <label class="block text-sm font-medium text-gray-700 mb-1">Empresa <span class="text-red-500">*</span></label>
+                <select id="select-empresa-modal" class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-[#D0AE6D] focus:ring-[#D0AE6D] py-2.5 text-sm">
+                    <option value="">Selecione a empresa...</option>
+                    @foreach(\App\Models\Empresa::orderBy('nome_fantasia')->get() as $emp)
+                        <option value="{{ $emp->id }}">{{ $emp->nome_fantasia }}</option>
+                    @endforeach
+                </select>
+                <p class="text-[10px] text-gray-400 mt-1">Obrigatório para a escala B2B.</p>
+            </div>
+
             <div class="mb-5 relative" id="combo-box-container">
-                <label class="block text-sm font-medium text-gray-700 mb-1">Vincular a um lead <span class="text-gray-400 font-normal">(opcional)</span></label>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Lead / Contato <span class="text-gray-400 font-normal">(opcional)</span></label>
                 
                 <!-- Hidden input to store selected ID -->
                 <input type="hidden" id="select-contact" value="">
@@ -187,21 +198,23 @@
                 <!-- Search Input -->
                 <div class="relative">
                     <input type="text" id="combo-search" autocomplete="off"
-                        placeholder="Buscar pelo nome ou empresa..."
+                        placeholder="Buscar pelo nome..."
                         class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-[#D0AE6D] focus:ring-[#D0AE6D] pl-4 pr-11 py-2.5 text-sm cursor-text transition-colors"
                     >
                     <div class="absolute inset-y-0 right-3 flex items-center pointer-events-none">
-                        <ion-icon name="search-outline" class="text-gray-400 text-lg"></ion-icon>
+                        <ion-icon name="person-outline" class="text-gray-400 text-lg"></ion-icon>
                     </div>
                 </div>
 
                 <!-- Dropdown list -->
                 <ul id="combo-dropdown" class="absolute z-50 w-full bg-white border border-gray-200 shadow-xl max-h-60 rounded-lg py-1 text-base overflow-auto focus:outline-none sm:text-sm hidden mt-1">
                     <li class="combo-option cursor-pointer select-none relative py-2.5 pl-4 pr-4 hover:bg-gray-50 text-gray-900 border-b border-gray-100" data-value="">
-                        <span class="block truncate font-medium text-[#D0AE6D]">Diagnóstico avulso (sem lead)</span>
+                        <span class="block truncate font-medium text-gray-400 italic">Sem lead vinculado</span>
                     </li>
                     @foreach($contacts as $c)
-                    <li class="combo-option cursor-pointer select-none relative py-2.5 pl-4 pr-4 hover:bg-gray-50 text-gray-900" data-value="{{ $c->id }}">
+                    <li class="combo-option cursor-pointer select-none relative py-2.5 pl-4 pr-4 hover:bg-gray-50 text-gray-900" 
+                        data-value="{{ $c->id }}" 
+                        data-empresa-id="{{ $c->empresa_id }}">
                         <span class="block font-medium lead-name">{{ $c->name }}</span>
                         @if($c->company)
                         <span class="block text-xs text-gray-500 mt-0.5">{{ $c->company }}</span>
@@ -212,7 +225,16 @@
                         Nenhum lead encontrado.
                     </li>
                 </ul>
-                <p class="text-xs text-gray-500 mt-2">Dica: Deixe em branco se desejar gerar um link avulso para envio geral.</p>
+            </div>
+
+            <div class="mb-5">
+                <label class="block text-sm font-medium text-gray-700 mb-1">Modelo de Questionário</label>
+                <select id="select-questionario" class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-[#D0AE6D] focus:ring-[#D0AE6D] py-2.5 text-sm">
+                    <option value="">Padrão (18 questões estáticas)</option>
+                    @foreach($questionarios as $q)
+                        <option value="{{ $q->id }}">{{ $q->titulo }} ({{ $q->questoes_count }} questões)</option>
+                    @endforeach
+                </select>
             </div>
 
             <div id="link-resultado" class="hidden mb-5 p-4 bg-gray-50 rounded-xl border border-gray-200">
@@ -290,6 +312,8 @@
         const btnGerar = document.getElementById('btn-gerar');
         const btnCopiar = document.getElementById('btn-copiar');
         const selectContact = document.getElementById('select-contact');
+        const selectEmpresa = document.getElementById('select-empresa-modal');
+        const selectQuestionario = document.getElementById('select-questionario');
         const linkResultado = document.getElementById('link-resultado');
         const linkGerado = document.getElementById('link-gerado');
         const copyFeedback = document.getElementById('copy-feedback');
@@ -327,6 +351,7 @@
         options.forEach(opt => {
             opt.addEventListener('click', () => {
                 const val = opt.getAttribute('data-value');
+                const empId = opt.getAttribute('data-empresa-id');
                 selectContact.value = val;
                 
                 if(val === "") {
@@ -334,6 +359,10 @@
                 } else {
                     const nameSpan = opt.querySelector('.lead-name');
                     searchInput.value = nameSpan ? nameSpan.textContent.trim() : opt.textContent.trim();
+                    // Auto-select Empresa if it belongs to one
+                    if (empId && empId !== "null") {
+                        selectEmpresa.value = empId;
+                    }
                 }
                 
                 dropdown.classList.add('hidden');
@@ -351,16 +380,25 @@
             // Reset modal state
             selectContact.value = "";
             searchInput.value = "";
+            selectEmpresa.value = "";
+            selectQuestionario.value = "";
             options.forEach(opt => opt.style.display = 'block');
             emptyMsg.classList.add('hidden');
+            btnGerar.disabled = false;
+            btnGerar.textContent = 'Gerar Link';
         }
 
-        btnAbrir.addEventListener('click', abrirModal);
+        if (btnAbrir) btnAbrir.addEventListener('click', abrirModal);
         btnFechar.addEventListener('click', fecharModal);
         btnCancelar.addEventListener('click', fecharModal);
         modal.addEventListener('click', e => { if (e.target === modal) fecharModal(); });
 
         btnGerar.addEventListener('click', function () {
+            if (!selectEmpresa.value) {
+                alert('Por favor, selecione uma Empresa. Esta é uma exigência do novo modelo B2B.');
+                return;
+            }
+
             btnGerar.disabled = true;
             btnGerar.textContent = 'Gerando...';
 
@@ -371,7 +409,11 @@
                     'Accept': 'application/json',
                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
                 },
-                body: JSON.stringify({ contact_id: selectContact.value || null }),
+                body: JSON.stringify({ 
+                    contact_id: selectContact.value || null,
+                    empresa_id: selectEmpresa.value || null, // Ensure empresa_id is sent
+                    questionario_id: selectQuestionario.value || null
+                }),
             })
             .then(r => r.json())
             .then(data => {

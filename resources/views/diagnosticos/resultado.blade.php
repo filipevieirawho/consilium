@@ -57,7 +57,15 @@ $cfg = $faixaConfig[$faixa];
         </h3>
 
         <div class="space-y-4">
-            @foreach($dimensoes as $d => $dim)
+    <!-- Dimension scores -->
+    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg border border-gray-100 p-6 mb-6">
+        <h3 class="font-semibold text-gray-900 mb-5 flex items-center gap-2">
+            <ion-icon name="bar-chart-outline" style="color: #D0AE6D;"></ion-icon>
+            Pontuação por dimensão
+        </h3>
+
+        <div class="space-y-4">
+            @foreach($dimensoes as $dim)
             <div>
                 <div class="flex justify-between items-center mb-1">
                     <div class="flex items-center gap-2">
@@ -72,7 +80,7 @@ $cfg = $faixaConfig[$faixa];
                     <div class="h-2.5 rounded-full transition-all duration-700"
                          style="width: {{ $dim['score'] }}%; background-color: {{ $dim['fraca'] ? '#ef4444' : ($dim['score'] >= 70 ? '#22c55e' : '#f59e0b') }};"></div>
                 </div>
-                <div class="text-xs text-gray-400 mt-0.5">Peso: {{ ($dim['peso'] * 100) }}%</div>
+                <div class="text-xs text-gray-400 mt-0.5">Peso: {{ round($dim['peso'] * 100) }}%</div>
             </div>
             @endforeach
         </div>
@@ -124,14 +132,13 @@ $cfg = $faixaConfig[$faixa];
     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg border border-gray-100 p-6 mb-6">
         <h3 class="font-semibold text-gray-700 mb-4 text-sm uppercase tracking-wide">Dados do diagnóstico</h3>
         <dl class="grid grid-cols-2 gap-x-4 gap-y-3 text-sm">
-            <div><dt class="text-gray-400 text-xs">Respondente</dt><dd class="font-medium text-gray-800">{{ $diagnostico->nome }}</dd></div>
-            <div><dt class="text-gray-400 text-xs">Empresa</dt><dd class="font-medium text-gray-800">{{ $diagnostico->empresa }}</dd></div>
-            <div><dt class="text-gray-400 text-xs">Empreendimento</dt><dd class="font-medium text-gray-800">{{ $diagnostico->nome_empreendimento }}</dd></div>
+            <div><dt class="text-gray-400 text-xs">Respondente</dt><dd class="font-medium text-gray-800">{{ $diagnostico->nome ?: '—' }}</dd></div>
+            <div><dt class="text-gray-400 text-xs">Empresa</dt><dd class="font-medium text-gray-800">{{ $diagnostico->empresa ?: '—' }}</dd></div>
+            <div><dt class="text-gray-400 text-xs">Empreendimento</dt><dd class="font-medium text-gray-800">{{ $diagnostico->nome_empreendimento ?: '—' }}</dd></div>
             @if($diagnostico->cidade)<div><dt class="text-gray-400 text-xs">Cidade</dt><dd class="font-medium text-gray-800">{{ $diagnostico->cidade }}</dd></div>@endif
             @if($diagnostico->estagio_obra !== null)<div><dt class="text-gray-400 text-xs">Estágio da obra</dt><dd class="font-medium text-gray-800">{{ $diagnostico->estagio_obra }}%</dd></div>@endif
             <div><dt class="text-gray-400 text-xs">Data</dt><dd class="font-medium text-gray-800">{{ $diagnostico->updated_at->format('d/m/Y') }}</dd></div>
         </dl>
-    </div>
     </div>
 
     @push('scripts')
@@ -145,11 +152,23 @@ $cfg = $faixaConfig[$faixa];
         $radarLabels = [];
         $radarData = [];
         $radarFullNames = [];
-        $dimNames = ['','Viabl.','Proj.','Orçam.','Plan.','Fin.','Conf.'];
-        $dimFullNames = ['','Viabilidade','Projetos','Orçamento','Planejamento','Financeiro','Conformidade'];
-        foreach($dimensoes as $d => $dim) {
-            $radarLabels[] = $dimNames[$d];
-            $radarFullNames[] = $dimFullNames[$d];
+        foreach($dimensoes as $dim) {
+            $fullName = $dim['nome'];
+            $shortName = mb_substr($fullName, 0, 5) . '.';
+            if (mb_strlen($fullName) <= 6) $shortName = $fullName;
+
+            $map = [
+                'Viabilidade e Premissas' => 'Viabl.',
+                'Projetos' => 'Proj.',
+                'Orçamento' => 'Orçam.',
+                'Planejamento' => 'Plan.',
+                'Sustentação Financeira' => 'Finan.',
+                'Confiabilidade da Informação' => 'Confi.',
+            ];
+            if (isset($map[$fullName])) $shortName = $map[$fullName];
+
+            $radarLabels[] = $shortName;
+            $radarFullNames[] = $fullName;
             $radarData[] = $dim['score'];
         }
         @endphp

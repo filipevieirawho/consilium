@@ -9,6 +9,8 @@ class Diagnostico extends Model
     protected $fillable = [
         'token',
         'contact_id',
+        'empresa_id',
+        'questionario_id',
         'nome',
         'cargo',
         'empresa',
@@ -39,6 +41,16 @@ class Diagnostico extends Model
     public function contact()
     {
         return $this->belongsTo(Contact::class);
+    }
+
+    public function questionario()
+    {
+        return $this->belongsTo(Questionario::class);
+    }
+
+    public function empresaRelationship()
+    {
+        return $this->belongsTo(Empresa::class, 'empresa_id');
     }
 
     /**

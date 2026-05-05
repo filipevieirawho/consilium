@@ -1,5 +1,6 @@
 @php
-$pct = 10 + (($num / 18) * 80);
+$totalQuestions = $total ?? 18;
+$pct = 10 + (($num / $totalQuestions) * 80);
 $opcoes = [
     0 => ['label' => 'Inexistente ou desconhecido', 'desc' => 'Não existe prática estruturada ou a informação não está disponível.', 'colors' => ['bg'=>'#fef2f2','border'=>'#fca5a5','sel'=>'#ef4444','num'=>'#ef4444']],
     1 => ['label' => 'Existe de forma informal',    'desc' => 'A prática ocorre, mas depende de pessoas e não é consistente.',             'colors' => ['bg'=>'#fff7ed','border'=>'#fdba74','sel'=>'#f97316','num'=>'#f97316']],
@@ -7,16 +8,16 @@ $opcoes = [
     3 => ['label' => 'Formalizado e utilizado para decisão', 'desc' => 'A prática é estruturada e utilizada ativamente para decisões de prazo, custo e margem.', 'colors' => ['bg'=>'#f0fdf4','border'=>'#86efac','sel'=>'#16a34a','num'=>'#16a34a']],
 ];
 $respostaValor = $respostaAtual ? (int) $respostaAtual->resposta : null;
-$nextUrl = $num < 18 ? route('diagnostico.pergunta', [$token, $num + 1]) : route('diagnostico.finalizar', $token);
+$nextUrl = $num < $totalQuestions ? route('diagnostico.pergunta', [$token, $num + 1]) : route('diagnostico.finalizar', $token);
 @endphp
 
-<x-diagnosticos.layout :progressPct="(int) $pct" progressLabel="Pergunta {{ $num }} de 18">
+<x-diagnosticos.layout :progressPct="(int) $pct" progressLabel="Pergunta {{ $num }} de {{ $totalQuestions }}">
     <!-- Dimension badge -->
     <div class="flex items-center justify-between mb-6">
         <span class="text-xs font-semibold uppercase tracking-wider px-3 py-1 rounded-full text-white" style="background-color: #D0AE6D;">
             {{ $dimensaoNome }}
         </span>
-        <span class="text-sm font-medium text-gray-400">{{ $num }}/18</span>
+        <span class="text-sm font-medium text-gray-400">{{ $num }}/{{ $totalQuestions }}</span>
     </div>
 
     <!-- Question -->
@@ -68,7 +69,7 @@ $nextUrl = $num < 18 ? route('diagnostico.pergunta', [$token, $num + 1]) : route
                 class="inline-flex items-center gap-2 px-6 py-3 text-white font-semibold rounded-xl transition-all"
                 style="background-color:#D0AE6D;{{ is_null($respostaValor) ? 'opacity:0.4;cursor:not-allowed;' : '' }}"
                 {{ is_null($respostaValor) ? 'disabled' : '' }}>
-                {{ $num < 18 ? 'Próxima →' : 'Ver Resultado' }}
+                {{ $num < $totalQuestions ? 'Próxima →' : 'Ver Resultado' }}
             </button>
         </div>
     </div>
@@ -139,6 +140,18 @@ $nextUrl = $num < 18 ? route('diagnostico.pergunta', [$token, $num + 1]) : route
                 saving = true;
                 setNextEnabled(false);
 
+                // Build payload
+                var payload = { 
+                    resposta: val,
+                    num: {{ $num }}
+                };
+                
+                @if(isset($perguntaAtual['questao_id']))
+                    payload.questao_id = {{ $perguntaAtual['questao_id'] }};
+                @else
+                    payload.pergunta = {{ $num }};
+                @endif
+
                 fetch(saveUrl, {
                     method: 'POST',
                     headers: {
@@ -146,7 +159,7 @@ $nextUrl = $num < 18 ? route('diagnostico.pergunta', [$token, $num + 1]) : route
                         'Accept': 'application/json',
                         'X-CSRF-TOKEN': csrf,
                     },
-                    body: JSON.stringify({ pergunta: {{ $num }}, resposta: val }),
+                    body: JSON.stringify(payload),
                 })
                 .then(function (r) { return r.json(); })
                 .then(function (data) {
@@ -176,3 +189,4 @@ $nextUrl = $num < 18 ? route('diagnostico.pergunta', [$token, $num + 1]) : route
     })();
     </script>
 </x-diagnosticos.layout>
+

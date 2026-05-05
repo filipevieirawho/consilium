@@ -167,6 +167,7 @@
             bairro:        document.getElementById('bairro'),
             cidade:        document.getElementById('cidade'),
             estado:        document.getElementById('estado'),
+            tipo_unidade:  document.querySelector('select[name="tipo_unidade"]'),
         };
 
         function applyMask(input, val) {
