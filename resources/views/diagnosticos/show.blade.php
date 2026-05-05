@@ -91,6 +91,7 @@ $opcaoLabels = [
                 </div>
 
                 <!-- Data summary -->
+                <div class="md:col-span-2 bg-white overflow-hidden shadow-sm sm:rounded-lg border border-gray-100 p-6">
                     <div class="flex items-start justify-between mb-5">
                         <h3 class="font-semibold text-gray-900">Dados do diagnóstico</h3>
                         <div class="flex gap-2">
@@ -283,8 +284,10 @@ $opcaoLabels = [
                 @endif
             </div>
             @endif
+        </div>
+    </div>
 
-        @if($resultado)
+    @if($resultado)
     @push('scripts')
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
