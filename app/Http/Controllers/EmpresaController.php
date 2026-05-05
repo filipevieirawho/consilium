@@ -64,6 +64,14 @@ class EmpresaController extends Controller
             'pais'          => 'nullable|string|max:50',
         ]);
 
+        $existing = Empresa::whereRaw('LOWER(nome_fantasia) = ?', [strtolower($validated['nome_fantasia'])])
+            ->orWhereRaw('LOWER(razao_social) = ?', [strtolower($validated['nome_fantasia'])])
+            ->first();
+
+        if ($existing) {
+            return back()->withInput()->withErrors(['nome_fantasia' => 'Já existe uma empresa cadastrada com este nome.']);
+        }
+
         $empresa = Empresa::create(array_merge($validated, [
             'user_id' => Auth::id(),
             'cnpj'    => isset($validated['cnpj']) ? preg_replace('/\D/', '', $validated['cnpj']) : null,
@@ -103,6 +111,17 @@ class EmpresaController extends Controller
             'estado'        => 'nullable|string|max:2',
             'pais'          => 'nullable|string|max:50',
         ]);
+
+        $existing = Empresa::where('id', '!=', $empresa->id)
+            ->where(function ($query) use ($validated) {
+                $query->whereRaw('LOWER(nome_fantasia) = ?', [strtolower($validated['nome_fantasia'])])
+                      ->orWhereRaw('LOWER(razao_social) = ?', [strtolower($validated['nome_fantasia'])]);
+            })
+            ->first();
+
+        if ($existing) {
+            return back()->withInput()->withErrors(['nome_fantasia' => 'Já existe outra empresa cadastrada com este nome.']);
+        }
 
         if (isset($validated['cnpj'])) {
             $validated['cnpj'] = preg_replace('/\D/', '', $validated['cnpj']);
