@@ -114,8 +114,13 @@ $opcaoLabels = [
 
                 <!-- Data summary -->
                 <div class="md:col-span-2 bg-white overflow-hidden shadow-sm sm:rounded-lg border border-gray-100 p-6">
-                    <div class="flex items-start justify-between mb-5">
+                    <div class="flex items-center justify-between mb-5">
                         <h3 class="font-semibold text-gray-900">Resumo de Informações</h3>
+                        @if($diagnostico->status === 'concluido')
+                            <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md border text-green-700 border-green-300 bg-green-50">Concluído</span>
+                        @else
+                            <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md border text-yellow-700 border-yellow-300 bg-yellow-50">Em andamento</span>
+                        @endif
                     </div>
 
                     <dl class="grid grid-cols-2 gap-x-6 gap-y-4 text-sm">
@@ -138,16 +143,6 @@ $opcaoLabels = [
                         <div><dt class="text-xs text-gray-400 uppercase tracking-wide">Data</dt><dd class="font-medium text-gray-800 mt-0.5">{{ $diagnostico->created_at->format('d/m/Y H:i') }}</dd></div>
                         
                         <div class="col-span-2 mt-2 pt-2 border-t border-gray-50 flex items-start gap-8">
-                            <div>
-                                <dt class="text-xs text-gray-400 uppercase tracking-wide">Status</dt>
-                                <dd class="mt-0.5">
-                                    @if($diagnostico->status === 'concluido')
-                                    <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md border text-green-700 border-green-300 bg-green-50">Concluído</span>
-                                    @else
-                                    <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md border text-yellow-700 border-yellow-300 bg-yellow-50">Em andamento</span>
-                                    @endif
-                                </dd>
-                            </div>
                             @if($diagnostico->status !== 'concluido')
                             <div>
                                 <dt class="text-xs text-gray-400 uppercase tracking-wide">Progresso</dt>
