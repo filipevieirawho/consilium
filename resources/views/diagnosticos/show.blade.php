@@ -142,8 +142,8 @@ $opcaoLabels = [
                         <div><dt class="text-xs text-gray-400 uppercase tracking-wide">Cidade</dt><dd class="font-medium text-gray-800 mt-0.5">{{ $diagnostico->cidade ?: '—' }}</dd></div>
                         <div><dt class="text-xs text-gray-400 uppercase tracking-wide">Data</dt><dd class="font-medium text-gray-800 mt-0.5">{{ $diagnostico->created_at->format('d/m/Y H:i') }}</dd></div>
                         
-                        <div class="col-span-2 mt-2 pt-2 border-t border-gray-50 flex items-start gap-8">
-                            <div class="flex-1 max-w-xs">
+                        <div class="col-span-2 mt-2 pt-2 border-t border-gray-50">
+                            <div class="w-full">
                                 <dt class="text-xs text-gray-400 uppercase tracking-wide flex items-center gap-2">
                                     Lead Vinculado
                                     <span id="vincular-status" class="hidden text-[10px] font-bold text-green-600 uppercase">✓ Salvo</span>
@@ -160,18 +160,6 @@ $opcaoLabels = [
                                     </select>
                                 </dd>
                             </div>
-                            @if($diagnostico->status !== 'concluido')
-                            <div>
-                                <dt class="text-xs text-gray-400 uppercase tracking-wide">Progresso</dt>
-                                <dd class="text-xs font-semibold text-gray-600 mt-0.5">
-                                    @php
-                                        $respondidas = $diagnostico->respostas->count();
-                                        $totalQ = $diagnostico->questionario ? $diagnostico->questionario->questoes->count() : 18;
-                                    @endphp
-                                    {{ $respondidas }}/{{ $totalQ }}
-                                </dd>
-                            </div>
-                            @endif
                         </div>
                     </dl>
 
