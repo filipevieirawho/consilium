@@ -20,7 +20,7 @@
             @endif
 
             {{-- Search & Table Card --}}
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg border border-gray-100">
+            <div class="bg-white shadow-sm sm:rounded-lg border border-gray-100">
                 <div class="p-6">
                     <!-- Search & Filter -->
                     <div class="flex justify-between items-center mb-6 gap-4 flex-wrap">
@@ -53,7 +53,7 @@
                     </div>
 
                     <!-- Table -->
-                    <div class="overflow-x-auto">
+                    <div class="overflow-x-auto pb-24 -mb-24">
                         <table class="min-w-full divide-y divide-gray-200">
                             <thead class="bg-gray-50">
                                 <tr>
@@ -92,7 +92,7 @@
                                                 x-transition:leave="transition ease-in duration-75"
                                                 x-transition:leave-start="transform opacity-100 scale-100"
                                                 x-transition:leave-end="transform opacity-0 scale-95"
-                                                class="absolute right-0 w-36 bg-white rounded-md shadow-lg border border-gray-100 z-50 py-1 {{ $loop->last || ($loop->count > 2 && $loop->iteration >= $loop->count - 1) ? 'bottom-full mb-1' : 'top-full mt-1' }}">
+                                                class="absolute right-0 top-full mt-1 w-36 bg-white rounded-md shadow-lg border border-gray-100 z-50 py-1">
                                                 <a href="{{ route('empresas.edit', $empresa) }}"
                                                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors">Editar</a>
                                                 <button type="button" @click.stop="open = false; openDeleteEmpresaModal('{{ route('empresas.destroy', $empresa) }}')"

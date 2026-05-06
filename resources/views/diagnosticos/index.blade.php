@@ -20,7 +20,7 @@
             </div>
             @endif
 
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="bg-white shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
 
                     <!-- Top Bar -->
@@ -59,7 +59,7 @@
                     </div>
 
                     <!-- Table -->
-                    <div class="overflow-x-auto">
+                    <div class="overflow-x-auto pb-24 -mb-24">
                         <table class="min-w-full divide-y divide-gray-200">
                             <thead class="bg-gray-50">
                                 <tr>
@@ -133,7 +133,7 @@
                                                 x-transition:leave="transition ease-in duration-75"
                                                 x-transition:leave-start="transform opacity-100 scale-100"
                                                 x-transition:leave-end="transform opacity-0 scale-95"
-                                                class="absolute right-0 w-36 bg-white rounded-md shadow-lg border border-gray-100 z-50 py-1 {{ $loop->last || ($loop->count > 2 && $loop->iteration >= $loop->count - 1) ? 'bottom-full mb-1' : 'top-full mt-1' }}">
+                                                class="absolute right-0 top-full mt-1 w-36 bg-white rounded-md shadow-lg border border-gray-100 z-50 py-1">
                                                 <button type="button" @click.stop="open = false; openDeleteModal('{{ route('diagnosticos.destroy', $d) }}')"
                                                     class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors">
                                                     Excluir
