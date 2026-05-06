@@ -1,9 +1,13 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight flex items-center gap-2">
-            <ion-icon name="business-outline" class="text-[#D0AE6D] text-2xl"></ion-icon>
-            Empresas
-        </h2>
+        <div class="flex items-center gap-3 h-10">
+            <div class="flex items-center justify-center w-8 h-8 text-[#D0AE6D]">
+                <ion-icon name="business-outline" class="text-2xl"></ion-icon>
+            </div>
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                Empresas
+            </h2>
+        </div>
     </x-slot>
 
     <div class="py-8">
