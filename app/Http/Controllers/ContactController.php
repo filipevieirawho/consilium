@@ -236,7 +236,7 @@ class ContactController extends Controller
         });
 
         $users = \App\Models\User::all();
-        $questionarios = \App\Models\Questionario::where('is_active', true)->orderBy('titulo')->get();
+        $questionarios = \App\Models\Questionario::withCount('questoes')->where('is_active', true)->orderBy('titulo')->get();
         return view('contacts.show', compact('contact', 'users', 'timeline', 'questionarios'));
     }
 
