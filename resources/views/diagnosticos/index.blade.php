@@ -187,7 +187,10 @@
                 placeholder="Selecione a empresa..." 
                 icon="business-outline"
                 emptyMessage="Nenhuma empresa encontrada."
-                helperText="Obrigatório para a escala B2B.">
+                helperText="Obrigatório para a escala B2B."
+                creatable="true"
+                creatableText="Adicionar empresa"
+                onCreate="criarEmpresaRapido">
                 @foreach(\App\Models\Empresa::orderBy('nome_fantasia')->get() as $emp)
                     <li class="combo-option cursor-pointer select-none relative py-2.5 pl-4 pr-4 hover:bg-gray-50 text-gray-900" 
                         data-value="{{ $emp->id }}">
@@ -359,6 +362,48 @@
         });
 
     (function () {
+        function criarEmpresaRapido(nome, container) {
+            const searchInput = container.querySelector('.combo-search-input');
+            const originalPlaceholder = searchInput.placeholder;
+            searchInput.disabled = true;
+            searchInput.value = "Criando...";
+
+            fetch("{{ route('empresas.storeQuick') }}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({ nome_fantasia: nome })
+            })
+            .then(response => response.json())
+            .then(data => {
+                searchInput.disabled = false;
+                
+                // 1. Create a new LI for the dropdown
+                const ul = container.querySelector('.combo-dropdown-list');
+                const emptyMsg = container.querySelector('.combo-empty');
+                const newLi = document.createElement('li');
+                newLi.className = "combo-option cursor-pointer select-none relative py-2.5 pl-4 pr-4 hover:bg-gray-50 text-gray-900";
+                newLi.dataset.value = data.id;
+                newLi.innerHTML = `<span class="block font-medium item-name">${data.nome_fantasia}</span>`;
+                
+                // Insert before the empty message and creatable item
+                const creatableItem = container.querySelector('.combo-creatable');
+                ul.insertBefore(newLi, creatableItem || emptyMsg);
+                
+                // 2. Click the new LI to select it (re-using existing logic)
+                newLi.click();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                searchInput.disabled = false;
+                searchInput.value = nome;
+                alert('Erro ao criar empresa.');
+            });
+        }
+
         const modal = document.getElementById('modal-gerar-link');
         const btnAbrir = document.getElementById('btn-gerar-link');
         const btnFechar = document.getElementById('btn-fechar-modal');

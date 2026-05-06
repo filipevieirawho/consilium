@@ -8,7 +8,10 @@
     'onSelect' => '', // JS callback
     'helperText' => '', // Text below the input
     'selectedValue' => '',
-    'selectedName' => ''
+    'selectedName' => '',
+    'creatable' => false,
+    'creatableText' => 'Adicionar',
+    'onCreate' => '' // JS function name
 ])
 
 <div class="mb-5 relative custom-combobox-container" id="combo-container-{{ $id }}">
@@ -17,7 +20,11 @@
     </label>
     
     <!-- Hidden input to store selected ID -->
-    <input type="hidden" id="{{ $id }}" value="{{ $selectedValue }}" data-onselect="{{ $onSelect }}">
+    <input type="hidden" id="{{ $id }}" value="{{ $selectedValue }}" 
+        data-onselect="{{ $onSelect }}"
+        data-creatable="{{ $creatable ? 'true' : 'false' }}"
+        data-oncreate="{{ $onCreate }}"
+        data-creatable-text="{{ $creatableText }}">
 
     <!-- Search Input -->
     <div class="relative">
@@ -44,6 +51,15 @@
         <li class="combo-empty hidden cursor-default select-none relative py-3 pl-4 pr-4 text-gray-500 text-sm text-center">
             {{ $emptyMessage }}
         </li>
+
+        @if($creatable)
+        <li class="combo-creatable hidden cursor-pointer select-none relative py-2.5 pl-4 pr-4 text-[#D0AE6D] hover:bg-gray-50 border-t border-gray-100 font-bold italic">
+            <div class="flex items-center gap-2">
+                <ion-icon name="add-circle-outline" class="text-lg"></ion-icon>
+                <span>{{ $creatableText }}: <span class="creatable-term font-normal text-gray-900 not-italic"></span></span>
+            </div>
+        </li>
+        @endif
     </ul>
 
     @if($helperText)

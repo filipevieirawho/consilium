@@ -45,6 +45,28 @@ class EmpresaController extends Controller
         return view('empresas.create');
     }
 
+    public function storeQuick(Request $request)
+    {
+        $validated = $request->validate([
+            'nome_fantasia' => 'required|string|max:255',
+        ]);
+
+        $existing = Empresa::whereRaw('LOWER(nome_fantasia) = ?', [strtolower($validated['nome_fantasia'])])
+            ->first();
+
+        if ($existing) {
+            return response()->json($existing);
+        }
+
+        $empresa = Empresa::create([
+            'nome_fantasia' => $validated['nome_fantasia'],
+            'user_id'       => Auth::id(),
+            'pais'          => 'Brasil',
+        ]);
+
+        return response()->json($empresa);
+    }
+
     public function store(Request $request)
     {
         $validated = $request->validate([

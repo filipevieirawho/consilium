@@ -62,6 +62,11 @@
                 const emptyMsg = container.querySelector('.combo-empty');
                 const hiddenInput = container.querySelector('input[type="hidden"]');
                 const onSelectFnName = hiddenInput.getAttribute('data-onselect');
+                
+                const creatableItem = container.querySelector('.combo-creatable');
+                const creatableTerm = container.querySelector('.creatable-term');
+                const isCreatable = hiddenInput.getAttribute('data-creatable') === 'true';
+                const onCreateFnName = hiddenInput.getAttribute('data-oncreate');
 
                 searchInput.addEventListener('focus', () => dropdown.classList.remove('hidden'));
                 
@@ -73,19 +78,39 @@
                     const term = e.target.value.toLowerCase();
                     dropdown.classList.remove('hidden');
                     let hasVisible = false;
+                    let perfectMatch = false;
                     
                     options.forEach(opt => {
-                        const text = opt.textContent.toLowerCase();
+                        const itemNameEl = opt.querySelector('.item-name');
+                        const text = (itemNameEl ? itemNameEl.textContent : opt.textContent).trim().toLowerCase();
                         if (text.includes(term)) {
                             opt.style.display = 'block';
                             hasVisible = true;
+                            if (text === term) perfectMatch = true;
                         } else {
                             opt.style.display = 'none';
                         }
                     });
                     
-                    if(emptyMsg) emptyMsg.classList.toggle('hidden', hasVisible);
+                    if(emptyMsg) emptyMsg.classList.toggle('hidden', hasVisible || (isCreatable && term.length > 0));
+
+                    if (isCreatable && term.length > 0 && !perfectMatch) {
+                        creatableItem.classList.remove('hidden');
+                        creatableTerm.textContent = searchInput.value;
+                    } else if (creatableItem) {
+                        creatableItem.classList.add('hidden');
+                    }
                 });
+
+                if (creatableItem) {
+                    creatableItem.addEventListener('click', () => {
+                        const term = searchInput.value;
+                        if (onCreateFnName && window[onCreateFnName]) {
+                            window[onCreateFnName](term, container);
+                        }
+                        dropdown.classList.add('hidden');
+                    });
+                }
 
                 options.forEach(opt => {
                     opt.addEventListener('click', () => {

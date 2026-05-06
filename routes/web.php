@@ -55,6 +55,7 @@ Route::middleware('auth')->group(function () {
 
     // Empresas
     Route::resource('/empresas', EmpresaController::class);
+    Route::post('/empresas/store-quick', [EmpresaController::class, 'storeQuick'])->name('empresas.storeQuick');
     Route::post('/empresas/cnpj-lookup', [EmpresaController::class, 'cnpjLookup'])->name('empresas.cnpjLookup');
 
     // Questionários
