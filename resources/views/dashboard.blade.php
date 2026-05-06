@@ -1,8 +1,16 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight flex items-center gap-2">
-            <ion-icon name="receipt-outline" class="text-[#D0AE6D] text-2xl"></ion-icon> {{ __('Dashboard de Leads') }}
-        </h2>
+        <div class="flex items-center gap-3">
+            <div class="text-[#D0AE6D]">
+                <ion-icon name="receipt-outline" class="text-2xl"></ion-icon>
+            </div>
+            <div>
+                <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                    {{ __('Dashboard de Leads') }}
+                </h2>
+                <p class="text-[10px] text-gray-400 font-mono uppercase tracking-widest">Gestão de Funil e Contatos</p>
+            </div>
+        </div>
     </x-slot>
 
     <div class="py-12">

@@ -28,13 +28,30 @@ $opcaoLabels = [
 <x-app-layout>
     <x-slot name="header">
         <div class="flex items-center justify-between">
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight flex items-center gap-2">
-                <ion-icon name="analytics-outline" class="text-[#D0AE6D] text-2xl"></ion-icon>
-                Diagnóstico — {{ $diagnostico->empresa ?: 'Sem empresa' }}
-            </h2>
-            <a href="{{ route('diagnosticos.index') }}" class="text-sm text-gray-500 hover:text-gray-700 flex items-center gap-1">
-                <ion-icon name="arrow-back-outline"></ion-icon> Voltar à lista
-            </a>
+            <div class="flex items-center gap-3">
+                <a href="{{ route('diagnosticos.index') }}" class="text-gray-400 hover:text-gray-700">
+                    <ion-icon name="arrow-back-outline" class="text-xl"></ion-icon>
+                </a>
+                <div>
+                    <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                        Diagnóstico — {{ $diagnostico->empresa ?: 'Sem empresa' }}
+                    </h2>
+                    @if($diagnostico->contact)
+                        <p class="text-[10px] text-gray-400 font-mono uppercase tracking-widest">Lead: {{ $diagnostico->contact->name }}</p>
+                    @endif
+                </div>
+            </div>
+            <div class="flex gap-2">
+                <a href="{{ route('diagnostico.landing', $diagnostico->token) }}" target="_blank"
+                    class="text-[10px] font-bold uppercase tracking-wider flex items-center gap-1 px-4 py-2 rounded-lg text-white"
+                    style="background-color: #D0AE6D;">
+                    <ion-icon name="open-outline" class="text-sm"></ion-icon> Ver formulário
+                </a>
+                <a href="{{ route('diagnostico.result', $diagnostico->token) }}" target="_blank"
+                    class="text-[10px] font-bold uppercase tracking-wider flex items-center gap-1 px-4 py-2 rounded-lg border border-[#D0AE6D] text-[#D0AE6D] hover:bg-[#D0AE6D]/05 transition-colors">
+                    <ion-icon name="eye-outline" class="text-sm"></ion-icon> Resultado Público
+                </a>
+            </div>
         </div>
     </x-slot>
 
@@ -93,18 +110,7 @@ $opcaoLabels = [
                 <!-- Data summary -->
                 <div class="md:col-span-2 bg-white overflow-hidden shadow-sm sm:rounded-lg border border-gray-100 p-6">
                     <div class="flex items-start justify-between mb-5">
-                        <h3 class="font-semibold text-gray-900">Dados do diagnóstico</h3>
-                        <div class="flex gap-2">
-                            <a href="{{ route('diagnostico.landing', $diagnostico->token) }}" target="_blank"
-                                class="text-[10px] font-bold uppercase tracking-wider flex items-center gap-1 px-3 py-1.5 rounded-lg text-white"
-                                style="background-color: #D0AE6D;">
-                                <ion-icon name="open-outline" class="text-sm"></ion-icon> Ver formulário
-                            </a>
-                            <a href="{{ route('diagnostico.result', $diagnostico->token) }}" target="_blank"
-                                class="text-[10px] font-bold uppercase tracking-wider flex items-center gap-1 px-3 py-1.5 rounded-lg border border-[#D0AE6D] text-[#D0AE6D] hover:bg-[#D0AE6D]/05 transition-colors">
-                                <ion-icon name="eye-outline" class="text-sm"></ion-icon> Resultado Público
-                            </a>
-                        </div>
+                        <h3 class="font-semibold text-gray-900">Resumo de Informações</h3>
                     </div>
 
                     <dl class="grid grid-cols-2 gap-x-6 gap-y-4 text-sm">
