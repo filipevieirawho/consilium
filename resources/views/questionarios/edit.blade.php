@@ -80,11 +80,19 @@
 
     @push('scripts')
     <script>
+    const DIMENSOES_DEFAULT = ['Viabilidade e Premissas', 'Projetos', 'Orçamento', 'Planejamento', 'Sustentação Financeira', 'Confiabilidade da Informação'];
     let questaoIndex = 0;
 
     function criarQuestaoRow(idx, data = {}) {
         const div = document.createElement('div');
         div.className = 'questao-row border border-gray-200 rounded-xl p-4 bg-gray-50';
+        
+        let dimensoesHtml = `<option value="">Selecione...</option>`;
+        DIMENSOES_DEFAULT.forEach(d => {
+            const selected = data.dimensao_nome === d ? 'selected' : '';
+            dimensoesHtml += `<option value="${d}" ${selected}>${d}</option>`;
+        });
+
         div.innerHTML = `
             <div class="flex items-start justify-between gap-3 mb-3">
                 <span class="numero flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold text-white" style="background-color:#D0AE6D;">${idx+1}</span>
@@ -101,9 +109,10 @@
                 <div class="grid grid-cols-2 gap-3">
                     <div>
                         <label class="block text-xs text-gray-500 mb-1">Dimensão</label>
-                        <input type="text" name="questoes[${idx}][dimensao_nome]" required list="dimensoes-list"
-                               value="${data.dimensao_nome||''}" placeholder="Ex: Planejamento"
+                        <select name="questoes[${idx}][dimensao_nome]" required
                                class="block w-full text-sm rounded-lg border-gray-300 focus:border-[#D0AE6D] focus:ring-[#D0AE6D]">
+                            ${dimensoesHtml}
+                        </select>
                     </div>
                     <div>
                         <label class="block text-xs text-gray-500 mb-1">Peso</label>
@@ -145,10 +154,5 @@
         atualizarNumeracao();
     });
     </script>
-    <datalist id="dimensoes-list">
-        @foreach(['Viabilidade e Premissas', 'Projetos', 'Orçamento', 'Planejamento', 'Sustentação Financeira', 'Confiabilidade da Informação'] as $d)
-        <option value="{{ $d }}">
-        @endforeach
-    </datalist>
     @endpush
 </x-app-layout>
