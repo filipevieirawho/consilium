@@ -417,7 +417,7 @@ class DiagnosticoController extends Controller
 
         $diagnosticos = $query->paginate(15);
         $contacts     = Contact::orderBy('name')->get();
-        $questionarios = Questionario::where('is_active', true)->orderBy('titulo')->get();
+        $questionarios = Questionario::withCount('questoes')->where('is_active', true)->orderBy('titulo')->get();
 
         return view('diagnosticos.index', compact('diagnosticos', 'contacts', 'questionarios'));
     }
@@ -436,7 +436,7 @@ class DiagnosticoController extends Controller
         }
 
         $contacts     = Contact::orderBy('name')->get();
-        $questionarios = Questionario::where('is_active', true)->orderBy('titulo')->get();
+        $questionarios = Questionario::withCount('questoes')->where('is_active', true)->orderBy('titulo')->get();
         $perguntas    = $this->getPerguntas();
 
         return view('diagnosticos.show', compact('diagnostico', 'resultado', 'contacts', 'questionarios', 'perguntas'));
