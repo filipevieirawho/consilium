@@ -1,9 +1,14 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex items-center justify-between">
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight flex items-center gap-2">
-                <ion-icon name="receipt-outline" class="text-[#D0AE6D] text-2xl"></ion-icon> {{ $contact->name }}
-            </h2>
+        <div class="flex items-center justify-between h-10">
+            <div class="flex items-center gap-3">
+                <a href="{{ route('dashboard') }}" class="flex items-center justify-center w-8 h-8 text-gray-400 hover:text-gray-700">
+                    <ion-icon name="arrow-back-outline" class="text-2xl"></ion-icon>
+                </a>
+                <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                    {{ $contact->name }}
+                </h2>
+            </div>
             <div class="flex items-center gap-4">
                 <!-- Generate Diagnostic for this Lead (Opens Modal) -->
                 <button type="button" x-data="" x-on:click="$dispatch('open-modal', 'gerar-diagnostico-modal')"
@@ -11,10 +16,6 @@
                     <ion-icon name="link-outline" class="text-lg"></ion-icon>
                     Gerar Diagnóstico
                 </button>
-
-                <a href="{{ route('dashboard') }}" class="text-sm text-gray-500 hover:text-gray-700 flex items-center gap-1">
-                    <ion-icon name="arrow-back-outline"></ion-icon> Voltar
-                </a>
             </div>
         </div>
     </x-slot>
