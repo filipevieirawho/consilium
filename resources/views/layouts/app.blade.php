@@ -112,24 +112,25 @@
                     });
                 }
 
-                options.forEach(opt => {
-                    opt.addEventListener('click', () => {
-                        const val = opt.getAttribute('data-value');
-                        hiddenInput.value = val;
-                        
-                        if(val === "") {
-                            searchInput.value = "";
-                        } else {
-                            const nameSpan = opt.querySelector('.item-name') || opt;
-                            searchInput.value = nameSpan.textContent.trim();
-                        }
-                        
-                        dropdown.classList.add('hidden');
+                dropdown.addEventListener('click', (e) => {
+                    const opt = e.target.closest('.combo-option');
+                    if (!opt) return;
 
-                        if (onSelectFnName && window[onSelectFnName]) {
-                            window[onSelectFnName](val, opt);
-                        }
-                    });
+                    const val = opt.getAttribute('data-value');
+                    hiddenInput.value = val;
+                    
+                    if(val === "") {
+                        searchInput.value = "";
+                    } else {
+                        const nameSpan = opt.querySelector('.item-name') || opt;
+                        searchInput.value = nameSpan.textContent.trim();
+                    }
+                    
+                    dropdown.classList.add('hidden');
+
+                    if (onSelectFnName && window[onSelectFnName]) {
+                        window[onSelectFnName](val, opt);
+                    }
                 });
             });
         });
