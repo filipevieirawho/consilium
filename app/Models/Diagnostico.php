@@ -8,6 +8,9 @@ class Diagnostico extends Model
 {
     protected $fillable = [
         'token',
+        'titulo',
+        'subtitulo',
+        'descricao',
         'contact_id',
         'empresa_id',
         'questionario_id',

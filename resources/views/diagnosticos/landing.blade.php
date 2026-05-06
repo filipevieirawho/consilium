@@ -7,34 +7,44 @@
 
         <!-- Title -->
         <h1 class="text-3xl font-bold text-gray-900 mb-4 leading-tight">
-            Check-up de Consistência<br>da Margem
+            {!! $diagnostico->titulo ?: ($diagnostico->questionario && $diagnostico->questionario->titulo 
+                ? nl2br(e($diagnostico->questionario->titulo)) 
+                : 'Check-up de Consistência<br>da Margem') !!}
         </h1>
 
         <!-- Separator -->
         <div class="w-16 h-1 rounded-full mx-auto mb-6" style="background-color: #D0AE6D;"></div>
 
-        <!-- Description -->
+        <!-- Subtitle/Description -->
         <p class="text-gray-600 text-lg max-w-lg mx-auto mb-2 leading-relaxed">
-            Este check-up avalia a consistência das condições que sustentam a previsibilidade da margem de um empreendimento.
+            {{ $diagnostico->subtitulo ?: ($diagnostico->questionario && $diagnostico->questionario->subtitulo 
+                ? $diagnostico->questionario->subtitulo 
+                : 'Este check-up avalia a consistência das condições que sustentam a previsibilidade da margem de um empreendimento.') }}
         </p>
         <p class="text-gray-500 text-sm max-w-lg mx-auto mb-10">
-            O resultado representa um retrato do momento atual, com base nas informações fornecidas.
+            {{ $diagnostico->descricao ?: ($diagnostico->questionario && $diagnostico->questionario->descricao 
+                ? $diagnostico->questionario->descricao 
+                : 'O resultado representa um retrato do momento atual, com base nas informações fornecidas.') }}
         </p>
 
         <!-- Stats row -->
+        @php
+            $totalQ = $diagnostico->questionario ? $diagnostico->questionario->questoes->count() : 18;
+            $totalD = $diagnostico->questionario ? $diagnostico->questionario->questoes->pluck('dimensao_nome')->unique()->count() : 6;
+        @endphp
         <div class="flex justify-center gap-8 mb-12">
             <div class="text-center">
-                <div class="text-2xl font-bold text-gray-800">6</div>
+                <div class="text-2xl font-bold text-gray-800">{{ $totalD }}</div>
                 <div class="text-xs text-gray-500 uppercase tracking-wider mt-1">Dimensões</div>
             </div>
             <div class="w-px bg-gray-200"></div>
             <div class="text-center">
-                <div class="text-2xl font-bold text-gray-800">18</div>
+                <div class="text-2xl font-bold text-gray-800">{{ $totalQ }}</div>
                 <div class="text-xs text-gray-500 uppercase tracking-wider mt-1">Perguntas</div>
             </div>
             <div class="w-px bg-gray-200"></div>
             <div class="text-center">
-                <div class="text-2xl font-bold text-gray-800">~5 min</div>
+                <div class="text-2xl font-bold text-gray-800">~{{ ceil($totalQ * 0.3) }} min</div>
                 <div class="text-xs text-gray-500 uppercase tracking-wider mt-1">Duração</div>
             </div>
         </div>

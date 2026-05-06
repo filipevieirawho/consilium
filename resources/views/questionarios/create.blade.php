@@ -16,19 +16,45 @@
                 <div class="bg-white shadow-sm sm:rounded-lg border border-gray-100 p-6 mb-5">
                     <h3 class="font-semibold text-gray-800 mb-4">Informações do Modelo</h3>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <div class="space-y-4 mb-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Nome do Modelo</label>
+                                <input type="text" name="nome" value="{{ old('nome') }}" required
+                                       placeholder="Ex: Check-up IPM 2026"
+                                       class="block w-full text-sm rounded-lg border-gray-300 focus:border-[#D0AE6D] focus:ring-[#D0AE6D]">
+                                @error('nome') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">ID do Modelo *</label>
+                                <input type="text" name="modelo_id" value="{{ old('modelo_id', $modeloId) }}" required
+                                       class="block w-full text-sm rounded-lg border-gray-300 focus:border-[#D0AE6D] focus:ring-[#D0AE6D] font-mono">
+                                @error('modelo_id') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+                            </div>
+                        </div>
+
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Título do modelo *</label>
-                            <input type="text" name="titulo" value="{{ old('titulo') }}" required
-                                   placeholder="Ex: Check-up IPM 2026"
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Título</label>
+                            <input type="text" name="titulo" value="{{ old('titulo') }}"
+                                   placeholder="Ex: Check-up de Consistência da Margem"
                                    class="block w-full text-sm rounded-lg border-gray-300 focus:border-[#D0AE6D] focus:ring-[#D0AE6D]">
                             @error('titulo') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
                         </div>
+
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">ID do Modelo *</label>
-                            <input type="text" name="modelo_id" value="{{ old('modelo_id', $modeloId) }}" required
-                                   class="block w-full text-sm rounded-lg border-gray-300 focus:border-[#D0AE6D] focus:ring-[#D0AE6D] font-mono">
-                            @error('modelo_id') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Subtítulo</label>
+                            <textarea name="subtitulo" rows="2"
+                                      placeholder="Ex: Este check-up avalia a consistência das condições..."
+                                      class="block w-full text-sm rounded-lg border-gray-300 focus:border-[#D0AE6D] focus:ring-[#D0AE6D]">{{ old('subtitulo') }}</textarea>
+                            @error('subtitulo') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Descrição</label>
+                            <textarea name="descricao" rows="2"
+                                      placeholder="Ex: O resultado representa um retrato do momento atual..."
+                                      class="block w-full text-sm rounded-lg border-gray-300 focus:border-[#D0AE6D] focus:ring-[#D0AE6D]">{{ old('descricao') }}</textarea>
+                            @error('descricao') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
                         </div>
                     </div>
 
@@ -104,10 +130,10 @@
                                class="block w-full text-sm rounded-lg border-gray-300 focus:border-[#D0AE6D] focus:ring-[#D0AE6D]">
                     </div>
                     <div>
-                        <label class="block text-xs text-gray-500 mb-1">Peso da Dimensão (0–1)</label>
-                        <input type="number" step="0.01" min="0.01" max="1" name="questoes[${idx}][dimensao_peso]" required
+                        <label class="block text-xs text-gray-500 mb-1">Peso da Dimensão</label>
+                        <input type="number" step="0.0001" name="questoes[${idx}][dimensao_peso]" required
                                value="${data.dimensao_peso || ''}"
-                               placeholder="0.20"
+                               placeholder="Ex: 0.20"
                                class="block w-full text-sm rounded-lg border-gray-300 focus:border-[#D0AE6D] focus:ring-[#D0AE6D]">
                     </div>
                 </div>

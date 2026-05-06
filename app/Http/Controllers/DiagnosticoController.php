@@ -37,7 +37,7 @@ class DiagnosticoController extends Controller
      */
     public function landing(string $token)
     {
-        $diagnostico = Diagnostico::where('token', $token)->firstOrFail();
+        $diagnostico = Diagnostico::with('questionario')->where('token', $token)->firstOrFail();
 
         if ($diagnostico->status === 'concluido') {
             return redirect()->route('diagnostico.result', $token);
@@ -501,13 +501,25 @@ class DiagnosticoController extends Controller
             }
         }
 
+        $qFields = [];
+        if ($request->filled('questionario_id')) {
+            $q = Questionario::find($request->questionario_id);
+            if ($q) {
+                $qFields = [
+                    'titulo'    => $q->titulo,
+                    'subtitulo' => $q->subtitulo,
+                    'descricao' => $q->descricao,
+                ];
+            }
+        }
+
         $diagnostico = Diagnostico::create(array_merge([
             'token'           => Str::random(40),
             'contact_id'      => $request->contact_id ?? null,
             'empresa_id'      => $empresaId,
             'questionario_id' => $request->questionario_id ?? null,
             'status'          => 'em_andamento',
-        ], $defaults));
+        ], $defaults, $qFields));
 
         $url = route('diagnostico.landing', $diagnostico->token);
 

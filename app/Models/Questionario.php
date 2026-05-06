@@ -10,8 +10,11 @@ class Questionario extends Model
     use HasFactory;
 
     protected $fillable = [
-        'modelo_id',
+        'nome',
         'titulo',
+        'subtitulo',
+        'descricao',
+        'modelo_id',
         'is_active',
     ];
 

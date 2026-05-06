@@ -21,13 +21,13 @@
                                 <!-- Search -->
                                 <input type="text" name="search" placeholder="Buscar por nome, e-mail, nota ou mensagem"
                                     value="{{ request('search') }}"
-                                    class="w-full md:w-96 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 px-4 py-2">
+                                    class="w-full md:w-96 rounded-md border-gray-300 shadow-sm focus:border-[#D0AE6D] focus:ring-[#D0AE6D] px-4 py-2 text-sm">
 
                                 <!-- Filters and buttons -->
                                 <div class="flex gap-3 items-center flex-wrap">
                                     <!-- Year Select -->
                                     <select name="year" onchange="this.form.submit()"
-                                        class="w-36 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 pl-3 pr-8 py-2 text-sm">
+                                        class="w-36 rounded-md border-gray-300 shadow-sm focus:border-[#D0AE6D] focus:ring-[#D0AE6D] pl-3 pr-8 py-2 text-sm">
                                         <option value="">Todos os anos</option>
                                         @for($year = date('Y'); $year >= 2026; $year--)
                                             <option value="{{ $year }}" {{ request('year') == $year ? 'selected' : '' }}>
@@ -38,7 +38,7 @@
 
                                     <!-- Month Select -->
                                     <select name="month" onchange="this.form.submit()"
-                                        class="w-36 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 pl-3 pr-8 py-2 text-sm">
+                                        class="w-36 rounded-md border-gray-300 shadow-sm focus:border-[#D0AE6D] focus:ring-[#D0AE6D] pl-3 pr-8 py-2 text-sm">
                                         <option value="">Todos os meses</option>
                                         <option value="1" {{ request('month') == '1' ? 'selected' : '' }}>Janeiro</option>
                                         <option value="2" {{ request('month') == '2' ? 'selected' : '' }}>Fevereiro
@@ -61,7 +61,7 @@
 
                                     <!-- Status Select -->
                                     <select name="status" onchange="this.form.submit()"
-                                        class="w-36 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 pl-3 pr-8 py-2 text-sm">
+                                        class="w-36 rounded-md border-gray-300 shadow-sm focus:border-[#D0AE6D] focus:ring-[#D0AE6D] pl-3 pr-8 py-2 text-sm">
                                         <option value="">Todos os status</option>
                                         <option value="Cliente Potencial" {{ request('status') == 'Cliente Potencial' ? 'selected' : '' }}>Cliente Potencial</option>
                                         <option value="Contactado" {{ request('status') == 'Contactado' ? 'selected' : '' }}>Contactado</option>
@@ -90,9 +90,9 @@
                         <!-- Add Lead Button -->
                         <div class="w-full lg:w-auto flex justify-end flex-shrink-0">
                             <button type="button" x-data="" @click.prevent="$dispatch('open-modal', 'add-manual-lead')"
-                                class="px-4 py-2 text-white font-medium rounded-md shadow-sm transition-colors flex items-center gap-2"
+                                class="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-white rounded-md shadow-sm transition-colors"
                                 style="background-color: #D0AE6D;">
-                                <ion-icon name="receipt-outline" class="text-xl"></ion-icon> Novo Lead
+                                <ion-icon name="add-outline" class="text-xl"></ion-icon> Novo Lead
                             </button>
                         </div>
 

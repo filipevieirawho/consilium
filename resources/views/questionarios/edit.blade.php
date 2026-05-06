@@ -15,16 +15,39 @@
 
                 <div class="bg-white shadow-sm sm:rounded-lg border border-gray-100 p-6 mb-5">
                     <h3 class="font-semibold text-gray-800 mb-4">Informações do Modelo</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <div class="space-y-4 mb-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Nome do Modelo</label>
+                                <input type="text" name="nome" value="{{ old('nome', $questionario->nome) }}" required
+                                       class="block w-full text-sm rounded-lg border-gray-300 focus:border-[#D0AE6D] focus:ring-[#D0AE6D]">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">ID do Modelo</label>
+                                <input type="text" value="{{ $questionario->modelo_id }}" disabled
+                                       class="block w-full text-sm rounded-lg border-gray-200 bg-gray-50 text-gray-400 font-mono">
+                            </div>
+                        </div>
+
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Título *</label>
-                            <input type="text" name="titulo" value="{{ old('titulo', $questionario->titulo) }}" required
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Título</label>
+                            <input type="text" name="titulo" value="{{ old('titulo', $questionario->titulo) }}"
+                                   placeholder="Ex: Check-up de Consistência da Margem"
                                    class="block w-full text-sm rounded-lg border-gray-300 focus:border-[#D0AE6D] focus:ring-[#D0AE6D]">
                         </div>
+
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">ID do Modelo</label>
-                            <input type="text" value="{{ $questionario->modelo_id }}" disabled
-                                   class="block w-full text-sm rounded-lg border-gray-200 bg-gray-50 text-gray-400 font-mono">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Subtítulo</label>
+                            <textarea name="subtitulo" rows="2"
+                                      placeholder="Ex: Este check-up avalia a consistência das condições..."
+                                      class="block w-full text-sm rounded-lg border-gray-300 focus:border-[#D0AE6D] focus:ring-[#D0AE6D]">{{ old('subtitulo', $questionario->subtitulo) }}</textarea>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Descrição</label>
+                            <textarea name="descricao" rows="2"
+                                      placeholder="Ex: O resultado representa um retrato do momento atual..."
+                                      class="block w-full text-sm rounded-lg border-gray-300 focus:border-[#D0AE6D] focus:ring-[#D0AE6D]">{{ old('descricao', $questionario->descricao) }}</textarea>
                         </div>
                     </div>
                     <label class="flex items-center gap-2 text-sm text-gray-700 cursor-pointer">
@@ -83,9 +106,9 @@
                                class="block w-full text-sm rounded-lg border-gray-300 focus:border-[#D0AE6D] focus:ring-[#D0AE6D]">
                     </div>
                     <div>
-                        <label class="block text-xs text-gray-500 mb-1">Peso (0–1)</label>
-                        <input type="number" step="0.01" min="0.01" max="1" name="questoes[${idx}][dimensao_peso]" required
-                               value="${data.dimensao_peso||''}" placeholder="0.20"
+                        <label class="block text-xs text-gray-500 mb-1">Peso</label>
+                        <input type="number" step="0.0001" name="questoes[${idx}][dimensao_peso]" required
+                               value="${data.dimensao_peso||''}" placeholder="Ex: 0.20"
                                class="block w-full text-sm rounded-lg border-gray-300 focus:border-[#D0AE6D] focus:ring-[#D0AE6D]">
                     </div>
                 </div>
