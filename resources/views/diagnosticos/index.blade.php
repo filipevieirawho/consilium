@@ -226,7 +226,8 @@
                 @foreach($questionarios as $q)
                     <li class="combo-option cursor-pointer select-none relative py-2.5 pl-4 pr-4 hover:bg-gray-50 text-gray-900" 
                         data-value="{{ $q->id }}">
-                        <span class="block font-medium item-name">{{ $q->titulo }} ({{ $q->questoes_count }} questões)</span>
+                        <span class="block font-medium item-name">{{ $q->titulo }}</span>
+                        <span class="block text-xs text-gray-500 mt-0.5">{{ $q->questoes_count }} questões</span>
                     </li>
                 @endforeach
             </x-custom-combobox>
@@ -288,7 +289,8 @@
                     @foreach($questionarios as $q)
                         <li class="combo-option cursor-pointer select-none relative py-2.5 pl-4 pr-4 hover:bg-gray-50 text-gray-900" 
                             data-value="{{ $q->id }}">
-                            <span class="block font-medium item-name">{{ $q->titulo }} ({{ $q->questoes_count }} questões)</span>
+                            <span class="block font-medium item-name">{{ $q->titulo }}</span>
+                            <span class="block text-xs text-gray-500 mt-0.5">{{ $q->questoes_count }} questões</span>
                         </li>
                     @endforeach
                 </x-custom-combobox>
