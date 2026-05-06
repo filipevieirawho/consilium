@@ -1,10 +1,12 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex items-center gap-3">
-            <a href="{{ route('questionarios.show', $questionario) }}" class="text-gray-400 hover:text-gray-700">
-                <ion-icon name="arrow-back-outline" class="text-xl"></ion-icon>
+        <div class="flex items-center gap-3 h-10">
+            <a href="{{ route('questionarios.show', $questionario) }}" class="flex items-center justify-center w-8 h-8 text-gray-400 hover:text-gray-700">
+                <ion-icon name="arrow-back-outline" class="text-2xl"></ion-icon>
             </a>
-            <h2 class="font-semibold text-xl text-gray-800">Editar: {{ $questionario->titulo }}</h2>
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                Editar: {{ $questionario->titulo }}
+            </h2>
         </div>
     </x-slot>
 
