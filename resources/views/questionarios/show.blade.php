@@ -2,7 +2,7 @@
     <x-slot name="header">
         <div class="flex items-center justify-between h-10">
             <div class="flex items-center gap-3">
-                <a href="{{ route('questionarios.index') }}" class="text-gray-400 hover:text-gray-700 flex items-center">
+                <a href="{{ route('questionarios.index') }}" class="flex items-center justify-center w-8 h-8 text-gray-400 hover:text-gray-700">
                     <ion-icon name="arrow-back-outline" class="text-2xl"></ion-icon>
                 </a>
                 <h2 class="font-semibold text-xl text-gray-800 leading-tight">{{ $questionario->nome }}</h2>

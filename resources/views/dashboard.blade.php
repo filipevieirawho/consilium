@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <div class="flex items-center gap-3 h-10">
-            <div class="text-[#D0AE6D]">
+            <div class="flex items-center justify-center w-8 h-8 text-[#D0AE6D]">
                 <ion-icon name="receipt-outline" class="text-2xl"></ion-icon>
             </div>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
