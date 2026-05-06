@@ -42,9 +42,9 @@ $opcaoLabels = [
                 </div>
             </div>
             <div class="flex gap-2">
-                <button onclick="navigator.clipboard.writeText('{{ route('diagnostico.landing', $diagnostico->token) }}'); this.classList.add('bg-green-500'); this.classList.remove('bg-white'); setTimeout(() => { this.classList.remove('bg-green-500'); this.classList.add('bg-white'); }, 2000)"
+                <button onclick="copyToClipboard(this, '{{ route('diagnostico.landing', $diagnostico->token) }}')"
                     title="Copiar Link"
-                    class="p-2 rounded-lg border border-gray-200 bg-white text-gray-500 hover:text-[#D0AE6D] hover:border-[#D0AE6D] transition-all flex items-center justify-center">
+                    class="p-2 rounded-lg border border-gray-200 bg-white text-gray-500 hover:text-[#D0AE6D] hover:border-[#D0AE6D] transition-all duration-200 flex items-center justify-center transform active:scale-95">
                     <ion-icon name="link-outline" class="text-xl"></ion-icon>
                 </button>
                 <a href="{{ route('diagnostico.landing', $diagnostico->token) }}" target="_blank"
@@ -339,6 +339,24 @@ $opcaoLabels = [
             console.error('Error:', error);
             alert('Erro ao vincular lead.');
         });
+    }
+
+    function copyToClipboard(btn, text) {
+        navigator.clipboard.writeText(text);
+        
+        const icon = btn.querySelector('ion-icon');
+        const originalName = icon.getAttribute('name');
+        
+        // Feedback visual
+        icon.setAttribute('name', 'checkmark-outline');
+        btn.classList.add('bg-green-50', 'text-green-600', 'border-green-200', 'scale-110');
+        btn.classList.remove('bg-white', 'text-gray-500', 'border-gray-200');
+        
+        setTimeout(() => {
+            icon.setAttribute('name', originalName);
+            btn.classList.remove('bg-green-50', 'text-green-600', 'border-green-200', 'scale-110');
+            btn.classList.add('bg-white', 'text-gray-500', 'border-gray-200');
+        }, 1500);
     }
     </script>
     @endpush
