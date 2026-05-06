@@ -273,6 +273,34 @@ $opcaoLabels = [
 
     @push('scripts')
     <link href="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/css/tom-select.css" rel="stylesheet">
+    <style>
+        .ts-control {
+            border-color: #e5e7eb !important; /* gray-200 */
+            border-radius: 0.5rem !important; /* rounded-lg */
+            padding: 0.375rem 0.75rem !important;
+            font-size: 0.75rem !important; /* text-xs */
+            box-shadow: none !important;
+        }
+        .ts-wrapper.focus .ts-control {
+            border-color: #D0AE6D !important;
+            ring-color: #D0AE6D !important;
+            box-shadow: 0 0 0 1px #D0AE6D !important;
+        }
+        .ts-dropdown {
+            border-radius: 0.5rem !important;
+            margin-top: 4px !important;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1) !important;
+            border-color: #f3f4f6 !important;
+        }
+        .ts-dropdown .active {
+            background-color: #D0AE6D !important;
+            color: white !important;
+        }
+        .ts-control .item {
+            font-size: 0.75rem !important;
+            color: #374151 !important;
+        }
+    </style>
     <script src="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.complete.min.js"></script>
     <script>
     document.addEventListener('DOMContentLoaded', function() {
