@@ -126,7 +126,7 @@ $opcaoLabels = [
                         <div><dt class="text-xs text-gray-400 uppercase tracking-wide">Cidade</dt><dd class="font-medium text-gray-800 mt-0.5">{{ $diagnostico->cidade ?: '—' }}</dd></div>
                         <div><dt class="text-xs text-gray-400 uppercase tracking-wide">Data</dt><dd class="font-medium text-gray-800 mt-0.5">{{ $diagnostico->created_at->format('d/m/Y H:i') }}</dd></div>
                         
-                        <div class="col-span-2 mt-2 pt-2 border-t border-gray-50 flex items-center gap-8">
+                        <div class="col-span-2 mt-2 pt-2 border-t border-gray-50 flex items-start gap-8">
                             <div>
                                 <dt class="text-xs text-gray-400 uppercase tracking-wide">Status</dt>
                                 <dd class="mt-0.5">
@@ -155,12 +155,12 @@ $opcaoLabels = [
                                     <span id="vincular-status" class="hidden text-[10px] font-bold text-green-600 uppercase">✓ Salvo</span>
                                 </dt>
                                 <dd class="mt-0.5">
-                                    <select id="contact_id_select" onchange="vincularLead(this.value)"
+                                    <select id="contact_id_select"
                                         class="block w-full rounded-md border-gray-200 shadow-sm focus:border-[#D0AE6D] focus:ring-[#D0AE6D] text-[11px] py-1">
                                         <option value="">Nenhum (avulso)</option>
                                         @foreach($contacts as $c)
                                         <option value="{{ $c->id }}" {{ $diagnostico->contact_id == $c->id ? 'selected' : '' }}>
-                                            {{ $c->name }}
+                                            {{ $c->name }} {{ $c->company ? '— ' . $c->company : '' }}
                                         </option>
                                         @endforeach
                                     </select>
@@ -271,6 +271,49 @@ $opcaoLabels = [
         </div>
     </div>
 
+    @push('scripts')
+    <link href="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/css/tom-select.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.complete.min.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize Tom Select
+        new TomSelect("#contact_id_select", {
+            create: false,
+            sortField: {
+                field: "text",
+                direction: "asc"
+            },
+            onChange: function(value) {
+                vincularLead(value);
+            }
+        });
+    });
+
+    function vincularLead(contactId) {
+        const statusEl = document.getElementById('vincular-status');
+        
+        fetch("{{ route('diagnosticos.vincular', $diagnostico) }}", {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({ contact_id: contactId })
+        })
+        .then(response => response.json())
+        .then(data => {
+            statusEl.classList.remove('hidden');
+            setTimeout(() => statusEl.classList.add('hidden'), 3000);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Erro ao vincular lead.');
+        });
+    }
+    </script>
+    @endpush
+
     @if($resultado)
     @push('scripts')
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -364,29 +407,6 @@ $opcaoLabels = [
             }
         });
     });
-
-    function vincularLead(contactId) {
-        const statusEl = document.getElementById('vincular-status');
-        
-        fetch("{{ route('diagnosticos.vincular', $diagnostico) }}", {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify({ contact_id: contactId })
-        })
-        .then(response => response.json())
-        .then(data => {
-            statusEl.classList.remove('hidden');
-            setTimeout(() => statusEl.classList.add('hidden'), 3000);
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Erro ao vincular lead.');
-        });
-    }
     </script>
     @endpush
     @endif
