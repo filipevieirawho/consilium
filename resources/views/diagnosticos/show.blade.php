@@ -42,6 +42,11 @@ $opcaoLabels = [
                 </div>
             </div>
             <div class="flex gap-2">
+                <button onclick="navigator.clipboard.writeText('{{ route('diagnostico.landing', $diagnostico->token) }}'); this.classList.add('bg-green-500'); this.classList.remove('bg-white'); setTimeout(() => { this.classList.remove('bg-green-500'); this.classList.add('bg-white'); }, 2000)"
+                    title="Copiar Link"
+                    class="p-2 rounded-lg border border-gray-200 bg-white text-gray-500 hover:text-[#D0AE6D] hover:border-[#D0AE6D] transition-all flex items-center justify-center">
+                    <ion-icon name="link-outline" class="text-xl"></ion-icon>
+                </button>
                 <a href="{{ route('diagnostico.landing', $diagnostico->token) }}" target="_blank"
                     class="text-[10px] font-bold uppercase tracking-wider flex items-center gap-1 px-4 py-2 rounded-lg text-white"
                     style="background-color: #D0AE6D;">
@@ -175,17 +180,7 @@ $opcaoLabels = [
                         </div>
                     </dl>
 
-                    <!-- Link -->
-                    <div class="mt-5 pt-5 border-t border-gray-100">
-                        <label class="text-xs text-gray-400 uppercase tracking-wide font-medium">Link do diagnóstico</label>
-                        <div class="flex items-center gap-2 mt-1">
-                            <input type="text" id="diag-url" readonly value="{{ route('diagnostico.landing', $diagnostico->token) }}"
-                                class="block flex-1 text-xs text-gray-600 bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 focus:ring-0">
-                            <button onclick="navigator.clipboard.writeText('{{ route('diagnostico.landing', $diagnostico->token) }}'); this.textContent='✓'; setTimeout(() => this.textContent='Copiar', 2000)"
-                                class="px-3 py-2 text-xs rounded-lg text-white font-medium"
-                                style="background-color: #D0AE6D;">Copiar</button>
-                        </div>
-                    </div>
+
                 </div>
             </div>
 
