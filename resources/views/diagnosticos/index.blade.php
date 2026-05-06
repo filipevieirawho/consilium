@@ -20,7 +20,7 @@
             </div>
             @endif
 
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="bg-white shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
 
                     <!-- Top Bar -->
@@ -59,7 +59,7 @@
                     </div>
 
                     <!-- Table -->
-                    <div class="overflow-x-auto">
+                    <div class="overflow-x-auto" style="min-height: 180px;">
                         <table class="min-w-full divide-y divide-gray-200">
                             <thead class="bg-gray-50">
                                 <tr>

@@ -20,7 +20,7 @@
             @endif
 
             {{-- Search & Table Card --}}
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg border border-gray-100">
+            <div class="bg-white shadow-sm sm:rounded-lg border border-gray-100">
                 <div class="p-6">
                     <!-- Search & Filter -->
                     <div class="flex justify-between items-center mb-6 gap-4 flex-wrap">
@@ -53,7 +53,7 @@
                     </div>
 
                     <!-- Table -->
-                    <div class="overflow-x-auto">
+                    <div class="overflow-x-auto" style="min-height: 180px;">
                         <table class="min-w-full divide-y divide-gray-200">
                             <thead class="bg-gray-50">
                                 <tr>
