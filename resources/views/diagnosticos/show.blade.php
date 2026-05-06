@@ -143,16 +143,26 @@ $opcaoLabels = [
                                     Lead Vinculado
                                     <span id="vincular-status" class="hidden text-[10px] font-bold text-green-600 uppercase">✓ Salvo</span>
                                 </dt>
-                                <dd class="mt-0.5">
-                                    <select id="contact_id_select"
-                                        class="block w-full rounded-md border-gray-200 shadow-sm focus:border-[#D0AE6D] focus:ring-[#D0AE6D] text-[11px] py-1">
-                                        <option value="">Nenhum (avulso)</option>
+                                <dd class="mt-2">
+                                    <x-custom-combobox 
+                                        id="contact_id_select" 
+                                        label="" 
+                                        optional="true"
+                                        placeholder="Nenhum (avulso)" 
+                                        icon="person-outline"
+                                        onSelect="vincularLead"
+                                        selectedValue="{{ $diagnostico->contact_id }}"
+                                        selectedName="{{ $diagnostico->contact ? $diagnostico->contact->name : '' }}">
                                         @foreach($contacts as $c)
-                                        <option value="{{ $c->id }}" {{ $diagnostico->contact_id == $c->id ? 'selected' : '' }}>
-                                            {{ $c->name }} {{ $c->company ? '— ' . $c->company : '' }}
-                                        </option>
+                                            <li class="combo-option cursor-pointer select-none relative py-2.5 pl-4 pr-4 hover:bg-gray-50 text-gray-900" 
+                                                data-value="{{ $c->id }}">
+                                                <span class="block font-medium item-name">{{ $c->name }}</span>
+                                                @if($c->company)
+                                                <span class="block text-xs text-gray-500 mt-0.5">{{ $c->company }}</span>
+                                                @endif
+                                            </li>
                                         @endforeach
-                                    </select>
+                                    </x-custom-combobox>
                                 </dd>
                             </div>
                         </div>
@@ -251,50 +261,9 @@ $opcaoLabels = [
     </div>
 
     @push('scripts')
-    <link href="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/css/tom-select.css" rel="stylesheet">
-    <style>
-        .ts-control {
-            border-color: #e5e7eb !important; /* gray-200 */
-            border-radius: 0.5rem !important; /* rounded-lg */
-            padding: 0.375rem 0.75rem !important;
-            font-size: 0.75rem !important; /* text-xs */
-            box-shadow: none !important;
-        }
-        .ts-wrapper.focus .ts-control {
-            border-color: #D0AE6D !important;
-            ring-color: #D0AE6D !important;
-            box-shadow: 0 0 0 1px #D0AE6D !important;
-        }
-        .ts-dropdown {
-            border-radius: 0.5rem !important;
-            margin-top: 4px !important;
-            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1) !important;
-            border-color: #f3f4f6 !important;
-        }
-        .ts-dropdown .active {
-            background-color: #D0AE6D !important;
-            color: white !important;
-        }
-        .ts-control .item {
-            font-size: 0.75rem !important;
-            color: #374151 !important;
-        }
-    </style>
-    <script src="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.complete.min.js"></script>
     <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Initialize Tom Select
-        new TomSelect("#contact_id_select", {
-            create: false,
-            dropdownParent: 'body',
-            sortField: {
-                field: "text",
-                direction: "asc"
-            },
-            onChange: function(value) {
-                vincularLead(value);
-            }
-        });
+        // Combobox logic is handled in app.blade.php
     });
 
     function vincularLead(contactId) {

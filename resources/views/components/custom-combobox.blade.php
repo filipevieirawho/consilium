@@ -6,7 +6,9 @@
     'icon' => 'search-outline',
     'emptyMessage' => 'Nenhum item encontrado.',
     'onSelect' => '', // JS callback
-    'helperText' => '' // Text below the input
+    'helperText' => '', // Text below the input
+    'selectedValue' => '',
+    'selectedName' => ''
 ])
 
 <div class="mb-5 relative custom-combobox-container" id="combo-container-{{ $id }}">
@@ -20,12 +22,13 @@
     </label>
     
     <!-- Hidden input to store selected ID -->
-    <input type="hidden" id="{{ $id }}" value="" data-onselect="{{ $onSelect }}">
+    <input type="hidden" id="{{ $id }}" value="{{ $selectedValue }}" data-onselect="{{ $onSelect }}">
 
     <!-- Search Input -->
     <div class="relative">
         <input type="text" id="combo-search-{{ $id }}" autocomplete="off"
             placeholder="{{ $placeholder }}"
+            value="{{ $selectedName }}"
             class="combo-search-input block w-full rounded-lg border-gray-300 shadow-sm focus:border-[#D0AE6D] focus:ring-[#D0AE6D] pl-4 pr-11 py-2.5 text-sm cursor-text transition-colors"
         >
         <div class="absolute inset-y-0 right-3 flex items-center pointer-events-none">
