@@ -1,14 +1,11 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex items-center justify-between">
+        <div class="flex items-center justify-between h-10">
             <div class="flex items-center gap-3">
-                <a href="{{ route('questionarios.index') }}" class="text-gray-400 hover:text-gray-700">
-                    <ion-icon name="arrow-back-outline" class="text-xl"></ion-icon>
+                <a href="{{ route('questionarios.index') }}" class="text-gray-400 hover:text-gray-700 flex items-center">
+                    <ion-icon name="arrow-back-outline" class="text-2xl"></ion-icon>
                 </a>
-                <div>
-                    <h2 class="font-semibold text-xl text-gray-800">{{ $questionario->nome }}</h2>
-                    <p class="text-xs text-gray-400 font-mono">{{ $questionario->modelo_id }}</p>
-                </div>
+                <h2 class="font-semibold text-xl text-gray-800 leading-tight">{{ $questionario->nome }}</h2>
             </div>
             <a href="{{ route('questionarios.edit', $questionario) }}"
                class="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-semibold text-white rounded-lg"

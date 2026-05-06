@@ -1,9 +1,13 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight flex items-center gap-2">
-            <ion-icon name="file-tray-full-outline" class="text-[#D0AE6D] text-2xl"></ion-icon>
-            Modelos de Questionários
-        </h2>
+        <div class="flex items-center gap-3 h-10">
+            <div class="text-[#D0AE6D]">
+                <ion-icon name="file-tray-full-outline" class="text-2xl"></ion-icon>
+            </div>
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                Modelos de Questionários
+            </h2>
+        </div>
     </x-slot>
 
     <div class="py-12">

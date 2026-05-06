@@ -27,10 +27,10 @@ $opcaoLabels = [
 
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex items-center justify-between">
+        <div class="flex items-center justify-between h-10">
             <div class="flex items-center gap-3">
-                <a href="{{ route('diagnosticos.index') }}" class="text-gray-400 hover:text-gray-700">
-                    <ion-icon name="arrow-back-outline" class="text-xl"></ion-icon>
+                <a href="{{ route('diagnosticos.index') }}" class="text-gray-400 hover:text-gray-700 flex items-center">
+                    <ion-icon name="arrow-back-outline" class="text-2xl"></ion-icon>
                 </a>
                 <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                     Diagnóstico — {{ $diagnostico->empresa ?: 'Sem empresa' }}

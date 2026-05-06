@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex items-center gap-3">
+        <div class="flex items-center gap-3 h-10">
             <div class="text-[#D0AE6D]">
                 <ion-icon name="analytics-outline" class="text-2xl"></ion-icon>
             </div>
