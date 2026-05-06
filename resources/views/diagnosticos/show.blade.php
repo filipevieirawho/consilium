@@ -113,7 +113,7 @@ $opcaoLabels = [
                 </div>
 
                 <!-- Data summary -->
-                <div class="md:col-span-2 bg-white overflow-hidden shadow-sm sm:rounded-lg border border-gray-100 p-6">
+                <div class="md:col-span-2 bg-white shadow-sm sm:rounded-lg border border-gray-100 p-6 relative">
                     <div class="flex items-center justify-between mb-5">
                         <h3 class="font-semibold text-gray-900">Resumo de Informações</h3>
                         @if($diagnostico->status === 'concluido')
@@ -303,6 +303,7 @@ $opcaoLabels = [
         // Initialize Tom Select
         new TomSelect("#contact_id_select", {
             create: false,
+            dropdownParent: 'body',
             sortField: {
                 field: "text",
                 direction: "asc"
