@@ -29,7 +29,7 @@ class QuestionarioController extends Controller
 
     public function create()
     {
-        $modeloId = 'CON-' . date('Y') . rand(1000, 9999);
+        $modeloId = 'CON-' . date('Y') . '-' . strtoupper(Str::random(4));
         return view('questionarios.create', compact('modeloId'));
     }
 
