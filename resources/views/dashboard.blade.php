@@ -4,12 +4,9 @@
             <div class="text-[#D0AE6D]">
                 <ion-icon name="receipt-outline" class="text-2xl"></ion-icon>
             </div>
-            <div>
-                <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                    {{ __('Dashboard de Leads') }}
-                </h2>
-                <p class="text-[10px] text-gray-400 font-mono uppercase tracking-widest">Gestão de Funil e Contatos</p>
-            </div>
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                {{ __('Dashboard de Leads') }}
+            </h2>
         </div>
     </x-slot>
 

@@ -32,14 +32,9 @@ $opcaoLabels = [
                 <a href="{{ route('diagnosticos.index') }}" class="text-gray-400 hover:text-gray-700">
                     <ion-icon name="arrow-back-outline" class="text-xl"></ion-icon>
                 </a>
-                <div>
-                    <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                        Diagnóstico — {{ $diagnostico->empresa ?: 'Sem empresa' }}
-                    </h2>
-                    @if($diagnostico->contact)
-                        <p class="text-[10px] text-gray-400 font-mono uppercase tracking-widest">Lead: {{ $diagnostico->contact->name }}</p>
-                    @endif
-                </div>
+                <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                    Diagnóstico — {{ $diagnostico->empresa ?: 'Sem empresa' }}
+                </h2>
             </div>
             <div class="flex gap-2">
                 <button onclick="copyToClipboard(this, '{{ route('diagnostico.landing', $diagnostico->token) }}')"

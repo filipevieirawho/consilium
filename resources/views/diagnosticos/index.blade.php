@@ -4,12 +4,9 @@
             <a href="{{ route('dashboard') }}" class="text-gray-400 hover:text-gray-700">
                 <ion-icon name="arrow-back-outline" class="text-xl"></ion-icon>
             </a>
-            <div>
-                <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                    Diagnósticos
-                </h2>
-                <p class="text-[10px] text-gray-400 font-mono uppercase tracking-widest">Controle de aplicações</p>
-            </div>
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                Diagnósticos
+            </h2>
         </div>
     </x-slot>
 
