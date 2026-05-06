@@ -1,9 +1,9 @@
 <x-app-layout>
     <x-slot name="header">
         <div class="flex items-center gap-3">
-            <a href="{{ route('dashboard') }}" class="text-gray-400 hover:text-gray-700">
-                <ion-icon name="arrow-back-outline" class="text-xl"></ion-icon>
-            </a>
+            <div class="text-[#D0AE6D]">
+                <ion-icon name="analytics-outline" class="text-2xl"></ion-icon>
+            </div>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 Diagnósticos
             </h2>
