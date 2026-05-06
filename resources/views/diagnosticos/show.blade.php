@@ -126,7 +126,7 @@ $opcaoLabels = [
                         <div><dt class="text-xs text-gray-400 uppercase tracking-wide">Cidade</dt><dd class="font-medium text-gray-800 mt-0.5">{{ $diagnostico->cidade ?: '—' }}</dd></div>
                         <div><dt class="text-xs text-gray-400 uppercase tracking-wide">Data</dt><dd class="font-medium text-gray-800 mt-0.5">{{ $diagnostico->created_at->format('d/m/Y H:i') }}</dd></div>
                         
-                        <div class="col-span-2 mt-2 pt-2 border-t border-gray-50 flex items-center gap-4">
+                        <div class="col-span-2 mt-2 pt-2 border-t border-gray-50 flex items-center gap-8">
                             <div>
                                 <dt class="text-xs text-gray-400 uppercase tracking-wide">Status</dt>
                                 <dd class="mt-0.5">
@@ -145,10 +145,27 @@ $opcaoLabels = [
                                         $respondidas = $diagnostico->respostas->count();
                                         $totalQ = $diagnostico->questionario ? $diagnostico->questionario->questoes->count() : 18;
                                     @endphp
-                                    {{ $respondidas }}/{{ $totalQ }} respondidas
+                                    {{ $respondidas }}/{{ $totalQ }}
                                 </dd>
                             </div>
                             @endif
+                            <div class="flex-1 max-w-xs">
+                                <dt class="text-xs text-gray-400 uppercase tracking-wide flex items-center gap-2">
+                                    Lead Vinculado
+                                    <span id="vincular-status" class="hidden text-[10px] font-bold text-green-600 uppercase">✓ Salvo</span>
+                                </dt>
+                                <dd class="mt-0.5">
+                                    <select id="contact_id_select" onchange="vincularLead(this.value)"
+                                        class="block w-full rounded-md border-gray-200 shadow-sm focus:border-[#D0AE6D] focus:ring-[#D0AE6D] text-[11px] py-1">
+                                        <option value="">Nenhum (avulso)</option>
+                                        @foreach($contacts as $c)
+                                        <option value="{{ $c->id }}" {{ $diagnostico->contact_id == $c->id ? 'selected' : '' }}>
+                                            {{ $c->name }}
+                                        </option>
+                                        @endforeach
+                                    </select>
+                                </dd>
+                            </div>
                         </div>
                     </dl>
 
@@ -166,30 +183,7 @@ $opcaoLabels = [
                 </div>
             </div>
 
-            <!-- Vincular a lead -->
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg border border-gray-100 p-6">
-                <h3 class="font-semibold text-gray-900 mb-4">Vincular a um lead</h3>
-                <form method="POST" action="{{ route('diagnosticos.vincular', $diagnostico) }}" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    @csrf @method('PATCH')
-                    <div>
-                        <label class="block text-xs font-bold text-gray-400 uppercase tracking-wide mb-1">Lead / Contato</label>
-                        <select name="contact_id"
-                            class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-[#D0AE6D] focus:ring-[#D0AE6D] text-sm">
-                            <option value="">Nenhum (diagnóstico avulso)</option>
-                            @foreach($contacts as $c)
-                            <option value="{{ $c->id }}" {{ $diagnostico->contact_id == $c->id ? 'selected' : '' }}>
-                                {{ $c->name }} {{ $c->company ? '— ' . $c->company : '' }}
-                            </option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="flex items-end">
-                        <button type="submit" class="w-full px-4 py-2.5 text-white font-semibold rounded-lg text-sm" style="background-color: #D0AE6D;">
-                            Salvar Alterações
-                        </button>
-                    </div>
-                </form>
-            </div>
+
 
             <!-- Respostas do questionário -->
             @if($diagnostico->respostas->count() > 0)
@@ -370,6 +364,29 @@ $opcaoLabels = [
             }
         });
     });
+
+    function vincularLead(contactId) {
+        const statusEl = document.getElementById('vincular-status');
+        
+        fetch("{{ route('diagnosticos.vincular', $diagnostico) }}", {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({ contact_id: contactId })
+        })
+        .then(response => response.json())
+        .then(data => {
+            statusEl.classList.remove('hidden');
+            setTimeout(() => statusEl.classList.add('hidden'), 3000);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Erro ao vincular lead.');
+        });
+    }
     </script>
     @endpush
     @endif

@@ -453,6 +453,15 @@ class DiagnosticoController extends Controller
         ]);
 
         $diagnostico->update($validated);
+        $diagnostico->load('contact');
+
+        if ($request->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Vínculo de lead atualizado com sucesso!',
+                'contact' => $diagnostico->contact
+            ]);
+        }
 
         return redirect()->route('diagnosticos.show', $diagnostico)
             ->with('success', 'Vínculo de lead atualizado com sucesso!');
