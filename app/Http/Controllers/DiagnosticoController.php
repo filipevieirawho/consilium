@@ -449,14 +449,13 @@ class DiagnosticoController extends Controller
     public function vincular(Request $request, Diagnostico $diagnostico)
     {
         $validated = $request->validate([
-            'contact_id'      => 'nullable|exists:contacts,id',
-            'questionario_id' => 'nullable|exists:questionarios,id',
+            'contact_id' => 'nullable|exists:contacts,id',
         ]);
 
         $diagnostico->update($validated);
 
         return redirect()->route('diagnosticos.show', $diagnostico)
-            ->with('success', 'Vínculos de lead e modelo atualizados com sucesso!');
+            ->with('success', 'Vínculo de lead atualizado com sucesso!');
     }
 
     /**

@@ -168,11 +168,11 @@ $opcaoLabels = [
 
             <!-- Vincular a lead -->
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg border border-gray-100 p-6">
-                <h3 class="font-semibold text-gray-900 mb-4">Vincular a um lead ou alterar modelo</h3>
-                <form method="POST" action="{{ route('diagnosticos.vincular', $diagnostico) }}" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <h3 class="font-semibold text-gray-900 mb-4">Vincular a um lead</h3>
+                <form method="POST" action="{{ route('diagnosticos.vincular', $diagnostico) }}" class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     @csrf @method('PATCH')
                     <div>
-                        <label class="block text-xs font-bold text-gray-400 uppercase tracking-wide mb-1">Lead</label>
+                        <label class="block text-xs font-bold text-gray-400 uppercase tracking-wide mb-1">Lead / Contato</label>
                         <select name="contact_id"
                             class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-[#D0AE6D] focus:ring-[#D0AE6D] text-sm">
                             <option value="">Nenhum (diagnóstico avulso)</option>
@@ -180,16 +180,6 @@ $opcaoLabels = [
                             <option value="{{ $c->id }}" {{ $diagnostico->contact_id == $c->id ? 'selected' : '' }}>
                                 {{ $c->name }} {{ $c->company ? '— ' . $c->company : '' }}
                             </option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-gray-400 uppercase tracking-wide mb-1">Modelo (Cuidado: resetará respostas incompatíveis)</label>
-                        <select name="questionario_id"
-                            class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-[#D0AE6D] focus:ring-[#D0AE6D] text-sm">
-                            <option value="">Padrão (18 questões)</option>
-                            @foreach($questionarios as $q)
-                            <option value="{{ $q->id }}" {{ $diagnostico->questionario_id == $q->id ? 'selected' : '' }}>{{ $q->titulo }}</option>
                             @endforeach
                         </select>
                     </div>
