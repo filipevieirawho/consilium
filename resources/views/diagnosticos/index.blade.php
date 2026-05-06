@@ -98,7 +98,7 @@
                                             ];
                                             $fc = $faixaColors[$d->ipmFaixa()] ?? 'text-gray-500 border-gray-200 bg-gray-50';
                                         @endphp
-                                        <span class="inline-flex items-center px-2.5 py-1 rounded-lg border text-sm font-bold {{ $fc }}">
+                                        <span class="inline-flex items-center px-2.5 py-1 rounded-lg border text-xs font-bold {{ $fc }}">
                                             {{ number_format($d->ipm, 1) }}
                                         </span>
                                         @else
