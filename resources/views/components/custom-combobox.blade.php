@@ -14,11 +14,6 @@
 <div class="mb-5 relative custom-combobox-container" id="combo-container-{{ $id }}">
     <label class="block text-sm font-medium text-gray-700 mb-1">
         {{ $label }} 
-        @if($optional)
-            <span class="text-gray-400 font-normal">(opcional)</span>
-        @else
-            <span class="text-red-500">*</span>
-        @endif
     </label>
     
     <!-- Hidden input to store selected ID -->
