@@ -96,41 +96,41 @@
                         </div>
 
                         <!-- Tab: Questões -->
-                        <div x-show="activeTab === 'questions'" class="space-y-5 animate-fade-in" x-cloak>
-                            <div class="bg-white shadow-sm sm:rounded-lg border border-gray-100 p-8">
-                                <div class="flex items-center justify-between mb-8 pb-4 border-b border-gray-50">
+                        <div x-show="activeTab === 'questions'" class="space-y-4 animate-fade-in" x-cloak>
+                            <div class="bg-white shadow-sm sm:rounded-lg border border-gray-100 p-6">
+                                <div class="flex items-center justify-between mb-6 pb-4 border-b border-gray-50">
                                     <div>
-                                        <h3 class="text-lg font-bold text-gray-900">Lista de Questões</h3>
-                                        <p class="text-sm text-gray-500 mt-1">Este modelo possui {{ $questionario->questoes->count() }} questões cadastradas.</p>
+                                        <h3 class="text-base font-bold text-gray-900">Lista de Questões</h3>
+                                        <p class="text-xs text-gray-500 mt-0.5">Este modelo possui {{ $questionario->questoes->count() }} questões cadastradas.</p>
                                     </div>
                                 </div>
 
-                                <div class="space-y-4">
+                                <div class="space-y-3">
                                     @forelse($questionario->questoes as $q)
-                                    <div class="bg-gray-50 rounded-2xl border border-gray-100 p-6 transition-all hover:shadow-sm">
-                                        <div class="flex items-start gap-4">
-                                            <span class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold text-white shadow-sm" style="background-color: #D0AE6D;">
+                                    <div class="bg-gray-50 rounded-xl border border-gray-100 p-4 transition-all hover:shadow-sm">
+                                        <div class="flex items-start gap-3">
+                                            <span class="flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold text-white shadow-sm" style="background-color: #D0AE6D;">
                                                 {{ $loop->iteration }}
                                             </span>
                                             <div class="flex-1 min-w-0">
-                                                <p class="text-base text-gray-800 font-medium mb-3">{{ $q->texto }}</p>
-                                                <div class="flex flex-wrap items-center gap-3">
-                                                    <div class="flex items-center gap-1.5 px-3 py-1 bg-amber-50 text-amber-700 rounded-full border border-amber-100">
-                                                        <ion-icon name="pricetag-outline" class="text-xs"></ion-icon>
-                                                        <span class="text-xs font-bold uppercase tracking-tight">{{ $q->dimensao_nome }}</span>
+                                                <p class="text-sm text-gray-800 font-medium mb-2">{{ $q->texto }}</p>
+                                                <div class="flex flex-wrap items-center gap-2">
+                                                    <div class="flex items-center gap-1.5 px-2.5 py-0.5 bg-amber-50 text-amber-700 rounded-full border border-amber-100">
+                                                        <ion-icon name="pricetag-outline" class="text-[10px]"></ion-icon>
+                                                        <span class="text-[10px] font-bold uppercase tracking-tight">{{ $q->dimensao_nome }}</span>
                                                     </div>
-                                                    <div class="flex items-center gap-1.5 px-3 py-1 bg-gray-100 text-gray-600 rounded-full border border-gray-200">
-                                                        <ion-icon name="bar-chart-outline" class="text-xs"></ion-icon>
-                                                        <span class="text-xs font-medium">Peso: {{ number_format($q->dimensao_peso, 2) }}</span>
+                                                    <div class="flex items-center gap-1.5 px-2.5 py-0.5 bg-gray-100 text-gray-600 rounded-full border border-gray-200">
+                                                        <ion-icon name="bar-chart-outline" class="text-[10px]"></ion-icon>
+                                                        <span class="text-[10px] font-medium">Peso: {{ number_format($q->dimensao_peso, 2) }}</span>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     @empty
-                                    <div class="text-center py-20 text-gray-400 border-2 border-dashed border-gray-100 rounded-2xl">
-                                        <ion-icon name="help-circle-outline" class="text-5xl block mx-auto mb-4 opacity-20"></ion-icon>
-                                        <p class="font-medium">Nenhuma questão cadastrada neste modelo.</p>
+                                    <div class="text-center py-10 text-gray-400 border-2 border-dashed border-gray-100 rounded-2xl">
+                                        <ion-icon name="help-circle-outline" class="text-4xl block mx-auto mb-2 opacity-20"></ion-icon>
+                                        <p class="text-sm font-medium">Nenhuma questão cadastrada neste modelo.</p>
                                     </div>
                                     @endforelse
                                 </div>
