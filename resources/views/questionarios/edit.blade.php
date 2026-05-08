@@ -15,16 +15,53 @@
             <form action="{{ route('questionarios.update', $questionario) }}" method="POST" id="formQuestionario">
                 @csrf @method('PUT')
 
-                <div class="flex flex-col lg:flex-row gap-6">
+                <div class="flex flex-col md:flex-row gap-8 items-start">
+                    <!-- Right Sidebar: Tab Navigation -->
+                    <div class="w-full md:w-64 lg:w-72 md:sticky md:top-8 order-1 md:order-2">
+                        <div class="bg-white shadow-sm rounded-2xl border border-gray-100 p-4">
+                            <h4 class="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-4 px-4">Menu de Edição</h4>
+                            <nav class="space-y-1">
+                                <button type="button" @click="activeTab = 'info'" 
+                                        :class="activeTab === 'info' ? 'bg-[#fdf8ed] text-[#D0AE6D] font-bold shadow-sm' : 'text-gray-500 hover:bg-gray-50 hover:text-gray-700'"
+                                        class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm transition-all group">
+                                    <ion-icon name="information-circle-outline" class="text-xl"></ion-icon>
+                                    Informações
+                                </button>
+                                <button type="button" @click="activeTab = 'questions'" 
+                                        :class="activeTab === 'questions' ? 'bg-[#fdf8ed] text-[#D0AE6D] font-bold shadow-sm' : 'text-gray-500 hover:bg-gray-50 hover:text-gray-700'"
+                                        class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm transition-all group">
+                                    <ion-icon name="list-outline" class="text-xl"></ion-icon>
+                                    Questões
+                                </button>
+                                <button type="button" @click="activeTab = 'result'" 
+                                        :class="activeTab === 'result' ? 'bg-[#fdf8ed] text-[#D0AE6D] font-bold shadow-sm' : 'text-gray-500 hover:bg-gray-50 hover:text-gray-700'"
+                                        class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm transition-all group">
+                                    <ion-icon name="analytics-outline" class="text-xl"></ion-icon>
+                                    Resultado
+                                </button>
+                            </nav>
+
+                            <div class="mt-8 p-4 bg-gray-50 rounded-xl border border-gray-100">
+                                <div class="flex items-center gap-2 text-xs font-bold text-gray-400 uppercase tracking-tight mb-2">
+                                    <ion-icon name="bulb-outline" class="text-gold-500"></ion-icon>
+                                    Dica
+                                </div>
+                                <p class="text-[11px] text-gray-500 leading-relaxed">
+                                    Lembre-se que o somatório dos pesos das dimensões deve totalizar 1.00.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Main Content Area -->
-                    <div class="flex-1 order-2 lg:order-1">
+                    <div class="flex-1 w-full order-2 md:order-1">
                         
                         <!-- Tab: Informações do Modelo -->
                         <div x-show="activeTab === 'info'" class="space-y-5 animate-fade-in">
                             <div class="bg-white shadow-sm sm:rounded-lg border border-gray-100 p-8">
                                 <div class="mb-6 pb-4 border-b border-gray-50">
                                     <h3 class="text-lg font-bold text-gray-900">Informações do Modelo</h3>
-                                    <p class="text-sm text-gray-500 mt-1">Configure os dados básicos de identificação e apresentação do questionário.</p>
+                                    <p class="text-sm text-gray-500 mt-1">Configure os dados básicos de identificação.</p>
                                 </div>
 
                                 <div class="space-y-5">
@@ -136,43 +173,6 @@
                                     Salvar Alterações
                                  </button>
                              </div>
-                        </div>
-                    </div>
-
-                    <!-- Right Sidebar: Tab Navigation -->
-                    <div class="w-full lg:w-80 order-1 lg:order-2">
-                        <div class="bg-white shadow-sm rounded-2xl border border-gray-100 p-4 sticky top-8">
-                            <h4 class="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-4 px-4">Menu de Edição</h4>
-                            <nav class="space-y-2">
-                                <button type="button" @click="activeTab = 'info'" 
-                                        :class="activeTab === 'info' ? 'bg-[#fdf8ed] text-[#D0AE6D] font-bold' : 'text-gray-600 hover:bg-gray-50'"
-                                        class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm transition-all group">
-                                    <ion-icon name="information-circle-outline" class="text-xl"></ion-icon>
-                                    Informações do Modelo
-                                </button>
-                                <button type="button" @click="activeTab = 'questions'" 
-                                        :class="activeTab === 'questions' ? 'bg-[#fdf8ed] text-[#D0AE6D] font-bold' : 'text-gray-600 hover:bg-gray-50'"
-                                        class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm transition-all group">
-                                    <ion-icon name="list-outline" class="text-xl"></ion-icon>
-                                    Questões
-                                </button>
-                                <button type="button" @click="activeTab = 'result'" 
-                                        :class="activeTab === 'result' ? 'bg-[#fdf8ed] text-[#D0AE6D] font-bold' : 'text-gray-600 hover:bg-gray-50'"
-                                        class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm transition-all group">
-                                    <ion-icon name="analytics-outline" class="text-xl"></ion-icon>
-                                    Resultado
-                                </button>
-                            </nav>
-
-                            <div class="mt-8 p-4 bg-gray-50 rounded-xl">
-                                <div class="flex items-center gap-2 text-xs font-bold text-gray-400 uppercase tracking-tight mb-2">
-                                    <ion-icon name="bulb-outline" class="text-gold-500"></ion-icon>
-                                    Dica
-                                </div>
-                                <p class="text-[11px] text-gray-500 leading-relaxed">
-                                    Lembre-se que o somatório dos pesos das dimensões deve preferencialmente totalizar 1.00 para uma escala padrão.
-                                </p>
-                            </div>
                         </div>
                     </div>
                 </div>
