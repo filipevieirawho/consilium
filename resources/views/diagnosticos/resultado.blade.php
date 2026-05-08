@@ -100,8 +100,8 @@ $cfg = $faixaConfig[$faixa];
         </h3>
         <ul class="space-y-2 mb-6">
             @foreach($dimensoesFracas as $fraca)
-            <li class="flex items-center gap-2 text-sm text-gray-700">
-                <ion-icon name="chevron-forward-outline" class="text-red-500"></ion-icon>
+            <li class="flex items-center gap-2 text-sm text-red-600 font-medium">
+                <ion-icon name="chevron-forward-outline"></ion-icon>
                 {{ $fraca }}
             </li>
             @endforeach
