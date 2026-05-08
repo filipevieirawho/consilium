@@ -111,11 +111,18 @@
         div.className = 'questao-row border border-gray-200 rounded-xl p-4 bg-gray-50';
         div.dataset.idx = idx;
         
-        let dimensoesHtml = `<option value="">Selecione...</option>`;
+        let datalistHtml = `<datalist id="dimensoes-list">`;
         DIMENSOES_DEFAULT.forEach(d => {
-            const selected = data.dimensao_nome === d ? 'selected' : '';
-            dimensoesHtml += `<option value="${d}" ${selected}>${d}</option>`;
+            datalistHtml += `<option value="${d}">`;
         });
+        datalistHtml += `</datalist>`;
+
+        // Ensure datalist exists in the body
+        if (!document.getElementById('dimensoes-list')) {
+            const dl = document.createElement('div');
+            dl.innerHTML = datalistHtml;
+            document.body.appendChild(dl.firstElementChild);
+        }
 
         div.innerHTML = `
             <div class="flex items-start justify-between gap-3 mb-3">
@@ -133,10 +140,9 @@
                 <div class="grid grid-cols-2 gap-3">
                     <div>
                         <label class="block text-xs text-gray-500 mb-1">Dimensão</label>
-                        <select name="questoes[${idx}][dimensao_nome]" required
+                        <input type="text" name="questoes[${idx}][dimensao_nome]" list="dimensoes-list" required
+                               value="${data.dimensao_nome || ''}" placeholder="Ex: Projetos"
                                class="block w-full text-sm rounded-lg border-gray-300 focus:border-[#D0AE6D] focus:ring-[#D0AE6D]">
-                            ${dimensoesHtml}
-                        </select>
                     </div>
                     <div>
                         <label class="block text-xs text-gray-500 mb-1">Peso da Dimensão</label>
