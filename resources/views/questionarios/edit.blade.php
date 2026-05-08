@@ -150,7 +150,7 @@
 
                             <!-- Global Actions -->
                             <div class="mt-6 flex flex-col gap-4">
-                                <div x-show="activeTab === 'questions'" x-cloak class="bg-gold-50 border border-gold-100 p-4 rounded-xl flex items-center gap-3 text-[#D0AE6D]">
+                                <div x-show="activeTab === 'questions'" x-cloak class="bg-[#fdf8ed] border border-[#fdf8ed] p-4 rounded-xl flex items-center gap-3 text-[#D0AE6D]">
                                     <ion-icon name="bulb-outline" class="text-xl flex-shrink-0"></ion-icon>
                                     <p class="text-xs font-medium leading-relaxed">
                                         Lembre-se que o somatório dos pesos das dimensões deve preferencialmente totalizar 1.00 para uma escala padrão.
