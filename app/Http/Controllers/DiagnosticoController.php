@@ -509,6 +509,15 @@ class DiagnosticoController extends Controller
             }
         }
 
+        // If an Empresa was explicitly selected or came from the Contact,
+        // ensure its name is also in the 'empresa' string field for the form.
+        if ($empresaId) {
+            $emp = Empresa::find($empresaId);
+            if ($emp && empty($defaults['empresa'])) {
+                $defaults['empresa'] = $emp->nome_fantasia;
+            }
+        }
+
         $qFields = [];
         if ($request->filled('questionario_id')) {
             $q = Questionario::find($request->questionario_id);
