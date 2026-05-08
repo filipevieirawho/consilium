@@ -11,13 +11,13 @@
     </x-slot>
 
     <div class="py-8" x-data="{ activeTab: 'info' }">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="max-w-[1440px] mx-auto sm:px-6 lg:px-8">
             <form action="{{ route('questionarios.update', $questionario) }}" method="POST" id="formQuestionario">
                 @csrf @method('PUT')
 
                 <div class="flex flex-col md:flex-row gap-8 items-start">
-                    <!-- Right Sidebar: Tab Navigation -->
-                    <div class="w-full md:w-64 lg:w-72 md:sticky md:top-8 order-1 md:order-2">
+                    <!-- Left Sidebar: Tab Navigation -->
+                    <div class="w-full md:w-72 md:sticky md:top-8">
                         <div class="bg-white shadow-sm rounded-2xl border border-gray-100 p-4">
                             <h4 class="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-4 px-4">Menu de Edição</h4>
                             <nav class="space-y-1">
@@ -54,7 +54,7 @@
                     </div>
 
                     <!-- Main Content Area -->
-                    <div class="flex-1 w-full order-2 md:order-1">
+                    <div class="flex-1 w-full min-w-0">
                         
                         <!-- Tab: Informações do Modelo -->
                         <div x-show="activeTab === 'info'" class="space-y-5 animate-fade-in">
