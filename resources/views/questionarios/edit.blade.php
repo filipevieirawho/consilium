@@ -11,30 +11,30 @@
     </x-slot>
 
     <div class="py-8" x-data="{ activeTab: 'info' }">
-        <div class="max-w-[1440px] mx-auto sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <form action="{{ route('questionarios.update', $questionario) }}" method="POST" id="formQuestionario">
                 @csrf @method('PUT')
 
-                <div class="flex flex-col md:flex-row gap-8 items-start">
+                <div class="flex flex-col lg:flex-row gap-8">
                     <!-- Left Sidebar: Tab Navigation -->
-                    <div class="w-full md:w-72 md:sticky md:top-8">
-                        <div class="bg-white shadow-sm rounded-2xl border border-gray-100 p-4">
+                    <div class="w-full lg:w-72">
+                        <div class="bg-white shadow-sm rounded-2xl border border-gray-100 p-4 sticky top-8">
                             <h4 class="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-4 px-4">Menu de Edição</h4>
-                            <nav class="space-y-1">
+                            <nav class="space-y-2">
                                 <button type="button" @click="activeTab = 'info'" 
-                                        :class="activeTab === 'info' ? 'bg-[#fdf8ed] text-[#D0AE6D] font-bold shadow-sm' : 'text-gray-500 hover:bg-gray-50 hover:text-gray-700'"
+                                        :class="activeTab === 'info' ? 'bg-[#fdf8ed] text-[#D0AE6D] font-bold shadow-sm' : 'text-gray-600 hover:bg-gray-50'"
                                         class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm transition-all group">
                                     <ion-icon name="information-circle-outline" class="text-xl"></ion-icon>
-                                    Informações
+                                    Informações do Modelo
                                 </button>
                                 <button type="button" @click="activeTab = 'questions'" 
-                                        :class="activeTab === 'questions' ? 'bg-[#fdf8ed] text-[#D0AE6D] font-bold shadow-sm' : 'text-gray-500 hover:bg-gray-50 hover:text-gray-700'"
+                                        :class="activeTab === 'questions' ? 'bg-[#fdf8ed] text-[#D0AE6D] font-bold shadow-sm' : 'text-gray-600 hover:bg-gray-50'"
                                         class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm transition-all group">
                                     <ion-icon name="list-outline" class="text-xl"></ion-icon>
                                     Questões
                                 </button>
                                 <button type="button" @click="activeTab = 'result'" 
-                                        :class="activeTab === 'result' ? 'bg-[#fdf8ed] text-[#D0AE6D] font-bold shadow-sm' : 'text-gray-500 hover:bg-gray-50 hover:text-gray-700'"
+                                        :class="activeTab === 'result' ? 'bg-[#fdf8ed] text-[#D0AE6D] font-bold shadow-sm' : 'text-gray-600 hover:bg-gray-50'"
                                         class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm transition-all group">
                                     <ion-icon name="analytics-outline" class="text-xl"></ion-icon>
                                     Resultado
@@ -47,21 +47,21 @@
                                     Dica
                                 </div>
                                 <p class="text-[11px] text-gray-500 leading-relaxed">
-                                    Lembre-se que o somatório dos pesos das dimensões deve totalizar 1.00.
+                                    Lembre-se que o somatório dos pesos das dimensões deve preferencialmente totalizar 1.00 para uma escala padrão.
                                 </p>
                             </div>
                         </div>
                     </div>
 
                     <!-- Main Content Area -->
-                    <div class="flex-1 w-full min-w-0">
+                    <div class="flex-1">
                         
                         <!-- Tab: Informações do Modelo -->
                         <div x-show="activeTab === 'info'" class="space-y-5 animate-fade-in">
                             <div class="bg-white shadow-sm sm:rounded-lg border border-gray-100 p-8">
                                 <div class="mb-6 pb-4 border-b border-gray-50">
                                     <h3 class="text-lg font-bold text-gray-900">Informações do Modelo</h3>
-                                    <p class="text-sm text-gray-500 mt-1">Configure os dados básicos de identificação.</p>
+                                    <p class="text-sm text-gray-500 mt-1">Configure os dados básicos de identificação e apresentação do questionário.</p>
                                 </div>
 
                                 <div class="space-y-5">
