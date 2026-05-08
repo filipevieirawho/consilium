@@ -150,33 +150,24 @@
                             </div>
 
                             <!-- Global Actions -->
-                            <div class="mt-6 flex justify-between items-center bg-white p-4 rounded-xl border border-gray-100 shadow-sm">
-                                 <a href="{{ route('questionarios.index') }}" class="text-sm font-medium text-gray-500 hover:text-gray-700 transition-colors">
-                                    Descartar alterações
-                                 </a>
-                                 <div class="flex gap-3">
-                                     <button type="submit" class="px-8 py-3 text-sm font-bold text-white rounded-xl shadow-lg shadow-gold-100 transition-all hover:scale-[1.02] active:scale-[0.98]" 
-                                             style="background-color: #D0AE6D;">
-                                        Salvar Questionário
-                                     </button>
-                                 </div>
-                            </div>
-                        </div>
-
-                        <!-- Sidebar: Contextual Info -->
-                        <div class="w-full lg:w-80" x-show="activeTab === 'questions'" x-cloak>
-                            <div class="bg-white shadow-sm rounded-2xl border border-gray-100 p-6 sticky top-8">
-                                <div class="flex items-center gap-2 text-xs font-bold text-gold-500 uppercase tracking-widest mb-4">
-                                    <ion-icon name="bulb-outline" class="text-lg"></ion-icon>
-                                    Dica Técnica
-                                </div>
-                                <p class="text-[13px] text-gray-600 leading-relaxed mb-4">
-                                    Lembre-se que o somatório dos pesos das dimensões deve preferencialmente totalizar <strong>1.00</strong> para uma escala padrão.
-                                </p>
-                                <div class="pt-4 border-t border-gray-50">
-                                    <p class="text-[11px] text-gray-400">
-                                        Pesos maiores darão mais importância àquela dimensão no cálculo final do IPM.
+                            <div class="mt-6 flex flex-col gap-4">
+                                <div x-show="activeTab === 'questions'" x-cloak class="bg-gold-50 border border-gold-100 p-4 rounded-xl flex items-center gap-3 text-[#D0AE6D]">
+                                    <ion-icon name="bulb-outline" class="text-xl flex-shrink-0"></ion-icon>
+                                    <p class="text-xs font-medium leading-relaxed">
+                                        Lembre-se que o somatório dos pesos das dimensões deve preferencialmente totalizar 1.00 para uma escala padrão.
                                     </p>
+                                </div>
+                                
+                                <div class="flex justify-between items-center bg-white p-4 rounded-xl border border-gray-100 shadow-sm">
+                                     <a href="{{ route('questionarios.index') }}" class="text-sm font-medium text-gray-500 hover:text-gray-700 transition-colors">
+                                        Descartar alterações
+                                     </a>
+                                     <div class="flex gap-3">
+                                         <button type="submit" class="px-8 py-3 text-sm font-bold text-white rounded-xl shadow-lg shadow-gold-100 transition-all hover:scale-[1.02] active:scale-[0.98]" 
+                                                 style="background-color: #D0AE6D;">
+                                            Salvar Questionário
+                                         </button>
+                                     </div>
                                 </div>
                             </div>
                         </div>
