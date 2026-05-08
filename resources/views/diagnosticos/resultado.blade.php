@@ -93,23 +93,21 @@ $cfg = $faixaConfig[$faixa];
 
     <!-- Weak dimensions callout -->
     @if(!empty($dimensoesFracas))
-    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg border border-gray-100 mb-6">
-        <div class="bg-red-50 p-6 border-b border-red-100">
-            <h3 class="font-semibold text-red-700 mb-3 flex items-center gap-2">
-                <ion-icon name="alert-circle-outline" class="text-lg"></ion-icon>
-                Dimensões com maior fragilidade
-            </h3>
-            <ul class="space-y-1">
-                @foreach($dimensoesFracas as $fraca)
-                <li class="flex items-center gap-2 text-sm text-red-700">
-                    <ion-icon name="chevron-forward-outline"></ion-icon>
-                    {{ $fraca }}
-                </li>
-                @endforeach
-            </ul>
-        </div>
-        <div class="bg-gray-50 p-6">
-            <p class="text-sm text-gray-600 italic leading-relaxed">
+    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg border border-gray-100 p-6 mb-6">
+        <h3 class="font-semibold text-gray-900 mb-4 flex items-center gap-2">
+            <ion-icon name="alert-circle-outline" class="text-lg" style="color: #ef4444;"></ion-icon>
+            Dimensões com maior fragilidade
+        </h3>
+        <ul class="space-y-2 mb-6">
+            @foreach($dimensoesFracas as $fraca)
+            <li class="flex items-center gap-2 text-sm text-gray-700">
+                <ion-icon name="chevron-forward-outline" class="text-red-500"></ion-icon>
+                {{ $fraca }}
+            </li>
+            @endforeach
+        </ul>
+        <div class="pt-5 border-t border-gray-100">
+            <p class="text-sm text-gray-500 italic leading-relaxed">
                 "Este resultado representa um retrato do momento atual do empreendimento. Assim como um exame, sua validade está associada ao momento em que foi realizado. Recomenda-se sua reaplicação periódica ou em marcos relevantes da obra."
             </p>
         </div>
