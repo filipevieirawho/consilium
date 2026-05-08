@@ -98,14 +98,16 @@ $cfg = $faixaConfig[$faixa];
             <ion-icon name="alert-circle-outline" class="text-lg" style="color: #ef4444;"></ion-icon>
             Dimensões com maior fragilidade
         </h3>
-        <ul class="space-y-2 mb-6">
-            @foreach($dimensoesFracas as $fraca)
-            <li class="flex items-center gap-2 text-sm text-red-600 font-medium">
-                <ion-icon name="chevron-forward-outline"></ion-icon>
-                {{ $fraca }}
-            </li>
-            @endforeach
-        </ul>
+        <div class="bg-red-50 border border-red-100 rounded-xl p-5 mb-6">
+            <ul class="space-y-2">
+                @foreach($dimensoesFracas as $fraca)
+                <li class="flex items-center gap-2 text-sm text-red-700 font-semibold">
+                    <ion-icon name="chevron-forward-outline"></ion-icon>
+                    {{ $fraca }}
+                </li>
+                @endforeach
+            </ul>
+        </div>
         <div class="pt-5 border-t border-gray-100">
             <p class="text-sm text-gray-500 italic leading-relaxed">
                 "Este resultado representa um retrato do momento atual do empreendimento. Assim como um exame, sua validade está associada ao momento em que foi realizado. Recomenda-se sua reaplicação periódica ou em marcos relevantes da obra."
