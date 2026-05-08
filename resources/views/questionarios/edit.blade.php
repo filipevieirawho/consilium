@@ -81,6 +81,12 @@
     </div>
 
     @push('scripts')
+    <style>
+        /* Hide datalist arrow */
+        input::-webkit-calendar-picker-indicator {
+            display: none !important;
+        }
+    </style>
     <script>
     const DIMENSOES_DEFAULT = ['Viabilidade e Premissas', 'Projetos', 'Orçamento', 'Planejamento', 'Sustentação Financeira', 'Confiabilidade da Informação'];
     let questaoIndex = 0;
