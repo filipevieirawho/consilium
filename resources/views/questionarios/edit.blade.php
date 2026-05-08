@@ -127,7 +127,7 @@
                                         {{-- JS will insert rows here --}}
                                     </div>
 
-                                    <div id="questoes-empty" class="text-center py-20 text-gray-400 border-2 border-dashed border-gray-100 rounded-2xl mt-4 hidden">
+                                    <div id="questoes-empty" class="text-center py-20 text-gray-400 rounded-2xl mt-4 hidden">
                                         <ion-icon name="help-circle-outline" class="text-5xl block mx-auto mb-4 opacity-20"></ion-icon>
                                         <p class="font-medium">Nenhuma questão adicionada.</p>
                                         <p class="text-xs mt-1">Comece clicando no botão de adicionar acima.</p>
