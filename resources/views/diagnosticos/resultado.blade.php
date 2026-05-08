@@ -14,6 +14,19 @@ $cfg = $faixaConfig[$faixa];
 @endphp
 
 <x-diagnosticos.layout :progressPct="100" progressLabel="Resultado">
+    <!-- Enterprise data summary -->
+    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg border border-gray-100 p-6 mb-8">
+        <h3 class="font-semibold text-gray-700 mb-4 text-xs uppercase tracking-wide">Dados do diagnóstico</h3>
+        <dl class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4 text-sm">
+            <div><dt class="text-gray-400 text-[10px] uppercase">Respondente</dt><dd class="font-medium text-gray-800">{{ $diagnostico->nome ?: '—' }}</dd></div>
+            <div><dt class="text-gray-400 text-[10px] uppercase">Empresa</dt><dd class="font-medium text-gray-800">{{ $diagnostico->empresa ?: '—' }}</dd></div>
+            <div><dt class="text-gray-400 text-[10px] uppercase">Empreendimento</dt><dd class="font-medium text-gray-800">{{ $diagnostico->nome_empreendimento ?: '—' }}</dd></div>
+            @if($diagnostico->cidade)<div><dt class="text-gray-400 text-[10px] uppercase">Cidade</dt><dd class="font-medium text-gray-800">{{ $diagnostico->cidade }}</dd></div>@endif
+            @if($diagnostico->estagio_obra !== null)<div><dt class="text-gray-400 text-[10px] uppercase">Estágio da obra</dt><dd class="font-medium text-gray-800">{{ $diagnostico->estagio_obra }}%</dd></div>@endif
+            <div><dt class="text-gray-400 text-[10px] uppercase">Data</dt><dd class="font-medium text-gray-800">{{ $diagnostico->updated_at->format('d/m/Y') }}</dd></div>
+        </dl>
+    </div>
+
     <!-- Top row: IPM & Radar Chart -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
         <!-- IPM Card -->
@@ -57,14 +70,6 @@ $cfg = $faixaConfig[$faixa];
         </h3>
 
         <div class="space-y-4">
-    <!-- Dimension scores -->
-    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg border border-gray-100 p-6 mb-6">
-        <h3 class="font-semibold text-gray-900 mb-5 flex items-center gap-2">
-            <ion-icon name="bar-chart-outline" style="color: #D0AE6D;"></ion-icon>
-            Pontuação por dimensão
-        </h3>
-
-        <div class="space-y-4">
             @foreach($dimensoes as $dim)
             <div>
                 <div class="flex justify-between items-center mb-1">
@@ -88,29 +93,30 @@ $cfg = $faixaConfig[$faixa];
 
     <!-- Weak dimensions callout -->
     @if(!empty($dimensoesFracas))
-    <div class="bg-red-50 border border-red-200 overflow-hidden sm:rounded-lg p-6 mb-6">
-        <h3 class="font-semibold text-red-700 mb-3 flex items-center gap-2">
-            <ion-icon name="alert-circle-outline" class="text-lg"></ion-icon>
-            Dimensões com maior fragilidade
-        </h3>
-        <ul class="space-y-1">
-            @foreach($dimensoesFracas as $fraca)
-            <li class="flex items-center gap-2 text-sm text-red-700">
-                <ion-icon name="chevron-forward-outline"></ion-icon>
-                {{ $fraca }}
-            </li>
-            @endforeach
-        </ul>
+    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg border border-gray-100 mb-6">
+        <div class="bg-red-50 p-6 border-b border-red-100">
+            <h3 class="font-semibold text-red-700 mb-3 flex items-center gap-2">
+                <ion-icon name="alert-circle-outline" class="text-lg"></ion-icon>
+                Dimensões com maior fragilidade
+            </h3>
+            <ul class="space-y-1">
+                @foreach($dimensoesFracas as $fraca)
+                <li class="flex items-center gap-2 text-sm text-red-700">
+                    <ion-icon name="chevron-forward-outline"></ion-icon>
+                    {{ $fraca }}
+                </li>
+                @endforeach
+            </ul>
+        </div>
+        <div class="bg-gray-50 p-6">
+            <p class="text-sm text-gray-600 italic leading-relaxed">
+                "Este resultado representa um retrato do momento atual do empreendimento. Assim como um exame, sua validade está associada ao momento em que foi realizado. Recomenda-se sua reaplicação periódica ou em marcos relevantes da obra."
+            </p>
+        </div>
     </div>
     @endif
 
-    <!-- Connection phrase -->
-    <div class="bg-gray-50 border border-gray-200 overflow-hidden sm:rounded-lg p-6 mb-6">
-        <p class="text-sm text-gray-600 italic leading-relaxed">
-            "Este resultado representa um retrato do momento atual do empreendimento. Assim como um exame, sua validade está associada ao momento em que foi realizado. Recomenda-se sua reaplicação periódica ou em marcos relevantes da obra."
-        </p>
-    </div>
-
+    <!-- Connection phrase moved up or kept near bottom? User said: "Dimensões com maior fragilidade + connection phrase" -->
     <!-- Commercial trigger -->
     <div class="bg-white overflow-hidden sm:rounded-lg border-2 p-6 mb-8" style="border-color: #D0AE6D;">
         <h3 class="font-bold text-gray-900 mb-2 flex items-center gap-2">
@@ -126,19 +132,6 @@ $cfg = $faixaConfig[$faixa];
             Falar com um especialista
             <ion-icon name="arrow-forward-outline"></ion-icon>
         </a>
-    </div>
-
-    <!-- Enterprise data summary -->
-    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg border border-gray-100 p-6 mb-6">
-        <h3 class="font-semibold text-gray-700 mb-4 text-sm uppercase tracking-wide">Dados do diagnóstico</h3>
-        <dl class="grid grid-cols-2 gap-x-4 gap-y-3 text-sm">
-            <div><dt class="text-gray-400 text-xs">Respondente</dt><dd class="font-medium text-gray-800">{{ $diagnostico->nome ?: '—' }}</dd></div>
-            <div><dt class="text-gray-400 text-xs">Empresa</dt><dd class="font-medium text-gray-800">{{ $diagnostico->empresa ?: '—' }}</dd></div>
-            <div><dt class="text-gray-400 text-xs">Empreendimento</dt><dd class="font-medium text-gray-800">{{ $diagnostico->nome_empreendimento ?: '—' }}</dd></div>
-            @if($diagnostico->cidade)<div><dt class="text-gray-400 text-xs">Cidade</dt><dd class="font-medium text-gray-800">{{ $diagnostico->cidade }}</dd></div>@endif
-            @if($diagnostico->estagio_obra !== null)<div><dt class="text-gray-400 text-xs">Estágio da obra</dt><dd class="font-medium text-gray-800">{{ $diagnostico->estagio_obra }}%</dd></div>@endif
-            <div><dt class="text-gray-400 text-xs">Data</dt><dd class="font-medium text-gray-800">{{ $diagnostico->updated_at->format('d/m/Y') }}</dd></div>
-        </dl>
     </div>
 
     @push('scripts')
