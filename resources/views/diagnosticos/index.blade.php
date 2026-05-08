@@ -362,7 +362,7 @@
         });
 
     (function () {
-        function criarEmpresaRapido(nome, container) {
+        window.criarEmpresaRapido = function(nome, container) {
             const searchInput = container.querySelector('.combo-search-input');
             const originalPlaceholder = searchInput.placeholder;
             searchInput.disabled = true;
@@ -442,6 +442,12 @@
             }
         };
 
+        window.showAlert = function(message) {
+            document.getElementById('alert-message').textContent = message;
+            document.getElementById('modal-alert').classList.remove('hidden');
+            document.getElementById('modal-alert').classList.add('flex');
+        };
+
         function abrirModal() { 
             modal.classList.remove('hidden'); 
             modal.classList.add('flex'); 
@@ -477,7 +483,7 @@
         btnGerar.addEventListener('click', function () {
             const empId = document.getElementById('select-empresa').value;
             if (!empId) {
-                alert('Por favor, selecione uma Empresa. Esta é uma exigência do novo modelo B2B.');
+                showAlert('Por favor, selecione uma Empresa. Esta é uma exigência do novo modelo B2B.');
                 return;
             }
 
@@ -569,4 +575,19 @@
     })();
     </script>
     @endpush
+
+    <!-- Custom Alert Modal -->
+    <div id="modal-alert" class="fixed inset-0 z-[100] hidden items-center justify-center bg-gray-900 bg-opacity-50 backdrop-blur-sm">
+        <div class="bg-white rounded-xl shadow-2xl max-w-sm w-full mx-4 p-6 overflow-hidden">
+            <div class="flex items-center gap-3 text-red-600 mb-4">
+                <ion-icon name="alert-circle" class="text-3xl"></ion-icon>
+                <h3 class="text-lg font-bold">Atenção</h3>
+            </div>
+            <p id="alert-message" class="text-gray-600 mb-6 text-sm"></p>
+            <button onclick="document.getElementById('modal-alert').classList.add('hidden')" 
+                class="w-full py-2.5 bg-gray-900 text-white rounded-lg font-semibold hover:bg-gray-800 transition-colors">
+                Entendi
+            </button>
+        </div>
+    </div>
 </x-app-layout>
