@@ -50,10 +50,11 @@
                             <div class="bg-white shadow-sm sm:rounded-lg border border-gray-100 p-8">
                                 <div class="flex items-center justify-between mb-6 pb-4 border-b border-gray-50">
                                     <div>
-                                        <h3 class="text-lg font-bold text-gray-900">Dados do Modelo</h3>
+                                        <h3 class="text-lg font-bold text-gray-900">Informações do Modelo</h3>
                                         <p class="text-sm text-gray-500 mt-1">Visão geral das informações de apresentação.</p>
                                     </div>
-                                    <div class="flex items-center gap-3">
+                                    <div class="flex items-center gap-4">
+                                        <span class="text-[10px] text-gray-400 font-medium uppercase tracking-wider">Criado em {{ $questionario->created_at->format('d/m/Y H:i') }}</span>
                                         @if($questionario->is_active)
                                             <span class="text-xs font-bold px-3 py-1 bg-green-100 text-green-700 rounded-full uppercase tracking-wide">Ativo</span>
                                         @else
@@ -62,8 +63,9 @@
                                     </div>
                                 </div>
 
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                                    <div class="space-y-6">
+                                <div class="space-y-6">
+                                    <!-- Line 1: Name and ID -->
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                         <div>
                                             <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Nome do Modelo</h4>
                                             <p class="text-sm font-semibold text-gray-800 bg-gray-50 px-4 py-3 rounded-xl border border-gray-100">{{ $questionario->nome }}</p>
@@ -72,13 +74,14 @@
                                             <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">ID do Modelo</h4>
                                             <p class="text-sm font-mono text-gray-500 bg-gray-50 px-4 py-3 rounded-xl border border-gray-100">{{ $questionario->modelo_id }}</p>
                                         </div>
-                                        <div>
-                                            <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Página (Título)</h4>
-                                            <p class="text-sm font-semibold text-gray-800">{{ $questionario->titulo ?: '—' }}</p>
-                                        </div>
                                     </div>
 
-                                    <div class="space-y-6">
+                                    <!-- Separator-ish Space -->
+                                    <div class="pt-2 space-y-6">
+                                        <div>
+                                            <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Título da Página</h4>
+                                            <p class="text-sm font-semibold text-gray-800">{{ $questionario->titulo ?: '—' }}</p>
+                                        </div>
                                         <div>
                                             <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Subtítulo / Chamada</h4>
                                             <p class="text-sm text-gray-600 leading-relaxed">{{ $questionario->subtitulo ?: '—' }}</p>
@@ -86,9 +89,6 @@
                                         <div>
                                             <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Descrição do Resultado</h4>
                                             <p class="text-sm text-gray-500 leading-relaxed">{{ $questionario->descricao ?: '—' }}</p>
-                                        </div>
-                                        <div class="pt-4 border-t border-gray-50">
-                                            <p class="text-[11px] text-gray-400">Criado em {{ $questionario->created_at->format('d/m/Y H:i') }}</p>
                                         </div>
                                     </div>
                                 </div>
