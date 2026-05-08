@@ -6,6 +6,7 @@ use App\Models\Contact;
 use App\Models\Diagnostico;
 use App\Models\DiagnosticoResposta;
 use App\Models\Questionario;
+use App\Models\Empresa;
 use App\Services\IpmCalculator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -495,6 +496,7 @@ class DiagnosticoController extends Controller
         $contact   = null;
         $empresaId = $request->empresa_id;
         $defaults  = [];
+        $qFields   = [];
 
         if ($request->filled('contact_id')) {
             $contact = Contact::find($request->contact_id);
