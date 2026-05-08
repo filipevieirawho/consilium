@@ -158,16 +158,14 @@
                                     </p>
                                 </div>
                                 
-                                <div class="flex justify-between items-center bg-white p-4 rounded-xl border border-gray-100 shadow-sm">
+                                <div class="flex justify-end items-center gap-4 py-4">
                                      <a href="{{ route('questionarios.index') }}" class="text-sm font-medium text-gray-500 hover:text-gray-700 transition-colors">
                                         Descartar alterações
                                      </a>
-                                     <div class="flex gap-3">
-                                         <button type="submit" class="px-8 py-3 text-sm font-bold text-white rounded-xl shadow-lg shadow-gold-100 transition-all hover:scale-[1.02] active:scale-[0.98]" 
-                                                 style="background-color: #D0AE6D;">
-                                            Salvar Questionário
-                                         </button>
-                                     </div>
+                                     <button type="submit" class="px-8 py-3 text-sm font-bold text-white rounded-xl shadow-lg shadow-gold-100 transition-all hover:scale-[1.02] active:scale-[0.98]" 
+                                             style="background-color: #D0AE6D;">
+                                        Salvar Questionário
+                                     </button>
                                 </div>
                             </div>
                         </div>
