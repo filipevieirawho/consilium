@@ -15,46 +15,9 @@
             <form action="{{ route('questionarios.update', $questionario) }}" method="POST" id="formQuestionario">
                 @csrf @method('PUT')
 
-                <div class="flex flex-col lg:flex-row gap-8">
-                    <!-- Left Sidebar: Tab Navigation -->
-                    <div class="w-full lg:w-72">
-                        <div class="bg-white shadow-sm rounded-2xl border border-gray-100 p-4 sticky top-8">
-                            <h4 class="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-4 px-4">Menu de Edição</h4>
-                            <nav class="space-y-2">
-                                <button type="button" @click="activeTab = 'info'" 
-                                        :class="activeTab === 'info' ? 'bg-[#fdf8ed] text-[#D0AE6D] font-bold shadow-sm' : 'text-gray-600 hover:bg-gray-50'"
-                                        class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm transition-all group">
-                                    <ion-icon name="information-circle-outline" class="text-xl"></ion-icon>
-                                    Informações do Modelo
-                                </button>
-                                <button type="button" @click="activeTab = 'questions'" 
-                                        :class="activeTab === 'questions' ? 'bg-[#fdf8ed] text-[#D0AE6D] font-bold shadow-sm' : 'text-gray-600 hover:bg-gray-50'"
-                                        class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm transition-all group">
-                                    <ion-icon name="list-outline" class="text-xl"></ion-icon>
-                                    Questões
-                                </button>
-                                <button type="button" @click="activeTab = 'result'" 
-                                        :class="activeTab === 'result' ? 'bg-[#fdf8ed] text-[#D0AE6D] font-bold shadow-sm' : 'text-gray-600 hover:bg-gray-50'"
-                                        class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm transition-all group">
-                                    <ion-icon name="analytics-outline" class="text-xl"></ion-icon>
-                                    Resultado
-                                </button>
-                            </nav>
-
-                            <div class="mt-8 p-4 bg-gray-50 rounded-xl border border-gray-100">
-                                <div class="flex items-center gap-2 text-xs font-bold text-gray-400 uppercase tracking-tight mb-2">
-                                    <ion-icon name="bulb-outline" class="text-gold-500"></ion-icon>
-                                    Dica
-                                </div>
-                                <p class="text-[11px] text-gray-500 leading-relaxed">
-                                    Lembre-se que o somatório dos pesos das dimensões deve preferencialmente totalizar 1.00 para uma escala padrão.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
+                <div class="flex flex-col lg:flex-row gap-6">
                     <!-- Main Content Area -->
-                    <div class="flex-1">
+                    <div class="flex-1 order-2 lg:order-1">
                         
                         <!-- Tab: Informações do Modelo -->
                         <div x-show="activeTab === 'info'" class="space-y-5 animate-fade-in">
@@ -173,6 +136,43 @@
                                     Salvar Alterações
                                  </button>
                              </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Sidebar: Tab Navigation -->
+                    <div class="w-full lg:w-80 order-1 lg:order-2">
+                        <div class="bg-white shadow-sm rounded-2xl border border-gray-100 p-4 sticky top-8">
+                            <h4 class="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-4 px-4">Menu de Edição</h4>
+                            <nav class="space-y-2">
+                                <button type="button" @click="activeTab = 'info'" 
+                                        :class="activeTab === 'info' ? 'bg-[#fdf8ed] text-[#D0AE6D] font-bold' : 'text-gray-600 hover:bg-gray-50'"
+                                        class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm transition-all group">
+                                    <ion-icon name="information-circle-outline" class="text-xl"></ion-icon>
+                                    Informações do Modelo
+                                </button>
+                                <button type="button" @click="activeTab = 'questions'" 
+                                        :class="activeTab === 'questions' ? 'bg-[#fdf8ed] text-[#D0AE6D] font-bold' : 'text-gray-600 hover:bg-gray-50'"
+                                        class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm transition-all group">
+                                    <ion-icon name="list-outline" class="text-xl"></ion-icon>
+                                    Questões
+                                </button>
+                                <button type="button" @click="activeTab = 'result'" 
+                                        :class="activeTab === 'result' ? 'bg-[#fdf8ed] text-[#D0AE6D] font-bold' : 'text-gray-600 hover:bg-gray-50'"
+                                        class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm transition-all group">
+                                    <ion-icon name="analytics-outline" class="text-xl"></ion-icon>
+                                    Resultado
+                                </button>
+                            </nav>
+
+                            <div class="mt-8 p-4 bg-gray-50 rounded-xl" x-show="activeTab === 'questions'" x-cloak>
+                                <div class="flex items-center gap-2 text-xs font-bold text-gray-400 uppercase tracking-tight mb-2">
+                                    <ion-icon name="bulb-outline" class="text-gold-500"></ion-icon>
+                                    Dica
+                                </div>
+                                <p class="text-[11px] text-gray-500 leading-relaxed">
+                                    Lembre-se que o somatório dos pesos das dimensões deve preferencialmente totalizar 1.00 para uma escala padrão.
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
