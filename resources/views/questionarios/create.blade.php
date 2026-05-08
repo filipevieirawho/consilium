@@ -15,164 +15,169 @@
             <form action="{{ route('questionarios.store') }}" method="POST" id="formQuestionario">
                 @csrf
 
-                <div class="flex flex-col lg:flex-row gap-6">
-                    <!-- Main Content Area -->
-                    <div class="flex-1 order-2 lg:order-1">
-                        
-                        <!-- Tab: Informações do Modelo -->
-                        <div x-show="activeTab === 'info'" class="space-y-5 animate-fade-in">
-                            <div class="bg-white shadow-sm sm:rounded-lg border border-gray-100 p-8">
-                                <div class="mb-6 pb-4 border-b border-gray-50">
-                                    <h3 class="text-lg font-bold text-gray-900">Informações do Modelo</h3>
-                                    <p class="text-sm text-gray-500 mt-1">Configure os dados básicos de identificação e apresentação do questionário.</p>
-                                </div>
-
-                                <div class="space-y-5">
-                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                                        <div>
-                                            <label class="block text-sm font-medium text-gray-700 mb-1.5">Nome do Modelo</label>
-                                            <input type="text" name="nome" value="{{ old('nome') }}" required
-                                                   placeholder="Ex: Check-up IPM 2026"
-                                                   class="block w-full text-sm rounded-lg border-gray-300 focus:border-[#D0AE6D] focus:ring-[#D0AE6D] shadow-sm transition-all px-4 py-2.5">
-                                            @error('nome') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
-                                        </div>
-                                        <div>
-                                            <label class="block text-sm font-medium text-gray-700 mb-1.5">ID do Modelo *</label>
-                                            <input type="text" name="modelo_id" value="{{ old('modelo_id', $modeloId) }}" required
-                                                   class="block w-full text-sm rounded-lg border-gray-200 bg-gray-50 text-gray-500 focus:outline-none px-4 py-2.5 font-mono">
-                                            @error('modelo_id') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
-                                        </div>
-                                    </div>
-
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-1.5">Título da Página</label>
-                                        <input type="text" name="titulo" value="{{ old('titulo') }}"
-                                               placeholder="Ex: Check-up de Consistência da Margem"
-                                               class="block w-full text-sm rounded-lg border-gray-300 focus:border-[#D0AE6D] focus:ring-[#D0AE6D] shadow-sm transition-all px-4 py-2.5">
-                                        @error('titulo') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
-                                    </div>
-
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-1.5">Subtítulo (Call to action)</label>
-                                        <textarea name="subtitulo" rows="3"
-                                                  placeholder="Ex: Este check-up avalia a consistência das condições..."
-                                                  class="block w-full text-sm rounded-lg border-gray-300 focus:border-[#D0AE6D] focus:ring-[#D0AE6D] shadow-sm transition-all px-4 py-2.5">{{ old('subtitulo') }}</textarea>
-                                        @error('subtitulo') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
-                                    </div>
-
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-1.5">Descrição do Resultado</label>
-                                        <textarea name="descricao" rows="3"
-                                                  placeholder="Ex: O resultado representa um retrato do momento atual..."
-                                                  class="block w-full text-sm rounded-lg border-gray-300 focus:border-[#D0AE6D] focus:ring-[#D0AE6D] shadow-sm transition-all px-4 py-2.5">{{ old('descricao') }}</textarea>
-                                        @error('descricao') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
-                                    </div>
-
-                                    <div class="pt-4 mt-4 border-t border-gray-50">
-                                        <label class="flex items-center gap-3 text-sm text-gray-700 cursor-pointer group">
-                                            <input type="checkbox" name="is_active" value="1" checked 
-                                                   class="w-5 h-5 rounded border-gray-300 text-[#D0AE6D] focus:ring-[#D0AE6D] transition-all cursor-pointer">
-                                            <span class="group-hover:text-gray-900 transition-colors">Ativo (disponível para uso em novos diagnósticos)</span>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Tab: Questões -->
-                        <div x-show="activeTab === 'questions'" class="space-y-5 animate-fade-in" x-cloak>
-                            <div class="bg-white shadow-sm sm:rounded-lg border border-gray-100 p-8">
-                                <div class="flex items-center justify-between mb-8 pb-4 border-b border-gray-50">
-                                    <div>
-                                        <h3 class="text-lg font-bold text-gray-900">Questões do Modelo</h3>
-                                        <p class="text-sm text-gray-500 mt-1">Gerencie as perguntas que compõem este diagnóstico.</p>
-                                    </div>
-                                    <button type="button" id="btn-add-questao"
-                                            class="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-white rounded-xl transition-all hover:shadow-md"
-                                            style="background-color: #D0AE6D;">
-                                        <ion-icon name="add-outline" class="text-lg"></ion-icon> Adicionar Questão
-                                    </button>
-                                </div>
-
-                                @if($errors->has('questoes'))
-                                <div class="bg-red-50 text-red-600 text-sm p-4 rounded-lg mb-6 flex items-center gap-2">
-                                    <ion-icon name="alert-circle-outline" class="text-lg"></ion-icon>
-                                    {{ $errors->first('questoes') }}
-                                </div>
-                                @endif
-
-                                <div id="questoes-container" class="space-y-6">
-                                    {{-- JS will insert rows here --}}
-                                </div>
-
-                                <div id="questoes-empty" class="text-center py-20 text-gray-400 border-2 border-dashed border-gray-100 rounded-2xl mt-4">
-                                    <ion-icon name="help-circle-outline" class="text-5xl block mx-auto mb-4 opacity-20"></ion-icon>
-                                    <p class="font-medium">Nenhuma questão adicionada.</p>
-                                    <p class="text-xs mt-1">Comece clicando no botão de adicionar acima.</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Tab: Resultado (Placeholder) -->
-                        <div x-show="activeTab === 'result'" class="space-y-5 animate-fade-in" x-cloak>
-                            <div class="bg-white shadow-sm sm:rounded-lg border border-gray-100 p-8 min-h-[400px] flex flex-col items-center justify-center text-center">
-                                <div class="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mb-4">
-                                    <ion-icon name="construct-outline" class="text-3xl text-gray-300"></ion-icon>
-                                </div>
-                                <h3 class="text-lg font-bold text-gray-900">Configurações de Resultado</h3>
-                                <p class="text-sm text-gray-500 mt-2 max-w-sm">
-                                    Esta área está sendo preparada. Em breve você poderá configurar as faixas de IPM e textos automáticos por desempenho.
-                                </p>
-                            </div>
-                        </div>
-
-                        <!-- Global Actions -->
-                        <div class="mt-6 flex justify-between items-center bg-white p-4 rounded-xl border border-gray-100 shadow-sm">
-                             <a href="{{ route('questionarios.index') }}" class="text-sm font-medium text-gray-500 hover:text-gray-700 transition-colors">
-                                Descartar alterações
-                             </a>
-                             <div class="flex gap-3">
-                                 <button type="submit" class="px-8 py-3 text-sm font-bold text-white rounded-xl shadow-lg shadow-gold-100 transition-all hover:scale-[1.02] active:scale-[0.98]" 
-                                         style="background-color: #D0AE6D;">
-                                    Salvar Questionário
-                                 </button>
-                             </div>
-                        </div>
+                <div class="flex flex-col gap-6">
+                    <!-- Tab Navigation (Horizontal) -->
+                    <div class="bg-white shadow-sm rounded-2xl border border-gray-100 p-2 flex gap-1">
+                        <button type="button" @click="activeTab = 'info'" 
+                                :class="activeTab === 'info' ? 'bg-[#fdf8ed] text-[#D0AE6D] font-bold shadow-sm' : 'text-gray-500 hover:bg-gray-50'"
+                                class="flex-1 flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-sm transition-all group">
+                            <ion-icon name="information-circle-outline" class="text-xl"></ion-icon>
+                            Informações
+                        </button>
+                        <button type="button" @click="activeTab = 'questions'" 
+                                :class="activeTab === 'questions' ? 'bg-[#fdf8ed] text-[#D0AE6D] font-bold shadow-sm' : 'text-gray-500 hover:bg-gray-50'"
+                                class="flex-1 flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-sm transition-all group">
+                            <ion-icon name="list-outline" class="text-xl"></ion-icon>
+                            Questões
+                        </button>
+                        <button type="button" @click="activeTab = 'result'" 
+                                :class="activeTab === 'result' ? 'bg-[#fdf8ed] text-[#D0AE6D] font-bold shadow-sm' : 'text-gray-500 hover:bg-gray-50'"
+                                class="flex-1 flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-sm transition-all group">
+                            <ion-icon name="analytics-outline" class="text-xl"></ion-icon>
+                            Resultado
+                        </button>
                     </div>
 
-                    <!-- Right Sidebar: Tab Navigation -->
-                    <div class="w-full lg:w-80 order-1 lg:order-2">
-                        <div class="bg-white shadow-sm rounded-2xl border border-gray-100 p-4 sticky top-8">
-                            <h4 class="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-4 px-4">Menu de Edição</h4>
-                            <nav class="space-y-2">
-                                <button type="button" @click="activeTab = 'info'" 
-                                        :class="activeTab === 'info' ? 'bg-[#fdf8ed] text-[#D0AE6D] font-bold' : 'text-gray-600 hover:bg-gray-50'"
-                                        class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm transition-all group">
-                                    <ion-icon name="information-circle-outline" class="text-xl"></ion-icon>
-                                    Informações do Modelo
-                                </button>
-                                <button type="button" @click="activeTab = 'questions'" 
-                                        :class="activeTab === 'questions' ? 'bg-[#fdf8ed] text-[#D0AE6D] font-bold' : 'text-gray-600 hover:bg-gray-50'"
-                                        class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm transition-all group">
-                                    <ion-icon name="list-outline" class="text-xl"></ion-icon>
-                                    Questões
-                                </button>
-                                <button type="button" @click="activeTab = 'result'" 
-                                        :class="activeTab === 'result' ? 'bg-[#fdf8ed] text-[#D0AE6D] font-bold' : 'text-gray-600 hover:bg-gray-50'"
-                                        class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm transition-all group">
-                                    <ion-icon name="analytics-outline" class="text-xl"></ion-icon>
-                                    Resultado
-                                </button>
-                            </nav>
+                    <div class="flex flex-col lg:flex-row gap-6">
+                        <!-- Main Content Area -->
+                        <div class="flex-1">
+                            
+                            <!-- Tab: Informações do Modelo -->
+                            <div x-show="activeTab === 'info'" class="space-y-5 animate-fade-in">
+                                <div class="bg-white shadow-sm sm:rounded-lg border border-gray-100 p-8">
+                                    <div class="mb-6 pb-4 border-b border-gray-50">
+                                        <h3 class="text-lg font-bold text-gray-900">Informações do Modelo</h3>
+                                        <p class="text-sm text-gray-500 mt-1">Configure os dados básicos de identificação e apresentação do questionário.</p>
+                                    </div>
 
-                            <div class="mt-8 p-4 bg-gray-50 rounded-xl" x-show="activeTab === 'questions'" x-cloak>
-                                <div class="flex items-center gap-2 text-xs font-bold text-gray-400 uppercase tracking-tight mb-2">
-                                    <ion-icon name="bulb-outline" class="text-gold-500"></ion-icon>
-                                    Dica
+                                    <div class="space-y-5">
+                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700 mb-1.5">Nome do Modelo</label>
+                                                <input type="text" name="nome" value="{{ old('nome') }}" required
+                                                       placeholder="Ex: Check-up IPM 2026"
+                                                       class="block w-full text-sm rounded-lg border-gray-300 focus:border-[#D0AE6D] focus:ring-[#D0AE6D] shadow-sm transition-all px-4 py-2.5">
+                                                @error('nome') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+                                            </div>
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700 mb-1.5">ID do Modelo *</label>
+                                                <input type="text" name="modelo_id" value="{{ old('modelo_id', $modeloId) }}" required
+                                                       class="block w-full text-sm rounded-lg border-gray-200 bg-gray-50 text-gray-500 focus:outline-none px-4 py-2.5 font-mono">
+                                                @error('modelo_id') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-1.5">Título da Página</label>
+                                            <input type="text" name="titulo" value="{{ old('titulo') }}"
+                                                   placeholder="Ex: Check-up de Consistência da Margem"
+                                                   class="block w-full text-sm rounded-lg border-gray-300 focus:border-[#D0AE6D] focus:ring-[#D0AE6D] shadow-sm transition-all px-4 py-2.5">
+                                            @error('titulo') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+                                        </div>
+
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-1.5">Subtítulo (Call to action)</label>
+                                            <textarea name="subtitulo" rows="3"
+                                                      placeholder="Ex: Este check-up avalia a consistência das condições..."
+                                                      class="block w-full text-sm rounded-lg border-gray-300 focus:border-[#D0AE6D] focus:ring-[#D0AE6D] shadow-sm transition-all px-4 py-2.5">{{ old('subtitulo') }}</textarea>
+                                            @error('subtitulo') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+                                        </div>
+
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-1.5">Descrição do Resultado</label>
+                                            <textarea name="descricao" rows="3"
+                                                      placeholder="Ex: O resultado representa um retrato do momento atual..."
+                                                      class="block w-full text-sm rounded-lg border-gray-300 focus:border-[#D0AE6D] focus:ring-[#D0AE6D] shadow-sm transition-all px-4 py-2.5">{{ old('descricao') }}</textarea>
+                                            @error('descricao') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+                                        </div>
+
+                                        <div class="pt-4 mt-4 border-t border-gray-50">
+                                            <label class="flex items-center gap-3 text-sm text-gray-700 cursor-pointer group">
+                                                <input type="checkbox" name="is_active" value="1" checked 
+                                                       class="w-5 h-5 rounded border-gray-300 text-[#D0AE6D] focus:ring-[#D0AE6D] transition-all cursor-pointer">
+                                                <span class="group-hover:text-gray-900 transition-colors">Ativo (disponível para uso em novos diagnósticos)</span>
+                                            </label>
+                                        </div>
+                                    </div>
                                 </div>
-                                <p class="text-[11px] text-gray-500 leading-relaxed">
-                                    Lembre-se que o somatório dos pesos das dimensões deve preferencialmente totalizar 1.00 para uma escala padrão.
+                            </div>
+
+                            <!-- Tab: Questões -->
+                            <div x-show="activeTab === 'questions'" class="space-y-5 animate-fade-in" x-cloak>
+                                <div class="bg-white shadow-sm sm:rounded-lg border border-gray-100 p-8">
+                                    <div class="flex items-center justify-between mb-8 pb-4 border-b border-gray-50">
+                                        <div>
+                                            <h3 class="text-lg font-bold text-gray-900">Questões do Modelo</h3>
+                                            <p class="text-sm text-gray-500 mt-1">Gerencie as perguntas que compõem este diagnóstico.</p>
+                                        </div>
+                                        <button type="button" id="btn-add-questao"
+                                                class="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-white rounded-xl transition-all hover:shadow-md"
+                                                style="background-color: #D0AE6D;">
+                                            <ion-icon name="add-outline" class="text-lg"></ion-icon> Adicionar Questão
+                                        </button>
+                                    </div>
+
+                                    @if($errors->has('questoes'))
+                                    <div class="bg-red-50 text-red-600 text-sm p-4 rounded-lg mb-6 flex items-center gap-2">
+                                        <ion-icon name="alert-circle-outline" class="text-lg"></ion-icon>
+                                        {{ $errors->first('questoes') }}
+                                    </div>
+                                    @endif
+
+                                    <div id="questoes-container" class="space-y-6">
+                                        {{-- JS will insert rows here --}}
+                                    </div>
+
+                                    <div id="questoes-empty" class="text-center py-20 text-gray-400 border-2 border-dashed border-gray-100 rounded-2xl mt-4">
+                                        <ion-icon name="help-circle-outline" class="text-5xl block mx-auto mb-4 opacity-20"></ion-icon>
+                                        <p class="font-medium">Nenhuma questão adicionada.</p>
+                                        <p class="text-xs mt-1">Comece clicando no botão de adicionar acima.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Tab: Resultado (Placeholder) -->
+                            <div x-show="activeTab === 'result'" class="space-y-5 animate-fade-in" x-cloak>
+                                <div class="bg-white shadow-sm sm:rounded-lg border border-gray-100 p-8 min-h-[400px] flex flex-col items-center justify-center text-center">
+                                    <div class="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mb-4">
+                                        <ion-icon name="construct-outline" class="text-3xl text-gray-300"></ion-icon>
+                                    </div>
+                                    <h3 class="text-lg font-bold text-gray-900">Configurações de Resultado</h3>
+                                    <p class="text-sm text-gray-500 mt-2 max-w-sm">
+                                        Esta área está sendo preparada. Em breve você poderá configurar as faixas de IPM e textos automáticos por desempenho.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- Global Actions -->
+                            <div class="mt-6 flex justify-between items-center bg-white p-4 rounded-xl border border-gray-100 shadow-sm">
+                                 <a href="{{ route('questionarios.index') }}" class="text-sm font-medium text-gray-500 hover:text-gray-700 transition-colors">
+                                    Descartar alterações
+                                 </a>
+                                 <div class="flex gap-3">
+                                     <button type="submit" class="px-8 py-3 text-sm font-bold text-white rounded-xl shadow-lg shadow-gold-100 transition-all hover:scale-[1.02] active:scale-[0.98]" 
+                                             style="background-color: #D0AE6D;">
+                                        Salvar Questionário
+                                     </button>
+                                 </div>
+                            </div>
+                        </div>
+
+                        <!-- Sidebar: Contextual Info -->
+                        <div class="w-full lg:w-80" x-show="activeTab === 'questions'" x-cloak>
+                            <div class="bg-white shadow-sm rounded-2xl border border-gray-100 p-6 sticky top-8">
+                                <div class="flex items-center gap-2 text-xs font-bold text-gold-500 uppercase tracking-widest mb-4">
+                                    <ion-icon name="bulb-outline" class="text-lg"></ion-icon>
+                                    Dica Técnica
+                                </div>
+                                <p class="text-[13px] text-gray-600 leading-relaxed mb-4">
+                                    Lembre-se que o somatório dos pesos das dimensões deve preferencialmente totalizar <strong>1.00</strong> para uma escala padrão.
                                 </p>
+                                <div class="pt-4 border-t border-gray-50">
+                                    <p class="text-[11px] text-gray-400">
+                                        Pesos maiores darão mais importância àquela dimensão no cálculo final do IPM.
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>
