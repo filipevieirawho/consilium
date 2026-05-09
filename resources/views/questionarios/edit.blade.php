@@ -261,6 +261,10 @@
         const row = criarQuestaoRow(questaoIndex++);
         container.appendChild(row);
         atualizarNumeracao();
+        row.querySelector('textarea').focus();
+        
+        // Smooth scroll to the new question
+        row.scrollIntoView({ behavior: 'smooth', block: 'center' });
     });
     </script>
     @endpush
