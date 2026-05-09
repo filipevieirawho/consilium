@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <div class="flex items-center gap-3 h-10">
-            <div class="flex items-center justify-center w-8 h-8 text-[#D0AE6D]">
+            <div class="flex items-center justify-center w-8 h-8 text-gold">
                 <ion-icon name="business-outline" class="text-2xl"></ion-icon>
             </div>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -27,9 +27,9 @@
                         <form method="GET" action="{{ route('empresas.index') }}" class="flex gap-3 flex-wrap flex-grow">
                             <input type="text" name="q" placeholder="Buscar empresa, CNPJ..."
                                 value="{{ request('q') }}"
-                                class="w-full md:w-80 rounded-md border-gray-300 shadow-sm focus:border-[#D0AE6D] focus:ring-[#D0AE6D] px-4 py-2 text-sm">
+                                class="w-full md:w-80 rounded-md border-gray-300 shadow-sm focus:border-gold focus:ring-gold px-4 py-2 text-sm">
                             <select name="segmento" onchange="this.form.submit()"
-                                class="rounded-md border-gray-300 shadow-sm focus:border-[#D0AE6D] focus:ring-[#D0AE6D] pl-3 pr-8 py-2 text-sm">
+                                class="rounded-md border-gray-300 shadow-sm focus:border-gold focus:ring-gold pl-3 pr-8 py-2 text-sm">
                                 <option value="">Todos os segmentos</option>
                                 @foreach($segmentos as $seg)
                                     <option value="{{ $seg }}" {{ request('segmento') == $seg ? 'selected' : '' }}>{{ $seg }}</option>
@@ -46,7 +46,7 @@
                         <div class="flex gap-3">
                             <a href="{{ route('empresas.create') }}"
                                class="px-4 py-2 text-white font-medium rounded-md shadow-sm transition-colors flex items-center gap-2 text-sm"
-                               style="background-color: #D0AE6D;">
+                               class="bg-gold">
                                 <ion-icon name="add-outline" class="text-xl"></ion-icon> Nova Empresa
                             </a>
                         </div>
@@ -106,7 +106,7 @@
                                     <td colspan="6" class="px-6 py-10 text-center text-gray-400 text-sm">
                                         <ion-icon name="business-outline" class="text-4xl mb-3 block mx-auto"></ion-icon>
                                         <p class="text-sm">Nenhuma empresa cadastrada ainda.</p>
-                                        <a href="{{ route('empresas.create') }}" class="mt-3 inline-block text-sm font-medium" style="color: #D0AE6D;">Cadastrar primeira empresa →</a>
+                                        <a href="{{ route('empresas.create') }}" class="mt-3 inline-block text-sm font-medium" class="text-gold">Cadastrar primeira empresa →</a>
                                     </td>
                                 </tr>
                                 @endforelse

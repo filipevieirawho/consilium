@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <div class="flex items-center gap-3 h-10">
-            <div class="flex items-center justify-center w-8 h-8 text-[#D0AE6D]">
+            <div class="flex items-center justify-center w-8 h-8 text-gold">
                 <ion-icon name="file-tray-full-outline" class="text-2xl"></ion-icon>
             </div>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -26,7 +26,7 @@
                         <form method="GET" action="{{ route('questionarios.index') }}" class="flex gap-3 flex-wrap flex-grow">
                             <input type="text" name="search" placeholder="Buscar por título ou código..."
                                 value="{{ request('search') }}"
-                                class="w-full md:w-80 rounded-md border-gray-300 shadow-sm focus:border-[#D0AE6D] focus:ring-[#D0AE6D] px-4 py-2 text-sm">
+                                class="w-full md:w-80 rounded-md border-gray-300 shadow-sm focus:border-gold focus:ring-gold px-4 py-2 text-sm">
                             <button type="submit" class="bg-gray-800 text-white px-3 py-2 rounded-md hover:bg-gray-700 transition-colors flex items-center" title="Buscar">
                                 <ion-icon name="search-outline" class="text-base"></ion-icon>
                             </button>
@@ -39,7 +39,7 @@
                         <div class="flex gap-3">
                             <a href="{{ route('questionarios.create') }}"
                                class="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-white rounded-md shadow-sm transition-colors"
-                               style="background-color: #D0AE6D; hover:background-color: #b5955a;">
+                               class="bg-gold hover:bg-gold-dark">
                                 <ion-icon name="add-outline" class="text-xl"></ion-icon>
                                 Novo Modelo
                             </a>
@@ -111,7 +111,7 @@
                                     <td colspan="5" class="px-6 py-10 text-center text-gray-500 text-sm">
                                         <ion-icon name="document-text-outline" class="text-4xl mb-3 block mx-auto text-gray-400"></ion-icon>
                                         <p class="mb-3">Nenhum modelo de questionário criado ainda.</p>
-                                        <a href="{{ route('questionarios.create') }}" class="font-medium" style="color: #D0AE6D;">Criar primeiro modelo →</a>
+                                        <a href="{{ route('questionarios.create') }}" class="font-medium" class="text-gold">Criar primeiro modelo →</a>
                                     </td>
                                 </tr>
                                 @endforelse

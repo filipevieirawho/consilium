@@ -11,7 +11,7 @@
             </div>
             <a :href="'{{ route('questionarios.edit', $questionario) }}?tab=' + activeTab"
                class="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-semibold text-white rounded-lg transition-all"
-               style="background-color: #D0AE6D;">
+               class="bg-gold">
                 <ion-icon name="create-outline"></ion-icon> Editar
             </a>
         </div>
@@ -26,19 +26,19 @@
                 <!-- Tab Navigation (Horizontal) -->
                 <div class="bg-white shadow-sm rounded-2xl border border-gray-100 p-2 flex gap-1">
                     <button type="button" @click="activeTab = 'info'" 
-                            :class="activeTab === 'info' ? 'bg-[#fdf8ed] text-[#D0AE6D] font-bold shadow-sm' : 'text-gray-500 hover:bg-gray-50'"
+                            :class="activeTab === 'info' ? 'bg-[#fdf8ed] text-gold font-bold shadow-sm' : 'text-gray-500 hover:bg-gray-50'"
                             class="flex-1 flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-sm transition-all group">
                         <ion-icon name="information-circle-outline" class="text-xl"></ion-icon>
                         Informações
                     </button>
                     <button type="button" @click="activeTab = 'questions'" 
-                            :class="activeTab === 'questions' ? 'bg-[#fdf8ed] text-[#D0AE6D] font-bold shadow-sm' : 'text-gray-500 hover:bg-gray-50'"
+                            :class="activeTab === 'questions' ? 'bg-[#fdf8ed] text-gold font-bold shadow-sm' : 'text-gray-500 hover:bg-gray-50'"
                             class="flex-1 flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-sm transition-all group">
                         <ion-icon name="list-outline" class="text-xl"></ion-icon>
                         Questões
                     </button>
                     <button type="button" @click="activeTab = 'result'" 
-                            :class="activeTab === 'result' ? 'bg-[#fdf8ed] text-[#D0AE6D] font-bold shadow-sm' : 'text-gray-500 hover:bg-gray-50'"
+                            :class="activeTab === 'result' ? 'bg-[#fdf8ed] text-gold font-bold shadow-sm' : 'text-gray-500 hover:bg-gray-50'"
                             class="flex-1 flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-sm transition-all group">
                         <ion-icon name="analytics-outline" class="text-xl"></ion-icon>
                         Resultado
@@ -113,7 +113,7 @@
                                     @forelse($questionario->questoes as $q)
                                     <div class="bg-gray-50 rounded-xl border border-gray-100 p-4 transition-all hover:shadow-sm">
                                         <div class="flex items-start gap-3">
-                                            <span class="flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold text-white shadow-sm" style="background-color: #D0AE6D;">
+                                            <span class="flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold text-white shadow-sm" class="bg-gold">
                                                 {{ $loop->iteration }}
                                             </span>
                                             <div class="flex-1 min-w-0">

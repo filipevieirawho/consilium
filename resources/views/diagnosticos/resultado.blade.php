@@ -127,8 +127,7 @@ $cfg = $faixaConfig[$faixa];
 
     <div class="flex justify-end mb-4 no-print">
         <button onclick="window.print()"
-            class="text-[10px] font-bold uppercase tracking-wider flex items-center gap-1 px-4 py-2 rounded-lg text-white transition-all transform active:scale-95"
-            style="background-color: #111827;">
+            class="text-[10px] font-bold uppercase tracking-wider flex items-center gap-1 px-4 py-2 rounded-lg text-white bg-dark transition-all transform active:scale-95">
             <ion-icon name="document-text-outline" class="text-sm"></ion-icon> Baixar PDF
         </button>
     </div>
@@ -178,7 +177,7 @@ $cfg = $faixaConfig[$faixa];
     <!-- Interpretive text -->
     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg border border-gray-100 p-6 mb-6">
         <h3 class="font-semibold text-gray-900 mb-3 flex items-center gap-2">
-            <ion-icon name="reader-outline" style="color: #D0AE6D;"></ion-icon>
+            <ion-icon name="reader-outline" class="text-gold"></ion-icon>
             Análise do resultado
         </h3>
         <p class="text-gray-700 leading-relaxed text-sm">{{ $texto }}</p>
@@ -187,7 +186,7 @@ $cfg = $faixaConfig[$faixa];
     <!-- Dimension scores -->
     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg border border-gray-100 p-6 mb-6">
         <h3 class="font-semibold text-gray-900 mb-5 flex items-center gap-2">
-            <ion-icon name="bar-chart-outline" style="color: #D0AE6D;"></ion-icon>
+            <ion-icon name="bar-chart-outline" class="text-gold"></ion-icon>
             Pontuação por dimensão
         </h3>
 
@@ -240,17 +239,16 @@ $cfg = $faixaConfig[$faixa];
 
     <!-- Connection phrase moved up or kept near bottom? User said: "Dimensões com maior fragilidade + connection phrase" -->
     <!-- Commercial trigger -->
-    <div class="bg-white overflow-hidden sm:rounded-lg border-2 p-6 mb-8" style="border-color: #D0AE6D;">
+    <div class="bg-white overflow-hidden sm:rounded-lg border-2 border-gold p-6 mb-8">
         <h3 class="font-bold text-gray-900 mb-2 flex items-center gap-2">
-            <ion-icon name="analytics-outline" style="color: #D0AE6D;"></ion-icon>
+            <ion-icon name="analytics-outline" class="text-gold"></ion-icon>
             Próximo passo
         </h3>
         <p class="text-sm text-gray-600 mb-4">
             Aprofundar a análise dessas fragilidades permite identificar causas e definir ações concretas para proteção da margem.
         </p>
         <a href="https://consilium.eng.br/contato" target="_blank"
-            class="inline-flex items-center gap-2 px-6 py-3 text-white font-semibold rounded-xl transition-all hover:shadow-md text-sm"
-            style="background-color: #D0AE6D;">
+            class="inline-flex items-center gap-2 px-6 py-3 text-white font-semibold rounded-xl bg-gold hover:bg-gold-dark transition-all hover:shadow-md text-sm">
             Falar com um especialista
             <ion-icon name="arrow-forward-outline"></ion-icon>
         </a>

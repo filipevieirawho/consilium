@@ -26,7 +26,7 @@
                                maxlength="18">
                         <button type="button" id="btn-cnpj-buscar"
                                 class="px-4 py-2 text-sm font-medium text-white rounded-lg"
-                                style="background-color: #D0AE6D;">
+                                class="bg-gold">
                             Buscar
                         </button>
                     </div>
@@ -43,14 +43,14 @@
                                 <label class="block text-sm font-medium text-gray-700 mb-1">Nome Fantasia *</label>
                                 <input type="text" name="nome_fantasia" id="nome_fantasia"
                                        value="{{ old('nome_fantasia') }}" required
-                                       class="block w-full text-sm rounded-lg border-gray-300 focus:border-[#D0AE6D] focus:ring-[#D0AE6D]">
+                                       class="block w-full text-sm rounded-lg border-gray-300 focus:border-gold focus:ring-gold">
                                 @error('nome_fantasia') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
                             </div>
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-1">Razão Social</label>
                                 <input type="text" name="razao_social" id="razao_social"
                                        value="{{ old('razao_social') }}"
-                                       class="block w-full text-sm rounded-lg border-gray-300 focus:border-[#D0AE6D] focus:ring-[#D0AE6D]">
+                                       class="block w-full text-sm rounded-lg border-gray-300 focus:border-gold focus:ring-gold">
                             </div>
                         </div>
 
@@ -61,12 +61,12 @@
                                 <input type="text" name="cnpj" id="cnpj"
                                        value="{{ old('cnpj') }}" maxlength="18"
                                        placeholder="00.000.000/0001-00"
-                                       class="block w-full text-sm rounded-lg border-gray-300 focus:border-[#D0AE6D] focus:ring-[#D0AE6D]">
+                                       class="block w-full text-sm rounded-lg border-gray-300 focus:border-gold focus:ring-gold">
                                 @error('cnpj') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
                             </div>
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-1">Segmento</label>
-                                <select name="segmento" class="block w-full text-sm rounded-lg border-gray-300 focus:border-[#D0AE6D] focus:ring-[#D0AE6D]">
+                                <select name="segmento" class="block w-full text-sm rounded-lg border-gray-300 focus:border-gold focus:ring-gold">
                                     <option value="">Selecione...</option>
                                     @foreach(['Imobiliária / Incorporação', 'Construção Civil', 'Engenharia & Projetos', 'Investimento / Fundo', 'Outros'] as $seg)
                                         <option value="{{ $seg }}" {{ old('segmento') === $seg ? 'selected' : '' }}>{{ $seg }}</option>
@@ -75,7 +75,7 @@
                             </div>
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-1">Porte</label>
-                                <select name="porte" class="block w-full text-sm rounded-lg border-gray-300 focus:border-[#D0AE6D] focus:ring-[#D0AE6D]">
+                                <select name="porte" class="block w-full text-sm rounded-lg border-gray-300 focus:border-gold focus:ring-gold">
                                     <option value="">Selecione...</option>
                                     @foreach(['Microempresa (ME)', 'Empresa de Pequeno Porte (EPP)', 'Médio Porte', 'Grande Porte'] as $p)
                                         <option value="{{ $p }}" {{ old('porte') === $p ? 'selected' : '' }}>{{ $p }}</option>
@@ -86,7 +86,7 @@
 
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Tipo de Unidade</label>
-                            <select name="tipo_unidade" class="block w-full text-sm rounded-lg border-gray-300 focus:border-[#D0AE6D] focus:ring-[#D0AE6D] max-w-xs">
+                            <select name="tipo_unidade" class="block w-full text-sm rounded-lg border-gray-300 focus:border-gold focus:ring-gold max-w-xs">
                                 <option value="">Selecione...</option>
                                 <option value="Matriz" {{ old('tipo_unidade') === 'Matriz' ? 'selected' : '' }}>Matriz</option>
                                 <option value="Filial" {{ old('tipo_unidade') === 'Filial' ? 'selected' : '' }}>Filial</option>
@@ -100,49 +100,49 @@
                                 <div>
                                     <label class="block text-xs text-gray-500 mb-1">CEP</label>
                                     <input type="text" name="cep" id="cep" value="{{ old('cep') }}" maxlength="9"
-                                           class="block w-full text-sm rounded-lg border-gray-300 focus:border-[#D0AE6D] focus:ring-[#D0AE6D]">
+                                           class="block w-full text-sm rounded-lg border-gray-300 focus:border-gold focus:ring-gold">
                                 </div>
                                 <div class="md:col-span-2">
                                     <label class="block text-xs text-gray-500 mb-1">Rua / Logradouro</label>
                                     <input type="text" name="rua" id="rua" value="{{ old('rua') }}"
-                                           class="block w-full text-sm rounded-lg border-gray-300 focus:border-[#D0AE6D] focus:ring-[#D0AE6D]">
+                                           class="block w-full text-sm rounded-lg border-gray-300 focus:border-gold focus:ring-gold">
                                 </div>
                                 <div>
                                     <label class="block text-xs text-gray-500 mb-1">Número</label>
                                     <input type="text" name="numero" id="numero" value="{{ old('numero') }}"
-                                           class="block w-full text-sm rounded-lg border-gray-300 focus:border-[#D0AE6D] focus:ring-[#D0AE6D]">
+                                           class="block w-full text-sm rounded-lg border-gray-300 focus:border-gold focus:ring-gold">
                                 </div>
                                 <div>
                                     <label class="block text-xs text-gray-500 mb-1">Complemento</label>
                                     <input type="text" name="complemento" id="complemento" value="{{ old('complemento') }}"
-                                           class="block w-full text-sm rounded-lg border-gray-300 focus:border-[#D0AE6D] focus:ring-[#D0AE6D]">
+                                           class="block w-full text-sm rounded-lg border-gray-300 focus:border-gold focus:ring-gold">
                                 </div>
                                 <div>
                                     <label class="block text-xs text-gray-500 mb-1">Bairro</label>
                                     <input type="text" name="bairro" id="bairro" value="{{ old('bairro') }}"
-                                           class="block w-full text-sm rounded-lg border-gray-300 focus:border-[#D0AE6D] focus:ring-[#D0AE6D]">
+                                           class="block w-full text-sm rounded-lg border-gray-300 focus:border-gold focus:ring-gold">
                                 </div>
                                 <div>
                                     <label class="block text-xs text-gray-500 mb-1">Cidade</label>
                                     <input type="text" name="cidade" id="cidade" value="{{ old('cidade') }}"
-                                           class="block w-full text-sm rounded-lg border-gray-300 focus:border-[#D0AE6D] focus:ring-[#D0AE6D]">
+                                           class="block w-full text-sm rounded-lg border-gray-300 focus:border-gold focus:ring-gold">
                                 </div>
                                 <div>
                                     <label class="block text-xs text-gray-500 mb-1">Estado (UF)</label>
                                     <input type="text" name="estado" id="estado" value="{{ old('estado') }}" maxlength="2"
-                                           class="block w-full text-sm rounded-lg border-gray-300 focus:border-[#D0AE6D] focus:ring-[#D0AE6D]">
+                                           class="block w-full text-sm rounded-lg border-gray-300 focus:border-gold focus:ring-gold">
                                 </div>
                                 <div>
                                     <label class="block text-xs text-gray-500 mb-1">País</label>
                                     <input type="text" name="pais" value="{{ old('pais', 'Brasil') }}"
-                                           class="block w-full text-sm rounded-lg border-gray-300 focus:border-[#D0AE6D] focus:ring-[#D0AE6D]">
+                                           class="block w-full text-sm rounded-lg border-gray-300 focus:border-gold focus:ring-gold">
                                 </div>
                             </div>
                         </div>
 
                         <div class="flex justify-end gap-3 pt-2 border-t">
                             <a href="{{ route('empresas.index') }}" class="px-5 py-2 text-sm font-medium bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200">Cancelar</a>
-                            <button type="submit" class="px-5 py-2 text-sm font-semibold text-white rounded-lg" style="background-color: #D0AE6D;">
+                            <button type="submit" class="px-5 py-2 text-sm font-semibold text-white rounded-lg" class="bg-gold">
                                 Salvar Empresa
                             </button>
                         </div>

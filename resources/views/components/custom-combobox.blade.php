@@ -31,7 +31,7 @@
         <input type="text" id="combo-search-{{ $id }}" autocomplete="off"
             placeholder="{{ $placeholder }}"
             value="{{ $selectedName }}"
-            class="combo-search-input block w-full rounded-lg border-gray-300 shadow-sm focus:border-[#D0AE6D] focus:ring-[#D0AE6D] pl-4 pr-11 py-2.5 text-sm cursor-text transition-colors"
+            class="combo-search-input block w-full rounded-lg border-gray-300 shadow-sm focus:border-gold focus:ring-gold pl-4 pr-11 py-2.5 text-sm cursor-text transition-colors"
         >
         <div class="absolute inset-y-0 right-3 flex items-center pointer-events-none">
             <ion-icon name="{{ $icon }}" class="text-gray-400 text-lg"></ion-icon>
@@ -53,7 +53,7 @@
         </li>
 
         @if($creatable)
-        <li class="combo-creatable hidden cursor-pointer select-none relative py-2.5 pl-4 pr-4 text-[#D0AE6D] hover:bg-gray-50 border-t border-gray-100 font-bold italic">
+        <li class="combo-creatable hidden cursor-pointer select-none relative py-2.5 pl-4 pr-4 text-gold hover:bg-gray-50 border-t border-gray-100 font-bold italic">
             <div class="flex items-center gap-2">
                 <ion-icon name="add-circle-outline" class="text-lg"></ion-icon>
                 <span>{{ $creatableText }}: <span class="creatable-term font-normal text-gray-900 not-italic"></span></span>

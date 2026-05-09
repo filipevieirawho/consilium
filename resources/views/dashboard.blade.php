@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <div class="flex items-center gap-3 h-10">
-            <div class="flex items-center justify-center w-8 h-8 text-[#D0AE6D]">
+            <div class="flex items-center justify-center w-8 h-8 text-gold">
                 <ion-icon name="receipt-outline" class="text-2xl"></ion-icon>
             </div>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -26,13 +26,13 @@
                                 <!-- Search -->
                                 <input type="text" name="search" placeholder="Buscar por nome, e-mail, nota ou mensagem"
                                     value="{{ request('search') }}"
-                                    class="w-full md:w-96 rounded-md border-gray-300 shadow-sm focus:border-[#D0AE6D] focus:ring-[#D0AE6D] px-4 py-2 text-sm">
+                                    class="w-full md:w-96 rounded-md border-gray-300 shadow-sm focus:border-gold focus:ring-gold px-4 py-2 text-sm">
 
                                 <!-- Filters and buttons -->
                                 <div class="flex gap-3 items-center flex-wrap">
                                     <!-- Year Select -->
                                     <select name="year" onchange="this.form.submit()"
-                                        class="w-36 rounded-md border-gray-300 shadow-sm focus:border-[#D0AE6D] focus:ring-[#D0AE6D] pl-3 pr-8 py-2 text-sm">
+                                        class="w-36 rounded-md border-gray-300 shadow-sm focus:border-gold focus:ring-gold pl-3 pr-8 py-2 text-sm">
                                         <option value="">Todos os anos</option>
                                         @for($year = date('Y'); $year >= 2026; $year--)
                                             <option value="{{ $year }}" {{ request('year') == $year ? 'selected' : '' }}>
@@ -43,7 +43,7 @@
 
                                     <!-- Month Select -->
                                     <select name="month" onchange="this.form.submit()"
-                                        class="w-36 rounded-md border-gray-300 shadow-sm focus:border-[#D0AE6D] focus:ring-[#D0AE6D] pl-3 pr-8 py-2 text-sm">
+                                        class="w-36 rounded-md border-gray-300 shadow-sm focus:border-gold focus:ring-gold pl-3 pr-8 py-2 text-sm">
                                         <option value="">Todos os meses</option>
                                         <option value="1" {{ request('month') == '1' ? 'selected' : '' }}>Janeiro</option>
                                         <option value="2" {{ request('month') == '2' ? 'selected' : '' }}>Fevereiro
@@ -66,7 +66,7 @@
 
                                     <!-- Status Select -->
                                     <select name="status" onchange="this.form.submit()"
-                                        class="w-36 rounded-md border-gray-300 shadow-sm focus:border-[#D0AE6D] focus:ring-[#D0AE6D] pl-3 pr-8 py-2 text-sm">
+                                        class="w-36 rounded-md border-gray-300 shadow-sm focus:border-gold focus:ring-gold pl-3 pr-8 py-2 text-sm">
                                         <option value="">Todos os status</option>
                                         <option value="Cliente Potencial" {{ request('status') == 'Cliente Potencial' ? 'selected' : '' }}>Cliente Potencial</option>
                                         <option value="Contactado" {{ request('status') == 'Contactado' ? 'selected' : '' }}>Contactado</option>
@@ -96,7 +96,7 @@
                         <div class="w-full lg:w-auto flex justify-end flex-shrink-0">
                             <button type="button" x-data="" @click.prevent="$dispatch('open-modal', 'add-manual-lead')"
                                 class="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-white rounded-md shadow-sm transition-colors"
-                                style="background-color: #D0AE6D;">
+                                class="bg-gold">
                                 <ion-icon name="add-outline" class="text-xl"></ion-icon> Novo Lead
                             </button>
                         </div>
@@ -157,8 +157,8 @@
                                                 $statusColors = [
                                                     'Cliente Potencial' => 'text-[#2892D7] border-[#2892D7] bg-[#2892D7]/05',
                                                     'Contactado' => 'text-[#00c49a] border-[#00c49a] bg-[#00c49a]/05',
-                                                    'Proposta Enviada' => 'text-[#D0AE6D] border-[#D0AE6D] bg-[#D0AE6D]/05',
-                                                    'Negociação' => 'text-[#D0AE6D] border-[#D0AE6D] bg-[#D0AE6D]/05',
+                                                    'Proposta Enviada' => 'text-gold border-gold bg-gold-light',
+                                                    'Negociação' => 'text-gold border-gold bg-gold-light',
                                                     'Stand By' => 'text-[#6b7280] border-[#6b7280] bg-[#6b7280]/05',
                                                 ];
                                                 $statusClass = $statusColors[$contact->status] ?? 'text-gray-500 border-gray-300 bg-gray-50';
@@ -197,8 +197,8 @@
                 <!-- Title & Icon -->
                 <div class="flex items-center gap-4">
                     <div class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full"
-                        style="background-color: #fdf8ed;">
-                        <ion-icon name="receipt-outline" class="text-2xl" style="color: #D0AE6D;"></ion-icon>
+                        class="bg-gold-light">
+                        <ion-icon name="receipt-outline" class="text-2xl" class="text-gold"></ion-icon>
                     </div>
                     <h3 class="text-xl font-semibold leading-6 text-gray-900 text-left" id="modal-title">
                         Novo Lead
@@ -221,7 +221,7 @@
                 <div>
                     <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Nome</label>
                     <input type="text" name="name" id="name" required
-                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-2"
+                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-gold focus:ring-gold sm:text-sm px-4 py-2"
                         placeholder="Ex: João Silva">
                 </div>
 
@@ -229,7 +229,7 @@
                 <div>
                     <label for="company" class="block text-sm font-medium text-gray-700 mb-1">Empresa</label>
                     <input type="text" name="company" id="company"
-                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-2"
+                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-gold focus:ring-gold sm:text-sm px-4 py-2"
                         placeholder="Ex: Nome da Empresa">
                 </div>
 
@@ -237,7 +237,7 @@
                 <div>
                     <label for="email" class="block text-sm font-medium text-gray-700 mb-1">E-mail</label>
                     <input type="email" name="email" id="email"
-                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-2"
+                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-gold focus:ring-gold sm:text-sm px-4 py-2"
                         placeholder="joao@exemplo.com">
                 </div>
 
@@ -255,7 +255,7 @@
                 }">
                     <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Telefone / WhatsApp</label>
                     <input type="text" name="phone" id="phone" x-model="phone" @input="formatPhone" maxlength="15"
-                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-2"
+                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-gold focus:ring-gold sm:text-sm px-4 py-2"
                         placeholder="(11) 99999-9999">
                 </div>
 
@@ -264,14 +264,14 @@
                     <label for="message" class="block text-sm font-medium text-gray-700 mb-1">Observação Inicial /
                         Detalhes</label>
                     <textarea name="message" id="message" rows="3"
-                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-2"
+                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-gold focus:ring-gold sm:text-sm px-4 py-2"
                         placeholder="Como esse lead chegou ou o que ele precisa..."></textarea>
                 </div>
 
                 <!-- Opt-in -->
                 <div class="flex items-center">
                     <input id="opt_in" name="opt_in" type="checkbox" value="1"
-                        class="h-4 w-4 rounded border-gray-300 text-[#D0AE6D] focus:ring-[#D0AE6D]">
+                        class="h-4 w-4 rounded border-gray-300 text-gold focus:ring-gold">
                     <label for="opt_in" class="ml-2 block text-sm text-gray-900">
                         Aceita receber novidades (Opt-in)
                     </label>
@@ -281,7 +281,7 @@
                 <div class="pt-2 flex justify-end">
                     <button type="submit" form="new-lead-form"
                         class="px-4 py-2 text-white font-medium rounded-md shadow-sm transition-colors inline-flex items-center justify-center"
-                        style="background-color: #D0AE6D; hover:background-color: #b5955a;">
+                        class="bg-gold hover:bg-gold-dark">
                         Salvar Lead
                     </button>
                 </div>

@@ -14,14 +14,14 @@ $nextUrl = $num < $totalQuestions ? route('diagnostico.pergunta', [$token, $num 
 <x-diagnosticos.layout :progressPct="(int) $pct" progressLabel="Pergunta {{ $num }} de {{ $totalQuestions }}">
     <!-- Dimension badge -->
     <div class="flex items-center justify-between mb-6">
-        <span class="text-xs font-semibold uppercase tracking-wider px-3 py-1 rounded-full text-white" style="background-color: #D0AE6D;">
+        <span class="text-xs font-semibold uppercase tracking-wider px-3 py-1 rounded-full text-white bg-gold">
             {{ $dimensaoNome }}
         </span>
         <span class="text-sm font-medium text-gray-400">{{ $num }}/{{ $totalQuestions }}</span>
     </div>
 
     <!-- Question -->
-    <div class="bg-white sm:rounded-lg shadow-sm border border-gray-100 mb-4" style="padding: 35px;">
+    <div class="bg-white sm:rounded-lg shadow-sm border border-gray-100 mb-4 p-9">
         <h2 class="text-lg font-semibold text-gray-900 leading-relaxed mb-8">
             {{ $perguntaAtual['texto'] }}
         </h2>
@@ -66,8 +66,7 @@ $nextUrl = $num < $totalQuestions ? route('diagnostico.pergunta', [$token, $num 
             @endif
 
             <button id="next-btn"
-                class="inline-flex items-center gap-2 px-6 py-3 text-white font-semibold rounded-xl transition-all"
-                style="background-color:#D0AE6D;{{ is_null($respostaValor) ? 'opacity:0.4;cursor:not-allowed;' : '' }}"
+                class="inline-flex items-center gap-2 px-6 py-3 text-white font-semibold rounded-xl transition-all bg-gold {{ is_null($respostaValor) ? 'opacity-40 cursor-not-allowed' : 'hover:bg-gold-dark' }}"
                 {{ is_null($respostaValor) ? 'disabled' : '' }}>
                 {{ $num < $totalQuestions ? 'Próxima →' : 'Ver Resultado' }}
             </button>

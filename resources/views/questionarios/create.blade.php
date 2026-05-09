@@ -19,19 +19,19 @@
                     <!-- Tab Navigation (Horizontal) -->
                     <div class="bg-white shadow-sm rounded-2xl border border-gray-100 p-2 flex gap-1">
                         <button type="button" @click="activeTab = 'info'" 
-                                :class="activeTab === 'info' ? 'bg-[#fdf8ed] text-[#D0AE6D] font-bold shadow-sm' : 'text-gray-500 hover:bg-gray-50'"
+                                :class="activeTab === 'info' ? 'bg-[#fdf8ed] text-gold font-bold shadow-sm' : 'text-gray-500 hover:bg-gray-50'"
                                 class="flex-1 flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-sm transition-all group">
                             <ion-icon name="information-circle-outline" class="text-xl"></ion-icon>
                             Informações
                         </button>
                         <button type="button" @click="activeTab = 'questions'" 
-                                :class="activeTab === 'questions' ? 'bg-[#fdf8ed] text-[#D0AE6D] font-bold shadow-sm' : 'text-gray-500 hover:bg-gray-50'"
+                                :class="activeTab === 'questions' ? 'bg-[#fdf8ed] text-gold font-bold shadow-sm' : 'text-gray-500 hover:bg-gray-50'"
                                 class="flex-1 flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-sm transition-all group">
                             <ion-icon name="list-outline" class="text-xl"></ion-icon>
                             Questões
                         </button>
                         <button type="button" @click="activeTab = 'result'" 
-                                :class="activeTab === 'result' ? 'bg-[#fdf8ed] text-[#D0AE6D] font-bold shadow-sm' : 'text-gray-500 hover:bg-gray-50'"
+                                :class="activeTab === 'result' ? 'bg-[#fdf8ed] text-gold font-bold shadow-sm' : 'text-gray-500 hover:bg-gray-50'"
                                 class="flex-1 flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-sm transition-all group">
                             <ion-icon name="analytics-outline" class="text-xl"></ion-icon>
                             Resultado
@@ -56,7 +56,7 @@
                                                 <label class="block text-sm font-medium text-gray-700 mb-1.5">Nome do Modelo</label>
                                                 <input type="text" name="nome" value="{{ old('nome') }}" required
                                                        placeholder="Ex: Check-up IPM 2026"
-                                                       class="block w-full text-sm rounded-lg border-gray-300 focus:border-[#D0AE6D] focus:ring-[#D0AE6D] shadow-sm transition-all px-4 py-2.5">
+                                                       class="block w-full text-sm rounded-lg border-gray-300 focus:border-gold focus:ring-gold shadow-sm transition-all px-4 py-2.5">
                                                 @error('nome') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
                                             </div>
                                             <div>
@@ -71,7 +71,7 @@
                                             <label class="block text-sm font-medium text-gray-700 mb-1.5">Título da Página</label>
                                             <input type="text" name="titulo" value="{{ old('titulo') }}"
                                                    placeholder="Ex: Check-up de Consistência da Margem"
-                                                   class="block w-full text-sm font-bold rounded-lg border-gray-300 focus:border-[#D0AE6D] focus:ring-[#D0AE6D] shadow-sm transition-all px-4 py-2.5">
+                                                   class="block w-full text-sm font-bold rounded-lg border-gray-300 focus:border-gold focus:ring-gold shadow-sm transition-all px-4 py-2.5">
                                             @error('titulo') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
                                         </div>
 
@@ -79,7 +79,7 @@
                                             <label class="block text-sm font-medium text-gray-700 mb-1.5">Subtítulo (Call to action)</label>
                                             <textarea name="subtitulo" rows="3"
                                                       placeholder="Ex: Este check-up avalia a consistência das condições..."
-                                                      class="block w-full text-sm rounded-lg border-gray-300 focus:border-[#D0AE6D] focus:ring-[#D0AE6D] shadow-sm transition-all px-4 py-2.5">{{ old('subtitulo') }}</textarea>
+                                                      class="block w-full text-sm rounded-lg border-gray-300 focus:border-gold focus:ring-gold shadow-sm transition-all px-4 py-2.5">{{ old('subtitulo') }}</textarea>
                                             @error('subtitulo') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
                                         </div>
 
@@ -87,14 +87,14 @@
                                             <label class="block text-sm font-medium text-gray-700 mb-1.5">Descrição do Resultado</label>
                                             <textarea name="descricao" rows="3"
                                                       placeholder="Ex: O resultado representa um retrato do momento atual..."
-                                                      class="block w-full text-sm rounded-lg border-gray-300 focus:border-[#D0AE6D] focus:ring-[#D0AE6D] shadow-sm transition-all px-4 py-2.5">{{ old('descricao') }}</textarea>
+                                                      class="block w-full text-sm rounded-lg border-gray-300 focus:border-gold focus:ring-gold shadow-sm transition-all px-4 py-2.5">{{ old('descricao') }}</textarea>
                                             @error('descricao') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
                                         </div>
 
                                         <div class="pt-4 mt-4 border-t border-gray-50">
                                             <label class="flex items-center gap-3 text-sm text-gray-700 cursor-pointer group">
                                                 <input type="checkbox" name="is_active" value="1" checked 
-                                                       class="w-5 h-5 rounded border-gray-300 text-[#D0AE6D] focus:ring-[#D0AE6D] transition-all cursor-pointer">
+                                                       class="w-5 h-5 rounded border-gray-300 text-gold focus:ring-gold transition-all cursor-pointer">
                                                 <span class="group-hover:text-gray-900 transition-colors">Ativo (disponível para uso em novos diagnósticos)</span>
                                             </label>
                                         </div>
@@ -112,12 +112,12 @@
                                         </div>
                                         <button type="button" id="btn-add-questao"
                                                 class="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-white rounded-xl transition-all hover:shadow-md"
-                                                style="background-color: #D0AE6D;">
+                                                class="bg-gold">
                                             <ion-icon name="add-outline" class="text-lg"></ion-icon> Adicionar Questão
                                         </button>
                                     </div>
 
-                                    <div class="bg-[#fdf8ed] border border-[#D0AE6D] p-4 rounded-xl flex items-center gap-3 text-[#D0AE6D] mb-6">
+                                    <div class="bg-[#fdf8ed] border border-gold p-4 rounded-xl flex items-center gap-3 text-gold mb-6">
                                         <ion-icon name="bulb-outline" class="text-xl flex-shrink-0"></ion-icon>
                                         <p class="text-sm font-medium leading-relaxed">
                                             Lembre-se que o somatório dos pesos das dimensões deve preferencialmente totalizar 1.00 para uma escala padrão.
@@ -163,7 +163,7 @@
                                         Descartar alterações
                                      </a>
                                      <button type="submit" class="px-8 py-3 text-sm font-bold text-white rounded-xl transition-all hover:scale-[1.02] active:scale-[0.98] hover:shadow-md" 
-                                             style="background-color: #D0AE6D;">
+                                             class="bg-gold">
                                         Salvar Questionário
                                      </button>
                                 </div>
@@ -206,7 +206,7 @@
 
         div.innerHTML = `
             <div class="flex items-start justify-between gap-3 mb-3">
-                <span class="flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold text-white" style="background-color: #D0AE6D;">${idx + 1}</span>
+                <span class="flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold text-white" class="bg-gold">${idx + 1}</span>
                 <button type="button" onclick="removerQuestao(this)" class="text-gray-400 hover:text-red-500 ml-auto">
                     <ion-icon name="trash-outline" class="text-base"></ion-icon>
                 </button>
@@ -215,21 +215,21 @@
                 <div>
                     <label class="block text-xs text-gray-500 mb-1">Texto da Questão *</label>
                     <textarea name="questoes[${idx}][texto]" rows="2" required
-                              class="block w-full text-sm rounded-lg border-gray-300 focus:border-[#D0AE6D] focus:ring-[#D0AE6D]">${data.texto || ''}</textarea>
+                              class="block w-full text-sm rounded-lg border-gray-300 focus:border-gold focus:ring-gold">${data.texto || ''}</textarea>
                 </div>
                 <div class="grid grid-cols-2 gap-3">
                     <div>
                         <label class="block text-xs text-gray-500 mb-1">Dimensão</label>
                         <input type="text" name="questoes[${idx}][dimensao_nome]" list="dimensoes-list" required
                                value="${data.dimensao_nome || ''}" placeholder="Ex: Projetos"
-                               class="block w-full text-sm rounded-lg border-gray-300 focus:border-[#D0AE6D] focus:ring-[#D0AE6D]">
+                               class="block w-full text-sm rounded-lg border-gray-300 focus:border-gold focus:ring-gold">
                     </div>
                     <div>
                         <label class="block text-xs text-gray-500 mb-1">Peso da Dimensão</label>
                         <input type="number" step="0.0001" name="questoes[${idx}][dimensao_peso]" required
                                value="${data.dimensao_peso || ''}"
                                placeholder="Ex: 0.20"
-                               class="block w-full text-sm rounded-lg border-gray-300 focus:border-[#D0AE6D] focus:ring-[#D0AE6D]">
+                               class="block w-full text-sm rounded-lg border-gray-300 focus:border-gold focus:ring-gold">
                     </div>
                 </div>
             </div>

@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight flex items-center gap-2">
-            <ion-icon name="people-outline" class="text-[#D0AE6D] text-2xl"></ion-icon> {{ __('Usuários') }}
+            <ion-icon name="people-outline" class="text-gold text-2xl"></ion-icon> {{ __('Usuários') }}
         </h2>
     </x-slot>
 
@@ -24,19 +24,19 @@
                         @csrf
                         <div class="flex flex-col md:flex-row gap-3 items-center">
                             <input type="text" name="name" required value="{{ old('name') }}"
-                                class="w-full md:flex-1 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                                class="w-full md:flex-1 rounded-md border-gray-300 shadow-sm focus:border-gold focus:ring-gold"
                                 placeholder="Nome completo">
 
                             <input type="email" name="email" required value="{{ old('email') }}"
-                                class="w-full md:flex-1 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                                class="w-full md:flex-1 rounded-md border-gray-300 shadow-sm focus:border-gold focus:ring-gold"
                                 placeholder="E-mail">
 
                             <input type="password" name="password" required
-                                class="w-full md:w-36 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                                class="w-full md:w-36 rounded-md border-gray-300 shadow-sm focus:border-gold focus:ring-gold"
                                 placeholder="Senha">
 
                             <select name="role"
-                                class="w-full md:w-auto rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                                class="w-full md:w-auto rounded-md border-gray-300 shadow-sm focus:border-gold focus:ring-gold">
                                 <option value="representante">Representante</option>
                                 <option value="gestor">Gestor</option>
                                 <option value="admin">Admin</option>
@@ -86,7 +86,7 @@
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                                             {{ $user->name }}
                                             @if($user->id === auth()->id())
-                                                <span class="ml-1 text-xs font-normal" style="color: #D0AE6D">(você)</span>
+                                                <span class="ml-1 text-xs font-normal" class="text-gold">(você)</span>
                                             @endif
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
@@ -94,7 +94,7 @@
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm">
                                             <select data-user-id="{{ $user->id }}" onchange="updateRole(this)"
-                                                class="role-select rounded-md border-gray-300 text-sm shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                                                class="role-select rounded-md border-gray-300 text-sm shadow-sm focus:border-gold focus:ring-gold">
                                                 <option value="admin" {{ $user->role === 'admin' ? 'selected' : '' }}>Admin
                                                 </option>
                                                 <option value="gestor" {{ $user->role === 'gestor' ? 'selected' : '' }}>Gestor
@@ -104,7 +104,7 @@
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm">
                                             <select data-user-id="{{ $user->id }}" onchange="updateActive(this)"
-                                                class="active-select rounded-md border-gray-300 text-sm shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                                                class="active-select rounded-md border-gray-300 text-sm shadow-sm focus:border-gold focus:ring-gold"
                                                 {{ $user->id === auth()->id() ? 'disabled' : '' }}>
                                                 <option value="1" {{ $user->active ? 'selected' : '' }}>Ativo</option>
                                                 <option value="0" {{ !$user->active ? 'selected' : '' }}>Inativo</option>

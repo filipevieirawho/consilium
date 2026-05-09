@@ -39,21 +39,19 @@ $opcaoLabels = [
             <div class="flex gap-2">
                 <button onclick="copyToClipboard(this, '{{ route('diagnostico.landing', $diagnostico->token) }}')"
                     title="Copiar Link"
-                    class="p-2 rounded-lg border border-gray-200 bg-white text-gray-500 hover:text-[#D0AE6D] hover:border-[#D0AE6D] transition-all duration-200 flex items-center justify-center transform active:scale-95">
+                    class="p-2 rounded-lg border border-gray-200 bg-white text-gray-500 hover:text-gold hover:border-gold transition-all duration-200 flex items-center justify-center transform active:scale-95">
                     <ion-icon name="link-outline" class="text-xl"></ion-icon>
                 </button>
                 <a href="{{ route('diagnostico.landing', $diagnostico->token) }}" target="_blank"
-                    class="text-[10px] font-bold uppercase tracking-wider flex items-center gap-1 px-4 py-2 rounded-lg text-white"
-                    style="background-color: #D0AE6D;">
+                    class="text-[10px] font-bold uppercase tracking-wider flex items-center gap-1 px-4 py-2 rounded-lg text-white bg-gold hover:bg-gold-dark transition-all">
                     <ion-icon name="open-outline" class="text-sm"></ion-icon> Ver formulário
                 </a>
                 <a href="{{ route('diagnostico.result', $diagnostico->token) }}" target="_blank"
-                    class="text-[10px] font-bold uppercase tracking-wider flex items-center gap-1 px-4 py-2 rounded-lg border border-[#D0AE6D] text-[#D0AE6D] hover:bg-[#D0AE6D]/05 transition-colors">
+                    class="text-[10px] font-bold uppercase tracking-wider flex items-center gap-1 px-4 py-2 rounded-lg border border-gold text-gold hover:bg-gold-light transition-colors">
                     <ion-icon name="eye-outline" class="text-sm"></ion-icon> Resultado
                 </a>
                 <button onclick="window.print()"
-                    class="text-[10px] font-bold uppercase tracking-wider flex items-center gap-1 px-4 py-2 rounded-lg text-white transition-all transform active:scale-95"
-                    style="background-color: #111827;">
+                    class="text-[10px] font-bold uppercase tracking-wider flex items-center gap-1 px-4 py-2 rounded-lg text-white bg-dark transition-all transform active:scale-95">
                     <ion-icon name="document-text-outline" class="text-sm"></ion-icon> PDF
                 </button>
             </div>
@@ -256,7 +254,7 @@ $opcaoLabels = [
                         @if($diagnostico->questionario)
                         <div class="col-span-2">
                             <dt class="text-xs text-gray-400 uppercase tracking-wide">Modelo Aplicado</dt>
-                            <dd class="font-bold text-[#D0AE6D] mt-0.5">{{ $diagnostico->questionario->titulo }}</dd>
+                            <dd class="font-bold text-gold mt-0.5">{{ $diagnostico->questionario->titulo }}</dd>
                         </div>
                         @else
                         <div class="col-span-2">
@@ -325,7 +323,7 @@ $opcaoLabels = [
                     @foreach($grupos as $dimNome => $questoes)
                     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg border border-gray-100 p-6 dimension-block">
                         <div class="flex items-center gap-2 mb-3">
-                            <div class="w-2 h-6 rounded-full" style="background-color: #D0AE6D;"></div>
+                            <div class="w-2 h-6 rounded-full bg-gold"></div>
                             <h4 class="font-bold text-gray-800 text-sm">{{ $dimNome }}</h4>
                         </div>
                         <div class="space-y-3">
@@ -366,7 +364,7 @@ $opcaoLabels = [
                     @foreach($dimensoesGrupos as $dim => $nums)
                     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg border border-gray-100 p-6 dimension-block">
                         <div class="flex items-center gap-2 mb-3">
-                            <div class="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold text-white" style="background-color: #D0AE6D;">{{ $dim }}</div>
+                            <div class="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold text-white bg-gold">{{ $dim }}</div>
                             <h4 class="font-medium text-gray-800 text-sm">{{ $dimensoesNomesLocal[$dim] }}</h4>
                         </div>
                         <div class="space-y-2 pl-0">

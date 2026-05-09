@@ -12,7 +12,7 @@
             <div class="flex items-center gap-4">
                 <!-- Generate Diagnostic for this Lead (Opens Modal) -->
                 <button type="button" x-data="" x-on:click="$dispatch('open-modal', 'gerar-diagnostico-modal')"
-                    class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#D0AE6D] text-white text-sm font-medium rounded-md hover:bg-[#b89555] transition-colors shadow-sm">
+                    class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gold text-white text-sm font-medium rounded-md hover:bg-gold-dark transition-colors shadow-sm">
                     <ion-icon name="link-outline" class="text-lg"></ion-icon>
                     Gerar Diagnóstico
                 </button>
@@ -81,18 +81,18 @@
                                 <div>
                                     <span class="block text-sm font-medium text-gray-500">E-mail</span>
                                     <a href="mailto:{{ $contact->email }}"
-                                        class="block text-base text-[#D0AE6D] hover:text-[#b89555] hover:underline transition-colors">{{ $contact->email }}</a>
+                                        class="block text-base text-gold hover:text-gold-dark hover:underline transition-colors">{{ $contact->email }}</a>
                                 </div>
                                 <div>
                                     <span class="block text-sm font-medium text-gray-500">Telefone</span>
                                     <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $contact->phone) }}"
                                         target="_blank"
-                                        class="block text-base text-[#D0AE6D] hover:text-[#b89555] hover:underline transition-colors">{{ $contact->phone }}</a>
+                                        class="block text-base text-gold hover:text-gold-dark hover:underline transition-colors">{{ $contact->phone }}</a>
                                 </div>
                                 <div>
                                     <span class="block text-sm font-medium text-gray-500">Opt-in Novidades</span>
                                     <span
-                                        class="block text-base {{ $contact->opt_in ? 'text-[#D0AE6D] font-bold' : 'text-gray-500' }}">
+                                        class="block text-base {{ $contact->opt_in ? 'text-gold font-bold' : 'text-gray-500' }}">
                                         {{ $contact->opt_in ? 'Sim' : 'Não' }}
                                     </span>
                                 </div>
@@ -123,13 +123,13 @@
                                                 $statusClass = [
                                                     'Cliente Potencial' => 'text-[#2892D7] bg-[#2892D7]/05 border-[#2892D7]',
                                                     'Contactado' => 'text-[#00c49a] bg-[#00c49a]/05 border-[#00c49a]',
-                                                    'Proposta Enviada' => 'text-[#D0AE6D] bg-[#D0AE6D]/05 border-[#D0AE6D]',
-                                                    'Negociação' => 'text-[#D0AE6D] bg-[#D0AE6D]/05 border-[#D0AE6D]',
+                                                    'Proposta Enviada' => 'text-gold bg-gold-light border-gold',
+                                                    'Negociação' => 'text-gold bg-gold-light border-gold',
                                                     'Stand By' => 'text-[#6b7280] bg-[#6b7280]/05 border-[#6b7280]',
                                                 ][$contact->status] ?? 'text-gray-500 bg-gray-50 border-gray-300';
                                             @endphp
                                             <select name="status" id="status" onchange="this.form.submit()"
-                                                class="w-full rounded-md border text-xs font-bold tracking-wider uppercase shadow-sm focus:border-[#D0AE6D] focus:ring-[#D0AE6D] appearance-none py-2 px-3 {{ $statusClass }}">
+                                                class="w-full rounded-md border text-xs font-bold tracking-wider uppercase shadow-sm focus:border-gold focus:ring-gold appearance-none py-2 px-3 {{ $statusClass }}">
                                                 <option value="Cliente Potencial" {{ $contact->status === 'Cliente Potencial' ? 'selected' : '' }}>Cliente Potencial</option>
                                                 <option value="Contactado" {{ $contact->status === 'Contactado' ? 'selected' : '' }}>Contactado</option>
                                                 <option value="Proposta Enviada" {{ $contact->status === 'Proposta Enviada' ? 'selected' : '' }}>Proposta Enviada</option>
@@ -147,7 +147,7 @@
                                         <label for="user_id" class="block text-sm font-medium text-gray-500 mb-1">Dono
                                             (Responsável)</label>
                                         <select name="user_id" id="user_id" onchange="this.form.submit()"
-                                            class="w-full rounded-md border-gray-300 shadow-sm focus:border-[#D0AE6D] focus:ring-[#D0AE6D]">
+                                            class="w-full rounded-md border-gray-300 shadow-sm focus:border-gold focus:ring-gold">
                                             <option value="">-- Não atribuído --</option>
                                             @foreach($users as $user)
                                                 <option value="{{ $user->id }}" {{ $contact->user_id == $user->id ? 'selected' : '' }}>
@@ -198,7 +198,7 @@
                                         <textarea name="note" id="note" rows="3" required maxlength="500"
                                             x-model="noteText"
                                             @focus="noteFocused = true"
-                                            class="w-full rounded-md border-gray-300 shadow-sm focus:border-[#D0AE6D] focus:ring-[#D0AE6D]"
+                                            class="w-full rounded-md border-gray-300 shadow-sm focus:border-gold focus:ring-gold"
                                             placeholder="Adicione observações sobre reuniões, negociações ou interesses relativas a este lead..."></textarea>
                                     </div>
                                     <div class="flex justify-between items-center" x-show="noteFocused || noteText.trim() !== ''" x-cloak style="display: none;"
@@ -207,7 +207,7 @@
                                         x-transition:enter-end="opacity-100 transform translate-y-0">
                                         <span class="text-xs" :class="noteText.length >= 500 ? 'font-medium text-[#FF5666]' : 'text-gray-500'" x-text="(500 - noteText.length) + ' caracteres restantes.'"></span>
                                         <button type="submit"
-                                            class="bg-[#D0AE6D] text-white font-medium py-2 px-4 rounded-md hover:bg-[#b89555] transition-colors">
+                                            class="bg-gold text-white font-medium py-2 px-4 rounded-md hover:bg-gold-dark transition-colors">
                                             Adicionar Nota
                                         </button>
                                     </div>
@@ -234,8 +234,8 @@
                                 $statusColors = [
                                     'Cliente Potencial' => 'text-[#2892D7] border-[#2892D7] bg-[#2892D7]/05',
                                     'Contactado' => 'text-[#00c49a] border-[#00c49a] bg-[#00c49a]/05',
-                                    'Proposta Enviada' => 'text-[#D0AE6D] border-[#D0AE6D] bg-[#D0AE6D]/05',
-                                    'Negociação' => 'text-[#D0AE6D] border-[#D0AE6D] bg-[#D0AE6D]/05',
+                                    'Proposta Enviada' => 'text-gold border-gold bg-gold-light',
+                                    'Negociação' => 'text-gold border-gold bg-gold-light',
                                     'Stand By' => 'text-[#6b7280] border-[#6b7280] bg-[#6b7280]/05',
                                 ];
                                 $dateStr = '';
@@ -259,16 +259,16 @@
                             <div class="relative pl-14">
                                 <!-- Dot Marker -->
                                 <div class="absolute left-4 w-4 h-4 rounded-full border-4 border-white z-10 shadow-sm
-                                    {{ $isNote ? 'top-2 md:top-3 bg-[#D0AE6D]' : 'top-1.5 bg-gray-300' }}"></div>
+                                    {{ $isNote ? 'top-2 md:top-3 bg-gold' : 'top-1.5 bg-gray-300' }}"></div>
 
                                 @if($isNote)
                                     <!-- Note Card -->
                                     <div x-data="{ editing: false, note: @js($item) }"
-                                        class="bg-[#fdf8ed] border border-[#eaddc5] rounded-lg p-5 transition-all relative group shadow-sm {{ $item->is_pinned ? 'ring-2 ring-[#D0AE6D]' : '' }}">
+                                        class="bg-[#fdf8ed] border border-[#eaddc5] rounded-lg p-5 transition-all relative group shadow-sm {{ $item->is_pinned ? 'ring-2 ring-gold' : '' }}">
                                         
                                         @if($item->is_pinned)
                                             <div class="absolute -top-3 -right-3 bg-white rounded-full p-1.5 shadow-sm border border-gray-100" title="Fixado no topo">
-                                                <ion-icon name="pin" class="text-[#D0AE6D] text-lg block"></ion-icon>
+                                                <ion-icon name="pin" class="text-gold text-lg block"></ion-icon>
                                             </div>
                                         @endif
 
@@ -334,13 +334,13 @@
                                                 @csrf
                                                 @method('PATCH')
                                                 <textarea name="note" rows="3" required
-                                                    class="w-full rounded-md border-[#eaddc5] shadow-sm focus:border-[#D0AE6D] focus:ring-[#D0AE6D] mb-3 text-sm bg-white"
+                                                    class="w-full rounded-md border-[#eaddc5] shadow-sm focus:border-gold focus:ring-gold mb-3 text-sm bg-white"
                                                     x-model="note.note"></textarea>
                                                 <div class="flex justify-end gap-3 items-center">
                                                     <button type="button" @click="editing = false"
                                                         class="text-sm text-gray-500 hover:text-gray-700 font-medium transition-colors">Cancelar</button>
                                                     <button type="submit"
-                                                        class="bg-[#D0AE6D] text-white text-sm font-medium py-1.5 px-4 rounded-md hover:bg-[#b89555] transition-colors shadow-sm">Salvar Alteração</button>
+                                                        class="bg-gold text-white text-sm font-medium py-1.5 px-4 rounded-md hover:bg-gold-dark transition-colors shadow-sm">Salvar Alteração</button>
                                                 </div>
                                             </form>
                                         </div>
@@ -354,7 +354,7 @@
                                                     Etapa : <strong>{{ ucfirst($item->new_value) }}</strong>
                                                 @else
                                                     Etapa : <strong>{{ ucfirst($item->old_value) }}</strong> 
-                                                    <ion-icon name="arrow-forward-outline" class="align-middle text-[#D0AE6D] mx-0.5"></ion-icon> 
+                                                    <ion-icon name="arrow-forward-outline" class="align-middle text-gold mx-0.5"></ion-icon> 
                                                     <strong>{{ ucfirst($item->new_value) }}</strong>
                                                 @endif
                                             @elseif($item->type === 'owner_change')
@@ -362,7 +362,7 @@
                                                     Proprietário : <strong>{{ \App\Models\User::find($item->new_value)?->name ?? 'Não atribuído' }}</strong>
                                                 @else
                                                     Proprietário : <strong>{{ \App\Models\User::find($item->old_value)?->name ?? 'Não atribuído' }}</strong> 
-                                                    <ion-icon name="arrow-forward-outline" class="align-middle text-[#D0AE6D] mx-0.5"></ion-icon> 
+                                                    <ion-icon name="arrow-forward-outline" class="align-middle text-gold mx-0.5"></ion-icon> 
                                                     <strong>{{ \App\Models\User::find($item->new_value)?->name ?? 'Não atribuído' }}</strong>
                                                 @endif
                                             @endif
@@ -402,7 +402,7 @@
                             <div class="absolute left-4 top-1.5 w-4 h-4 rounded-full border-4 border-white bg-gray-300 z-10 shadow-sm"></div>
                             <div class="pt-1 flex flex-col md:flex-row md:items-center gap-1 md:gap-3 text-sm">
                                 <div class="text-gray-600 font-medium flex items-center gap-2">
-                                    <ion-icon name="flag-outline" class="text-[#D0AE6D] text-lg"></ion-icon> Início do Histórico
+                                    <ion-icon name="flag-outline" class="text-gold text-lg"></ion-icon> Início do Histórico
                                 </div>
                                 <div class="flex items-center gap-1.5 text-xs text-gray-400">
                                     <span class="hidden md:inline">&middot;</span>
@@ -447,8 +447,8 @@
                 <!-- Title & Icon -->
                 <div class="flex items-center gap-4">
                     <div class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full"
-                        style="background-color: #fdf8ed;">
-                        <ion-icon name="pencil-outline" class="text-2xl" style="color: #D0AE6D;"></ion-icon>
+                        class="bg-gold-light">
+                        <ion-icon name="pencil-outline" class="text-2xl" class="text-gold"></ion-icon>
                     </div>
                     <h3 class="text-xl font-semibold leading-6 text-gray-900 text-left" id="modal-title">
                         Editar Lead
@@ -472,14 +472,14 @@
                 <div>
                     <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Nome</label>
                     <input type="text" name="name" id="name" required value="{{ $contact->name }}"
-                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-[#D0AE6D] focus:ring-[#D0AE6D] sm:text-sm px-4 py-2">
+                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-gold focus:ring-gold sm:text-sm px-4 py-2">
                 </div>
 
                 <!-- Empresa Vinculada (Sistema) -->
                 <div>
                     <label for="empresa_id" class="block text-sm font-medium text-gray-700 mb-1">Empresa Vinculada no Sistema</label>
                     <select name="empresa_id" id="empresa_id"
-                        class="w-full rounded-md border-gray-300 shadow-sm focus:border-[#D0AE6D] focus:ring-[#D0AE6D] sm:text-sm px-4 py-2">
+                        class="w-full rounded-md border-gray-300 shadow-sm focus:border-gold focus:ring-gold sm:text-sm px-4 py-2">
                         <option value="">-- Nenhuma / Avulso --</option>
                         @foreach(\App\Models\Empresa::orderBy('nome_fantasia')->get() as $emp)
                             <option value="{{ $emp->id }}" {{ $contact->empresa_id == $emp->id ? 'selected' : '' }}>
@@ -493,14 +493,14 @@
                 <div>
                     <label for="company" class="block text-sm font-medium text-gray-700 mb-1">Nome da Empresa (Texto Original do Lead)</label>
                     <input type="text" name="company" id="company" value="{{ $contact->company }}"
-                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-[#D0AE6D] focus:ring-[#D0AE6D] sm:text-sm px-4 py-2">
+                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-gold focus:ring-gold sm:text-sm px-4 py-2">
                 </div>
 
                 <!-- Email -->
                 <div>
                     <label for="email" class="block text-sm font-medium text-gray-700 mb-1">E-mail</label>
                     <input type="email" name="email" id="email" value="{{ $contact->email }}"
-                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-[#D0AE6D] focus:ring-[#D0AE6D] sm:text-sm px-4 py-2">
+                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-gold focus:ring-gold sm:text-sm px-4 py-2">
                 </div>
 
                 <!-- Telefone/WhatsApp -->
@@ -517,20 +517,20 @@
                 }" x-init="formatPhone">
                     <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Telefone / WhatsApp</label>
                     <input type="text" name="phone" id="phone" x-model="phone" @input="formatPhone" maxlength="15"
-                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-[#D0AE6D] focus:ring-[#D0AE6D] sm:text-sm px-4 py-2">
+                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-gold focus:ring-gold sm:text-sm px-4 py-2">
                 </div>
 
                 <!-- Mensagem -->
                 <div>
                     <label for="message" class="block text-sm font-medium text-gray-700 mb-1">Observação Inicial / Detalhes</label>
                     <textarea name="message" id="message" rows="3"
-                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-[#D0AE6D] focus:ring-[#D0AE6D] sm:text-sm px-4 py-2">{{ $contact->message }}</textarea>
+                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-gold focus:ring-gold sm:text-sm px-4 py-2">{{ $contact->message }}</textarea>
                 </div>
 
                 <!-- Opt-in -->
                 <div class="flex items-center">
                     <input id="opt_in" name="opt_in" type="checkbox" value="1" {{ $contact->opt_in ? 'checked' : '' }}
-                        class="h-4 w-4 rounded border-gray-300 text-[#D0AE6D] focus:ring-[#D0AE6D]">
+                        class="h-4 w-4 rounded border-gray-300 text-gold focus:ring-gold">
                     <label for="opt_in" class="ml-2 block text-sm text-gray-900">
                         Aceita receber novidades (Opt-in)
                     </label>
@@ -541,7 +541,7 @@
                     <button type="button" x-on:click="$dispatch('close')"
                         class="text-sm font-medium text-gray-500 hover:text-gray-700 transition-colors">Cancelar</button>
                     <button type="submit" form="edit-lead-form"
-                        class="px-4 py-2 text-white font-medium rounded-md shadow-sm transition-colors inline-flex items-center justify-center bg-[#D0AE6D] hover:bg-[#b89555]">
+                        class="px-4 py-2 text-white font-medium rounded-md shadow-sm transition-colors inline-flex items-center justify-center bg-gold hover:bg-gold-dark">
                         Salvar Alterações
                     </button>
                 </div>
@@ -580,8 +580,8 @@
         <div class="px-6 py-6 sm:p-8">
             <div class="flex items-center justify-between mb-6">
                 <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-full flex items-center justify-center" style="background-color: #fdf8ed;">
-                        <ion-icon name="link-outline" style="color: #D0AE6D; font-size: 1.25rem;"></ion-icon>
+                    <div class="w-10 h-10 rounded-full flex items-center justify-center" class="bg-gold-light">
+                        <ion-icon name="link-outline" class="text-gold" style="font-size: 1.25rem;"></ion-icon>
                     </div>
                     <h3 class="text-lg font-bold text-gray-900 text-left">Gerar Link de Diagnóstico</h3>
                 </div>
@@ -635,7 +635,7 @@
                         class="block flex-1 text-sm text-gray-800 bg-white border border-gray-200 rounded-lg px-3 py-2">
                     <button id="diag-btn-copiar"
                         class="px-3 py-2 rounded-lg text-white text-sm font-medium"
-                        style="background-color: #D0AE6D;">
+                        class="bg-gold">
                         Copiar
                     </button>
                 </div>
@@ -644,7 +644,7 @@
 
             <div class="flex gap-3">
                 <button id="diag-btn-gerar" class="flex-1 py-3 text-white font-semibold rounded-xl transition-all"
-                    style="background-color: #D0AE6D;">
+                    class="bg-gold">
                     Gerar Link
                 </button>
                 <button type="button" x-on:click="$dispatch('close')" class="flex-1 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold rounded-xl transition-all">

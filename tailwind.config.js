@@ -1,4 +1,4 @@
-) import defaultTheme from 'tailwindcss/defaultTheme';
+import defaultTheme from 'tailwindcss/defaultTheme';
 import forms from '@tailwindcss/forms';
 
 /** @type {import('tailwindcss').Config} */
@@ -14,13 +14,14 @@ export default {
         extend: {
             fontFamily: {
                 sans: ['DM Sans', ...defaultTheme.fontFamily.sans],
-                outfit: ['DM Sans', 'sans-serif'], // Forced override
-                cormorant: ['DM Sans', 'sans-serif'], // Forced override
             },
             colors: {
-                gold: '#c9a66b',
-                dark: '#0e0e0e',
-                black: '#000000',
+                gold: {
+                    DEFAULT: '#D0AE6D',
+                    light:   '#fdf8ed',
+                    dark:    '#b5955a',
+                },
+                dark: '#111827',
             },
         },
     },

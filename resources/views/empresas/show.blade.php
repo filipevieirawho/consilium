@@ -9,7 +9,7 @@
             </div>
             <a href="{{ route('empresas.edit', $empresa) }}"
                class="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-semibold text-white rounded-lg"
-               style="background-color: #D0AE6D;">
+               class="bg-gold">
                 <ion-icon name="create-outline"></ion-icon> Editar
             </a>
         </div>

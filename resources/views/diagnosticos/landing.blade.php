@@ -1,8 +1,8 @@
 <x-diagnosticos.layout>
     <div class="text-center py-16 px-4">
         <!-- Icon -->
-        <div class="inline-flex items-center justify-center w-20 h-20 rounded-full mb-6" style="background-color: #fdf8ed;">
-            <ion-icon name="bar-chart-outline" style="color: #D0AE6D; font-size: 2.5rem;"></ion-icon>
+        <div class="inline-flex items-center justify-center w-20 h-20 rounded-full mb-6 bg-gold-light">
+            <ion-icon name="bar-chart-outline" class="text-gold" style="font-size: 2.5rem;"></ion-icon>
         </div>
 
         <!-- Title -->
@@ -13,7 +13,7 @@
         </h1>
 
         <!-- Separator -->
-        <div class="w-16 h-1 rounded-full mx-auto mb-6" style="background-color: #D0AE6D;"></div>
+        <div class="w-16 h-1 rounded-full mx-auto mb-6 bg-gold"></div>
 
         <!-- Subtitle/Description -->
         <p class="text-gray-600 text-lg max-w-lg mx-auto mb-2 leading-relaxed">
@@ -52,7 +52,7 @@
         <!-- CTA -->
         <a href="{{ route('diagnostico.form', $token) }}"
             class="inline-flex items-center gap-2 px-8 py-4 text-white font-semibold rounded-xl shadow-lg transition-all hover:shadow-xl hover:scale-105"
-            style="background-color: #D0AE6D;">
+            class="bg-gold hover:bg-gold-dark">
             Iniciar Check-up
             <ion-icon name="arrow-forward-outline" class="text-xl"></ion-icon>
         </a>

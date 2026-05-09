@@ -1,8 +1,8 @@
 <x-diagnosticos.layout :progressPct="10" progressLabel="Etapa 2 de 4 — Instruções">
-    <div class="bg-white sm:rounded-lg shadow-sm border border-gray-100" style="padding: 35px;">
+    <div class="bg-white sm:rounded-lg shadow-sm border border-gray-100 p-9">
         <!-- Header -->
         <div class="mb-8">
-            <span class="text-xs font-semibold uppercase tracking-wider px-2 py-1 rounded-md" style="background-color: #fdf8ed; color: #D0AE6D;">Instruções</span>
+            <span class="text-xs font-semibold uppercase tracking-wider px-2 py-1 rounded-md bg-gold-light text-gold">Instruções</span>
             <h2 class="text-xl font-bold text-gray-900 mt-3">Como responder</h2>
             <p class="text-sm text-gray-500 mt-1">Para cada pergunta, selecione a opção que melhor representa a <strong>realidade atual</strong> do empreendimento.</p>
         </div>
@@ -45,8 +45,7 @@
                 ← Voltar
             </a>
             <a href="{{ route('diagnostico.pergunta', [$token, 1]) }}"
-                class="inline-flex items-center gap-2 px-6 py-3 text-white font-semibold rounded-xl transition-all hover:shadow-md"
-                style="background-color: #D0AE6D;">
+                class="inline-flex items-center gap-2 px-6 py-3 text-white font-semibold rounded-xl transition-all hover:shadow-md bg-gold hover:bg-gold-dark">
                 Entendi, vamos começar →
             </a>
         </div>

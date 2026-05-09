@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <div class="flex items-center gap-3 h-10">
-            <div class="flex items-center justify-center w-8 h-8 text-[#D0AE6D]">
+            <div class="flex items-center justify-center w-8 h-8 text-gold">
                 <ion-icon name="analytics-outline" class="text-2xl"></ion-icon>
             </div>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -29,9 +29,9 @@
                         <form method="GET" action="{{ route('diagnosticos.index') }}" class="flex gap-3 flex-wrap flex-grow">
                             <input type="text" name="search" placeholder="Buscar por nome, empresa ou empreendimento..."
                                 value="{{ request('search') }}"
-                                class="w-full md:w-80 rounded-md border-gray-300 shadow-sm focus:border-[#D0AE6D] focus:ring-[#D0AE6D] px-4 py-2 text-sm">
+                                class="w-full md:w-80 rounded-md border-gray-300 shadow-sm focus:border-gold focus:ring-gold px-4 py-2 text-sm">
                             <select name="status" onchange="this.form.submit()"
-                                class="rounded-md border-gray-300 shadow-sm focus:border-[#D0AE6D] focus:ring-[#D0AE6D] pl-3 pr-8 py-2 text-sm">
+                                class="rounded-md border-gray-300 shadow-sm focus:border-gold focus:ring-gold pl-3 pr-8 py-2 text-sm">
                                 <option value="">Todos os status</option>
                                 <option value="em_andamento" {{ request('status') == 'em_andamento' ? 'selected' : '' }}>Em andamento</option>
                                 <option value="concluido" {{ request('status') == 'concluido' ? 'selected' : '' }}>Concluído</option>
@@ -52,7 +52,7 @@
                             </button>
                             <button id="btn-gerar-link"
                                 class="px-4 py-2 text-white font-medium rounded-md shadow-sm transition-colors flex items-center gap-2 text-sm"
-                                style="background-color: #D0AE6D;">
+                                class="bg-gold">
                                 <ion-icon name="add-outline" class="text-xl"></ion-icon> Gerar Diagnóstico
                             </button>
                         </div>
@@ -115,7 +115,7 @@
                                     <td class="px-4 py-4 whitespace-nowrap">
                                         @if($d->contact)
                                         <a href="{{ route('contacts.show', $d->contact) }}" onclick="event.stopPropagation()"
-                                            class="text-xs text-[#D0AE6D] hover:underline">{{ $d->contact->name }}</a>
+                                            class="text-xs text-gold hover:underline">{{ $d->contact->name }}</a>
                                         @else
                                         <span class="text-xs text-gray-400">Avulso</span>
                                         @endif
@@ -167,8 +167,8 @@
         <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md p-8">
             <div class="flex items-center justify-between mb-6">
                 <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-full flex items-center justify-center" style="background-color: #fdf8ed;">
-                        <ion-icon name="link-outline" style="color: #D0AE6D; font-size: 1.25rem;"></ion-icon>
+                    <div class="w-10 h-10 rounded-full flex items-center justify-center bg-gold-light">
+                        <ion-icon name="link-outline" class="text-gold" style="font-size: 1.25rem;"></ion-icon>
                     </div>
                     <h3 class="text-lg font-bold text-gray-900">Gerar Link de Diagnóstico</h3>
                 </div>
@@ -242,7 +242,7 @@
                         class="block flex-1 text-sm text-gray-800 bg-white border border-gray-200 rounded-lg px-3 py-2">
                     <button id="btn-copiar"
                         class="px-3 py-2 rounded-lg text-white text-sm font-medium"
-                        style="background-color: #D0AE6D;">
+                        class="bg-gold">
                         Copiar
                     </button>
                 </div>
@@ -251,7 +251,7 @@
 
             <div class="flex gap-3">
                 <button id="btn-gerar" class="flex-1 py-3 text-white font-semibold rounded-xl transition-all"
-                    style="background-color: #D0AE6D;">
+                    class="bg-gold">
                     Gerar Link
                 </button>
                 <button id="btn-cancelar" class="flex-1 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold rounded-xl transition-all">
@@ -266,8 +266,8 @@
         <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md p-8">
             <div class="flex items-center justify-between mb-6">
                 <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-full flex items-center justify-center" style="background-color: #fdf8ed;">
-                        <ion-icon name="flash-outline" style="color: #D0AE6D; font-size: 1.25rem;"></ion-icon>
+                    <div class="w-10 h-10 rounded-full flex items-center justify-center bg-gold-light">
+                        <ion-icon name="flash-outline" class="text-gold" style="font-size: 1.25rem;"></ion-icon>
                     </div>
                     <h3 class="text-lg font-bold text-gray-900">Link de Campanha</h3>
                 </div>
@@ -306,7 +306,7 @@
                         class="block flex-1 text-sm text-gray-800 bg-white border border-gray-200 rounded-lg px-3 py-2">
                     <button id="btn-copiar-campanha-resultado"
                         class="px-3 py-2 rounded-lg text-white text-sm font-medium"
-                        style="background-color: #D0AE6D;">
+                        class="bg-gold">
                         Copiar
                     </button>
                 </div>
@@ -314,7 +314,7 @@
 
             <button id="btn-gerar-link-campanha-action"
                 class="w-full flex justify-center items-center gap-2 py-3 px-4 border border-transparent rounded-xl shadow-sm text-sm font-medium text-white transition-all focus:outline-none"
-                style="background-color: #D0AE6D;">
+                class="bg-gold">
                 Gerar Link de Campanha
             </button>
         </div>
