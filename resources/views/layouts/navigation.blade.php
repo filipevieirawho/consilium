@@ -6,8 +6,8 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
-                        <img src="{{ asset('assets/images/consilium-logo-text.svg') }}" alt="Consilium"
-                            class="block h-5 w-auto" />
+                        <img src="{{ asset('assets/images/logo-header-print.png') }}" alt="Consilium"
+                            class="block h-8 w-auto" />
                     </a>
                 </div>
 
