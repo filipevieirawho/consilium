@@ -61,48 +61,54 @@ $opcaoLabels = [
 
     <style>
         @media print {
+            /* Basic resets */
             header, nav, footer, .no-print, button, a, #vincular-status, .custom-combobox-container {
                 display: none !important;
             }
+            
             body {
                 background: white !important;
                 padding: 0 !important;
                 margin: 0 !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
             }
-            .py-8 {
-                padding-top: 0 !important;
-                padding-bottom: 0 !important;
-            }
-            .max-w-7xl {
-                max-width: 100% !important;
-                padding: 0 !important;
-            }
-            .shadow-sm, .shadow-lg {
-                shadow: none !important;
-                box-shadow: none !important;
-            }
-            .border, .border-2 {
-                border-color: #eee !important;
-            }
-            canvas {
-                max-width: 300px !important;
-                margin: 0 auto;
-            }
+
+            .py-8 { padding: 0 !important; }
+            .max-w-7xl { max-width: 100% !important; padding: 0 !important; }
+            
+            /* Preserve Grid Layout */
             .grid {
-                display: block !important;
+                display: grid !important;
+                gap: 1.5rem !important;
             }
-            .grid-cols-1, .grid-cols-2, .grid-cols-4 {
-                grid-template-columns: 1fr !important;
+            
+            .md\:grid-cols-4 {
+                grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
             }
-            .md\:col-span-1, .md\:col-span-2 {
-                width: 100% !important;
-                margin-bottom: 20px;
+
+            .md\:col-span-1 { grid-column: span 1 / span 1 !important; }
+            .md\:col-span-2 { grid-column: span 2 / span 2 !important; }
+
+            /* Ensure boxes look good */
+            .bg-white { background: white !important; }
+            .shadow-sm { box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important; }
+            
+            /* Radar Chart sizing */
+            canvas {
+                max-width: 100% !important;
+                height: auto !important;
             }
-            .bg-white {
-                background: white !important;
-            }
-            .sm\:rounded-lg {
-                border-radius: 0 !important;
+
+            /* Fix colors for boxes */
+            .bg-red-50 { background-color: #fef2f2 !important; }
+            .bg-yellow-50 { background-color: #fffbeb !important; }
+            .bg-green-50 { background-color: #f0fdf4 !important; }
+            .text-gold-500 { color: #D0AE6D !important; }
+            
+            /* Avoid page breaks inside sections */
+            .bg-white, .questao-row {
+                page-break-inside: avoid !important;
             }
         }
     </style>
