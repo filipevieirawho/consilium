@@ -10,9 +10,7 @@
         </div>
     </x-slot>
 
-    <div class="py-8" x-data="{ 
-        activeTab: new URLSearchParams(window.location.search).get('tab') || 'info' 
-    }">
+    <div class="py-8" x-data="{ activeTab: (new URLSearchParams(window.location.search)).get('tab') || 'info' }">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <form action="{{ route('questionarios.store') }}" method="POST" id="formQuestionario">
                 @csrf
@@ -53,7 +51,7 @@
                                     </div>
 
                                     <div class="space-y-5">
-                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5 pb-10 border-b border-dashed border-gray-100 mb-10">
+                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                                             <div>
                                                 <label class="block text-sm font-medium text-gray-700 mb-1.5">Nome do Modelo</label>
                                                 <input type="text" name="nome" value="{{ old('nome') }}" required
@@ -73,7 +71,7 @@
                                             <label class="block text-sm font-medium text-gray-700 mb-1.5">Título da Página</label>
                                             <input type="text" name="titulo" value="{{ old('titulo') }}"
                                                    placeholder="Ex: Check-up de Consistência da Margem"
-                                                   class="block w-full text-sm font-bold text-gray-800 rounded-lg border-gray-300 focus:border-[#D0AE6D] focus:ring-[#D0AE6D] shadow-sm transition-all px-4 py-2.5">
+                                                   class="block w-full text-sm rounded-lg border-gray-300 focus:border-[#D0AE6D] focus:ring-[#D0AE6D] shadow-sm transition-all px-4 py-2.5">
                                             @error('titulo') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
                                         </div>
 
@@ -119,7 +117,7 @@
                                         </button>
                                     </div>
 
-                                    <div class="bg-[#fdf8ed] border border-[#fdf8ed] p-4 rounded-xl flex items-center gap-3 text-[#D0AE6D] mb-6">
+                                    <div class="bg-[#fdf8ed] border border-[#D0AE6D] p-4 rounded-xl flex items-center gap-3 text-[#D0AE6D] mb-6">
                                         <ion-icon name="bulb-outline" class="text-xl flex-shrink-0"></ion-icon>
                                         <p class="text-sm font-medium leading-relaxed">
                                             Lembre-se que o somatório dos pesos das dimensões deve preferencialmente totalizar 1.00 para uma escala padrão.
