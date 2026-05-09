@@ -92,20 +92,17 @@ $cfg = $faixaConfig[$faixa];
         }
     </style>
 
-    <div class="print-only mb-10 border-b pb-6">
-        <div class="flex items-center justify-between">
-            <div class="flex items-center gap-4">
-                <img src="{{ asset('assets/images/consilium-logo-text.svg') }}" alt="Consilium" class="h-6 w-auto">
-                <div class="h-8 w-px bg-gray-200"></div>
-                <h1 class="text-lg font-bold text-gray-900">
-                    {{ $diagnostico->questionario ? $diagnostico->questionario->titulo : 'Check-up de Consistência da Margem' }}
-                </h1>
-            </div>
+    <div class="print-only mb-12">
+        <div class="flex justify-between items-start mb-6">
+            <img src="{{ asset('assets/images/consilium-logo-text.svg') }}" alt="Consilium" class="h-7 w-auto">
             <div class="text-right">
                 <p class="text-[10px] uppercase tracking-widest text-gray-400 font-bold">Realizado em</p>
-                <p class="text-sm font-bold text-gray-700">{{ $diagnostico->updated_at->format('d/m/Y H:i') }}</p>
+                <p class="text-sm font-bold text-gray-800">{{ $diagnostico->updated_at->format('d/m/Y H:i') }}</p>
             </div>
         </div>
+        <h1 class="text-2xl font-black text-gray-900 uppercase tracking-tighter">
+            {{ $diagnostico->questionario ? $diagnostico->questionario->titulo : 'Check-up de Consistência da Margem' }}
+        </h1>
     </div>
 
     <div class="flex justify-end mb-4 no-print">
