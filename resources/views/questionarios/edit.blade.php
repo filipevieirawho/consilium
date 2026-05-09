@@ -10,7 +10,9 @@
         </div>
     </x-slot>
 
-    <div class="py-8" x-data="{ activeTab: 'info' }">
+    <div class="py-8" x-data="{ 
+        activeTab: new URLSearchParams(window.location.search).get('tab') || 'info' 
+    }">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <form action="{{ route('questionarios.update', $questionario) }}" method="POST" id="formQuestionario">
                 @csrf @method('PUT')

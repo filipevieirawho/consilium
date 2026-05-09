@@ -8,6 +8,7 @@
                 <h2 class="font-semibold text-xl text-gray-800 leading-tight">{{ $questionario->nome }}</h2>
             </div>
             <a href="{{ route('questionarios.edit', $questionario) }}"
+               id="edit-questionario-btn"
                class="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-semibold text-white rounded-lg"
                style="background-color: #D0AE6D;">
                 <ion-icon name="create-outline"></ion-icon> Editar
@@ -15,7 +16,30 @@
         </div>
     </x-slot>
 
-    <div class="py-8" x-data="{ activeTab: 'info' }">
+    <div class="py-8" 
+         x-data="{ 
+            activeTab: new URLSearchParams(window.location.search).get('tab') || 'info' 
+         }"
+         x-init="
+            $watch('activeTab', value => {
+                const editBtn = document.getElementById('edit-questionario-btn');
+                if (editBtn) {
+                    const url = new URL(editBtn.href);
+                    url.searchParams.set('tab', value);
+                    editBtn.href = url.toString();
+                }
+                const newUrl = new URL(window.location.href);
+                newUrl.searchParams.set('tab', value);
+                window.history.replaceState({}, '', newUrl.toString());
+            });
+            // Trigger watch on init to set initial edit link
+            const editBtn = document.getElementById('edit-questionario-btn');
+            if (editBtn) {
+                const url = new URL(editBtn.href);
+                url.searchParams.set('tab', activeTab);
+                editBtn.href = url.toString();
+            }
+         ">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             
             <div class="flex flex-col gap-6">
