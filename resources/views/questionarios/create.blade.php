@@ -119,7 +119,7 @@
 
                                     <div class="bg-[#fdf8ed] border border-[#fdf8ed] p-4 rounded-xl flex items-center gap-3 text-[#D0AE6D] mb-6">
                                         <ion-icon name="bulb-outline" class="text-xl flex-shrink-0"></ion-icon>
-                                        <p class="text-xs font-medium leading-relaxed">
+                                        <p class="text-sm font-medium leading-relaxed">
                                             Lembre-se que o somatório dos pesos das dimensões deve preferencialmente totalizar 1.00 para uma escala padrão.
                                         </p>
                                     </div>
