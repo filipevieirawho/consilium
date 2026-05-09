@@ -154,15 +154,14 @@ $opcaoLabels = [
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
 
             <!-- Print Header -->
-            <div class="print-only mb-12">
-                <div class="flex justify-between items-start mb-6">
+            <div class="print-only mb-10">
+                <div class="flex justify-between items-start mb-4">
                     <img src="{{ asset('assets/images/consilium-logo-text.svg') }}" alt="Consilium" class="h-7 w-auto">
                     <div class="text-right">
-                        <p class="text-[10px] uppercase tracking-widest text-gray-400 font-bold">Realizado em</p>
-                        <p class="text-sm font-bold text-gray-800">{{ $diagnostico->updated_at->format('d/m/Y H:i') }}</p>
+                        <p class="text-sm font-bold text-gray-300">{{ $diagnostico->updated_at->format('d/m/Y H:i') }}</p>
                     </div>
                 </div>
-                <h1 class="text-2xl font-black text-gray-900 uppercase tracking-tighter">
+                <h1 class="text-2xl font-black text-gray-900 tracking-tight">
                     {{ $diagnostico->questionario ? $diagnostico->questionario->titulo : 'Check-up de Consistência da Margem' }}
                 </h1>
             </div>
