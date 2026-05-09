@@ -143,18 +143,6 @@ $cfg = $faixaConfig[$faixa];
         </div>
 
         <dl class="grid grid-cols-2 gap-x-6 gap-y-4 text-sm">
-            @if($diagnostico->questionario)
-            <div class="col-span-2">
-                <dt class="text-xs text-gray-400 uppercase tracking-wide">Modelo Aplicado</dt>
-                <dd class="font-bold text-gold mt-0.5">{{ $diagnostico->questionario->titulo }}</dd>
-            </div>
-            @else
-            <div class="col-span-2">
-                <dt class="text-xs text-gray-400 uppercase tracking-wide">Modelo Aplicado</dt>
-                <dd class="font-medium text-gray-400 mt-0.5 italic">Padrão Consilium (18 questões)</dd>
-            </div>
-            @endif
-
             @if($diagnostico->nome_empreendimento)
             <div class="col-span-2">
                 <dt class="text-xs text-gray-400 uppercase tracking-wide">Empreendimento</dt>
