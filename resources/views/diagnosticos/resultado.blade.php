@@ -147,23 +147,24 @@ $cfg = $faixaConfig[$faixa];
     <!-- Top row: IPM & Radar Chart -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
         <!-- IPM Card -->
-        <div class="sm:rounded-lg border-2 p-8 text-center flex flex-col items-center justify-center h-full"
+        <div class="sm:rounded-lg border-2 p-8 text-center flex flex-col items-center justify-start h-full"
              style="background-color: {{ $cfg['bg'] }}; border-color: {{ $cfg['border'] }};">
-            <h3 class="text-xs font-bold uppercase tracking-widest mb-4 w-full" style="color: {{ $cfg['text'] }}; opacity: 0.8;">Previsibilidade de Margem</h3>
-            <div class="flex justify-center mb-4">
-                <div class="w-20 h-20 rounded-full border flex items-center justify-center"
+            <h3 class="text-xs font-bold uppercase tracking-widest mb-8 w-full" style="color: {{ $cfg['text'] }}; opacity: 0.8;">Previsibilidade de Margem</h3>
+            
+            <div class="flex-1 flex flex-col items-center justify-center">
+                <div class="w-20 h-20 rounded-full border-4 flex items-center justify-center mb-6 shadow-sm"
                      style="border-color: {{ $cfg['border'] }}; background: white;">
                     <ion-icon name="{{ $cfg['icon'] }}" style="font-size: 2.5rem; color: {{ $cfg['text'] }};"></ion-icon>
                 </div>
+                <div class="text-6xl font-extrabold mb-1" style="color: {{ $cfg['text'] }};">{{ $ipm }}</div>
+                <div class="text-lg font-bold uppercase tracking-widest mb-2" style="color: {{ $cfg['text'] }};">IPM</div>
+                <div class="text-base font-semibold" style="color: {{ $cfg['text'] }};">{{ $cfg['label'] }}</div>
             </div>
-            <div class="text-6xl font-extrabold mb-1" style="color: {{ $cfg['text'] }};">{{ $ipm }}</div>
-            <div class="text-lg font-bold uppercase tracking-widest mb-2" style="color: {{ $cfg['text'] }};">IPM</div>
-            <div class="text-base font-semibold" style="color: {{ $cfg['text'] }};">{{ $cfg['label'] }}</div>
         </div>
 
         <!-- Radar Chart Card -->
-        <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg border border-gray-100 p-8 flex flex-col items-center justify-center h-full">
-            <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-6 text-center w-full">Desempenho por Dimensão</h3>
+        <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg border border-gray-100 p-8 flex flex-col items-center justify-start h-full">
+            <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-8 text-center w-full">Desempenho por Dimensão</h3>
             <div class="w-full relative flex-1 flex items-center justify-center" style="max-height: 250px; aspect-ratio: 1;">
                 <canvas id="radarChart"></canvas>
             </div>

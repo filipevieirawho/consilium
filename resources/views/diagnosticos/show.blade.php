@@ -196,16 +196,18 @@ $opcaoLabels = [
                 <!-- IPM Score -->
                 <div class="md:col-span-1 ipm-block">
                     @if($resultado)
-                    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg border-2 p-6 text-center h-full flex flex-col items-center justify-center"
+                    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg border-2 p-6 text-center h-full flex flex-col items-center justify-start"
                          style="border-color: {{ $cfg['border'] }};">
-                         <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-4 text-center w-full">Previsibilidade de Margem</h3>
-                         <div class="w-16 h-16 rounded-full border flex items-center justify-center mb-4 mx-auto"
-                              style="border-color: {{ $cfg['border'] }}; background: {{ $cfg['bg'] }};">
-                             <ion-icon name="{{ $cfg['bg'] == '#fef2f2' ? 'alert-circle-outline' : ($cfg['bg'] == '#fffbeb' ? 'warning-outline' : 'checkmark-circle-outline') }}" style="font-size: 2rem; color: {{ $cfg['text'] }};"></ion-icon>
+                         <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-8 text-center w-full">Previsibilidade de Margem</h3>
+                         <div class="flex-1 flex flex-col items-center justify-center">
+                             <div class="w-16 h-16 rounded-full border flex items-center justify-center mb-4 mx-auto"
+                                  style="border-color: {{ $cfg['border'] }}; background: {{ $cfg['bg'] }};">
+                                 <ion-icon name="{{ $cfg['bg'] == '#fef2f2' ? 'alert-circle-outline' : ($cfg['bg'] == '#fffbeb' ? 'warning-outline' : 'checkmark-circle-outline') }}" style="font-size: 2rem; color: {{ $cfg['text'] }};"></ion-icon>
+                             </div>
+                            <div class="text-5xl font-extrabold mb-1" style="color: {{ $cfg['text'] }};">{{ $ipm }}</div>
+                            <div class="text-sm font-bold uppercase tracking-widest mb-1" style="color: {{ $cfg['text'] }};">IPM</div>
+                            <div class="text-xs font-semibold px-3 py-1 rounded-full mt-2" style="background-color: {{ $cfg['bg'] }}; color: {{ $cfg['text'] }};">{{ $cfg['label'] }}</div>
                          </div>
-                        <div class="text-5xl font-extrabold mb-1" style="color: {{ $cfg['text'] }};">{{ $ipm }}</div>
-                        <div class="text-sm font-bold uppercase tracking-widest mb-1" style="color: {{ $cfg['text'] }};">IPM</div>
-                        <div class="text-xs font-semibold px-3 py-1 rounded-full mt-2" style="background-color: {{ $cfg['bg'] }}; color: {{ $cfg['text'] }};">{{ $cfg['label'] }}</div>
                     </div>
                     @else
                     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg border border-gray-200 p-6 text-center h-full flex flex-col items-center justify-center">
@@ -219,9 +221,9 @@ $opcaoLabels = [
                 <!-- Radar Chart -->
                 <div class="md:col-span-1 radar-block">
                     @if($resultado)
-                    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg border border-gray-100 p-6 h-full flex flex-col items-center justify-center">
-                        <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-4 text-center">Desempenho por Dimensão</h3>
-                        <div class="w-full relative" style="max-width: 200px; aspect-ratio: 1;">
+                    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg border border-gray-100 p-6 h-full flex flex-col items-center justify-start">
+                        <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-8 text-center w-full">Desempenho por Dimensão</h3>
+                        <div class="w-full relative flex-1 flex items-center justify-center" style="max-width: 200px; aspect-ratio: 1;">
                             <canvas id="radarChart"></canvas>
                         </div>
                     </div>
