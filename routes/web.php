@@ -8,6 +8,11 @@ use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\QuestionarioController;
 use Illuminate\Support\Facades\Route;
 
+Route::resourceVerbs([
+    'create' => 'criar',
+    'edit' => 'editar',
+]);
+
 Route::get('/', function () {
     return view('welcome');
 });
