@@ -151,7 +151,7 @@ $opcaoLabels = [
     </style>
 
     <!-- Print Header -->
-    <div class="print-only mb-12 max-w-7xl mx-auto sm:px-6 lg:px-8 pt-8">
+    <div class="print-only mb-8 max-w-7xl mx-auto sm:px-6 lg:px-8 pt-8 border-b-4 pb-6" style="border-bottom-color: #D0AE6D;">
         <div class="flex justify-between items-start mb-4">
             <img src="{{ asset('assets/images/consilium-logo-text.svg') }}" alt="Consilium" class="h-5 w-auto">
             <div class="text-right">
@@ -216,7 +216,7 @@ $opcaoLabels = [
                 </div>
 
                 <!-- Data summary -->
-                <div class="md:col-span-2 bg-white shadow-sm sm:rounded-lg border-t-4 border-l border-r border-b border-gray-100 p-6 relative summary-block" style="border-top-color: #D0AE6D;">
+                <div class="md:col-span-2 bg-white shadow-sm sm:rounded-lg border border-gray-100 p-6 relative summary-block">
                     <div class="flex items-center justify-between mb-5">
                         <h3 class="font-semibold text-gray-900">Resumo de Informações</h3>
                         @if($diagnostico->status === 'concluido')
