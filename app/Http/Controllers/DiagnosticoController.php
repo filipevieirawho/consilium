@@ -20,6 +20,9 @@ class DiagnosticoController extends Controller
     /**
      * Start a fresh generic diagnostic (Campaign Link)
      * GET /diagnostico/novo
+     *
+     * No DB record is created here — we only persist once the respondent
+     * submits the first form step ("Sobre você").
      */
     public function startNovo(Request $request)
     {
@@ -29,11 +32,9 @@ class DiagnosticoController extends Controller
 
         $token = Str::random(32);
 
-        Diagnostico::create([
-            'token' => $token,
-            'status' => 'em_andamento',
+        session(["pending_diagnostico.$token" => [
             'questionario_id' => $request->query('q'),
-        ]);
+        ]]);
 
         return redirect()->route('diagnostico.landing', $token);
     }
@@ -44,9 +45,11 @@ class DiagnosticoController extends Controller
      */
     public function landing(string $token)
     {
-        $diagnostico = Diagnostico::with('questionario')->where('token', $token)->firstOrFail();
+        $diagnostico = Diagnostico::with('questionario')->where('token', $token)->first();
 
-        if ($diagnostico->status === 'concluido') {
+        if (!$diagnostico) {
+            $diagnostico = $this->pendingDiagnostico($token);
+        } elseif ($diagnostico->status === 'concluido') {
             return redirect()->route('diagnostico.result', $token);
         }
 
@@ -59,9 +62,11 @@ class DiagnosticoController extends Controller
      */
     public function showForm(string $token)
     {
-        $diagnostico = Diagnostico::where('token', $token)->firstOrFail();
+        $diagnostico = Diagnostico::where('token', $token)->first();
 
-        if ($diagnostico->status === 'concluido') {
+        if (!$diagnostico) {
+            $diagnostico = $this->pendingDiagnostico($token);
+        } elseif ($diagnostico->status === 'concluido') {
             return redirect()->route('diagnostico.result', $token);
         }
 
@@ -73,7 +78,21 @@ class DiagnosticoController extends Controller
      */
     public function saveForm(Request $request, string $token)
     {
-        $diagnostico = Diagnostico::where('token', $token)->firstOrFail();
+        $diagnostico = Diagnostico::where('token', $token)->first();
+
+        // First form submission for a campaign link — create the record now
+        if (!$diagnostico) {
+            $pending = session("pending_diagnostico.$token");
+            abort_if(!$pending, 404);
+
+            $diagnostico = Diagnostico::create([
+                'token'           => $token,
+                'status'          => 'em_andamento',
+                'questionario_id' => $pending['questionario_id'] ?? null,
+            ]);
+
+            session()->forget("pending_diagnostico.$token");
+        }
 
         $validated = $request->validate([
             'nome'     => 'required|string|max:255',
@@ -557,6 +576,38 @@ class DiagnosticoController extends Controller
         }
 
         return redirect()->away($url);
+    }
+
+    // ─── Helpers ──────────────────────────────────────────────────────────
+
+    /**
+     * Build a lightweight anonymous object for views when the campaign token
+     * exists in session but hasn't been persisted to the DB yet.
+     */
+    protected function pendingDiagnostico(string $token): object
+    {
+        $pending = session("pending_diagnostico.$token");
+        abort_if(!$pending, 404);
+
+        $questionario = isset($pending['questionario_id'])
+            ? Questionario::with('questoes')->find($pending['questionario_id'])
+            : null;
+
+        return (object) [
+            'titulo'              => null,
+            'subtitulo'           => null,
+            'descricao'           => null,
+            'nome'                => null,
+            'cargo'               => null,
+            'empresa'             => null,
+            'email'               => null,
+            'telefone'            => null,
+            'nome_empreendimento' => null,
+            'status'              => 'em_andamento',
+            'aceite'              => false,
+            'questionario_id'     => $pending['questionario_id'] ?? null,
+            'questionario'        => $questionario,
+        ];
     }
 
     // ─── Data ─────────────────────────────────────────────────────────────
