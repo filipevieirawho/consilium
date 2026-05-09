@@ -195,7 +195,7 @@ $opcaoLabels = [
     </style>
 
     <!-- Print Header -->
-    <div class="print-only print-header pt-10">
+    <div class="print-only print-header pt-3">
         <div class="flex justify-between items-start mb-4">
             <img src="{{ asset('assets/images/logo-header-print.png') }}" alt="Consilium" class="h-10 w-auto">
             <div class="text-right">
