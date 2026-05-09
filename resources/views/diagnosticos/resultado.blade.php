@@ -25,6 +25,13 @@ $cfg = $faixaConfig[$faixa];
             .print-only, .print-footer {
                 display: block !important;
             }
+            .print-header {
+                border-bottom: 4px solid #D0AE6D !important;
+                padding-bottom: 1.5rem !important;
+                margin-bottom: 2rem !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
             .print-footer {
                 margin-top: 3rem;
                 padding-top: 1.5rem;
@@ -89,7 +96,7 @@ $cfg = $faixaConfig[$faixa];
         }
     </style>
 
-    <div class="print-only mb-8 border-b-4 pb-6" style="border-bottom-color: #D0AE6D;">
+    <div class="print-only print-header mb-8">
         <div class="flex justify-between items-start mb-4">
             <img src="{{ asset('assets/images/consilium-logo-text.svg') }}" alt="Consilium" class="h-5 w-auto">
             <div class="text-right">
