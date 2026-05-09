@@ -78,16 +78,16 @@ $opcaoLabels = [
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
             }
-            /* Standardize vertical gaps for PDF */
+            /* Standardize external vertical and horizontal gaps for PDF */
             .bg-white, .grid, .mb-6, .mb-8, .mb-12, .summary-block, .ipm-radar-grid { 
                 margin-bottom: 1.5rem !important;
                 padding: 1rem !important; 
             }
             
-            /* Reset internal grid gap */
-            .grid { gap: 1rem !important; }
+            /* Reset internal grid gap to match external vertical margin */
+            .grid { gap: 1.5rem !important; }
             dl.grid { gap: 0.5rem 1.5rem !important; }
-            h3 { margin-bottom: 0.75rem !important; }
+            h3 { margin-bottom: 1rem !important; }
 
             .print-footer {
                 margin-top: 2rem;
@@ -98,6 +98,7 @@ $opcaoLabels = [
                 line-height: 1.5;
                 color: #9ca3af;
             }
+            
             /* Basic resets */
             header, nav, footer, .no-print, button, a, #vincular-status, .custom-combobox-container {
                 display: none !important;

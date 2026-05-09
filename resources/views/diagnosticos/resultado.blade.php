@@ -32,14 +32,14 @@ $cfg = $faixaConfig[$faixa];
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
             }
-            /* Standardize vertical gaps for PDF */
+            /* Standardize external vertical and horizontal gaps for PDF */
             .bg-white, .grid, .mb-6, .mb-8, .mb-12, .summary-block, .ipm-radar-grid { 
                 margin-bottom: 1.5rem !important;
                 padding: 1rem !important; 
             }
             
-            /* Reset internal grid gap */
-            .grid { gap: 1rem !important; }
+            /* Reset internal grid gap to match external vertical margin */
+            .grid { gap: 1.5rem !important; }
             dl.grid { gap: 0.5rem 1.5rem !important; }
             h3 { margin-bottom: 0.75rem !important; }
             
@@ -129,7 +129,7 @@ $cfg = $faixaConfig[$faixa];
     </div>
 
     <!-- Enterprise data summary -->
-    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg border border-gray-100 p-6 mb-8">
+    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg border border-gray-100 p-6 mb-6">
         <h3 class="font-semibold text-gray-900 mb-4 flex items-center gap-2">
             <ion-icon name="business-outline" style="color: #D0AE6D;"></ion-icon>
             Dados do diagnóstico
@@ -236,7 +236,7 @@ $cfg = $faixaConfig[$faixa];
 
     <!-- Connection phrase moved up or kept near bottom? User said: "Dimensões com maior fragilidade + connection phrase" -->
     <!-- Commercial trigger -->
-    <div class="bg-white overflow-hidden sm:rounded-lg border-2 p-6 mb-8" style="border-color: #D0AE6D;">
+    <div class="bg-white overflow-hidden sm:rounded-lg border-2 p-6 mb-6" style="border-color: #D0AE6D;">
         <h3 class="font-bold text-gray-900 mb-2 flex items-center gap-2">
             <ion-icon name="analytics-outline" style="color: #D0AE6D;"></ion-icon>
             Próximo passo
