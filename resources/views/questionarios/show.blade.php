@@ -118,14 +118,8 @@
                                             <div class="flex-1 min-w-0">
                                                 <p class="text-sm text-gray-800 font-medium mb-2">{{ $q->texto }}</p>
                                                 <div class="flex flex-wrap items-center gap-2">
-                                                    <div class="flex items-center gap-1.5 px-2.5 py-0.5 bg-gold-light text-gold rounded-md border border-gold">
-                                                        <ion-icon name="pricetag-outline" class="text-[10px]"></ion-icon>
-                                                        <span class="text-[10px] font-semibold uppercase tracking-wide">{{ $q->dimensao_nome }}</span>
-                                                    </div>
-                                                    <div class="flex items-center gap-1.5 px-2.5 py-0.5 bg-gray-100 text-gray-600 rounded-md border border-gray-200">
-                                                        <ion-icon name="bar-chart-outline" class="text-[10px]"></ion-icon>
-                                                        <span class="text-[10px] font-medium uppercase tracking-wide">Peso: {{ number_format($q->dimensao_peso, 2) }}</span>
-                                                    </div>
+                                                    <span class="px-2.5 py-0.5 bg-gold-light text-gold rounded-md border border-gold text-[10px] font-semibold uppercase tracking-wide">{{ $q->dimensao_nome }}</span>
+                                                    <span class="px-2.5 py-0.5 bg-gray-100 text-gray-600 rounded-md border border-gray-200 text-[10px] font-medium uppercase tracking-wide">Peso: {{ number_format($q->dimensao_peso, 2) }}</span>
                                                 </div>
                                             </div>
                                         </div>
