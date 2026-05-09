@@ -49,7 +49,7 @@ $opcaoLabels = [
                 </a>
                 <a href="{{ route('diagnostico.result', $diagnostico->token) }}" target="_blank"
                     class="text-[10px] font-bold uppercase tracking-wider flex items-center gap-1 px-4 py-2 rounded-lg border border-[#D0AE6D] text-[#D0AE6D] hover:bg-[#D0AE6D]/05 transition-colors">
-                    <ion-icon name="eye-outline" class="text-sm"></ion-icon> Resultado Público
+                    <ion-icon name="eye-outline" class="text-sm"></ion-icon> Resultado
                 </a>
                 <button onclick="window.print()"
                     class="text-[10px] font-bold uppercase tracking-wider flex items-center gap-1 px-4 py-2 rounded-lg bg-gray-900 text-white hover:bg-gray-800 transition-colors">
