@@ -98,7 +98,7 @@ $cfg = $faixaConfig[$faixa];
 
     <div class="print-only print-header mb-8">
         <div class="flex justify-between items-start mb-4">
-            <img src="{{ asset('assets/images/consilium-logo-text.svg') }}" alt="Consilium" class="h-5 w-auto">
+            <img src="{{ asset('assets/images/logo-header-print.png') }}" alt="Consilium" class="h-10 w-auto">
             <div class="text-right">
                 <p class="text-[10px] font-bold text-gray-300">{{ $diagnostico->updated_at->format('d/m/Y H:i') }}</p>
             </div>
