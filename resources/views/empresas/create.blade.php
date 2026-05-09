@@ -25,7 +25,7 @@
                                class="flex-1 text-sm rounded-lg border-amber-300 focus:border-amber-500 focus:ring-amber-500"
                                maxlength="18">
                         <button type="button" id="btn-cnpj-buscar"
-                                class="px-4 py-2 text-sm font-medium text-white rounded-lg bg-gold">
+                                class="px-4 py-2 text-sm font-medium text-white rounded-lg transition-colors bg-gold hover:bg-gold-dark">
                             Buscar
                         </button>
                     </div>
@@ -141,7 +141,7 @@
 
                         <div class="flex justify-end gap-3 pt-2 border-t">
                             <a href="{{ route('empresas.index') }}" class="px-5 py-2 text-sm font-medium bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200">Cancelar</a>
-                            <button type="submit" class="px-5 py-2 text-sm font-semibold text-white rounded-lg bg-gold">
+                            <button type="submit" class="px-5 py-2 text-sm font-semibold text-white rounded-lg transition-colors bg-gold hover:bg-gold-dark">
                                 Salvar Empresa
                             </button>
                         </div>

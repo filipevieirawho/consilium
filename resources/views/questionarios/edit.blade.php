@@ -110,7 +110,7 @@
                                             <p class="text-sm text-gray-500 mt-1">Gerencie as perguntas que compõem este diagnóstico.</p>
                                         </div>
                                         <button type="button" id="btn-add-questao"
-                                                class="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-white rounded-xl transition-all hover:shadow-md bg-gold">
+                                                class="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-white rounded-lg transition-colors bg-gold hover:bg-gold-dark">
                                             <ion-icon name="add-outline" class="text-lg"></ion-icon> Adicionar Questão
                                         </button>
                                     </div>
@@ -161,7 +161,7 @@
                                      <a href="{{ route('questionarios.show', $questionario) }}" class="text-sm font-medium text-gray-500 hover:text-gray-700 transition-colors">
                                         Descartar alterações
                                      </a>
-                                     <button type="submit" class="px-8 py-3 text-sm font-bold text-white rounded-xl transition-all hover:scale-[1.02] active:scale-[0.98] hover:shadow-md bg-gold">
+                                     <button type="submit" class="px-8 py-3 text-sm font-bold text-white rounded-lg transition-colors bg-gold hover:bg-gold-dark">
                                         Salvar Alterações
                                      </button>
                                 </div>

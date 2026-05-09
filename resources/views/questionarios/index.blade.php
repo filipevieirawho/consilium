@@ -38,7 +38,7 @@
                         <!-- Action buttons -->
                         <div class="flex gap-3">
                             <a href="{{ route('questionarios.create') }}"
-                               class="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-white rounded-md shadow-sm transition-colors bg-gold hover:bg-gold-dark">
+                               class="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-white rounded-lg transition-colors bg-gold hover:bg-gold-dark">
                                 <ion-icon name="add-outline" class="text-xl"></ion-icon>
                                 Novo Modelo
                             </a>

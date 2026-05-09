@@ -633,7 +633,7 @@
                     <input type="text" id="diag-link-gerado" readonly
                         class="block flex-1 text-sm text-gray-800 bg-white border border-gray-200 rounded-lg px-3 py-2">
                     <button id="diag-btn-copiar"
-                        class="px-3 py-2 rounded-lg text-white text-sm font-medium bg-gold">
+                        class="px-3 py-2 rounded-lg text-white text-sm font-medium transition-colors bg-gold hover:bg-gold-dark">
                         Copiar
                     </button>
                 </div>
@@ -641,7 +641,7 @@
             </div>
 
             <div class="flex gap-3">
-                <button id="diag-btn-gerar" class="flex-1 py-3 text-white font-semibold rounded-xl transition-all bg-gold">
+                <button id="diag-btn-gerar" class="flex-1 py-3 text-white font-semibold rounded-lg transition-colors bg-gold hover:bg-gold-dark">
                     Gerar Link
                 </button>
                 <button type="button" x-on:click="$dispatch('close')" class="flex-1 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold rounded-xl transition-all">

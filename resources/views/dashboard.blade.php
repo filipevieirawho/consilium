@@ -95,7 +95,7 @@
                         <!-- Add Lead Button -->
                         <div class="w-full lg:w-auto flex justify-end flex-shrink-0">
                             <button type="button" x-data="" @click.prevent="$dispatch('open-modal', 'add-manual-lead')"
-                                class="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-white rounded-md shadow-sm transition-colors bg-gold">
+                                class="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-white rounded-lg transition-colors bg-gold hover:bg-gold-dark">
                                 <ion-icon name="add-outline" class="text-xl"></ion-icon> Novo Lead
                             </button>
                         </div>
@@ -278,7 +278,7 @@
                 <!-- Submit Button -->
                 <div class="pt-2 flex justify-end">
                     <button type="submit" form="new-lead-form"
-                        class="px-4 py-2 text-white font-medium rounded-md shadow-sm transition-colors inline-flex items-center justify-center bg-gold hover:bg-gold-dark">
+                        class="px-4 py-2 text-white font-medium rounded-lg transition-colors inline-flex items-center justify-center bg-gold hover:bg-gold-dark">
                         Salvar Lead
                     </button>
                 </div>

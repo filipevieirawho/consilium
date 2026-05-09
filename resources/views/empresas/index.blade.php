@@ -45,7 +45,7 @@
 
                         <div class="flex gap-3">
                             <a href="{{ route('empresas.create') }}"
-                               class="px-4 py-2 text-white font-medium rounded-md shadow-sm transition-colors flex items-center gap-2 text-sm bg-gold">
+                               class="px-4 py-2 text-white font-medium rounded-lg transition-colors flex items-center gap-2 text-sm bg-gold hover:bg-gold-dark">
                                 <ion-icon name="add-outline" class="text-xl"></ion-icon> Nova Empresa
                             </a>
                         </div>

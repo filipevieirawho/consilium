@@ -45,7 +45,7 @@
                 ← Voltar
             </a>
             <a href="{{ route('diagnostico.pergunta', [$token, 1]) }}"
-                class="inline-flex items-center gap-2 px-6 py-3 text-white font-semibold rounded-xl transition-all hover:shadow-md bg-gold hover:bg-gold-dark">
+                class="inline-flex items-center gap-2 px-6 py-3 text-white font-semibold rounded-lg transition-colors bg-gold hover:bg-gold-dark">
                 Entendi, vamos começar →
             </a>
         </div>

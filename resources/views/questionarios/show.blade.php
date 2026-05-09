@@ -10,7 +10,7 @@
                 <h2 class="font-semibold text-xl text-gray-800 leading-tight">{{ $questionario->nome }}</h2>
             </div>
             <a :href="'{{ route('questionarios.edit', $questionario) }}?tab=' + activeTab"
-               class="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-semibold text-white rounded-lg transition-all bg-gold">
+               class="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-semibold text-white rounded-lg transition-colors bg-gold hover:bg-gold-dark">
                 <ion-icon name="create-outline"></ion-icon> Editar
             </a>
         </div>

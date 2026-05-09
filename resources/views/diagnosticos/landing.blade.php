@@ -51,7 +51,7 @@
 
         <!-- CTA -->
         <a href="{{ route('diagnostico.form', $token) }}"
-            class="inline-flex items-center gap-2 px-8 py-4 text-white font-semibold rounded-xl shadow-lg transition-all hover:shadow-xl hover:scale-105 bg-gold hover:bg-gold-dark">
+            class="inline-flex items-center gap-2 px-8 py-4 text-white font-semibold rounded-lg transition-colors bg-gold hover:bg-gold-dark">
             Iniciar Check-up
             <ion-icon name="arrow-forward-outline" class="text-xl"></ion-icon>
         </a>

@@ -83,7 +83,7 @@
 
                         <div class="flex justify-end gap-3 pt-2 border-t">
                             <a href="{{ route('empresas.show', $empresa) }}" class="px-5 py-2 text-sm font-medium bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200">Cancelar</a>
-                            <button type="submit" class="px-5 py-2 text-sm font-semibold text-white rounded-lg bg-gold">Salvar</button>
+                            <button type="submit" class="px-5 py-2 text-sm font-semibold text-white rounded-lg transition-colors bg-gold hover:bg-gold-dark">Salvar</button>
                         </div>
                     </div>
                 </form>
