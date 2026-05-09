@@ -14,6 +14,75 @@ $cfg = $faixaConfig[$faixa];
 @endphp
 
 <x-diagnosticos.layout :progressPct="100" progressLabel="Resultado">
+    <style>
+        @page {
+            margin: 0;
+        }
+        @media print {
+            /* Basic resets */
+            header, nav, footer, .no-print, button, a, #vincular-status, .custom-combobox-container {
+                display: none !important;
+            }
+            
+            body {
+                background: white !important;
+                padding: 1.5cm !important;
+                margin: 0 !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            /* Remove gray backgrounds globally for print */
+            .bg-gray-50, .bg-gray-100, .bg-gray-50\/50, .py-12, main { 
+                background-color: white !important; 
+            }
+
+            .py-12 { padding: 0 !important; }
+            .max-w-2xl { max-width: 100% !important; padding: 0 !important; }
+            
+            /* Specific Grid adjustment for PDF */
+            .grid {
+                display: grid !important;
+                gap: 1rem !important;
+                grid-template-columns: repeat(2, 1fr) !important;
+            }
+            
+            /* IPM and Radar occupy 1 col each (side by side) */
+            .grid-cols-1.md\:grid-cols-2 {
+                grid-template-columns: 1fr 1fr !important;
+            }
+
+            /* Ensure boxes look good */
+            .bg-white { background: white !important; border: 1px solid #eee !important; }
+            .shadow-sm, .shadow-md { box-shadow: none !important; }
+            
+            /* Radar Chart sizing */
+            canvas {
+                max-width: 100% !important;
+                height: auto !important;
+                margin: 0 auto;
+            }
+
+            /* Fix colors for boxes */
+            .bg-red-50 { background-color: #fef2f2 !important; }
+            .bg-yellow-50 { background-color: #fffbeb !important; }
+            .bg-green-50 { background-color: #f0fdf4 !important; }
+            
+            /* Avoid page breaks inside sections */
+            .bg-white, .questao-row, .mb-6, .mb-8 {
+                page-break-inside: avoid !important;
+            }
+        }
+    </style>
+
+    <div class="flex justify-end mb-4 no-print">
+        <button onclick="window.print()"
+            class="text-[10px] font-bold uppercase tracking-wider flex items-center gap-1 px-4 py-2 rounded-lg text-white transition-all transform active:scale-95"
+            style="background-color: #111827;">
+            <ion-icon name="document-text-outline" class="text-sm"></ion-icon> Baixar PDF
+        </button>
+    </div>
+
     <!-- Enterprise data summary -->
     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg border border-gray-100 p-6 mb-8">
         <h3 class="font-semibold text-gray-700 mb-4 text-xs uppercase tracking-wide">Dados do diagnóstico</h3>
