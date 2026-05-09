@@ -40,7 +40,7 @@
 
     <!-- Progress bar (optional) -->
     @if(isset($progressPct))
-    <div class="w-full bg-gray-100 h-1 no-print">
+    <div class="w-full bg-gray-100 h-1">
         <div class="progress-bar-fill h-1 rounded-r" style="width: {{ $progressPct }}%"></div>
     </div>
     @endif
