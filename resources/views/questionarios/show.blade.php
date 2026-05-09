@@ -23,22 +23,22 @@
             
             <div class="flex flex-col gap-6">
                 <!-- Tab Navigation (Horizontal) -->
-                <div class="bg-white shadow-sm rounded-2xl border border-gray-100 p-2 flex gap-1">
-                    <button type="button" @click="activeTab = 'info'" 
-                            :class="activeTab === 'info' ? 'bg-[#fdf8ed] text-gold font-bold shadow-sm' : 'text-gray-500 hover:bg-gray-50'"
-                            class="flex-1 flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-sm transition-all group">
+                <div class="bg-white shadow-sm rounded-lg border border-gray-100 p-1.5 flex gap-1">
+                    <button type="button" @click="activeTab = 'info'"
+                            :class="activeTab === 'info' ? 'bg-gold-light text-gold font-bold' : 'text-gray-500 hover:bg-gray-50'"
+                            class="flex-1 flex items-center justify-center gap-2 px-6 py-2.5 rounded-md text-sm transition-colors group">
                         <ion-icon name="information-circle-outline" class="text-xl"></ion-icon>
                         Informações
                     </button>
-                    <button type="button" @click="activeTab = 'questions'" 
-                            :class="activeTab === 'questions' ? 'bg-[#fdf8ed] text-gold font-bold shadow-sm' : 'text-gray-500 hover:bg-gray-50'"
-                            class="flex-1 flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-sm transition-all group">
+                    <button type="button" @click="activeTab = 'questions'"
+                            :class="activeTab === 'questions' ? 'bg-gold-light text-gold font-bold' : 'text-gray-500 hover:bg-gray-50'"
+                            class="flex-1 flex items-center justify-center gap-2 px-6 py-2.5 rounded-md text-sm transition-colors group">
                         <ion-icon name="list-outline" class="text-xl"></ion-icon>
                         Questões
                     </button>
-                    <button type="button" @click="activeTab = 'result'" 
-                            :class="activeTab === 'result' ? 'bg-[#fdf8ed] text-gold font-bold shadow-sm' : 'text-gray-500 hover:bg-gray-50'"
-                            class="flex-1 flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-sm transition-all group">
+                    <button type="button" @click="activeTab = 'result'"
+                            :class="activeTab === 'result' ? 'bg-gold-light text-gold font-bold' : 'text-gray-500 hover:bg-gray-50'"
+                            class="flex-1 flex items-center justify-center gap-2 px-6 py-2.5 rounded-md text-sm transition-colors group">
                         <ion-icon name="analytics-outline" class="text-xl"></ion-icon>
                         Resultado
                     </button>
