@@ -320,21 +320,23 @@ $opcaoLabels = [
                         $grupos = $diagnostico->questionario->questoes->groupBy('dimensao_nome');
                     @endphp
 
+                    @php $questaoCounter = 0; @endphp
                     @foreach($grupos as $dimNome => $questoes)
                     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg border border-gray-100 p-6 dimension-block">
                         <div class="flex items-center gap-2 mb-3">
-                            <div class="w-2 h-6 rounded-full bg-gold"></div>
+                            <div class="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold text-white bg-gold">{{ $loop->iteration }}</div>
                             <h4 class="font-bold text-gray-800 text-sm">{{ $dimNome }}</h4>
                         </div>
                         <div class="space-y-3">
-                            @foreach($questoes as $idx => $q)
+                            @foreach($questoes as $q)
                                 @php
+                                    $questaoCounter++;
                                     $resp = $respostasPorQuestao->get($q->id);
                                     $val = $resp ? $resp->resposta : null;
                                     $lColors = [0 => 'bg-red-100 text-red-700', 1 => 'bg-orange-100 text-gray-800', 2 => 'bg-yellow-100 text-gray-800', 3 => 'bg-green-100 text-green-700'];
                                 @endphp
                                 <div class="flex items-start gap-4 py-3 border-b border-gray-50 last:border-0 pl-0">
-                                    <span class="flex-shrink-0 w-6 h-6 rounded bg-gray-100 text-[10px] font-bold flex items-center justify-center text-gray-400">{{ $idx + 1 }}</span>
+                                    <span class="flex-shrink-0 w-6 h-6 rounded bg-gray-100 text-[10px] font-bold flex items-center justify-center text-gray-400">{{ $questaoCounter }}</span>
                                     <p class="flex-1 text-sm text-gray-700 leading-relaxed">{{ $q->texto }}</p>
                                     @if($val !== null)
                                         <div class="flex-shrink-0 text-right">
