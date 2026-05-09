@@ -136,7 +136,7 @@ $cfg = $faixaConfig[$faixa];
     <!-- Enterprise data summary -->
     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg border border-gray-100 p-6 mb-8">
         <h3 class="font-semibold text-gray-700 mb-4 text-xs uppercase tracking-wide flex items-center gap-2">
-            <ion-icon name="reader-outline" class="text-gold-500"></ion-icon>
+            <ion-icon name="business-outline" class="text-gold-500"></ion-icon>
             Dados do diagnóstico
         </h3>
         <dl class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4 text-sm">
