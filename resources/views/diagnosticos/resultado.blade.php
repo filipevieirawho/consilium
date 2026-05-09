@@ -26,16 +26,13 @@ $cfg = $faixaConfig[$faixa];
                 display: block !important;
             }
             .print-footer {
-                position: fixed;
-                bottom: -1cm;
-                left: 0;
-                right: 0;
+                margin-top: 3rem;
+                padding-top: 1.5rem;
+                border-top: 1px solid #eee;
                 text-align: justify;
-                font-size: 7px;
-                line-height: 1.4;
+                font-size: 8px;
+                line-height: 1.5;
                 color: #9ca3af;
-                padding-top: 10px;
-                border-top: 1px solid #f3f4f6;
             }
             /* Basic resets */
             header, nav, footer, .no-print, button, a, #vincular-status, .custom-combobox-container {
@@ -111,13 +108,6 @@ $cfg = $faixaConfig[$faixa];
             style="background-color: #111827;">
             <ion-icon name="document-text-outline" class="text-sm"></ion-icon> Baixar PDF
         </button>
-    </div>
-
-    <!-- Print Disclaimer Footer -->
-    <div class="print-footer">
-        <p>
-            Os dados cadastrados nesta plataforma são de caráter estritamente confidencial e de uso exclusivo dos usuários autorizados. A integridade e a privacidade dessas informações são de suma importância para a Consilium Engenharia & Consultoria. O compartilhamento indevido de dados, relatórios ou credenciais de acesso pode expor informações sensíveis a riscos significativos, podendo resultar em violações de privacidade e em responsabilidades legais para o usuário envolvido. Sua atenção e cooperação são essenciais para garantir a segurança e a integridade das informações aqui armazenadas.
-        </p>
     </div>
 
     <!-- Enterprise data summary -->
@@ -331,4 +321,11 @@ $cfg = $faixaConfig[$faixa];
     });
     </script>
     @endpush
+
+    <!-- Print Disclaimer Footer -->
+    <div class="print-footer">
+        <p>
+            Os dados cadastrados nesta plataforma são de caráter estritamente confidencial e de uso exclusivo dos usuários autorizados. A integridade e a privacidade dessas informações são de suma importância para a Consilium Engenharia & Consultoria. O compartilhamento indevido de dados, relatórios ou credenciais de acesso pode expor informações sensíveis a riscos significativos, podendo resultar em violações de privacidade e em responsabilidades legais para o usuário envolvido. Sua atenção e cooperação são essenciais para garantir a segurança e a integridade das informações aqui armazenadas.
+        </p>
+    </div>
 </x-diagnosticos.layout>
