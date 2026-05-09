@@ -75,30 +75,43 @@ $opcaoLabels = [
                 print-color-adjust: exact !important;
             }
 
+            /* Remove gray backgrounds globally for print */
+            .bg-gray-50, .bg-gray-100, .bg-gray-50\/50, .py-8 { 
+                background-color: white !important; 
+            }
+
             .py-8 { padding: 0 !important; }
             .max-w-7xl { max-width: 100% !important; padding: 0 !important; }
             
-            /* Preserve Grid Layout */
+            /* Specific Grid adjustment for PDF */
             .grid {
                 display: grid !important;
-                gap: 1.5rem !important;
+                gap: 1rem !important;
+                grid-template-columns: repeat(2, 1fr) !important;
             }
             
-            .md\:grid-cols-4 {
-                grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+            /* IPM and Radar occupy 1 col each (side by side) */
+            .md\:col-span-1 { 
+                grid-column: span 1 / span 1 !important; 
+                width: 100% !important;
             }
 
-            .md\:col-span-1 { grid-column: span 1 / span 1 !important; }
-            .md\:col-span-2 { grid-column: span 2 / span 2 !important; }
+            /* Resumo de Informações occupies both columns (full width below) */
+            .md\:col-span-2 { 
+                grid-column: span 2 / span 2 !important; 
+                width: 100% !important;
+                margin-top: 1rem;
+            }
 
             /* Ensure boxes look good */
-            .bg-white { background: white !important; }
-            .shadow-sm { box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important; }
+            .bg-white { background: white !important; border: 1px solid #eee !important; }
+            .shadow-sm, .shadow-md { box-shadow: none !important; }
             
             /* Radar Chart sizing */
             canvas {
                 max-width: 100% !important;
                 height: auto !important;
+                margin: 0 auto;
             }
 
             /* Fix colors for boxes */
@@ -108,7 +121,7 @@ $opcaoLabels = [
             .text-gold-500 { color: #D0AE6D !important; }
             
             /* Avoid page breaks inside sections */
-            .bg-white, .questao-row {
+            .bg-white, .questao-row, .mb-6 {
                 page-break-inside: avoid !important;
             }
         }
