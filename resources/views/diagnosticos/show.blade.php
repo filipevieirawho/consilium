@@ -62,7 +62,7 @@ $opcaoLabels = [
 
     <style>
         @page {
-            margin: 0;
+            margin: 1.5cm;
         }
         @media print {
             /* Basic resets */
@@ -72,7 +72,7 @@ $opcaoLabels = [
             
             body {
                 background: white !important;
-                padding: 2cm !important;
+                padding: 0 !important;
                 margin: 0 !important;
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;

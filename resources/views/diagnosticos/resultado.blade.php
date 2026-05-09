@@ -16,7 +16,7 @@ $cfg = $faixaConfig[$faixa];
 <x-diagnosticos.layout :progressPct="100" progressLabel="Resultado">
     <style>
         @page {
-            margin: 0;
+            margin: 1.5cm;
         }
         @media print {
             /* Basic resets */
@@ -26,7 +26,7 @@ $cfg = $faixaConfig[$faixa];
             
             body {
                 background: white !important;
-                padding: 1.5cm !important;
+                padding: 0 !important;
                 margin: 0 !important;
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
