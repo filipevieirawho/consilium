@@ -53,7 +53,7 @@
                                     </div>
 
                                     <div class="space-y-5">
-                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5 pb-6 border-b border-dashed border-gray-100 mb-6">
+                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5 pb-10 border-b border-dashed border-gray-100 mb-10">
                                             <div>
                                                 <label class="block text-sm font-medium text-gray-700 mb-1.5">Nome do Modelo</label>
                                                 <input type="text" name="nome" value="{{ old('nome') }}" required
