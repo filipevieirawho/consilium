@@ -217,7 +217,7 @@ $cfg = $faixaConfig[$faixa];
 
     <!-- Interpretive text -->
     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg border border-gray-100 p-6 mb-6">
-        <h3 class="font-semibold text-gray-900 mb-3 flex items-center gap-2">
+        <h3 class="font-semibold text-gray-900 mb-4 flex items-center gap-2">
             <ion-icon name="reader-outline" class="text-gold"></ion-icon>
             Análise do resultado
         </h3>
@@ -226,7 +226,7 @@ $cfg = $faixaConfig[$faixa];
 
     <!-- Dimension scores -->
     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg border border-gray-100 p-6 mb-6">
-        <h3 class="font-semibold text-gray-900 mb-5 flex items-center gap-2">
+        <h3 class="font-semibold text-gray-900 mb-4 flex items-center gap-2">
             <ion-icon name="bar-chart-outline" class="text-gold"></ion-icon>
             Pontuação por dimensão
         </h3>
@@ -258,7 +258,7 @@ $cfg = $faixaConfig[$faixa];
     @if(!empty($dimensoesFracas))
     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg border border-gray-100 p-6 mb-6">
         <h3 class="font-semibold text-gray-900 mb-4 flex items-center gap-2">
-            <ion-icon name="alert-circle-outline" class="text-lg" style="color: #ef4444;"></ion-icon>
+            <ion-icon name="alert-circle-outline" class="text-red-500"></ion-icon>
             Dimensões com maior fragilidade
         </h3>
         <div class="bg-red-50 border border-red-100 rounded-xl p-5 mb-6">
@@ -282,7 +282,7 @@ $cfg = $faixaConfig[$faixa];
     <!-- Connection phrase moved up or kept near bottom? User said: "Dimensões com maior fragilidade + connection phrase" -->
     <!-- Commercial trigger -->
     <div class="bg-white overflow-hidden sm:rounded-lg border-2 border-gold p-6 mb-8">
-        <h3 class="font-bold text-gray-900 mb-2 flex items-center gap-2">
+        <h3 class="font-semibold text-gray-900 mb-4 flex items-center gap-2">
             <ion-icon name="analytics-outline" class="text-gold"></ion-icon>
             Próximo passo
         </h3>
