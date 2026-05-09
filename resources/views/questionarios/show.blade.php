@@ -59,9 +59,9 @@
                                     <div class="flex items-center gap-4">
                                         <span class="text-[10px] text-gray-400 font-medium uppercase tracking-wider">Criado em {{ $questionario->created_at->format('d/m/Y H:i') }}</span>
                                         @if($questionario->is_active)
-                                            <span class="text-xs font-bold px-3 py-1 bg-green-100 text-green-700 rounded-full uppercase tracking-wide">Ativo</span>
+                                            <span class="text-xs font-bold px-3 py-1 bg-green-100 text-green-700 rounded-md uppercase tracking-wide">Ativo</span>
                                         @else
-                                            <span class="text-xs font-bold px-3 py-1 bg-gray-100 text-gray-500 rounded-full uppercase tracking-wide">Inativo</span>
+                                            <span class="text-xs font-bold px-3 py-1 bg-gray-100 text-gray-500 rounded-md uppercase tracking-wide">Inativo</span>
                                         @endif
                                     </div>
                                 </div>
