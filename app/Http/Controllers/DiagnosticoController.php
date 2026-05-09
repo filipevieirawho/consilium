@@ -21,8 +21,12 @@ class DiagnosticoController extends Controller
      */
     public function startNovo(Request $request)
     {
+        $request->validate([
+            'q' => 'nullable|exists:questionarios,id',
+        ]);
+
         $token = Str::random(32);
-        
+
         Diagnostico::create([
             'token' => $token,
             'status' => 'em_andamento',

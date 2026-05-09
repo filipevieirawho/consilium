@@ -23,9 +23,6 @@ Route::get('/dashboard', [ContactController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
-Route::get('/debug-views', function () {
-    return response(file_get_contents(resource_path('views/dashboard.blade.php')))->header('Content-Type', 'text/plain');
-});
 
 Route::middleware('auth')->group(function () {
     Route::get('/lead/{contact}', [ContactController::class, 'show'])->name('contacts.show');

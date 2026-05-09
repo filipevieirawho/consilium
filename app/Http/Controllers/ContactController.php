@@ -78,7 +78,7 @@ class ContactController extends Controller
 
         // Send email alert
         try {
-            Mail::to('filipe@consilium.eng.br')->send(new NewContactAlert($contact));
+            Mail::to(config('mail.contact_alert_email'))->send(new NewContactAlert($contact));
         } catch (\Exception $e) {
             \Log::error('Failed to send contact alert: ' . $e->getMessage());
         }

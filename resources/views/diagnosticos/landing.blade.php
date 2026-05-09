@@ -7,8 +7,8 @@
 
         <!-- Title -->
         <h1 class="text-3xl font-bold text-gray-900 mb-4 leading-tight">
-            {!! $diagnostico->titulo ?: ($diagnostico->questionario && $diagnostico->questionario->titulo 
-                ? nl2br(e($diagnostico->questionario->titulo)) 
+            {!! nl2br(e($diagnostico->titulo)) ?: ($diagnostico->questionario && $diagnostico->questionario->titulo
+                ? nl2br(e($diagnostico->questionario->titulo))
                 : 'Check-up de Consistência<br>da Margem') !!}
         </h1>
 
