@@ -59,7 +59,7 @@ $opcaoLabels = [
     </x-slot>
 
     <!-- Mobile action bar (hidden on sm+) -->
-    <div class="sm:hidden border-b border-gray-100 px-4 py-3 overflow-x-auto no-print">
+    <div class="sm:hidden border-b border-gray-100 px-4 py-6 overflow-x-auto no-print">
         <div class="flex gap-2 w-max">
             <button onclick="copyToClipboard(this, '{{ route('diagnostico.landing', $diagnostico->token) }}')"
                 title="Copiar Link"
