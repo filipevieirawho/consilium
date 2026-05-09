@@ -117,6 +117,13 @@
                                         </button>
                                     </div>
 
+                                    <div class="bg-[#fdf8ed] border border-[#fdf8ed] p-4 rounded-xl flex items-center gap-3 text-[#D0AE6D] mb-6">
+                                        <ion-icon name="bulb-outline" class="text-xl flex-shrink-0"></ion-icon>
+                                        <p class="text-xs font-medium leading-relaxed">
+                                            Lembre-se que o somatório dos pesos das dimensões deve preferencialmente totalizar 1.00 para uma escala padrão.
+                                        </p>
+                                    </div>
+
                                     @if($errors->has('questoes'))
                                     <div class="bg-red-50 text-red-600 text-sm p-4 rounded-lg mb-6 flex items-center gap-2">
                                         <ion-icon name="alert-circle-outline" class="text-lg"></ion-icon>
@@ -151,13 +158,6 @@
 
                             <!-- Global Actions -->
                             <div class="mt-6 flex flex-col gap-4">
-                                <div x-show="activeTab === 'questions'" x-cloak class="bg-[#fdf8ed] border border-[#fdf8ed] p-4 rounded-xl flex items-center gap-3 text-[#D0AE6D]">
-                                    <ion-icon name="bulb-outline" class="text-xl flex-shrink-0"></ion-icon>
-                                    <p class="text-xs font-medium leading-relaxed">
-                                        Lembre-se que o somatório dos pesos das dimensões deve preferencialmente totalizar 1.00 para uma escala padrão.
-                                    </p>
-                                </div>
-                                
                                 <div class="flex justify-end items-center gap-4 py-4">
                                      <a href="{{ route('questionarios.index') }}" class="text-sm font-medium text-gray-500 hover:text-gray-700 transition-colors">
                                         Descartar alterações
