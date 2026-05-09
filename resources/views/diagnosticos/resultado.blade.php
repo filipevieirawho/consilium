@@ -195,6 +195,7 @@ $cfg = $faixaConfig[$faixa];
             <div class="dimension-row">
                 <div class="flex justify-between items-center mb-1">
                     <div class="flex items-center gap-2">
+                        <span class="flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold text-white bg-gold">{{ $loop->iteration }}</span>
                         <span class="text-sm font-medium text-gray-800">{{ $dim['nome'] }}</span>
                         @if($dim['fraca'])
                         <span class="text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-md bg-red-100 text-red-600">Atenção</span>
@@ -248,7 +249,7 @@ $cfg = $faixaConfig[$faixa];
             Aprofundar a análise dessas fragilidades permite identificar causas e definir ações concretas para proteção da margem.
         </p>
         <a href="https://consilium.eng.br/contato" target="_blank"
-            class="inline-flex items-center gap-2 px-6 py-3 text-white font-semibold rounded-xl bg-gold hover:bg-gold-dark transition-all hover:shadow-md text-sm">
+            class="inline-flex items-center gap-2 px-6 py-3 text-white font-semibold rounded-lg bg-gold hover:bg-gold-dark transition-colors text-sm">
             Falar com um especialista
             <ion-icon name="arrow-forward-outline"></ion-icon>
         </a>
