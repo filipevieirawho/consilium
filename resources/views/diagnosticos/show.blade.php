@@ -339,9 +339,9 @@ $opcaoLabels = [
                     : 18;
                 $respondidas = $diagnostico->respostas->count();
             @endphp
-            <div class="mb-4 no-print flex items-center justify-between">
-                <h3 class="font-semibold text-gray-900 ml-2">Respostas do questionário</h3>
-                <span class="text-xs font-medium text-gray-400 pr-2">Respondido {{ $respondidas }} de {{ $totalQuestoes }}</span>
+            <div class="mb-4 no-print flex items-center justify-between px-2">
+                <h3 class="font-semibold text-gray-900">Respostas do questionário</h3>
+                <span class="text-xs font-medium text-gray-400">Respondido {{ $respondidas }} de {{ $totalQuestoes }}</span>
             </div>
 
             <div class="space-y-6">
