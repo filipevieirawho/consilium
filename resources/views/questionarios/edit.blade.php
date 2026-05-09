@@ -70,7 +70,7 @@
                                             <label class="block text-sm font-medium text-gray-700 mb-1.5">Título da Página</label>
                                             <input type="text" name="titulo" value="{{ old('titulo', $questionario->titulo) }}"
                                                    placeholder="Ex: Check-up de Consistência da Margem"
-                                                   class="block w-full text-sm rounded-lg border-gray-300 focus:border-[#D0AE6D] focus:ring-[#D0AE6D] shadow-sm transition-all px-4 py-2.5">
+                                                   class="block w-full text-sm font-bold rounded-lg border-gray-300 focus:border-[#D0AE6D] focus:ring-[#D0AE6D] shadow-sm transition-all px-4 py-2.5">
                                             @error('titulo') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
                                         </div>
 
