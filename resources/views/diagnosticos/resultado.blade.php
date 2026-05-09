@@ -32,16 +32,14 @@ $cfg = $faixaConfig[$faixa];
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
             }
-            /* Standardize vertical gaps for PDF */
-            .bg-white, .grid, .mb-6, .mb-8, .mb-12, .summary-block, .ipm-radar-grid { 
-                margin-bottom: 1.5rem !important;
+            /* Compact sections for PDF */
+            .bg-white { 
                 padding: 1rem !important; 
+                margin-bottom: 1rem !important; 
             }
-            
-            /* Reset internal grid gap */
-            .grid { gap: 1rem !important; }
-            dl.grid { gap: 0.5rem 1.5rem !important; }
-            h3 { margin-bottom: 0.75rem !important; }
+            .grid { gap: 0.5rem !important; }
+            dl.grid { gap: 0.5rem 1rem !important; }
+            h3 { margin-bottom: 0.5rem !important; }
             
             .print-footer {
                 margin-top: 2rem;
@@ -130,10 +128,7 @@ $cfg = $faixaConfig[$faixa];
 
     <!-- Enterprise data summary -->
     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg border border-gray-100 p-6 mb-8">
-        <h3 class="font-semibold text-gray-900 mb-4 flex items-center gap-2">
-            <ion-icon name="business-outline" style="color: #D0AE6D;"></ion-icon>
-            Dados do diagnóstico
-        </h3>
+        <h3 class="font-semibold text-gray-700 mb-4 text-xs uppercase tracking-wide">Dados do diagnóstico</h3>
         <dl class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4 text-sm">
             <div><dt class="text-gray-400 text-[10px] uppercase">Respondente</dt><dd class="font-medium text-gray-800">{{ $diagnostico->nome ?: '—' }}</dd></div>
             <div><dt class="text-gray-400 text-[10px] uppercase">Empresa</dt><dd class="font-medium text-gray-800">{{ $diagnostico->empresa ?: '—' }}</dd></div>

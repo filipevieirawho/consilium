@@ -78,17 +78,17 @@ $opcaoLabels = [
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
             }
-            
-            /* Standardize vertical gaps for PDF */
-            .bg-white, .grid, .mb-6, .mb-8, .mb-12, .summary-block, .ipm-block, .radar-block, .dimension-block { 
-                margin-bottom: 1.5rem !important;
+            /* Compact sections for PDF */
+            .bg-white { 
                 padding: 1rem !important; 
+                margin-bottom: 0.5rem !important;
+                box-shadow: none !important;
+                border-radius: 0 !important;
+                background-color: white !important;
             }
-            
-            /* Reset internal grid gap */
-            .grid { gap: 1rem !important; }
-            dl.grid { gap: 0.5rem 1.5rem !important; }
-            h3 { margin-bottom: 0.75rem !important; }
+            .grid { gap: 0.5rem !important; }
+            dl.grid { gap: 0.5rem 1rem !important; }
+            h3 { margin-bottom: 0.5rem !important; }
 
             .print-footer {
                 margin-top: 2rem;
@@ -123,16 +123,27 @@ $opcaoLabels = [
             /* Specific Grid adjustment for PDF */
             .print-grid {
                 display: grid !important;
-                gap: 1.5rem !important;
+                gap: 1rem !important;
                 grid-template-areas: 
                     "summary summary"
                     "ipm radar" !important;
                 grid-template-columns: 1fr 1fr !important;
             }
             
-            .summary-block { grid-area: summary !important; }
-            .ipm-block { grid-area: ipm !important; }
-            .radar-block { grid-area: radar !important; }
+            .summary-block { 
+                grid-area: summary !important; 
+                margin: 0 !important;
+            }
+
+            .ipm-block { 
+                grid-area: ipm !important; 
+                margin: 0 !important;
+            }
+
+            .radar-block { 
+                grid-area: radar !important; 
+                margin: 0 !important;
+            }
 
             /* Ensure boxes look good */
             .bg-white { background: white !important; border: 1px solid #eee !important; }
@@ -225,34 +236,33 @@ $opcaoLabels = [
 
                 <!-- Data summary -->
                 <div class="md:col-span-2 bg-white shadow-sm sm:rounded-lg border border-gray-100 p-6 relative summary-block">
-                    <h3 class="font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                        <ion-icon name="business-outline" style="color: #D0AE6D;"></ion-icon>
-                        Resumo de Informações
+                    <div class="flex items-center justify-between mb-5">
+                        <h3 class="font-semibold text-gray-900">Resumo de Informações</h3>
                         @if($diagnostico->status === 'concluido')
-                            <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md border text-green-700 border-green-300 bg-green-50 ml-auto no-print">Concluído</span>
+                            <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md border text-green-700 border-green-300 bg-green-50">Concluído</span>
                         @else
-                            <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md border text-yellow-700 border-yellow-300 bg-yellow-50 ml-auto no-print">Em andamento</span>
+                            <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md border text-yellow-700 border-yellow-300 bg-yellow-50">Em andamento</span>
                         @endif
-                    </h3>
+                    </div>
 
-                    <dl class="grid grid-cols-2 sm:grid-cols-3 gap-4 text-sm">
+                    <dl class="grid grid-cols-2 gap-x-6 gap-y-4 text-sm">
                         @if($diagnostico->questionario)
-                        <div class="col-span-2 sm:col-span-3">
-                            <dt class="text-gray-400 text-[10px] uppercase">Modelo Aplicado</dt>
-                            <dd class="font-bold text-[#D0AE6D]">{{ $diagnostico->questionario->titulo }}</dd>
+                        <div class="col-span-2">
+                            <dt class="text-xs text-gray-400 uppercase tracking-wide">Modelo Aplicado</dt>
+                            <dd class="font-bold text-[#D0AE6D] mt-0.5">{{ $diagnostico->questionario->titulo }}</dd>
                         </div>
                         @else
-                        <div class="col-span-2 sm:col-span-3">
-                            <dt class="text-gray-400 text-[10px] uppercase">Modelo Aplicado</dt>
-                            <dd class="font-medium text-gray-400 italic">Padrão Consilium (18 questões)</dd>
+                        <div class="col-span-2">
+                            <dt class="text-xs text-gray-400 uppercase tracking-wide">Modelo Aplicado</dt>
+                            <dd class="font-medium text-gray-400 mt-0.5 italic">Padrão Consilium (18 questões)</dd>
                         </div>
                         @endif
 
-                        <div><dt class="text-gray-400 text-[10px] uppercase">Respondente</dt><dd class="font-medium text-gray-800">{{ $diagnostico->nome ?: '—' }}</dd></div>
-                        <div><dt class="text-gray-400 text-[10px] uppercase">Empresa</dt><dd class="font-medium text-gray-800">{{ $diagnostico->empresa ?: '—' }}</dd></div>
+                        <div><dt class="text-xs text-gray-400 uppercase tracking-wide">Respondente</dt><dd class="font-medium text-gray-800 mt-0.5">{{ $diagnostico->nome ?: '—' }}</dd></div>
+                        <div><dt class="text-xs text-gray-400 uppercase tracking-wide">Empresa</dt><dd class="font-medium text-gray-800 mt-0.5">{{ $diagnostico->empresa ?: '—' }}</dd></div>
                         
-                        <div><dt class="text-gray-400 text-[10px] uppercase">Cidade</dt><dd class="font-medium text-gray-800">{{ $diagnostico->cidade ?: '—' }}</dd></div>
-                        <div><dt class="text-gray-400 text-[10px] uppercase">Data</dt><dd class="font-medium text-gray-800">{{ $diagnostico->created_at->format('d/m/Y H:i') }}</dd></div>
+                        <div><dt class="text-xs text-gray-400 uppercase tracking-wide">Cidade</dt><dd class="font-medium text-gray-800 mt-0.5">{{ $diagnostico->cidade ?: '—' }}</dd></div>
+                        <div><dt class="text-xs text-gray-400 uppercase tracking-wide">Data</dt><dd class="font-medium text-gray-800 mt-0.5">{{ $diagnostico->created_at->format('d/m/Y H:i') }}</dd></div>
                         
                         <div class="col-span-2 mt-2 pt-2 border-t border-gray-50">
                             <div class="w-full">
