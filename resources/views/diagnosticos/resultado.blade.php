@@ -32,20 +32,14 @@ $cfg = $faixaConfig[$faixa];
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
             }
-            /* Standardize external gaps only for top-level sections */
-            .section-block { 
+            /* Standardize vertical gaps for PDF */
+            .bg-white, .grid, .mb-6, .mb-8, .mb-12, .summary-block, .ipm-radar-grid { 
                 margin-bottom: 1.5rem !important;
                 padding: 1rem !important; 
             }
             
-            /* Grid gap for top-level row */
-            .ipm-radar-grid { 
-                display: grid !important;
-                grid-template-columns: 1fr 1fr !important;
-                gap: 1.5rem !important; 
-                margin-bottom: 1.5rem !important;
-            }
-            
+            /* Reset internal grid gap */
+            .grid { gap: 1rem !important; }
             dl.grid { gap: 0.5rem 1.5rem !important; }
             h3 { margin-bottom: 0.75rem !important; }
             
@@ -135,7 +129,7 @@ $cfg = $faixaConfig[$faixa];
     </div>
 
     <!-- Enterprise data summary -->
-    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg border border-gray-100 p-6 mb-6 section-block">
+    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg border border-gray-100 p-6 mb-8">
         <h3 class="font-semibold text-gray-900 mb-4 flex items-center gap-2">
             <ion-icon name="business-outline" style="color: #D0AE6D;"></ion-icon>
             Dados do diagnóstico
@@ -151,32 +145,25 @@ $cfg = $faixaConfig[$faixa];
     </div>
 
     <!-- Top row: IPM & Radar Chart -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6 ipm-radar-grid">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
         <!-- IPM Card -->
-        <div class="sm:rounded-lg border-2 p-8 text-center flex flex-col items-center justify-start h-full"
+        <div class="sm:rounded-lg border-2 p-8 text-center flex flex-col items-center justify-center h-full"
              style="background-color: {{ $cfg['bg'] }}; border-color: {{ $cfg['border'] }};">
-            <h3 class="text-xs font-bold uppercase tracking-widest mb-8 w-full flex items-center justify-center gap-2" style="color: {{ $cfg['text'] }};">
-                <ion-icon name="speedometer-outline" class="opacity-70"></ion-icon>
-                Previsibilidade de Margem
-            </h3>
-            
-            <div class="flex-1 flex flex-col items-center justify-center">
-                <div class="w-20 h-20 rounded-full border-4 flex items-center justify-center mb-6 shadow-sm"
+            <h3 class="text-xs font-bold uppercase tracking-widest mb-4 w-full" style="color: {{ $cfg['text'] }}; opacity: 0.8;">Previsibilidade de Margem</h3>
+            <div class="flex justify-center mb-4">
+                <div class="w-20 h-20 rounded-full border flex items-center justify-center"
                      style="border-color: {{ $cfg['border'] }}; background: white;">
                     <ion-icon name="{{ $cfg['icon'] }}" style="font-size: 2.5rem; color: {{ $cfg['text'] }};"></ion-icon>
                 </div>
-                <div class="text-6xl font-extrabold mb-1" style="color: {{ $cfg['text'] }};">{{ $ipm }}</div>
-                <div class="text-lg font-bold uppercase tracking-widest mb-2" style="color: {{ $cfg['text'] }};">IPM</div>
-                <div class="text-base font-semibold" style="color: {{ $cfg['text'] }};">{{ $cfg['label'] }}</div>
             </div>
+            <div class="text-6xl font-extrabold mb-1" style="color: {{ $cfg['text'] }};">{{ $ipm }}</div>
+            <div class="text-lg font-bold uppercase tracking-widest mb-2" style="color: {{ $cfg['text'] }};">IPM</div>
+            <div class="text-base font-semibold" style="color: {{ $cfg['text'] }};">{{ $cfg['label'] }}</div>
         </div>
 
         <!-- Radar Chart Card -->
-        <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg border border-gray-100 p-8 flex flex-col items-center justify-start h-full">
-            <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-8 text-center w-full flex items-center justify-center gap-2">
-                <ion-icon name="pie-chart-outline" class="opacity-70"></ion-icon>
-                Desempenho por Dimensão
-            </h3>
+        <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg border border-gray-100 p-8 flex flex-col items-center justify-center h-full">
+            <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-6 text-center w-full">Desempenho por Dimensão</h3>
             <div class="w-full relative flex-1 flex items-center justify-center" style="max-height: 250px; aspect-ratio: 1;">
                 <canvas id="radarChart"></canvas>
             </div>
@@ -184,7 +171,7 @@ $cfg = $faixaConfig[$faixa];
     </div>
 
     <!-- Interpretive text -->
-    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg border border-gray-100 p-6 mb-6 section-block">
+    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg border border-gray-100 p-6 mb-6">
         <h3 class="font-semibold text-gray-900 mb-3 flex items-center gap-2">
             <ion-icon name="reader-outline" style="color: #D0AE6D;"></ion-icon>
             Análise do resultado
@@ -193,13 +180,13 @@ $cfg = $faixaConfig[$faixa];
     </div>
 
     <!-- Dimension scores -->
-    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg border border-gray-100 p-6 mb-6 section-block">
+    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg border border-gray-100 p-6 mb-6">
         <h3 class="font-semibold text-gray-900 mb-5 flex items-center gap-2">
             <ion-icon name="bar-chart-outline" style="color: #D0AE6D;"></ion-icon>
             Pontuação por dimensão
         </h3>
 
-        <div class="space-y-4 pl-0">
+        <div class="space-y-4">
             @foreach($dimensoes as $dim)
             <div class="dimension-row">
                 <div class="flex justify-between items-center mb-1">
@@ -223,7 +210,7 @@ $cfg = $faixaConfig[$faixa];
 
     <!-- Weak dimensions callout -->
     @if(!empty($dimensoesFracas))
-    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg border border-gray-100 p-6 mb-6 section-block">
+    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg border border-gray-100 p-6 mb-6">
         <h3 class="font-semibold text-gray-900 mb-4 flex items-center gap-2">
             <ion-icon name="alert-circle-outline" class="text-lg" style="color: #ef4444;"></ion-icon>
             Dimensões com maior fragilidade
@@ -248,7 +235,7 @@ $cfg = $faixaConfig[$faixa];
 
     <!-- Connection phrase moved up or kept near bottom? User said: "Dimensões com maior fragilidade + connection phrase" -->
     <!-- Commercial trigger -->
-    <div class="bg-white overflow-hidden sm:rounded-lg border-2 p-6 mb-6 section-block" style="border-color: #D0AE6D;">
+    <div class="bg-white overflow-hidden sm:rounded-lg border-2 p-6 mb-8" style="border-color: #D0AE6D;">
         <h3 class="font-bold text-gray-900 mb-2 flex items-center gap-2">
             <ion-icon name="analytics-outline" style="color: #D0AE6D;"></ion-icon>
             Próximo passo

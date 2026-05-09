@@ -66,7 +66,8 @@ $opcaoLabels = [
         }
         .print-only, .print-footer {
             display: none !important;
-             @media print {
+        }
+        @media print {
             .print-only, .print-footer {
                 display: block !important;
             }
@@ -77,20 +78,15 @@ $opcaoLabels = [
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
             }
-            /* Standardize external gaps only for top-level sections */
-            .section-block { 
+            
+            /* Standardize vertical gaps for PDF */
+            .bg-white, .grid, .mb-6, .mb-8, .mb-12, .summary-block, .ipm-block, .radar-block, .dimension-block { 
                 margin-bottom: 1.5rem !important;
                 padding: 1rem !important; 
             }
             
-            /* Grid layout for top-level row */
-            .print-grid { 
-                display: grid !important;
-                grid-template-columns: repeat(4, 1fr) !important;
-                gap: 1.5rem !important; 
-                margin-bottom: 1.5rem !important;
-            }
-            
+            /* Reset internal grid gap */
+            .grid { gap: 1rem !important; }
             dl.grid { gap: 0.5rem 1.5rem !important; }
             h3 { margin-bottom: 0.75rem !important; }
 
@@ -102,8 +98,7 @@ $opcaoLabels = [
                 font-size: 8px;
                 line-height: 1.5;
                 color: #9ca3af;
-            }    }
-            
+            }
             /* Basic resets */
             header, nav, footer, .no-print, button, a, #vincular-status, .custom-combobox-container {
                 display: none !important;
@@ -135,20 +130,9 @@ $opcaoLabels = [
                 grid-template-columns: 1fr 1fr !important;
             }
             
-            .summary-block { 
-                grid-area: summary !important; 
-                width: 100% !important;
-            }
-
-            .ipm-block { 
-                grid-area: ipm !important; 
-                width: 100% !important;
-            }
-
-            .radar-block { 
-                grid-area: radar !important; 
-                width: 100% !important;
-            }
+            .summary-block { grid-area: summary !important; }
+            .ipm-block { grid-area: ipm !important; }
+            .radar-block { grid-area: radar !important; }
 
             /* Ensure boxes look good */
             .bg-white { background: white !important; border: 1px solid #eee !important; }
@@ -167,6 +151,7 @@ $opcaoLabels = [
             .bg-green-50 { background-color: #f0fdf4 !important; }
             .text-gold-500 { color: #D0AE6D !important; }
             
+            /* Avoid page breaks inside sections */
             .bg-white, .questao-row, .mb-6, .dimension-block {
                 page-break-inside: avoid !important;
             }
@@ -199,23 +184,18 @@ $opcaoLabels = [
             <div class="grid grid-cols-1 md:grid-cols-4 gap-6 print-grid">
 
                 <!-- IPM Score -->
-                <div class="md:col-span-1 ipm-block section-block">
+                <div class="md:col-span-1 ipm-block">
                     @if($resultado)
-                    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg border-2 p-6 text-center h-full flex flex-col items-center justify-start"
+                    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg border-2 p-6 text-center h-full flex flex-col items-center justify-center"
                          style="border-color: {{ $cfg['border'] }};">
-                         <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-8 text-center w-full flex items-center justify-center gap-2">
-                             <ion-icon name="speedometer-outline" class="opacity-70"></ion-icon>
-                             Previsibilidade de Margem
-                         </h3>
-                         <div class="flex-1 flex flex-col items-center justify-center">
-                             <div class="w-16 h-16 rounded-full border flex items-center justify-center mb-4 mx-auto"
-                                  style="border-color: {{ $cfg['border'] }}; background: {{ $cfg['bg'] }};">
-                                 <ion-icon name="{{ $cfg['bg'] == '#fef2f2' ? 'alert-circle-outline' : ($cfg['bg'] == '#fffbeb' ? 'warning-outline' : 'checkmark-circle-outline') }}" style="font-size: 2rem; color: {{ $cfg['text'] }};"></ion-icon>
-                             </div>
-                            <div class="text-5xl font-extrabold mb-1" style="color: {{ $cfg['text'] }};">{{ $ipm }}</div>
-                            <div class="text-sm font-bold uppercase tracking-widest mb-1" style="color: {{ $cfg['text'] }};">IPM</div>
-                            <div class="text-xs font-semibold px-3 py-1 rounded-full mt-2" style="background-color: {{ $cfg['bg'] }}; color: {{ $cfg['text'] }};">{{ $cfg['label'] }}</div>
+                         <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-4 text-center w-full">Previsibilidade de Margem</h3>
+                         <div class="w-16 h-16 rounded-full border flex items-center justify-center mb-4 mx-auto"
+                              style="border-color: {{ $cfg['border'] }}; background: {{ $cfg['bg'] }};">
+                             <ion-icon name="{{ $cfg['bg'] == '#fef2f2' ? 'alert-circle-outline' : ($cfg['bg'] == '#fffbeb' ? 'warning-outline' : 'checkmark-circle-outline') }}" style="font-size: 2rem; color: {{ $cfg['text'] }};"></ion-icon>
                          </div>
+                        <div class="text-5xl font-extrabold mb-1" style="color: {{ $cfg['text'] }};">{{ $ipm }}</div>
+                        <div class="text-sm font-bold uppercase tracking-widest mb-1" style="color: {{ $cfg['text'] }};">IPM</div>
+                        <div class="text-xs font-semibold px-3 py-1 rounded-full mt-2" style="background-color: {{ $cfg['bg'] }}; color: {{ $cfg['text'] }};">{{ $cfg['label'] }}</div>
                     </div>
                     @else
                     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg border border-gray-200 p-6 text-center h-full flex flex-col items-center justify-center">
@@ -227,14 +207,11 @@ $opcaoLabels = [
                 </div>
 
                 <!-- Radar Chart -->
-                <div class="md:col-span-1 radar-block section-block">
+                <div class="md:col-span-1 radar-block">
                     @if($resultado)
-                    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg border border-gray-100 p-6 h-full flex flex-col items-center justify-start">
-                        <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-8 text-center w-full flex items-center justify-center gap-2">
-                            <ion-icon name="pie-chart-outline" class="opacity-70"></ion-icon>
-                            Desempenho por Dimensão
-                        </h3>
-                        <div class="w-full relative flex-1 flex items-center justify-center" style="max-width: 200px; aspect-ratio: 1;">
+                    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg border border-gray-100 p-6 h-full flex flex-col items-center justify-center">
+                        <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-4 text-center">Desempenho por Dimensão</h3>
+                        <div class="w-full relative" style="max-width: 200px; aspect-ratio: 1;">
                             <canvas id="radarChart"></canvas>
                         </div>
                     </div>
@@ -247,12 +224,9 @@ $opcaoLabels = [
                 </div>
 
                 <!-- Data summary -->
-                <div class="md:col-span-2 bg-white shadow-sm sm:rounded-lg border border-gray-100 p-6 relative summary-block section-block">
+                <div class="md:col-span-2 bg-white shadow-sm sm:rounded-lg border border-gray-100 p-6 relative summary-block">
                     <div class="flex items-center justify-between mb-5">
-                        <h3 class="font-semibold text-gray-900 flex items-center gap-2">
-                            <ion-icon name="information-circle-outline" style="color: #D0AE6D;"></ion-icon>
-                            Resumo de Informações
-                        </h3>
+                        <h3 class="font-semibold text-gray-900">Resumo de Informações</h3>
                         @if($diagnostico->status === 'concluido')
                             <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md border text-green-700 border-green-300 bg-green-50">Concluído</span>
                         @else
