@@ -85,7 +85,7 @@ $opcaoLabels = [
                 display: none !important;
             }
             
-            body {
+            body, main {
                 background: white !important;
                 padding: 0 !important;
                 margin: 0 !important;
@@ -94,7 +94,7 @@ $opcaoLabels = [
             }
 
             /* Remove gray backgrounds globally for print */
-            .bg-gray-50, .bg-gray-100, .bg-gray-50\/50, .py-8 { 
+            .bg-gray-50, .bg-gray-100, .bg-gray-50\/50, .py-8, main { 
                 background-color: white !important; 
             }
 
@@ -150,21 +150,21 @@ $opcaoLabels = [
         }
     </style>
 
+    <!-- Print Header -->
+    <div class="print-only mb-12 max-w-7xl mx-auto sm:px-6 lg:px-8 pt-8">
+        <div class="flex justify-between items-start mb-4">
+            <img src="{{ asset('assets/images/consilium-logo-text.svg') }}" alt="Consilium" class="h-5 w-auto">
+            <div class="text-right">
+                <p class="text-[10px] font-bold text-gray-300">{{ $diagnostico->updated_at->format('d/m/Y H:i') }}</p>
+            </div>
+        </div>
+        <h1 class="text-xl font-black text-gray-900 tracking-tight">
+            {{ $diagnostico->questionario ? $diagnostico->questionario->titulo : 'Check-up de Consistência da Margem' }}
+        </h1>
+    </div>
+
     <div class="py-8">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-
-            <!-- Print Header -->
-            <div class="print-only mb-12">
-                <div class="flex justify-between items-start mb-4">
-                    <img src="{{ asset('assets/images/consilium-logo-text.svg') }}" alt="Consilium" class="h-5 w-auto">
-                    <div class="text-right">
-                        <p class="text-[10px] font-bold text-gray-300">{{ $diagnostico->updated_at->format('d/m/Y H:i') }}</p>
-                    </div>
-                </div>
-                <h1 class="text-xl font-black text-gray-900 tracking-tight">
-                    {{ $diagnostico->questionario ? $diagnostico->questionario->titulo : 'Check-up de Consistência da Margem' }}
-                </h1>
-            </div>
 
             @if(session('success'))
             <div class="px-4 py-3 bg-green-50 border border-green-200 text-green-800 rounded-lg text-sm">
