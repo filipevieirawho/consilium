@@ -446,9 +446,8 @@
             <div class="flex items-start justify-between mb-6">
                 <!-- Title & Icon -->
                 <div class="flex items-center gap-4">
-                    <div class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full"
-                        class="bg-gold-light">
-                        <ion-icon name="pencil-outline" class="text-2xl" class="text-gold"></ion-icon>
+                    <div class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-gold-light">
+                        <ion-icon name="pencil-outline" class="text-2xl text-gold"></ion-icon>
                     </div>
                     <h3 class="text-xl font-semibold leading-6 text-gray-900 text-left" id="modal-title">
                         Editar Lead
@@ -580,7 +579,7 @@
         <div class="px-6 py-6 sm:p-8">
             <div class="flex items-center justify-between mb-6">
                 <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-full flex items-center justify-center" class="bg-gold-light">
+                    <div class="w-10 h-10 rounded-full flex items-center justify-center bg-gold-light">
                         <ion-icon name="link-outline" class="text-gold" style="font-size: 1.25rem;"></ion-icon>
                     </div>
                     <h3 class="text-lg font-bold text-gray-900 text-left">Gerar Link de Diagnóstico</h3>
@@ -634,8 +633,7 @@
                     <input type="text" id="diag-link-gerado" readonly
                         class="block flex-1 text-sm text-gray-800 bg-white border border-gray-200 rounded-lg px-3 py-2">
                     <button id="diag-btn-copiar"
-                        class="px-3 py-2 rounded-lg text-white text-sm font-medium"
-                        class="bg-gold">
+                        class="px-3 py-2 rounded-lg text-white text-sm font-medium bg-gold">
                         Copiar
                     </button>
                 </div>
@@ -643,8 +641,7 @@
             </div>
 
             <div class="flex gap-3">
-                <button id="diag-btn-gerar" class="flex-1 py-3 text-white font-semibold rounded-xl transition-all"
-                    class="bg-gold">
+                <button id="diag-btn-gerar" class="flex-1 py-3 text-white font-semibold rounded-xl transition-all bg-gold">
                     Gerar Link
                 </button>
                 <button type="button" x-on:click="$dispatch('close')" class="flex-1 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold rounded-xl transition-all">

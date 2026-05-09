@@ -8,8 +8,7 @@
                 <h2 class="font-semibold text-xl text-gray-800 leading-tight">{{ $empresa->nome_fantasia }}</h2>
             </div>
             <a href="{{ route('empresas.edit', $empresa) }}"
-               class="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-semibold text-white rounded-lg"
-               class="bg-gold">
+               class="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-semibold text-white rounded-lg bg-gold">
                 <ion-icon name="create-outline"></ion-icon> Editar
             </a>
         </div>

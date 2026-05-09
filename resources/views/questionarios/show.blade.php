@@ -10,8 +10,7 @@
                 <h2 class="font-semibold text-xl text-gray-800 leading-tight">{{ $questionario->nome }}</h2>
             </div>
             <a :href="'{{ route('questionarios.edit', $questionario) }}?tab=' + activeTab"
-               class="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-semibold text-white rounded-lg transition-all"
-               class="bg-gold">
+               class="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-semibold text-white rounded-lg transition-all bg-gold">
                 <ion-icon name="create-outline"></ion-icon> Editar
             </a>
         </div>
@@ -113,7 +112,7 @@
                                     @forelse($questionario->questoes as $q)
                                     <div class="bg-gray-50 rounded-xl border border-gray-100 p-4 transition-all hover:shadow-sm">
                                         <div class="flex items-start gap-3">
-                                            <span class="flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold text-white shadow-sm" class="bg-gold">
+                                            <span class="flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold text-white shadow-sm bg-gold">
                                                 {{ $loop->iteration }}
                                             </span>
                                             <div class="flex-1 min-w-0">

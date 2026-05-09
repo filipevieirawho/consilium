@@ -86,7 +86,7 @@
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                                             {{ $user->name }}
                                             @if($user->id === auth()->id())
-                                                <span class="ml-1 text-xs font-normal" class="text-gold">(você)</span>
+                                                <span class="ml-1 text-xs font-normal text-gold">(você)</span>
                                             @endif
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">

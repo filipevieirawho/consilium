@@ -38,8 +38,7 @@
                         <!-- Action buttons -->
                         <div class="flex gap-3">
                             <a href="{{ route('questionarios.create') }}"
-                               class="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-white rounded-md shadow-sm transition-colors"
-                               class="bg-gold hover:bg-gold-dark">
+                               class="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-white rounded-md shadow-sm transition-colors bg-gold hover:bg-gold-dark">
                                 <ion-icon name="add-outline" class="text-xl"></ion-icon>
                                 Novo Modelo
                             </a>
@@ -111,7 +110,7 @@
                                     <td colspan="5" class="px-6 py-10 text-center text-gray-500 text-sm">
                                         <ion-icon name="document-text-outline" class="text-4xl mb-3 block mx-auto text-gray-400"></ion-icon>
                                         <p class="mb-3">Nenhum modelo de questionário criado ainda.</p>
-                                        <a href="{{ route('questionarios.create') }}" class="font-medium" class="text-gold">Criar primeiro modelo →</a>
+                                        <a href="{{ route('questionarios.create') }}" class="font-medium text-gold">Criar primeiro modelo →</a>
                                     </td>
                                 </tr>
                                 @endforelse

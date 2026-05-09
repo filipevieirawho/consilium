@@ -51,8 +51,7 @@
                                 <ion-icon name="flash-outline" class="text-xl text-yellow-500"></ion-icon> Link de Campanha
                             </button>
                             <button id="btn-gerar-link"
-                                class="px-4 py-2 text-white font-medium rounded-md shadow-sm transition-colors flex items-center gap-2 text-sm"
-                                class="bg-gold">
+                                class="px-4 py-2 text-white font-medium rounded-md shadow-sm transition-colors flex items-center gap-2 text-sm bg-gold">
                                 <ion-icon name="add-outline" class="text-xl"></ion-icon> Gerar Diagnóstico
                             </button>
                         </div>
@@ -241,8 +240,7 @@
                     <input type="text" id="link-gerado" readonly
                         class="block flex-1 text-sm text-gray-800 bg-white border border-gray-200 rounded-lg px-3 py-2">
                     <button id="btn-copiar"
-                        class="px-3 py-2 rounded-lg text-white text-sm font-medium"
-                        class="bg-gold">
+                        class="px-3 py-2 rounded-lg text-white text-sm font-medium bg-gold">
                         Copiar
                     </button>
                 </div>
@@ -250,8 +248,7 @@
             </div>
 
             <div class="flex gap-3">
-                <button id="btn-gerar" class="flex-1 py-3 text-white font-semibold rounded-xl transition-all"
-                    class="bg-gold">
+                <button id="btn-gerar" class="flex-1 py-3 text-white font-semibold rounded-xl transition-all bg-gold">
                     Gerar Link
                 </button>
                 <button id="btn-cancelar" class="flex-1 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold rounded-xl transition-all">
@@ -305,16 +302,14 @@
                     <input type="text" id="link-gerado-campanha" readonly
                         class="block flex-1 text-sm text-gray-800 bg-white border border-gray-200 rounded-lg px-3 py-2">
                     <button id="btn-copiar-campanha-resultado"
-                        class="px-3 py-2 rounded-lg text-white text-sm font-medium"
-                        class="bg-gold">
+                        class="px-3 py-2 rounded-lg text-white text-sm font-medium bg-gold">
                         Copiar
                     </button>
                 </div>
             </div>
 
             <button id="btn-gerar-link-campanha-action"
-                class="w-full flex justify-center items-center gap-2 py-3 px-4 border border-transparent rounded-xl shadow-sm text-sm font-medium text-white transition-all focus:outline-none"
-                class="bg-gold">
+                class="w-full flex justify-center items-center gap-2 py-3 px-4 border border-transparent rounded-xl shadow-sm text-sm font-medium text-white transition-all focus:outline-none bg-gold">
                 Gerar Link de Campanha
             </button>
         </div>

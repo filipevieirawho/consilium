@@ -110,8 +110,7 @@
                                             <p class="text-sm text-gray-500 mt-1">Gerencie as perguntas que compõem este diagnóstico.</p>
                                         </div>
                                         <button type="button" id="btn-add-questao"
-                                                class="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-white rounded-xl transition-all hover:shadow-md"
-                                                class="bg-gold">
+                                                class="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-white rounded-xl transition-all hover:shadow-md bg-gold">
                                             <ion-icon name="add-outline" class="text-lg"></ion-icon> Adicionar Questão
                                         </button>
                                     </div>
@@ -162,8 +161,7 @@
                                      <a href="{{ route('questionarios.show', $questionario) }}" class="text-sm font-medium text-gray-500 hover:text-gray-700 transition-colors">
                                         Descartar alterações
                                      </a>
-                                     <button type="submit" class="px-8 py-3 text-sm font-bold text-white rounded-xl transition-all hover:scale-[1.02] active:scale-[0.98] hover:shadow-md" 
-                                             class="bg-gold">
+                                     <button type="submit" class="px-8 py-3 text-sm font-bold text-white rounded-xl transition-all hover:scale-[1.02] active:scale-[0.98] hover:shadow-md bg-gold">
                                         Salvar Alterações
                                      </button>
                                 </div>
@@ -205,7 +203,7 @@
 
         div.innerHTML = `
             <div class="flex items-start justify-between gap-3 mb-3">
-                <span class="numero flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold text-white" class="bg-gold">${idx+1}</span>
+                <span class="numero flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold text-white bg-gold">${idx+1}</span>
                 <button type="button" onclick="this.closest('.questao-row').remove(); atualizarNumeracao();" class="text-gray-400 hover:text-red-500 ml-auto">
                     <ion-icon name="trash-outline" class="text-base"></ion-icon>
                 </button>

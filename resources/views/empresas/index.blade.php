@@ -45,8 +45,7 @@
 
                         <div class="flex gap-3">
                             <a href="{{ route('empresas.create') }}"
-                               class="px-4 py-2 text-white font-medium rounded-md shadow-sm transition-colors flex items-center gap-2 text-sm"
-                               class="bg-gold">
+                               class="px-4 py-2 text-white font-medium rounded-md shadow-sm transition-colors flex items-center gap-2 text-sm bg-gold">
                                 <ion-icon name="add-outline" class="text-xl"></ion-icon> Nova Empresa
                             </a>
                         </div>
@@ -106,7 +105,7 @@
                                     <td colspan="6" class="px-6 py-10 text-center text-gray-400 text-sm">
                                         <ion-icon name="business-outline" class="text-4xl mb-3 block mx-auto"></ion-icon>
                                         <p class="text-sm">Nenhuma empresa cadastrada ainda.</p>
-                                        <a href="{{ route('empresas.create') }}" class="mt-3 inline-block text-sm font-medium" class="text-gold">Cadastrar primeira empresa →</a>
+                                        <a href="{{ route('empresas.create') }}" class="mt-3 inline-block text-sm font-medium text-gold">Cadastrar primeira empresa →</a>
                                     </td>
                                 </tr>
                                 @endforelse

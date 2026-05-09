@@ -95,8 +95,7 @@
                         <!-- Add Lead Button -->
                         <div class="w-full lg:w-auto flex justify-end flex-shrink-0">
                             <button type="button" x-data="" @click.prevent="$dispatch('open-modal', 'add-manual-lead')"
-                                class="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-white rounded-md shadow-sm transition-colors"
-                                class="bg-gold">
+                                class="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-white rounded-md shadow-sm transition-colors bg-gold">
                                 <ion-icon name="add-outline" class="text-xl"></ion-icon> Novo Lead
                             </button>
                         </div>
@@ -196,9 +195,8 @@
             <div class="flex items-start justify-between mb-6">
                 <!-- Title & Icon -->
                 <div class="flex items-center gap-4">
-                    <div class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full"
-                        class="bg-gold-light">
-                        <ion-icon name="receipt-outline" class="text-2xl" class="text-gold"></ion-icon>
+                    <div class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-gold-light">
+                        <ion-icon name="receipt-outline" class="text-2xl text-gold"></ion-icon>
                     </div>
                     <h3 class="text-xl font-semibold leading-6 text-gray-900 text-left" id="modal-title">
                         Novo Lead
@@ -280,8 +278,7 @@
                 <!-- Submit Button -->
                 <div class="pt-2 flex justify-end">
                     <button type="submit" form="new-lead-form"
-                        class="px-4 py-2 text-white font-medium rounded-md shadow-sm transition-colors inline-flex items-center justify-center"
-                        class="bg-gold hover:bg-gold-dark">
+                        class="px-4 py-2 text-white font-medium rounded-md shadow-sm transition-colors inline-flex items-center justify-center bg-gold hover:bg-gold-dark">
                         Salvar Lead
                     </button>
                 </div>
