@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\DiagnosticoResultadoMail;
 use App\Models\Contact;
 use App\Models\Diagnostico;
 use App\Models\DiagnosticoResposta;
@@ -9,6 +10,7 @@ use App\Models\Questionario;
 use App\Models\Empresa;
 use App\Services\IpmCalculator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
 class DiagnosticoController extends Controller
@@ -375,6 +377,10 @@ class DiagnosticoController extends Controller
         $resultado = IpmCalculator::calcular($diagnostico->respostas, $diagnostico);
 
         $diagnostico->update(['ipm' => $resultado['ipm'], 'status' => 'concluido']);
+
+        if ($diagnostico->email) {
+            Mail::to($diagnostico->email)->send(new DiagnosticoResultadoMail($diagnostico, $resultado));
+        }
 
         return redirect()->route('diagnostico.result', $token);
     }
