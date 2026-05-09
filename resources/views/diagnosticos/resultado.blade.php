@@ -69,7 +69,7 @@ $cfg = $faixaConfig[$faixa];
             .bg-green-50 { background-color: #f0fdf4 !important; }
             
             /* Avoid page breaks inside sections */
-            .bg-white, .questao-row, .mb-6, .mb-8, .dimension-block {
+            .bg-white, .questao-row, .mb-6, .mb-8, .dimension-block, .dimension-row {
                 page-break-inside: avoid !important;
             }
         }
@@ -132,32 +132,32 @@ $cfg = $faixaConfig[$faixa];
     </div>
 
     <!-- Dimension scores -->
-    <div class="mb-6 no-print">
-        <h3 class="font-semibold text-gray-900 mb-5 flex items-center gap-2 pl-2">
+    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg border border-gray-100 p-6 mb-6">
+        <h3 class="font-semibold text-gray-900 mb-5 flex items-center gap-2">
             <ion-icon name="bar-chart-outline" style="color: #D0AE6D;"></ion-icon>
             Pontuação por dimensão
         </h3>
-    </div>
 
-    <div class="space-y-4 mb-6">
-        @foreach($dimensoes as $dim)
-        <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg border border-gray-100 p-6 dimension-block">
-            <div class="flex justify-between items-center mb-2">
-                <div class="flex items-center gap-2">
-                    <span class="text-sm font-bold text-gray-800">{{ $dim['nome'] }}</span>
-                    @if($dim['fraca'])
-                    <span class="text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-md bg-red-100 text-red-600">Atenção</span>
-                    @endif
+        <div class="space-y-4">
+            @foreach($dimensoes as $dim)
+            <div class="dimension-row">
+                <div class="flex justify-between items-center mb-1">
+                    <div class="flex items-center gap-2">
+                        <span class="text-sm font-medium text-gray-800">{{ $dim['nome'] }}</span>
+                        @if($dim['fraca'])
+                        <span class="text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-md bg-red-100 text-red-600">Atenção</span>
+                        @endif
+                    </div>
+                    <span class="text-sm font-bold" style="color: {{ $dim['fraca'] ? '#ef4444' : ($dim['score'] >= 70 ? '#22c55e' : '#f59e0b') }};">{{ $dim['score'] }}/100</span>
                 </div>
-                <span class="text-sm font-bold" style="color: {{ $dim['fraca'] ? '#ef4444' : ($dim['score'] >= 70 ? '#22c55e' : '#f59e0b') }};">{{ $dim['score'] }}/100</span>
+                <div class="w-full bg-gray-100 rounded-full h-2.5">
+                    <div class="h-2.5 rounded-full transition-all duration-700"
+                         style="width: {{ $dim['score'] }}%; background-color: {{ $dim['fraca'] ? '#ef4444' : ($dim['score'] >= 70 ? '#22c55e' : '#f59e0b') }};"></div>
+                </div>
+                <div class="text-xs text-gray-400 mt-0.5">Peso: {{ round($dim['peso'] * 100) }}%</div>
             </div>
-            <div class="w-full bg-gray-100 rounded-full h-2.5 mb-2">
-                <div class="h-2.5 rounded-full transition-all duration-700"
-                     style="width: {{ $dim['score'] }}%; background-color: {{ $dim['fraca'] ? '#ef4444' : ($dim['score'] >= 70 ? '#22c55e' : '#f59e0b') }};"></div>
-            </div>
-            <div class="text-xs text-gray-400">Peso: {{ round($dim['peso'] * 100) }}%</div>
+            @endforeach
         </div>
-        @endforeach
     </div>
 
     <!-- Weak dimensions callout -->
