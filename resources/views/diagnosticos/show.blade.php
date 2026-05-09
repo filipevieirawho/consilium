@@ -51,9 +51,61 @@ $opcaoLabels = [
                     class="text-[10px] font-bold uppercase tracking-wider flex items-center gap-1 px-4 py-2 rounded-lg border border-[#D0AE6D] text-[#D0AE6D] hover:bg-[#D0AE6D]/05 transition-colors">
                     <ion-icon name="eye-outline" class="text-sm"></ion-icon> Resultado Público
                 </a>
+                <button onclick="window.print()"
+                    class="text-[10px] font-bold uppercase tracking-wider flex items-center gap-1 px-4 py-2 rounded-lg bg-gray-900 text-white hover:bg-gray-800 transition-colors">
+                    <ion-icon name="document-text-outline" class="text-sm"></ion-icon> PDF
+                </button>
             </div>
         </div>
     </x-slot>
+
+    <style>
+        @media print {
+            header, nav, footer, .no-print, button, a, #vincular-status, .custom-combobox-container {
+                display: none !important;
+            }
+            body {
+                background: white !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+            .py-8 {
+                padding-top: 0 !important;
+                padding-bottom: 0 !important;
+            }
+            .max-w-7xl {
+                max-width: 100% !important;
+                padding: 0 !important;
+            }
+            .shadow-sm, .shadow-lg {
+                shadow: none !important;
+                box-shadow: none !important;
+            }
+            .border, .border-2 {
+                border-color: #eee !important;
+            }
+            canvas {
+                max-width: 300px !important;
+                margin: 0 auto;
+            }
+            .grid {
+                display: block !important;
+            }
+            .grid-cols-1, .grid-cols-2, .grid-cols-4 {
+                grid-template-columns: 1fr !important;
+            }
+            .md\:col-span-1, .md\:col-span-2 {
+                width: 100% !important;
+                margin-bottom: 20px;
+            }
+            .bg-white {
+                background: white !important;
+            }
+            .sm\:rounded-lg {
+                border-radius: 0 !important;
+            }
+        }
+    </style>
 
     <div class="py-8">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
