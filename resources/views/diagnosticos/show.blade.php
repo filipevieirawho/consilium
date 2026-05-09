@@ -331,7 +331,7 @@ $opcaoLabels = [
                                     $val = $resp ? $resp->resposta : null;
                                     $lColors = [0 => 'bg-red-100 text-red-700', 1 => 'bg-orange-100 text-gray-800', 2 => 'bg-yellow-100 text-gray-800', 3 => 'bg-green-100 text-green-700'];
                                 @endphp
-                                <div class="flex items-start gap-4 py-3 border-b border-gray-50 last:border-0 pl-4">
+                                <div class="flex items-start gap-4 py-3 border-b border-gray-50 last:border-0 pl-0">
                                     <span class="flex-shrink-0 w-6 h-6 rounded bg-gray-100 text-[10px] font-bold flex items-center justify-center text-gray-400">{{ $idx + 1 }}</span>
                                     <p class="flex-1 text-sm text-gray-700 leading-relaxed">{{ $q->texto }}</p>
                                     @if($val !== null)
@@ -365,7 +365,7 @@ $opcaoLabels = [
                             <div class="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold text-white" style="background-color: #D0AE6D;">{{ $dim }}</div>
                             <h4 class="font-medium text-gray-800 text-sm">{{ $dimensoesNomesLocal[$dim] }}</h4>
                         </div>
-                        <div class="space-y-2 pl-4">
+                        <div class="space-y-2 pl-0">
                             @foreach($nums as $num)
                             @php
                             $resposta = $respostaMap[$num] ?? null;
