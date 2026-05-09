@@ -134,17 +134,58 @@ $cfg = $faixaConfig[$faixa];
 
     <!-- Enterprise data summary -->
     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg border border-gray-100 p-6 mb-8">
-        <h3 class="font-semibold text-gray-700 mb-4 text-xs uppercase tracking-wide flex items-center gap-2">
-            <ion-icon name="business-outline" class="text-gold-500"></ion-icon>
-            Dados do diagnóstico
-        </h3>
-        <dl class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4 text-sm">
-            <div><dt class="text-gray-400 text-[10px] uppercase">Respondente</dt><dd class="font-medium text-gray-800">{{ $diagnostico->nome ?: '—' }}</dd></div>
-            <div><dt class="text-gray-400 text-[10px] uppercase">Empresa</dt><dd class="font-medium text-gray-800">{{ $diagnostico->empresa ?: '—' }}</dd></div>
-            <div><dt class="text-gray-400 text-[10px] uppercase">Empreendimento</dt><dd class="font-medium text-gray-800">{{ $diagnostico->nome_empreendimento ?: '—' }}</dd></div>
-            @if($diagnostico->cidade)<div><dt class="text-gray-400 text-[10px] uppercase">Cidade</dt><dd class="font-medium text-gray-800">{{ $diagnostico->cidade }}</dd></div>@endif
-            @if($diagnostico->estagio_obra !== null)<div><dt class="text-gray-400 text-[10px] uppercase">Estágio da obra</dt><dd class="font-medium text-gray-800">{{ $diagnostico->estagio_obra }}%</dd></div>@endif
-            <div><dt class="text-gray-400 text-[10px] uppercase">Data</dt><dd class="font-medium text-gray-800">{{ $diagnostico->updated_at->format('d/m/Y') }}</dd></div>
+        <div class="flex items-center justify-between mb-5">
+            <h3 class="font-semibold text-gray-900 flex items-center gap-2">
+                <ion-icon name="business-outline" class="text-gold"></ion-icon>
+                Dados do diagnóstico
+            </h3>
+            <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md border text-green-700 border-green-300 bg-green-50">Concluído</span>
+        </div>
+
+        <dl class="grid grid-cols-2 gap-x-6 gap-y-4 text-sm">
+            @if($diagnostico->questionario)
+            <div class="col-span-2">
+                <dt class="text-xs text-gray-400 uppercase tracking-wide">Modelo Aplicado</dt>
+                <dd class="font-bold text-gold mt-0.5">{{ $diagnostico->questionario->titulo }}</dd>
+            </div>
+            @else
+            <div class="col-span-2">
+                <dt class="text-xs text-gray-400 uppercase tracking-wide">Modelo Aplicado</dt>
+                <dd class="font-medium text-gray-400 mt-0.5 italic">Padrão Consilium (18 questões)</dd>
+            </div>
+            @endif
+
+            @if($diagnostico->nome_empreendimento)
+            <div class="col-span-2">
+                <dt class="text-xs text-gray-400 uppercase tracking-wide">Empreendimento</dt>
+                <dd class="font-medium text-gray-800 mt-0.5">{{ $diagnostico->nome_empreendimento }}</dd>
+            </div>
+            @endif
+
+            <div>
+                <dt class="text-xs text-gray-400 uppercase tracking-wide">Respondente</dt>
+                <dd class="font-medium text-gray-800 mt-0.5">{{ $diagnostico->nome ?: '—' }}</dd>
+            </div>
+            <div>
+                <dt class="text-xs text-gray-400 uppercase tracking-wide">Empresa</dt>
+                <dd class="font-medium text-gray-800 mt-0.5">{{ $diagnostico->empresa ?: '—' }}</dd>
+            </div>
+
+            <div>
+                <dt class="text-xs text-gray-400 uppercase tracking-wide">Cidade</dt>
+                <dd class="font-medium text-gray-800 mt-0.5">{{ $diagnostico->cidade ?: '—' }}</dd>
+            </div>
+            <div>
+                <dt class="text-xs text-gray-400 uppercase tracking-wide">Data</dt>
+                <dd class="font-medium text-gray-800 mt-0.5">{{ $diagnostico->updated_at->format('d/m/Y') }}</dd>
+            </div>
+
+            @if($diagnostico->estagio_obra !== null)
+            <div>
+                <dt class="text-xs text-gray-400 uppercase tracking-wide">Estágio da obra</dt>
+                <dd class="font-medium text-gray-800 mt-0.5">{{ $diagnostico->estagio_obra }}%</dd>
+            </div>
+            @endif
         </dl>
     </div>
 
