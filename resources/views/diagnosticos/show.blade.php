@@ -75,8 +75,8 @@ $opcaoLabels = [
                 <ion-icon name="eye-outline" class="text-sm"></ion-icon> Resultado
             </a>
             <button onclick="window.print()"
-                class="p-2 rounded-lg text-white bg-dark active:scale-95 flex items-center justify-center flex-shrink-0">
-                <ion-icon name="document-text-outline" class="text-sm"></ion-icon>
+                class="text-[10px] font-bold uppercase tracking-wider flex items-center gap-1 px-4 py-2 rounded-lg text-white bg-dark active:scale-95 flex-shrink-0 whitespace-nowrap">
+                <ion-icon name="document-text-outline" class="text-sm"></ion-icon> PDF
             </button>
         </div>
     </div>
