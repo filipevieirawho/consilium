@@ -73,14 +73,25 @@ $opcaoLabels = [
             }
             .print-header {
                 border-bottom: 2px solid #D0AE6D !important;
-                padding-bottom: 1.5rem !important;
-                margin-bottom: 2.5rem !important;
+                padding-bottom: 1rem !important;
+                margin-bottom: 1.5rem !important;
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
             }
+            /* Compact sections for PDF */
+            .bg-white { 
+                padding: 1rem !important; 
+                margin-bottom: 1rem !important; 
+            }
+            .grid { gap: 0.5rem !important; }
+            dl.grid { gap: 0.5rem 1rem !important; }
+            dt { font-size: 8px !important; }
+            dd { font-size: 10px !important; margin-top: 0 !important; }
+            h3 { margin-bottom: 0.5rem !important; }
+
             .print-footer {
-                margin-top: 3rem;
-                padding-top: 1.5rem;
+                margin-top: 2rem;
+                padding-top: 1rem;
                 border-top: 1px solid #eee;
                 text-align: justify;
                 font-size: 8px;
