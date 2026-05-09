@@ -238,7 +238,7 @@ $opcaoLabels = [
                 <div class="md:col-span-2 bg-white shadow-sm sm:rounded-lg border border-gray-100 p-6 relative summary-block">
                     <div class="flex items-center justify-between mb-5">
                         <h3 class="font-semibold text-gray-900 flex items-center gap-2">
-                            <ion-icon name="information-circle-outline" class="text-gold-500"></ion-icon>
+                            <ion-icon name="reader-outline" class="text-gold-500"></ion-icon>
                             Resumo de Informações
                         </h3>
                         @if($diagnostico->status === 'concluido')
