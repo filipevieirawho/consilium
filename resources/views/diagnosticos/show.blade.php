@@ -237,7 +237,10 @@ $opcaoLabels = [
                 <!-- Data summary -->
                 <div class="md:col-span-2 bg-white shadow-sm sm:rounded-lg border border-gray-100 p-6 relative summary-block">
                     <div class="flex items-center justify-between mb-5">
-                        <h3 class="font-semibold text-gray-900">Resumo de Informações</h3>
+                        <h3 class="font-semibold text-gray-900 flex items-center gap-2">
+                            <ion-icon name="information-circle-outline" class="text-gold-500"></ion-icon>
+                            Resumo de Informações
+                        </h3>
                         @if($diagnostico->status === 'concluido')
                             <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md border text-green-700 border-green-300 bg-green-50">Concluído</span>
                         @else

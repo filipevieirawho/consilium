@@ -128,7 +128,10 @@ $cfg = $faixaConfig[$faixa];
 
     <!-- Enterprise data summary -->
     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg border border-gray-100 p-6 mb-8">
-        <h3 class="font-semibold text-gray-700 mb-4 text-xs uppercase tracking-wide">Dados do diagnóstico</h3>
+        <h3 class="font-semibold text-gray-700 mb-4 text-xs uppercase tracking-wide flex items-center gap-2">
+            <ion-icon name="information-circle-outline" class="text-gold-500"></ion-icon>
+            Dados do diagnóstico
+        </h3>
         <dl class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4 text-sm">
             <div><dt class="text-gray-400 text-[10px] uppercase">Respondente</dt><dd class="font-medium text-gray-800">{{ $diagnostico->nome ?: '—' }}</dd></div>
             <div><dt class="text-gray-400 text-[10px] uppercase">Empresa</dt><dd class="font-medium text-gray-800">{{ $diagnostico->empresa ?: '—' }}</dd></div>
