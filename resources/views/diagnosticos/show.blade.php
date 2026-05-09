@@ -78,14 +78,16 @@ $opcaoLabels = [
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
             }
-            /* Compact sections for PDF */
-            .bg-white { 
+            /* Standardize vertical gaps for PDF */
+            .bg-white, .grid, .mb-6, .mb-8, .mb-12, .summary-block, .ipm-radar-grid { 
+                margin-bottom: 1.5rem !important;
                 padding: 1rem !important; 
-                margin-bottom: 1rem !important; 
             }
-            .grid { gap: 0.5rem !important; }
-            dl.grid { gap: 0.5rem 1rem !important; }
-            h3 { margin-bottom: 0.5rem !important; }
+            
+            /* Reset internal grid gap */
+            .grid { gap: 1rem !important; }
+            dl.grid { gap: 0.5rem 1.5rem !important; }
+            h3 { margin-bottom: 0.75rem !important; }
 
             .print-footer {
                 margin-top: 2rem;
