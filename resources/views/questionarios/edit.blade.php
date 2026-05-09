@@ -162,7 +162,7 @@
                                      <a href="{{ route('questionarios.show', $questionario) }}" class="text-sm font-medium text-gray-500 hover:text-gray-700 transition-colors">
                                         Descartar alterações
                                      </a>
-                                     <button type="submit" class="px-8 py-3 text-sm font-bold text-white rounded-xl shadow-lg shadow-gold-100 transition-all hover:scale-[1.02] active:scale-[0.98]" 
+                                     <button type="submit" class="px-8 py-3 text-sm font-bold text-white rounded-xl transition-all hover:scale-[1.02] active:scale-[0.98] hover:shadow-lg hover:shadow-gold-100" 
                                              style="background-color: #D0AE6D;">
                                         Salvar Alterações
                                      </button>
