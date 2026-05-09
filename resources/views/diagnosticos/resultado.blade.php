@@ -39,8 +39,6 @@ $cfg = $faixaConfig[$faixa];
             }
             .grid { gap: 0.5rem !important; }
             dl.grid { gap: 0.5rem 1rem !important; }
-            dt { font-size: 8px !important; }
-            dd { font-size: 10px !important; margin-top: 0 !important; }
             h3 { margin-bottom: 0.5rem !important; }
             
             .print-footer {
