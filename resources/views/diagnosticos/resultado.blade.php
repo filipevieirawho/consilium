@@ -37,7 +37,7 @@ $cfg = $faixaConfig[$faixa];
                 padding: 1.5rem !important; 
                 margin-bottom: 1rem !important;
                 box-shadow: none !important;
-                border-radius: 0 !important;
+                border-radius: 8px !important;
                 background-color: white !important;
             }
             .grid { gap: 1rem !important; }
