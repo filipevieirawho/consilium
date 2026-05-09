@@ -133,7 +133,7 @@ $cfg = $faixaConfig[$faixa];
     </div>
 
     <!-- Enterprise data summary -->
-    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg border border-gray-100 p-6 mb-8">
+    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg border border-gray-100 p-6 mb-6">
         <div class="flex items-center justify-between mb-5">
             <h3 class="font-semibold text-gray-900 flex items-center gap-2">
                 <ion-icon name="business-outline" class="text-gold"></ion-icon>
