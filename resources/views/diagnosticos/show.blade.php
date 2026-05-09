@@ -64,7 +64,14 @@ $opcaoLabels = [
         @page {
             margin: 1.5cm;
         }
+            .print-only {
+                display: none !important;
+            }
+        }
         @media print {
+            .print-only {
+                display: block !important;
+            }
             /* Basic resets */
             header, nav, footer, .no-print, button, a, #vincular-status, .custom-combobox-container {
                 display: none !important;
@@ -137,6 +144,23 @@ $opcaoLabels = [
 
     <div class="py-8">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
+
+            <!-- Print Header -->
+            <div class="print-only mb-8 border-b pb-6">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-4">
+                        <img src="{{ asset('assets/images/consilium-logo-text.svg') }}" alt="Consilium" class="h-6 w-auto">
+                        <div class="h-8 w-px bg-gray-200"></div>
+                        <h1 class="text-lg font-bold text-gray-900">
+                            {{ $diagnostico->questionario ? $diagnostico->questionario->titulo : 'Check-up de Consistência da Margem' }}
+                        </h1>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-[10px] uppercase tracking-widest text-gray-400 font-bold">Realizado em</p>
+                        <p class="text-sm font-bold text-gray-700">{{ $diagnostico->updated_at->format('d/m/Y H:i') }}</p>
+                    </div>
+                </div>
+            </div>
 
             @if(session('success'))
             <div class="px-4 py-3 bg-green-50 border border-green-200 text-green-800 rounded-lg text-sm">
