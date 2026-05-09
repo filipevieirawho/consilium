@@ -50,7 +50,11 @@
         </div>
 
         <!-- CTA -->
-        <a href="{{ route('diagnostico.form', $token) }}"
+        @php
+            $formUrl = route('diagnostico.form', $token);
+            if ($diagnostico->questionario_id) $formUrl .= '?q=' . $diagnostico->questionario_id;
+        @endphp
+        <a href="{{ $formUrl }}"
             class="inline-flex items-center gap-2 px-8 py-4 text-white font-semibold rounded-lg transition-colors bg-gold hover:bg-gold-dark">
             Iniciar Check-up
             <ion-icon name="arrow-forward-outline" class="text-xl"></ion-icon>

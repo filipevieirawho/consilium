@@ -22,7 +22,8 @@ class DiagnosticoController extends Controller
      * GET /diagnostico/novo
      *
      * No DB record is created here — we only persist once the respondent
-     * submits the first form step ("Sobre você").
+     * submits the first form step ("Sobre você"). The questionario_id is
+     * carried through the URL so no session or cache dependency is needed.
      */
     public function startNovo(Request $request)
     {
@@ -31,12 +32,14 @@ class DiagnosticoController extends Controller
         ]);
 
         $token = Str::random(32);
+        $qId   = $request->query('q');
 
-        session(["pending_diagnostico.$token" => [
-            'questionario_id' => $request->query('q'),
-        ]]);
+        $url = route('diagnostico.landing', $token);
+        if ($qId) {
+            $url .= '?q=' . $qId;
+        }
 
-        return redirect()->route('diagnostico.landing', $token);
+        return redirect($url);
     }
 
     /**
@@ -48,7 +51,7 @@ class DiagnosticoController extends Controller
         $diagnostico = Diagnostico::with('questionario')->where('token', $token)->first();
 
         if (!$diagnostico) {
-            $diagnostico = $this->pendingDiagnostico($token);
+            $diagnostico = $this->pendingDiagnostico($token, request()->query('q'));
         } elseif ($diagnostico->status === 'concluido') {
             return redirect()->route('diagnostico.result', $token);
         }
@@ -65,12 +68,14 @@ class DiagnosticoController extends Controller
         $diagnostico = Diagnostico::where('token', $token)->first();
 
         if (!$diagnostico) {
-            $diagnostico = $this->pendingDiagnostico($token);
+            $diagnostico = $this->pendingDiagnostico($token, request()->query('q'));
         } elseif ($diagnostico->status === 'concluido') {
             return redirect()->route('diagnostico.result', $token);
         }
 
-        return view('diagnosticos.form', compact('diagnostico', 'token'));
+        $questionario_id = $diagnostico->questionario_id;
+
+        return view('diagnosticos.form', compact('diagnostico', 'token', 'questionario_id'));
     }
 
     /**
@@ -80,18 +85,21 @@ class DiagnosticoController extends Controller
     {
         $diagnostico = Diagnostico::where('token', $token)->first();
 
-        // First form submission for a campaign link — create the record now
+        // First form submission for a campaign link — create the record now.
+        // questionario_id is carried as a hidden field (no session dependency).
         if (!$diagnostico) {
-            $pending = session("pending_diagnostico.$token");
-            abort_if(!$pending, 404);
+            $qId = $request->input('questionario_id') ?: null;
+
+            // Validate questionario_id if provided
+            if ($qId && !Questionario::where('id', $qId)->exists()) {
+                $qId = null;
+            }
 
             $diagnostico = Diagnostico::create([
                 'token'           => $token,
                 'status'          => 'em_andamento',
-                'questionario_id' => $pending['questionario_id'] ?? null,
+                'questionario_id' => $qId,
             ]);
-
-            session()->forget("pending_diagnostico.$token");
         }
 
         $validated = $request->validate([
@@ -582,15 +590,13 @@ class DiagnosticoController extends Controller
 
     /**
      * Build a lightweight anonymous object for views when the campaign token
-     * exists in session but hasn't been persisted to the DB yet.
+     * hasn't been persisted to the DB yet. The questionario_id is passed
+     * directly from the URL query param — no session dependency.
      */
-    protected function pendingDiagnostico(string $token): object
+    protected function pendingDiagnostico(string $token, ?string $questionarioId = null): object
     {
-        $pending = session("pending_diagnostico.$token");
-        abort_if(!$pending, 404);
-
-        $questionario = isset($pending['questionario_id'])
-            ? Questionario::with('questoes')->find($pending['questionario_id'])
+        $questionario = $questionarioId
+            ? Questionario::with('questoes')->find($questionarioId)
             : null;
 
         return (object) [
@@ -605,7 +611,7 @@ class DiagnosticoController extends Controller
             'nome_empreendimento' => null,
             'status'              => 'em_andamento',
             'aceite'              => false,
-            'questionario_id'     => $pending['questionario_id'] ?? null,
+            'questionario_id'     => $questionarioId,
             'questionario'        => $questionario,
         ];
     }

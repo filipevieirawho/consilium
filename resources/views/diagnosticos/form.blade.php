@@ -9,6 +9,9 @@
 
         <form method="POST" action="{{ route('diagnostico.saveForm', $token) }}" class="space-y-5">
             @csrf
+            @if(!empty($questionario_id))
+            <input type="hidden" name="questionario_id" value="{{ $questionario_id }}">
+            @endif
 
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">Nome <span class="text-red-500">*</span></label>
