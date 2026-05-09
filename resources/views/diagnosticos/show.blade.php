@@ -225,33 +225,34 @@ $opcaoLabels = [
 
                 <!-- Data summary -->
                 <div class="md:col-span-2 bg-white shadow-sm sm:rounded-lg border border-gray-100 p-6 relative summary-block">
-                    <div class="flex items-center justify-between mb-5">
-                        <h3 class="font-semibold text-gray-900">Resumo de Informações</h3>
+                    <h3 class="font-semibold text-gray-900 mb-4 flex items-center gap-2">
+                        <ion-icon name="business-outline" style="color: #D0AE6D;"></ion-icon>
+                        Resumo de Informações
                         @if($diagnostico->status === 'concluido')
-                            <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md border text-green-700 border-green-300 bg-green-50">Concluído</span>
+                            <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md border text-green-700 border-green-300 bg-green-50 ml-auto no-print">Concluído</span>
                         @else
-                            <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md border text-yellow-700 border-yellow-300 bg-yellow-50">Em andamento</span>
+                            <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md border text-yellow-700 border-yellow-300 bg-yellow-50 ml-auto no-print">Em andamento</span>
                         @endif
-                    </div>
+                    </h3>
 
-                    <dl class="grid grid-cols-2 gap-x-6 gap-y-4 text-sm">
+                    <dl class="grid grid-cols-2 sm:grid-cols-3 gap-4 text-sm">
                         @if($diagnostico->questionario)
-                        <div class="col-span-2">
-                            <dt class="text-xs text-gray-400 uppercase tracking-wide">Modelo Aplicado</dt>
-                            <dd class="font-bold text-[#D0AE6D] mt-0.5">{{ $diagnostico->questionario->titulo }}</dd>
+                        <div class="col-span-2 sm:col-span-3">
+                            <dt class="text-gray-400 text-[10px] uppercase">Modelo Aplicado</dt>
+                            <dd class="font-bold text-[#D0AE6D]">{{ $diagnostico->questionario->titulo }}</dd>
                         </div>
                         @else
-                        <div class="col-span-2">
-                            <dt class="text-xs text-gray-400 uppercase tracking-wide">Modelo Aplicado</dt>
-                            <dd class="font-medium text-gray-400 mt-0.5 italic">Padrão Consilium (18 questões)</dd>
+                        <div class="col-span-2 sm:col-span-3">
+                            <dt class="text-gray-400 text-[10px] uppercase">Modelo Aplicado</dt>
+                            <dd class="font-medium text-gray-400 italic">Padrão Consilium (18 questões)</dd>
                         </div>
                         @endif
 
-                        <div><dt class="text-xs text-gray-400 uppercase tracking-wide">Respondente</dt><dd class="font-medium text-gray-800 mt-0.5">{{ $diagnostico->nome ?: '—' }}</dd></div>
-                        <div><dt class="text-xs text-gray-400 uppercase tracking-wide">Empresa</dt><dd class="font-medium text-gray-800 mt-0.5">{{ $diagnostico->empresa ?: '—' }}</dd></div>
+                        <div><dt class="text-gray-400 text-[10px] uppercase">Respondente</dt><dd class="font-medium text-gray-800">{{ $diagnostico->nome ?: '—' }}</dd></div>
+                        <div><dt class="text-gray-400 text-[10px] uppercase">Empresa</dt><dd class="font-medium text-gray-800">{{ $diagnostico->empresa ?: '—' }}</dd></div>
                         
-                        <div><dt class="text-xs text-gray-400 uppercase tracking-wide">Cidade</dt><dd class="font-medium text-gray-800 mt-0.5">{{ $diagnostico->cidade ?: '—' }}</dd></div>
-                        <div><dt class="text-xs text-gray-400 uppercase tracking-wide">Data</dt><dd class="font-medium text-gray-800 mt-0.5">{{ $diagnostico->created_at->format('d/m/Y H:i') }}</dd></div>
+                        <div><dt class="text-gray-400 text-[10px] uppercase">Cidade</dt><dd class="font-medium text-gray-800">{{ $diagnostico->cidade ?: '—' }}</dd></div>
+                        <div><dt class="text-gray-400 text-[10px] uppercase">Data</dt><dd class="font-medium text-gray-800">{{ $diagnostico->created_at->format('d/m/Y H:i') }}</dd></div>
                         
                         <div class="col-span-2 mt-2 pt-2 border-t border-gray-50">
                             <div class="w-full">
