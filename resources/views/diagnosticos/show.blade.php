@@ -124,7 +124,7 @@ $opcaoLabels = [
             .text-gold-500 { color: #D0AE6D !important; }
             
             /* Avoid page breaks inside sections */
-            .bg-white, .questao-row, .mb-6 {
+            .bg-white, .questao-row, .mb-6, .dimension-block {
                 page-break-inside: avoid !important;
             }
         }
@@ -251,9 +251,11 @@ $opcaoLabels = [
 
             <!-- Respostas do questionário -->
             @if($diagnostico->respostas->count() > 0)
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg border border-gray-100 p-6">
-                <h3 class="font-semibold text-gray-900 mb-5">Respostas do questionário</h3>
+            <div class="mb-4 no-print">
+                <h3 class="font-semibold text-gray-900 ml-2">Respostas do questionário</h3>
+            </div>
 
+            <div class="space-y-6">
                 @if($diagnostico->questionario)
                     {{-- MODO DINÂMICO --}}
                     @php
@@ -262,7 +264,7 @@ $opcaoLabels = [
                     @endphp
 
                     @foreach($grupos as $dimNome => $questoes)
-                    <div class="mb-6">
+                    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg border border-gray-100 p-6 dimension-block">
                         <div class="flex items-center gap-2 mb-3">
                             <div class="w-2 h-6 rounded-full" style="background-color: #D0AE6D;"></div>
                             <h4 class="font-bold text-gray-800 text-sm">{{ $dimNome }}</h4>
@@ -303,12 +305,12 @@ $opcaoLabels = [
                     @endphp
 
                     @foreach($dimensoesGrupos as $dim => $nums)
-                    <div class="mb-6">
+                    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg border border-gray-100 p-6 dimension-block">
                         <div class="flex items-center gap-2 mb-3">
                             <div class="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold text-white" style="background-color: #D0AE6D;">{{ $dim }}</div>
                             <h4 class="font-medium text-gray-800 text-sm">{{ $dimensoesNomesLocal[$dim] }}</h4>
                         </div>
-                        <div class="space-y-2 pl-8">
+                        <div class="space-y-2 pl-4">
                             @foreach($nums as $num)
                             @php
                             $resposta = $respostaMap[$num] ?? null;
