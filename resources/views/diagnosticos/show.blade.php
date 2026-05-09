@@ -87,23 +87,28 @@ $opcaoLabels = [
             .max-w-7xl { max-width: 100% !important; padding: 0 !important; }
             
             /* Specific Grid adjustment for PDF */
-            .grid {
+            .print-grid {
                 display: grid !important;
-                gap: 1rem !important;
-                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 1.5rem !important;
+                grid-template-areas: 
+                    "summary summary"
+                    "ipm radar" !important;
+                grid-template-columns: 1fr 1fr !important;
             }
             
-            /* IPM and Radar occupy 1 col each (side by side) */
-            .md\:col-span-1 { 
-                grid-column: span 1 / span 1 !important; 
+            .summary-block { 
+                grid-area: summary !important; 
                 width: 100% !important;
             }
 
-            /* Resumo de Informações occupies both columns (full width below) */
-            .md\:col-span-2 { 
-                grid-column: span 2 / span 2 !important; 
+            .ipm-block { 
+                grid-area: ipm !important; 
                 width: 100% !important;
-                margin-top: 1rem;
+            }
+
+            .radar-block { 
+                grid-area: radar !important; 
+                width: 100% !important;
             }
 
             /* Ensure boxes look good */
@@ -140,10 +145,10 @@ $opcaoLabels = [
             @endif
 
             <!-- Top row: IPM, Radar + Status -->
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 print-grid">
 
                 <!-- IPM Score -->
-                <div class="md:col-span-1">
+                <div class="md:col-span-1 ipm-block">
                     @if($resultado)
                     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg border-2 p-6 text-center h-full flex flex-col items-center justify-center"
                          style="border-color: {{ $cfg['border'] }};">
@@ -166,7 +171,7 @@ $opcaoLabels = [
                 </div>
 
                 <!-- Radar Chart -->
-                <div class="md:col-span-1">
+                <div class="md:col-span-1 radar-block">
                     @if($resultado)
                     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg border border-gray-100 p-6 h-full flex flex-col items-center justify-center">
                         <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-4 text-center">Desempenho por Dimensão</h3>
@@ -183,7 +188,7 @@ $opcaoLabels = [
                 </div>
 
                 <!-- Data summary -->
-                <div class="md:col-span-2 bg-white shadow-sm sm:rounded-lg border border-gray-100 p-6 relative">
+                <div class="md:col-span-2 bg-white shadow-sm sm:rounded-lg border border-gray-100 p-6 relative summary-block">
                     <div class="flex items-center justify-between mb-5">
                         <h3 class="font-semibold text-gray-900">Resumo de Informações</h3>
                         @if($diagnostico->status === 'concluido')
