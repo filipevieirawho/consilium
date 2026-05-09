@@ -59,24 +59,26 @@ $opcaoLabels = [
     </x-slot>
 
     <!-- Mobile action bar (hidden on sm+) -->
-    <div class="sm:hidden bg-white border-b border-gray-100 px-4 py-3 flex gap-2 no-print">
-        <button onclick="copyToClipboard(this, '{{ route('diagnostico.landing', $diagnostico->token) }}')"
-            title="Copiar Link"
-            class="p-2 rounded-lg border border-gray-200 text-gray-500 active:scale-95 flex items-center justify-center">
-            <ion-icon name="link-outline" class="text-xl"></ion-icon>
-        </button>
-        <a href="{{ route('diagnostico.landing', $diagnostico->token) }}" target="_blank"
-            class="flex-1 text-[10px] font-bold uppercase tracking-wider flex items-center justify-center gap-1 px-3 py-2 rounded-lg text-white bg-gold">
-            <ion-icon name="open-outline" class="text-sm"></ion-icon> Ver formulário
-        </a>
-        <a href="{{ route('diagnostico.result', $diagnostico->token) }}" target="_blank"
-            class="flex-1 text-[10px] font-bold uppercase tracking-wider flex items-center justify-center gap-1 px-3 py-2 rounded-lg border border-gold text-gold">
-            <ion-icon name="eye-outline" class="text-sm"></ion-icon> Resultado
-        </a>
-        <button onclick="window.print()"
-            class="p-2 rounded-lg text-white bg-dark active:scale-95 flex items-center justify-center">
-            <ion-icon name="document-text-outline" class="text-sm"></ion-icon>
-        </button>
+    <div class="sm:hidden border-b border-gray-100 px-4 py-3 overflow-x-auto no-print">
+        <div class="flex gap-2 w-max">
+            <button onclick="copyToClipboard(this, '{{ route('diagnostico.landing', $diagnostico->token) }}')"
+                title="Copiar Link"
+                class="p-2 rounded-lg border border-gray-200 text-gray-500 active:scale-95 flex items-center justify-center flex-shrink-0">
+                <ion-icon name="link-outline" class="text-xl"></ion-icon>
+            </button>
+            <a href="{{ route('diagnostico.landing', $diagnostico->token) }}" target="_blank"
+                class="text-[10px] font-bold uppercase tracking-wider flex items-center gap-1 px-4 py-2 rounded-lg text-white bg-gold whitespace-nowrap flex-shrink-0">
+                <ion-icon name="open-outline" class="text-sm"></ion-icon> Ver formulário
+            </a>
+            <a href="{{ route('diagnostico.result', $diagnostico->token) }}" target="_blank"
+                class="text-[10px] font-bold uppercase tracking-wider flex items-center gap-1 px-4 py-2 rounded-lg border border-gold text-gold whitespace-nowrap flex-shrink-0">
+                <ion-icon name="eye-outline" class="text-sm"></ion-icon> Resultado
+            </a>
+            <button onclick="window.print()"
+                class="p-2 rounded-lg text-white bg-dark active:scale-95 flex items-center justify-center flex-shrink-0">
+                <ion-icon name="document-text-outline" class="text-sm"></ion-icon>
+            </button>
+        </div>
     </div>
 
     <style>
