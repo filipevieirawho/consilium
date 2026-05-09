@@ -72,9 +72,9 @@ $opcaoLabels = [
                 display: block !important;
             }
             .print-header {
-                border-bottom: 4px solid #D0AE6D !important;
+                border-bottom: 2px solid #D0AE6D !important;
                 padding-bottom: 1.5rem !important;
-                margin-bottom: 2rem !important;
+                margin-bottom: 2.5rem !important;
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
             }
@@ -158,7 +158,7 @@ $opcaoLabels = [
     </style>
 
     <!-- Print Header -->
-    <div class="print-only print-header max-w-7xl mx-auto sm:px-6 lg:px-8 pt-8">
+    <div class="print-only print-header pt-10">
         <div class="flex justify-between items-start mb-4">
             <img src="{{ asset('assets/images/logo-header-print.png') }}" alt="Consilium" class="h-10 w-auto">
             <div class="text-right">
