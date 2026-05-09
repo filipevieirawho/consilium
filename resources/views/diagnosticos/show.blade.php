@@ -36,7 +36,7 @@ $opcaoLabels = [
                     Diagnóstico — {{ $diagnostico->empresa ?: 'Sem empresa' }}
                 </h2>
             </div>
-            <div class="flex gap-2">
+            <div class="hidden sm:flex gap-2">
                 <button onclick="copyToClipboard(this, '{{ route('diagnostico.landing', $diagnostico->token) }}')"
                     title="Copiar Link"
                     class="p-2 rounded-lg border border-gray-200 bg-white text-gray-500 hover:text-gold hover:border-gold transition-all duration-200 flex items-center justify-center transform active:scale-95">
@@ -57,6 +57,27 @@ $opcaoLabels = [
             </div>
         </div>
     </x-slot>
+
+    <!-- Mobile action bar (hidden on sm+) -->
+    <div class="sm:hidden bg-white border-b border-gray-100 px-4 py-3 flex gap-2 no-print">
+        <button onclick="copyToClipboard(this, '{{ route('diagnostico.landing', $diagnostico->token) }}')"
+            title="Copiar Link"
+            class="p-2 rounded-lg border border-gray-200 text-gray-500 active:scale-95 flex items-center justify-center">
+            <ion-icon name="link-outline" class="text-xl"></ion-icon>
+        </button>
+        <a href="{{ route('diagnostico.landing', $diagnostico->token) }}" target="_blank"
+            class="flex-1 text-[10px] font-bold uppercase tracking-wider flex items-center justify-center gap-1 px-3 py-2 rounded-lg text-white bg-gold">
+            <ion-icon name="open-outline" class="text-sm"></ion-icon> Ver formulário
+        </a>
+        <a href="{{ route('diagnostico.result', $diagnostico->token) }}" target="_blank"
+            class="flex-1 text-[10px] font-bold uppercase tracking-wider flex items-center justify-center gap-1 px-3 py-2 rounded-lg border border-gold text-gold">
+            <ion-icon name="eye-outline" class="text-sm"></ion-icon> Resultado
+        </a>
+        <button onclick="window.print()"
+            class="p-2 rounded-lg text-white bg-dark active:scale-95 flex items-center justify-center">
+            <ion-icon name="document-text-outline" class="text-sm"></ion-icon>
+        </button>
+    </div>
 
     <style>
         @page {
