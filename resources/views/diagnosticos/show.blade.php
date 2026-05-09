@@ -61,6 +61,9 @@ $opcaoLabels = [
     </x-slot>
 
     <style>
+        @page {
+            margin: 0;
+        }
         @media print {
             /* Basic resets */
             header, nav, footer, .no-print, button, a, #vincular-status, .custom-combobox-container {
@@ -69,7 +72,7 @@ $opcaoLabels = [
             
             body {
                 background: white !important;
-                padding: 0 !important;
+                padding: 2cm !important;
                 margin: 0 !important;
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
