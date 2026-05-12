@@ -306,6 +306,7 @@
             borderWidth: 1.5,
             pointRadius: 2,
             pointHoverRadius: 4,
+            order: 1,
         }));
 
         datasets.push({
@@ -317,6 +318,7 @@
             pointRadius: 3,
             pointHoverRadius: 5,
             pointBackgroundColor: '#D0AE6D',
+            order: 0,
         });
 
         new Chart(document.getElementById('radarChart'), {
