@@ -211,10 +211,10 @@
                                         </div>
                                     @endforeach
                                 </div>
-                                <div class="w-12 text-right flex-shrink-0">
+                                <div class="w-8 text-right flex-shrink-0">
                                     @if($q['avg'] !== null)
                                         <span class="text-xs font-bold {{ $q['avg'] >= 2.5 ? 'text-green-600' : ($q['avg'] >= 1.5 ? 'text-yellow-600' : 'text-red-500') }}">
-                                            {{ number_format($q['avg'], 1) }}<span class="text-xs font-normal text-gray-400">/3</span>
+                                            {{ number_format($q['avg'], 1) }}
                                         </span>
                                     @endif
                                 </div>
