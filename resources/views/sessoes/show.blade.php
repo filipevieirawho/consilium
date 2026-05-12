@@ -110,15 +110,48 @@
             <!-- ── Aba: Resultado Consolidado ─────────────────────────────── -->
             <div x-show="activeTab === 'consolidado'" class="space-y-6">
 
-                <!-- Radar de convergência -->
-                <div class="bg-white rounded-xl border border-gray-100 shadow-sm p-6">
-                    <div class="mb-4">
-                        <h3 class="text-sm font-bold text-gray-900">Radar de Convergência</h3>
-                        <p class="text-xs text-gray-400 mt-0.5">Cada linha = um respondente. Linha dourada = média do grupo.</p>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+                    <!-- Radar de convergência -->
+                    <div class="bg-white rounded-xl border border-gray-100 shadow-sm p-6">
+                        <div class="mb-4">
+                            <h3 class="text-sm font-bold text-gray-900">Radar de Convergência</h3>
+                            <p class="text-xs text-gray-400 mt-0.5">Cada linha = um respondente. Linha dourada = média do grupo.</p>
+                        </div>
+                        <div class="relative" style="height: 300px;">
+                            <canvas id="radarChart"></canvas>
+                        </div>
                     </div>
-                    <div class="relative" style="height: 320px;">
-                        <canvas id="radarChart"></canvas>
+
+                    <!-- IPM por Respondente -->
+                    <div class="bg-white rounded-xl border border-gray-100 shadow-sm p-6">
+                        <div class="mb-4">
+                            <h3 class="text-sm font-bold text-gray-900">IPM por Respondente</h3>
+                            <p class="text-xs text-gray-400 mt-0.5">Distribuição dos scores individuais.</p>
+                        </div>
+
+                        @php
+                            $ipmMedia = $ipms->count() > 0 ? round($ipms->avg(), 1) : null;
+                            $ipmMin   = $ipms->count() > 0 ? round($ipms->min(), 1) : null;
+                            $ipmMax   = $ipms->count() > 0 ? round($ipms->max(), 1) : null;
+                        @endphp
+
+                        <div class="grid grid-cols-3 gap-3">
+                            <div class="bg-gray-50 rounded-lg p-3 text-center border border-gray-100">
+                                <div class="text-xl font-bold text-gray-900">{{ $ipmMedia }}</div>
+                                <div class="text-[10px] text-gray-400 uppercase tracking-wide mt-0.5">Média</div>
+                            </div>
+                            <div class="bg-gray-50 rounded-lg p-3 text-center border border-gray-100">
+                                <div class="text-xl font-bold text-gray-500">{{ $ipmMin }}</div>
+                                <div class="text-[10px] text-gray-400 uppercase tracking-wide mt-0.5">Mínimo</div>
+                            </div>
+                            <div class="bg-gray-50 rounded-lg p-3 text-center border border-gray-100">
+                                <div class="text-xl font-bold text-gray-500">{{ $ipmMax }}</div>
+                                <div class="text-[10px] text-gray-400 uppercase tracking-wide mt-0.5">Máximo</div>
+                            </div>
+                        </div>
                     </div>
+
                 </div>
 
                 <!-- Mapa de divergência por questão -->
