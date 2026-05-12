@@ -184,12 +184,12 @@
                                 </div>
                             @endif
 
-                            <div class="flex items-center gap-3 py-2 px-3 rounded-lg {{ $q['divergente'] ? 'bg-red-50/50 border border-red-100' : 'hover:bg-gray-50' }} group">
-                                @if($q['divergente'])
-                                    <ion-icon name="warning-outline" class="text-red-500 flex-shrink-0 text-base"></ion-icon>
-                                @endif
+                            <div class="flex items-center gap-3 py-2 px-3 rounded-lg {{ $q['divergente'] ? 'bg-red-50 border border-red-100' : 'hover:bg-gray-50' }} group">
                                 <div class="flex-1 min-w-0">
                                     <p class="text-xs text-gray-700 leading-relaxed truncate group-hover:whitespace-normal">
+                                        @if($q['divergente'])
+                                            <ion-icon name="warning-outline" class="text-red-400 mr-0.5 align-middle"></ion-icon>
+                                        @endif
                                         {{ $q['texto'] }}
                                     </p>
                                 </div>
