@@ -194,22 +194,35 @@
                                     </p>
                                 </div>
                                 <div class="flex items-center gap-0.5 flex-shrink-0">
-                                    @php
-                                        $maxCount = max($q['dist']);
-                                        $cores = [
-                                            0 => ['sat' => 'bg-red-500 text-white',    'soft' => 'bg-red-50 text-red-500'],
-                                            1 => ['sat' => 'bg-orange-500 text-white',  'soft' => 'bg-orange-50 text-orange-500'],
-                                            2 => ['sat' => 'bg-yellow-500 text-white',  'soft' => 'bg-yellow-50 text-yellow-600'],
-                                            3 => ['sat' => 'bg-green-500 text-white',   'soft' => 'bg-green-50 text-green-600'],
-                                        ];
-                                    @endphp
-                                    @foreach($cores as $val => $c)
-                                        @php $count = $q['dist'][$val]; @endphp
-                                        <div class="w-8 h-6 rounded flex items-center justify-center text-[10px] font-bold
-                                                    {{ $maxCount > 0 && $count === $maxCount ? $c['sat'] : $c['soft'] }}">
-                                            {{ $count > 0 ? $count : '' }}
-                                        </div>
-                                    @endforeach
+                                    @php $maxCount = max($q['dist']); @endphp
+
+                                    {{-- 0 — Vermelho --}}
+                                    @php $count = $q['dist'][0]; $dominant = $maxCount > 0 && $count === $maxCount; @endphp
+                                    <div class="w-8 h-6 rounded flex items-center justify-center text-[10px] font-bold
+                                                {{ $dominant ? 'bg-red-500 text-white' : 'bg-red-50 text-red-500' }}">
+                                        {{ $count > 0 ? $count : '' }}
+                                    </div>
+
+                                    {{-- 1 — Laranja --}}
+                                    @php $count = $q['dist'][1]; $dominant = $maxCount > 0 && $count === $maxCount; @endphp
+                                    <div class="w-8 h-6 rounded flex items-center justify-center text-[10px] font-bold
+                                                {{ $dominant ? 'bg-orange-500 text-white' : 'bg-orange-50 text-orange-500' }}">
+                                        {{ $count > 0 ? $count : '' }}
+                                    </div>
+
+                                    {{-- 2 — Amarelo --}}
+                                    @php $count = $q['dist'][2]; $dominant = $maxCount > 0 && $count === $maxCount; @endphp
+                                    <div class="w-8 h-6 rounded flex items-center justify-center text-[10px] font-bold
+                                                {{ $dominant ? 'bg-yellow-500 text-white' : 'bg-yellow-50 text-yellow-600' }}">
+                                        {{ $count > 0 ? $count : '' }}
+                                    </div>
+
+                                    {{-- 3 — Verde --}}
+                                    @php $count = $q['dist'][3]; $dominant = $maxCount > 0 && $count === $maxCount; @endphp
+                                    <div class="w-8 h-6 rounded flex items-center justify-center text-[10px] font-bold
+                                                {{ $dominant ? 'bg-green-500 text-white' : 'bg-green-50 text-green-600' }}">
+                                        {{ $count > 0 ? $count : '' }}
+                                    </div>
                                 </div>
                                 <div class="w-8 text-right flex-shrink-0">
                                     @if($q['avg'] !== null)
