@@ -31,7 +31,7 @@
     <!-- Top bar -->
     <header class="bg-white border-b border-gray-200 py-4 shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-            <img src="{{ asset('assets/images/consilium-logo-text.svg') }}" alt="Consilium" class="h-5 w-auto">
+            <img src="{{ asset('assets/images/logo-horizontal-crop.png') }}" alt="Consilium" class="h-7 w-auto">
             @if(isset($progressLabel))
                 <span class="text-xs text-gray-500 font-medium">{{ $progressLabel }}</span>
             @endif
