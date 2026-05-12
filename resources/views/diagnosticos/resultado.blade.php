@@ -132,7 +132,8 @@ $cfg = $faixaConfig[$faixa];
         </button>
     </div>
 
-    <!-- Enterprise data summary -->
+    <!-- Enterprise data summary (oculto em diagnósticos de sessão coletiva) -->
+    @if(!$diagnostico->sessao_id)
     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg border border-gray-100 p-6 mb-6">
         <div class="flex items-center justify-between mb-5">
             <h3 class="font-semibold text-gray-900 flex items-center gap-2">
@@ -176,6 +177,7 @@ $cfg = $faixaConfig[$faixa];
             @endif
         </dl>
     </div>
+    @endif
 
     <!-- Top row: IPM & Radar Chart -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
