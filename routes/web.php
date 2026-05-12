@@ -4,6 +4,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DiagnosticoController;
+use App\Http\Controllers\DiagnosticoSessaoController;
+use App\Http\Controllers\SessaoPublicaController;
 use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\QuestionarioController;
 use Illuminate\Support\Facades\Route;
@@ -62,7 +64,19 @@ Route::middleware('auth')->group(function () {
 
     // Questionários
     Route::resource('/questionarios', QuestionarioController::class);
+
+    // Sessões de diagnóstico coletivo
+    Route::get('/sessoes', [DiagnosticoSessaoController::class, 'index'])->name('sessoes.index');
+    Route::get('/sessoes/criar', [DiagnosticoSessaoController::class, 'create'])->name('sessoes.create');
+    Route::post('/sessoes', [DiagnosticoSessaoController::class, 'store'])->name('sessoes.store');
+    Route::get('/sessoes/{sessao}', [DiagnosticoSessaoController::class, 'show'])->name('sessoes.show');
+    Route::patch('/sessoes/{sessao}/toggle', [DiagnosticoSessaoController::class, 'toggle'])->name('sessoes.toggle');
+    Route::delete('/sessoes/{sessao}', [DiagnosticoSessaoController::class, 'destroy'])->name('sessoes.destroy');
 });
+
+// ── Sessão pública (sem auth) ─────────────────────────────────────────────────
+Route::get('/sessao/{token}', [SessaoPublicaController::class, 'landing'])->name('sessao.landing');
+Route::post('/sessao/{token}/iniciar', [SessaoPublicaController::class, 'iniciar'])->name('sessao.iniciar');
 
 // ── Public diagnostic form (no auth) ──────────────────────────────────────────
 Route::get('/diagnostico/novo', [DiagnosticoController::class, 'startNovo'])->name('diagnostico.novo');

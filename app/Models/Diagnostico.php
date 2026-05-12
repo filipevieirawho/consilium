@@ -8,6 +8,7 @@ class Diagnostico extends Model
 {
     protected $fillable = [
         'token',
+        'sessao_id',
         'titulo',
         'subtitulo',
         'descricao',
@@ -49,6 +50,11 @@ class Diagnostico extends Model
     public function questionario()
     {
         return $this->belongsTo(Questionario::class);
+    }
+
+    public function sessao()
+    {
+        return $this->belongsTo(DiagnosticoSessao::class, 'sessao_id');
     }
 
     public function empresaRelationship()

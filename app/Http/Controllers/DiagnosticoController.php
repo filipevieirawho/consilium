@@ -227,9 +227,10 @@ class DiagnosticoController extends Controller
      */
     public function showInstrucoes(string $token)
     {
-        $diagnostico = Diagnostico::where('token', $token)->firstOrFail();
+        $diagnostico = Diagnostico::with('sessao')->where('token', $token)->firstOrFail();
 
-        if (!$diagnostico->aceite) {
+        // Sessão coletiva: aceite já foi marcado na criação, não há dados pessoais
+        if (!$diagnostico->aceite && !$diagnostico->sessao_id) {
             return redirect()->route('diagnostico.form', $token);
         }
 
@@ -244,7 +245,8 @@ class DiagnosticoController extends Controller
     {
         $diagnostico = Diagnostico::where('token', $token)->firstOrFail();
 
-        if (!$diagnostico->aceite) {
+        // Sessão coletiva: aceite já marcado na criação
+        if (!$diagnostico->aceite && !$diagnostico->sessao_id) {
             return redirect()->route('diagnostico.form', $token);
         }
 
@@ -408,7 +410,8 @@ class DiagnosticoController extends Controller
 
         $diagnostico->update(['ipm' => $resultado['ipm'], 'status' => 'concluido']);
 
-        if ($diagnostico->email) {
+        // Não envia e-mail para diagnósticos de sessão coletiva (anônimos)
+        if ($diagnostico->email && !$diagnostico->sessao_id) {
             Mail::to($diagnostico->email)->send(new DiagnosticoResultadoMail($diagnostico, $resultado));
         }
 

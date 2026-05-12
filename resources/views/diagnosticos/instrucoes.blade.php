@@ -44,9 +44,15 @@
 
         <!-- Navigation -->
         <div class="flex justify-between items-center pt-4 border-t border-gray-100">
-            <a href="{{ route('diagnostico.form2', $token) }}" class="text-sm text-gray-500 hover:text-gray-700">
-                ← Voltar
-            </a>
+            @if($diagnostico->sessao_id)
+                <a href="{{ route('sessao.landing', $diagnostico->sessao->token) }}" class="text-sm text-gray-500 hover:text-gray-700">
+                    ← Voltar
+                </a>
+            @else
+                <a href="{{ route('diagnostico.form2', $token) }}" class="text-sm text-gray-500 hover:text-gray-700">
+                    ← Voltar
+                </a>
+            @endif
             <a href="{{ route('diagnostico.pergunta', [$token, 1]) }}"
                 class="inline-flex items-center gap-2 px-6 py-3 text-white font-semibold rounded-lg transition-colors bg-gold hover:bg-gold-dark">
                 Entendi, vamos começar →
