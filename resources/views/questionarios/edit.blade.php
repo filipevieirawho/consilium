@@ -141,16 +141,44 @@
                                 </div>
                             </div>
 
-                            <!-- Tab: Resultado (Placeholder) -->
+                            <!-- Tab: Resultado -->
                             <div x-show="activeTab === 'result'" class="space-y-5 animate-fade-in" x-cloak>
-                                <div class="bg-white shadow-sm sm:rounded-lg border border-gray-100 p-8 min-h-[400px] flex flex-col items-center justify-center text-center">
-                                    <div class="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mb-4">
-                                        <ion-icon name="construct-outline" class="text-3xl text-gray-300"></ion-icon>
+                                <div class="bg-white shadow-sm sm:rounded-lg border border-gray-100 p-8">
+                                    <div class="mb-6 pb-4 border-b border-gray-50">
+                                        <h3 class="text-lg font-bold text-gray-900">Textos de Análise do Resultado</h3>
+                                        <p class="text-sm text-gray-500 mt-1">Personalize as mensagens exibidas ao respondente conforme a faixa de IPM obtida. Se em branco, o texto padrão do sistema será utilizado.</p>
                                     </div>
-                                    <h3 class="text-lg font-bold text-gray-900">Configurações de Resultado</h3>
-                                    <p class="text-sm text-gray-500 mt-2 max-w-sm">
-                                        Esta área está sendo preparada. Em breve você poderá configurar as faixas de IPM e textos automáticos por desempenho.
-                                    </p>
+
+                                    @php
+                                        $faixasEdit = [
+                                            ['key' => 'red',    'range' => '0 – 40',   'label' => 'Previsibilidade Comprometida', 'border' => 'border-red-200',    'bg' => 'bg-red-50',    'dot' => 'bg-red-500',    'text' => 'text-red-700'],
+                                            ['key' => 'yellow', 'range' => '41 – 70',  'label' => 'Previsibilidade Instável',     'border' => 'border-yellow-200', 'bg' => 'bg-yellow-50', 'dot' => 'bg-yellow-500', 'text' => 'text-yellow-700'],
+                                            ['key' => 'green',  'range' => '71 – 100', 'label' => 'Previsibilidade Consistente',  'border' => 'border-green-200',  'bg' => 'bg-green-50',  'dot' => 'bg-green-500',  'text' => 'text-green-700'],
+                                        ];
+                                        $placeholders = [
+                                            'red'    => 'Ex: O resultado indica inconsistências relevantes nas condições que sustentam o resultado econômico do empreendimento...',
+                                            'yellow' => 'Ex: O empreendimento apresenta estrutura de gestão, porém com fragilidades relevantes que indicam risco de decisões baseadas em informações parciais...',
+                                            'green'  => 'Ex: As condições estruturais indicam boa consistência entre planejamento e execução...',
+                                        ];
+                                    @endphp
+
+                                    <div class="space-y-6">
+                                        @foreach($faixasEdit as $f)
+                                        <div class="rounded-xl border {{ $f['border'] }} {{ $f['bg'] }} p-5">
+                                            <div class="flex items-center gap-2 mb-3">
+                                                <span class="w-2.5 h-2.5 rounded-full {{ $f['dot'] }}"></span>
+                                                <label for="resultado_{{ $f['key'] }}" class="text-xs font-bold uppercase tracking-wider {{ $f['text'] }}">
+                                                    IPM {{ $f['range'] }} — {{ $f['label'] }}
+                                                </label>
+                                            </div>
+                                            <textarea id="resultado_{{ $f['key'] }}"
+                                                      name="texto_resultado_{{ $f['key'] }}"
+                                                      rows="4"
+                                                      placeholder="{{ $placeholders[$f['key']] }}"
+                                                      class="block w-full text-sm rounded-lg border-gray-300 shadow-sm focus:border-gold focus:ring-gold bg-white leading-relaxed">{{ old('texto_resultado_' . $f['key'], $questionario->{'texto_resultado_' . $f['key']}) }}</textarea>
+                                        </div>
+                                        @endforeach
+                                    </div>
                                 </div>
                             </div>
 

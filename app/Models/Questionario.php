@@ -16,6 +16,9 @@ class Questionario extends Model
         'descricao',
         'modelo_id',
         'is_active',
+        'texto_resultado_red',
+        'texto_resultado_yellow',
+        'texto_resultado_green',
     ];
 
     protected $casts = [

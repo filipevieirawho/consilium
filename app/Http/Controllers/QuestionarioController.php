@@ -41,6 +41,9 @@ class QuestionarioController extends Controller
             'subtitulo' => 'nullable|string',
             'descricao' => 'nullable|string',
             'modelo_id' => 'required|string|max:50|unique:questionarios,modelo_id',
+            'texto_resultado_red'    => 'nullable|string',
+            'texto_resultado_yellow' => 'nullable|string',
+            'texto_resultado_green'  => 'nullable|string',
             'questoes'  => 'required|array|min:1',
             'questoes.*.dimensao_nome' => 'required|string|max:100',
             'questoes.*.dimensao_peso' => 'required|numeric|min:0.01|max:1',
@@ -55,6 +58,9 @@ class QuestionarioController extends Controller
                 'descricao' => $request->descricao,
                 'modelo_id' => $request->modelo_id,
                 'is_active' => $request->boolean('is_active', true),
+                'texto_resultado_red'    => $request->texto_resultado_red,
+                'texto_resultado_yellow' => $request->texto_resultado_yellow,
+                'texto_resultado_green'  => $request->texto_resultado_green,
             ]);
 
             $questoes = collect($request->questoes)->map(fn($q, $index) => [
@@ -90,6 +96,9 @@ class QuestionarioController extends Controller
             'titulo'    => 'nullable|string|max:255',
             'subtitulo' => 'nullable|string',
             'descricao' => 'nullable|string',
+            'texto_resultado_red'    => 'nullable|string',
+            'texto_resultado_yellow' => 'nullable|string',
+            'texto_resultado_green'  => 'nullable|string',
             'questoes'  => 'required|array|min:1',
             'questoes.*.dimensao_nome' => 'required|string|max:100',
             'questoes.*.dimensao_peso' => 'required|numeric|min:0.01|max:1',
@@ -103,6 +112,9 @@ class QuestionarioController extends Controller
                 'subtitulo' => $request->subtitulo,
                 'descricao' => $request->descricao,
                 'is_active' => $request->boolean('is_active', true),
+                'texto_resultado_red'    => $request->texto_resultado_red,
+                'texto_resultado_yellow' => $request->texto_resultado_yellow,
+                'texto_resultado_green'  => $request->texto_resultado_green,
             ]);
 
             // Replace all questions

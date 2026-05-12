@@ -57,12 +57,21 @@ class IpmCalculator
             $questoes = self::buildQuestoesMap($respostas, $diagnostico);
         }
 
-        if ($questoes) {
-            return self::calcularDinamico($respostas, $questoes);
+        $resultado = $questoes
+            ? self::calcularDinamico($respostas, $questoes)
+            : self::calcularLegacy($respostas);
+
+        // Override result text with questionario custom text when set
+        if ($diagnostico && $diagnostico->questionario_id) {
+            $diagnostico->loadMissing('questionario');
+            $q   = $diagnostico->questionario;
+            $key = 'texto_resultado_' . $resultado['faixa'];
+            if ($q && !empty($q->$key)) {
+                $resultado['texto'] = $q->$key;
+            }
         }
 
-        // --- Legacy static mode ---
-        return self::calcularLegacy($respostas);
+        return $resultado;
     }
 
     /**

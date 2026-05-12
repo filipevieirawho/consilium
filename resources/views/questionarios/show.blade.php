@@ -134,16 +134,44 @@
                             </div>
                         </div>
 
-                        <!-- Tab: Resultado (Placeholder) -->
-                        <div x-show="activeTab === 'result'" class="space-y-5 animate-fade-in" x-cloak>
-                            <div class="bg-white shadow-sm sm:rounded-lg border border-gray-100 p-8 min-h-[400px] flex flex-col items-center justify-center text-center">
-                                <div class="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mb-4">
-                                    <ion-icon name="construct-outline" class="text-3xl text-gray-300"></ion-icon>
+                        <!-- Tab: Resultado -->
+                        <div x-show="activeTab === 'result'" class="space-y-4 animate-fade-in" x-cloak>
+                            @php
+                                $faixas = [
+                                    ['key' => 'red',    'range' => '0 – 40',   'label' => 'Previsibilidade Comprometida', 'bg' => 'bg-red-50',    'border' => 'border-red-200',   'dot' => 'bg-red-500',    'text' => 'text-red-700'],
+                                    ['key' => 'yellow', 'range' => '41 – 70',  'label' => 'Previsibilidade Instável',     'bg' => 'bg-yellow-50', 'border' => 'border-yellow-200','dot' => 'bg-yellow-500', 'text' => 'text-yellow-700'],
+                                    ['key' => 'green',  'range' => '71 – 100', 'label' => 'Previsibilidade Consistente',  'bg' => 'bg-green-50',  'border' => 'border-green-200', 'dot' => 'bg-green-500',  'text' => 'text-green-700'],
+                                ];
+                                $defaults = [
+                                    'red'    => 'O resultado indica inconsistências relevantes nas condições que sustentam a margem do empreendimento. Existe alta probabilidade de impacto em prazo e resultado econômico já em curso ou em formação.',
+                                    'yellow' => 'O empreendimento apresenta estrutura de gestão, porém com fragilidades importantes. O sistema aparenta controle, mas existem riscos relevantes de perda de margem.',
+                                    'green'  => 'O empreendimento apresenta boa consistência entre planejamento e execução. Ainda assim, a manutenção dessa condição depende de monitoramento contínuo.',
+                                ];
+                            @endphp
+
+                            <div class="bg-white shadow-sm sm:rounded-lg border border-gray-100 p-6">
+                                <div class="flex items-center justify-between mb-6 pb-4 border-b border-gray-50">
+                                    <div>
+                                        <h3 class="text-base font-bold text-gray-900">Textos de Análise do Resultado</h3>
+                                        <p class="text-xs text-gray-500 mt-0.5">Mensagens exibidas ao respondente conforme a faixa de IPM obtida.</p>
+                                    </div>
                                 </div>
-                                <h3 class="text-lg font-bold text-gray-900">Configurações de Resultado</h3>
-                                <p class="text-sm text-gray-500 mt-2 max-w-sm">
-                                    Esta área está sendo preparada. Em breve você poderá visualizar as configurações de faixas de IPM e textos de feedback.
-                                </p>
+
+                                <div class="space-y-4">
+                                    @foreach($faixas as $f)
+                                    @php $customText = $questionario->{'texto_resultado_' . $f['key']}; @endphp
+                                    <div class="rounded-xl border {{ $f['border'] }} {{ $f['bg'] }} p-5">
+                                        <div class="flex items-center gap-2 mb-3">
+                                            <span class="w-2.5 h-2.5 rounded-full {{ $f['dot'] }}"></span>
+                                            <span class="text-xs font-bold uppercase tracking-wider {{ $f['text'] }}">IPM {{ $f['range'] }} — {{ $f['label'] }}</span>
+                                        </div>
+                                        <p class="text-sm text-gray-700 leading-relaxed whitespace-pre-line">{{ $customText ?: $defaults[$f['key']] }}</p>
+                                        @if(!$customText)
+                                        <p class="text-[10px] text-gray-400 mt-2 italic">Texto padrão — personalize na edição.</p>
+                                        @endif
+                                    </div>
+                                    @endforeach
+                                </div>
                             </div>
                         </div>
                     </div>
