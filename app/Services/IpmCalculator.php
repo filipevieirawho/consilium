@@ -91,9 +91,12 @@ class IpmCalculator
                     'dimensao_peso' => (float) $q->dimensao_peso,
                 ])->toArray();
             }
+            // questao_ids exist in respostas but records were deleted from DB.
+            // Do NOT fall back to current questionario questoes (they have different IDs).
+            return null;
         }
 
-        // Fallback: load from questionario linked to diagnostico
+        // Fallback: load from questionario linked to diagnostico (no questao_id in respostas)
         if ($diagnostico && $diagnostico->questionario_id) {
             $diagnostico->loadMissing('questionario.questoes');
             if ($diagnostico->questionario) {

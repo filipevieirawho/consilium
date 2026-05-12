@@ -432,6 +432,15 @@ class DiagnosticoController extends Controller
 
         $resultado = IpmCalculator::calcular($diagnostico->respostas, $diagnostico);
 
+        // If questoes were deleted after completion, recalculation returns 0.
+        // Restore the persisted IPM so the result page stays consistent.
+        if ($resultado['ipm'] == 0 && $diagnostico->ipm > 0) {
+            $ipmStored = (float) $diagnostico->ipm;
+            $faixa = $ipmStored <= 40 ? 'red' : ($ipmStored <= 70 ? 'yellow' : 'green');
+            $resultado['ipm']   = $ipmStored;
+            $resultado['faixa'] = $faixa;
+        }
+
         return view('diagnosticos.resultado', compact('diagnostico', 'token', 'resultado'));
     }
 
@@ -478,6 +487,14 @@ class DiagnosticoController extends Controller
 
         if ($diagnostico->status === 'concluido') {
             $resultado = IpmCalculator::calcular($diagnostico->respostas()->get(), $diagnostico);
+
+            // If questoes were deleted after completion, restore the persisted IPM.
+            if ($resultado['ipm'] == 0 && $diagnostico->ipm > 0) {
+                $ipmStored = (float) $diagnostico->ipm;
+                $faixa = $ipmStored <= 40 ? 'red' : ($ipmStored <= 70 ? 'yellow' : 'green');
+                $resultado['ipm']   = $ipmStored;
+                $resultado['faixa'] = $faixa;
+            }
         }
 
         $contacts     = Contact::orderBy('name')->get();
