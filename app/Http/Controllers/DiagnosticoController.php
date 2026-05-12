@@ -431,15 +431,7 @@ class DiagnosticoController extends Controller
         }
 
         $resultado = IpmCalculator::calcular($diagnostico->respostas, $diagnostico);
-
-        // If questoes were deleted after completion, recalculation returns 0.
-        // Restore the persisted IPM so the result page stays consistent.
-        if ($resultado['ipm'] == 0 && $diagnostico->ipm > 0) {
-            $ipmStored = (float) $diagnostico->ipm;
-            $faixa = $ipmStored <= 40 ? 'red' : ($ipmStored <= 70 ? 'yellow' : 'green');
-            $resultado['ipm']   = $ipmStored;
-            $resultado['faixa'] = $faixa;
-        }
+        $resultado = $this->restoreIpmIfStale($diagnostico->respostas, $diagnostico, $resultado);
 
         return view('diagnosticos.resultado', compact('diagnostico', 'token', 'resultado'));
     }
@@ -486,15 +478,9 @@ class DiagnosticoController extends Controller
         $resultado = null;
 
         if ($diagnostico->status === 'concluido') {
-            $resultado = IpmCalculator::calcular($diagnostico->respostas()->get(), $diagnostico);
-
-            // If questoes were deleted after completion, restore the persisted IPM.
-            if ($resultado['ipm'] == 0 && $diagnostico->ipm > 0) {
-                $ipmStored = (float) $diagnostico->ipm;
-                $faixa = $ipmStored <= 40 ? 'red' : ($ipmStored <= 70 ? 'yellow' : 'green');
-                $resultado['ipm']   = $ipmStored;
-                $resultado['faixa'] = $faixa;
-            }
+            $respostas = $diagnostico->respostas()->get();
+            $resultado = IpmCalculator::calcular($respostas, $diagnostico);
+            $resultado = $this->restoreIpmIfStale($respostas, $diagnostico, $resultado);
         }
 
         $contacts     = Contact::orderBy('name')->get();
@@ -638,6 +624,38 @@ class DiagnosticoController extends Controller
             'questionario_id'     => $questionarioId,
             'questionario'        => $questionario,
         ];
+    }
+
+    // ─── Helpers ──────────────────────────────────────────────────────────
+
+    /**
+     * When questao_ids stored in respostas no longer exist in the DB
+     * (e.g. the questionario was edited after completion), the recalculated
+     * IPM is wrong. Detect this and restore the persisted value.
+     */
+    private function restoreIpmIfStale(
+        \Illuminate\Support\Collection $respostas,
+        Diagnostico $diagnostico,
+        array $resultado
+    ): array {
+        $questaoIds = $respostas->pluck('questao_id')->filter()->unique();
+
+        if ($questaoIds->isEmpty() || $diagnostico->ipm <= 0) {
+            return $resultado;
+        }
+
+        $found = \App\Models\QuestionarioQuestao::whereIn('id', $questaoIds->toArray())->exists();
+
+        if (!$found) {
+            $ipmStored = (float) $diagnostico->ipm;
+            $faixa     = $ipmStored <= 40 ? 'red' : ($ipmStored <= 70 ? 'yellow' : 'green');
+            $resultado['ipm']              = $ipmStored;
+            $resultado['faixa']            = $faixa;
+            $resultado['dimensoes']        = [];
+            $resultado['dimensoes_fracas'] = [];
+        }
+
+        return $resultado;
     }
 
     // ─── Data ─────────────────────────────────────────────────────────────

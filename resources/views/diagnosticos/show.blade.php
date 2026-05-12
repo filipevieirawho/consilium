@@ -350,7 +350,8 @@ $opcaoLabels = [
                 @if($diagnostico->questionario)
                     {{-- MODO DINÂMICO --}}
                     @php
-                        $respostasPorQuestao = $diagnostico->respostas->keyBy('questao_id');
+                        $respostasPorQuestao  = $diagnostico->respostas->keyBy('questao_id');
+                        $respostasPorPergunta = $diagnostico->respostas->keyBy('pergunta');
                         $grupos = $diagnostico->questionario->questoes->groupBy('dimensao_nome');
                     @endphp
 
@@ -365,7 +366,8 @@ $opcaoLabels = [
                             @foreach($questoes as $q)
                                 @php
                                     $questaoCounter++;
-                                    $resp = $respostasPorQuestao->get($q->id);
+                                    // Fallback: se questao_id não existe mais no DB, busca pelo número sequencial
+                                    $resp = $respostasPorQuestao->get($q->id) ?? $respostasPorPergunta->get($questaoCounter);
                                     $val = $resp ? $resp->resposta : null;
                                     $lColors = [0 => 'bg-red-100 text-red-700', 1 => 'bg-orange-100 text-gray-800', 2 => 'bg-yellow-100 text-gray-800', 3 => 'bg-green-100 text-green-700'];
                                 @endphp
