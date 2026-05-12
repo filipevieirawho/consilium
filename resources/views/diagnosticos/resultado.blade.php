@@ -262,7 +262,7 @@ $cfg = $faixaConfig[$faixa];
         </div>
         <div class="pt-5 border-t border-gray-100">
             <p class="text-sm text-gray-500 italic leading-relaxed">
-                "Este resultado representa um retrato do momento atual do empreendimento. Assim como um exame, sua validade está associada ao momento em que foi realizado. Recomenda-se sua reaplicação periódica ou em marcos relevantes da obra."
+                "{{ $diagnostico->questionario?->texto_disclaimer ?: 'Este resultado representa um retrato do momento atual do empreendimento. Assim como um exame, sua validade está associada ao momento em que foi realizado. Recomenda-se sua reaplicação periódica ou em marcos relevantes da obra.' }}"
             </p>
         </div>
     </div>

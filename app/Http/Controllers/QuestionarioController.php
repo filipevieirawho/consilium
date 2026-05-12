@@ -44,6 +44,7 @@ class QuestionarioController extends Controller
             'texto_resultado_red'    => 'nullable|string',
             'texto_resultado_yellow' => 'nullable|string',
             'texto_resultado_green'  => 'nullable|string',
+            'texto_disclaimer'       => 'nullable|string',
             'questoes'  => 'required|array|min:1',
             'questoes.*.dimensao_nome' => 'required|string|max:100',
             'questoes.*.dimensao_peso' => 'required|numeric|min:0.01|max:1',
@@ -61,6 +62,7 @@ class QuestionarioController extends Controller
                 'texto_resultado_red'    => $request->texto_resultado_red,
                 'texto_resultado_yellow' => $request->texto_resultado_yellow,
                 'texto_resultado_green'  => $request->texto_resultado_green,
+                'texto_disclaimer'       => $request->texto_disclaimer,
             ]);
 
             $questoes = collect($request->questoes)->map(fn($q, $index) => [
@@ -99,6 +101,7 @@ class QuestionarioController extends Controller
             'texto_resultado_red'    => 'nullable|string',
             'texto_resultado_yellow' => 'nullable|string',
             'texto_resultado_green'  => 'nullable|string',
+            'texto_disclaimer'       => 'nullable|string',
             'questoes'  => 'required|array|min:1',
             'questoes.*.dimensao_nome' => 'required|string|max:100',
             'questoes.*.dimensao_peso' => 'required|numeric|min:0.01|max:1',
@@ -115,6 +118,7 @@ class QuestionarioController extends Controller
                 'texto_resultado_red'    => $request->texto_resultado_red,
                 'texto_resultado_yellow' => $request->texto_resultado_yellow,
                 'texto_resultado_green'  => $request->texto_resultado_green,
+                'texto_disclaimer'       => $request->texto_disclaimer,
             ]);
 
             // Replace all questions

@@ -179,6 +179,17 @@
                                         </div>
                                         @endforeach
                                     </div>
+
+                                    <!-- Disclaimer -->
+                                    <div class="mt-6 pt-6 border-t border-gray-100">
+                                        <label for="texto_disclaimer" class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Texto de Disclaimer</label>
+                                        <p class="text-xs text-gray-500 mb-3">Exibido ao final da seção "Dimensões com maior fragilidade". Se em branco, o texto padrão do sistema será utilizado.</p>
+                                        <textarea id="texto_disclaimer"
+                                                  name="texto_disclaimer"
+                                                  rows="3"
+                                                  placeholder="Ex: Este resultado representa um retrato do momento atual do empreendimento..."
+                                                  class="block w-full text-sm rounded-lg border-gray-300 shadow-sm focus:border-gold focus:ring-gold leading-relaxed">{{ old('texto_disclaimer', $questionario->texto_disclaimer) }}</textarea>
+                                    </div>
                                 </div>
                             </div>
 

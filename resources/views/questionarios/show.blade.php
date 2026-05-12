@@ -172,6 +172,17 @@
                                     </div>
                                     @endforeach
                                 </div>
+
+                                <!-- Disclaimer -->
+                                <div class="mt-6 pt-6 border-t border-gray-100">
+                                    <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Texto de Disclaimer</h4>
+                                    <p class="text-sm text-gray-600 italic leading-relaxed">
+                                        "{{ $questionario->texto_disclaimer ?: 'Este resultado representa um retrato do momento atual do empreendimento. Assim como um exame, sua validade está associada ao momento em que foi realizado. Recomenda-se sua reaplicação periódica ou em marcos relevantes da obra.' }}"
+                                    </p>
+                                    @if(!$questionario->texto_disclaimer)
+                                    <p class="text-[10px] text-gray-400 mt-1 italic">Texto padrão — personalize na edição.</p>
+                                    @endif
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -1,0 +1,22 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::table('questionarios', function (Blueprint $table) {
+            $table->text('texto_disclaimer')->nullable()->after('texto_resultado_green');
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::table('questionarios', function (Blueprint $table) {
+            $table->dropColumn('texto_disclaimer');
+        });
+    }
+};
