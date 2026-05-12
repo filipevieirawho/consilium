@@ -224,9 +224,10 @@
                                         {{ $count > 0 ? $count : '' }}
                                     </div>
                                 </div>
-                                <div class="w-8 text-right flex-shrink-0">
+                                <div class="flex-shrink-0">
                                     @if($q['avg'] !== null)
-                                        <span class="text-xs font-bold {{ $q['avg'] >= 2.5 ? 'text-green-600' : ($q['avg'] >= 1.5 ? 'text-yellow-600' : 'text-red-500') }}">
+                                        <span class="inline-block text-xs font-bold px-2 py-0.5 rounded-md bg-white border
+                                                      {{ $q['avg'] >= 2.5 ? 'text-green-600 border-green-200' : ($q['avg'] >= 1.5 ? 'text-yellow-600 border-yellow-200' : 'text-red-500 border-red-200') }}">
                                             {{ number_format($q['avg'], 1) }}
                                         </span>
                                     @endif
