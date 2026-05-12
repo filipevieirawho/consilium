@@ -134,7 +134,7 @@ class DiagnosticoController extends Controller
 
         if (!$contact && !empty($validated['email'])) {
             $contact = \App\Models\Contact::where('email', $validated['email'])->first();
-            
+
             if (!$contact) {
                 $contact = \App\Models\Contact::create([
                     'name' => $validated['nome'],
@@ -145,7 +145,7 @@ class DiagnosticoController extends Controller
                     'status' => 'Cliente Potencial',
                     'message' => 'Lead gerado automaticamente pelo formulário de Diagnóstico.',
                 ]);
-                
+
                 $contact->activities()->create([
                     'user_id' => null,
                     'type' => 'lead_created',
@@ -156,6 +156,9 @@ class DiagnosticoController extends Controller
                     'old_value' => null,
                     'new_value' => 'Cliente Potencial',
                 ]);
+            } else {
+                // Contact found by e-mail — update name with what the respondent typed.
+                $contact->update(['name' => $validated['nome']]);
             }
         }
 
