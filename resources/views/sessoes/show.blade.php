@@ -124,7 +124,7 @@
                     </div>
 
                     <!-- IPM por Respondente -->
-                    <div class="bg-white rounded-xl border border-gray-100 shadow-sm p-6">
+                    <div class="bg-white rounded-xl border border-gray-100 shadow-sm p-6 flex flex-col">
                         <div class="mb-4">
                             <h3 class="text-sm font-bold text-gray-900">IPM por Respondente</h3>
                             <p class="text-xs text-gray-400 mt-0.5">Distribuição dos scores individuais.</p>
@@ -136,18 +136,18 @@
                             $ipmMax   = $ipms->count() > 0 ? round($ipms->max(), 1) : null;
                         @endphp
 
-                        <div class="grid grid-cols-3 gap-3">
-                            <div class="bg-gray-50 rounded-lg p-3 text-center border border-gray-100">
-                                <div class="text-xl font-bold text-gray-900">{{ $ipmMedia }}</div>
-                                <div class="text-[10px] text-gray-400 uppercase tracking-wide mt-0.5">Média</div>
+                        <div class="grid grid-cols-3 gap-3 flex-1">
+                            <div class="bg-gray-50 rounded-lg border border-gray-100 flex flex-col items-center justify-center text-center p-3">
+                                <div class="text-2xl font-bold text-gray-900">{{ $ipmMedia }}</div>
+                                <div class="text-[10px] text-gray-400 uppercase tracking-wide mt-1">Média</div>
                             </div>
-                            <div class="bg-gray-50 rounded-lg p-3 text-center border border-gray-100">
-                                <div class="text-xl font-bold text-gray-500">{{ $ipmMin }}</div>
-                                <div class="text-[10px] text-gray-400 uppercase tracking-wide mt-0.5">Mínimo</div>
+                            <div class="bg-gray-50 rounded-lg border border-gray-100 flex flex-col items-center justify-center text-center p-3">
+                                <div class="text-2xl font-bold text-gray-500">{{ $ipmMin }}</div>
+                                <div class="text-[10px] text-gray-400 uppercase tracking-wide mt-1">Mínimo</div>
                             </div>
-                            <div class="bg-gray-50 rounded-lg p-3 text-center border border-gray-100">
-                                <div class="text-xl font-bold text-gray-500">{{ $ipmMax }}</div>
-                                <div class="text-[10px] text-gray-400 uppercase tracking-wide mt-0.5">Máximo</div>
+                            <div class="bg-gray-50 rounded-lg border border-gray-100 flex flex-col items-center justify-center text-center p-3">
+                                <div class="text-2xl font-bold text-gray-500">{{ $ipmMax }}</div>
+                                <div class="text-[10px] text-gray-400 uppercase tracking-wide mt-1">Máximo</div>
                             </div>
                         </div>
                     </div>
