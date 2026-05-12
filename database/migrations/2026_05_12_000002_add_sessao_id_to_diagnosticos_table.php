@@ -8,19 +8,17 @@ return new class extends Migration
 {
     public function up(): void
     {
+        // Turso/SQLite não suporta FK constraints em ALTER TABLE.
+        // Adicionamos sessao_id como integer nullable simples; a relação
+        // é garantida em nível de aplicação pelo Eloquent.
         Schema::table('diagnosticos', function (Blueprint $table) {
-            $table->foreignId('sessao_id')
-                  ->nullable()
-                  ->after('questionario_id')
-                  ->constrained('diagnostico_sessoes')
-                  ->nullOnDelete();
+            $table->unsignedBigInteger('sessao_id')->nullable()->after('questionario_id');
         });
     }
 
     public function down(): void
     {
         Schema::table('diagnosticos', function (Blueprint $table) {
-            $table->dropForeign(['sessao_id']);
             $table->dropColumn('sessao_id');
         });
     }
