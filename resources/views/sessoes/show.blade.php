@@ -194,20 +194,19 @@
                                     </p>
                                 </div>
                                 <div class="flex items-center gap-0.5 flex-shrink-0">
-                                    @foreach([0 => 'bg-red-300', 1 => 'bg-orange-300', 2 => 'bg-yellow-300', 3 => 'bg-green-400'] as $val => $cor)
+                                    @foreach([0 => ['bg-red-100','bg-red-400','text-red-700'], 1 => ['bg-orange-100','bg-orange-400','text-orange-700'], 2 => ['bg-yellow-100','bg-yellow-400','text-yellow-700'], 3 => ['bg-green-100','bg-green-500','text-green-700']] as $val => [$bgVazio, $bgCheio, $textCor])
                                         @php $count = $q['dist'][$val]; @endphp
                                         <div class="w-8 h-6 rounded flex items-center justify-center text-[10px] font-bold
-                                                    {{ $count > 0 ? $cor . ' text-white' : 'bg-gray-100 text-gray-300' }}">
-                                            {{ $count > 0 ? $count : '' }}
+                                                    {{ $count > 0 ? $bgCheio . ' text-white' : $bgVazio . ' ' . $textCor }}">
+                                            {{ $count > 0 ? $count : '·' }}
                                         </div>
                                     @endforeach
                                 </div>
-                                <div class="w-10 text-right flex-shrink-0">
+                                <div class="w-12 text-right flex-shrink-0">
                                     @if($q['avg'] !== null)
                                         <span class="text-xs font-bold {{ $q['avg'] >= 2.5 ? 'text-green-600' : ($q['avg'] >= 1.5 ? 'text-yellow-600' : 'text-red-500') }}">
-                                            {{ number_format($q['avg'], 1) }}
+                                            {{ number_format($q['avg'], 1) }}<span class="text-xs font-normal text-gray-400">/3</span>
                                         </span>
-                                        <span class="text-[9px] text-gray-300">/3</span>
                                     @endif
                                 </div>
                             </div>
