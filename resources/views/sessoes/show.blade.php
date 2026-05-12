@@ -152,14 +152,13 @@
                         </div>
 
                         <div class="space-y-2">
-                            @foreach($ipms->sortDesc()->values() as $i => $ipm)
+                            @foreach($ipms->sortDesc()->values() as $ipm)
                             @php $cor = $ipm <= 40 ? '#ef4444' : ($ipm <= 70 ? '#eab308' : '#22c55e'); @endphp
                             <div class="flex items-center gap-3">
-                                <div class="text-xs text-gray-400 w-20 text-right flex-shrink-0">Resp. {{ $i + 1 }}</div>
                                 <div class="flex-1 bg-gray-100 rounded-full h-2 overflow-hidden">
                                     <div class="h-2 rounded-full" style="width: {{ $ipm }}%; background-color: {{ $cor }}"></div>
                                 </div>
-                                <div class="text-xs font-bold text-gray-700 w-10 flex-shrink-0">{{ $ipm }}</div>
+                                <div class="text-xs font-bold text-gray-700 w-10 flex-shrink-0 text-right">{{ $ipm }}</div>
                             </div>
                             @endforeach
                         </div>
