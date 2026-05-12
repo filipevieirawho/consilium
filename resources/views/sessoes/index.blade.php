@@ -1,7 +1,10 @@
 <x-app-layout>
     <x-slot name="header">
         <div class="flex items-center justify-between h-10">
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Sessões de Diagnóstico Coletivo</h2>
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight flex items-center gap-2">
+                <ion-icon name="speedometer-outline" class="text-2xl text-gold"></ion-icon>
+                Sessões de Diagnóstico Coletivo
+            </h2>
             <a href="{{ route('sessoes.create') }}"
                class="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-semibold text-white rounded-lg bg-gold hover:bg-gold-dark transition-colors">
                 <ion-icon name="add-outline" class="text-base"></ion-icon>
