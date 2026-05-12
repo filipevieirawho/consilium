@@ -39,6 +39,9 @@
             </div>
         </div>
 
+        <!-- Tip -->
+        <p class="text-xs text-gray-400 mb-8 -mt-2">Na dúvida, selecione a opção mais conservadora.</p>
+
         <!-- Navigation -->
         <div class="flex justify-between items-center pt-4 border-t border-gray-100">
             <a href="{{ route('diagnostico.form2', $token) }}" class="text-sm text-gray-500 hover:text-gray-700">
