@@ -35,4 +35,14 @@ class Questionario extends Model
     {
         return $this->hasMany(Diagnostico::class);
     }
+
+    public function sessoes()
+    {
+        return $this->hasMany(DiagnosticoSessao::class);
+    }
+
+    public function emUso(): bool
+    {
+        return $this->diagnosticos()->exists() || $this->sessoes()->exists();
+    }
 }

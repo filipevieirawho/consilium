@@ -93,6 +93,10 @@ class QuestionarioController extends Controller
 
     public function update(Request $request, Questionario $questionario)
     {
+        if ($questionario->emUso()) {
+            return back()->with('error', 'Não é possível editar as questões deste questionário pois ele já possui diagnósticos ou sessões vinculadas. Crie um novo questionário se precisar de uma versão diferente.');
+        }
+
         $request->validate([
             'nome'      => 'required|string|max:255',
             'titulo'    => 'nullable|string|max:255',
@@ -140,6 +144,10 @@ class QuestionarioController extends Controller
 
     public function destroy(Questionario $questionario)
     {
+        if ($questionario->emUso()) {
+            return back()->with('error', 'Não é possível excluir este questionário pois ele já possui diagnósticos ou sessões vinculadas.');
+        }
+
         $questionario->questoes()->delete();
         $questionario->delete();
         return redirect()->route('questionarios.index')->with('success', 'Questionário excluído.');

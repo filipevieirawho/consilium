@@ -12,6 +12,14 @@
 
     <div class="py-8" x-data="{ activeTab: (new URLSearchParams(window.location.search)).get('tab') || 'info' }">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+
+            @if(session('error'))
+            <div class="mb-4 px-4 py-3 bg-red-50 border border-red-200 rounded-lg text-sm text-red-700 flex items-center gap-2">
+                <ion-icon name="alert-circle-outline" class="text-red-500 text-lg flex-shrink-0"></ion-icon>
+                {{ session('error') }}
+            </div>
+            @endif
+
             <form action="{{ route('questionarios.update', $questionario) }}" method="POST" id="formQuestionario">
                 @csrf @method('PUT')
 
