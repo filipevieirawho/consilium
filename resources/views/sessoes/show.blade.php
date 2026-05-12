@@ -194,11 +194,11 @@
                                     </p>
                                 </div>
                                 <div class="flex items-center gap-0.5 flex-shrink-0">
-                                    @foreach([0 => ['bg-red-100','bg-red-400','text-red-700'], 1 => ['bg-orange-100','bg-orange-400','text-orange-700'], 2 => ['bg-yellow-100','bg-yellow-400','text-yellow-700'], 3 => ['bg-green-100','bg-green-500','text-green-700']] as $val => [$bgVazio, $bgCheio, $textCor])
+                                    @foreach([0 => ['bg-red-100','bg-red-600'], 1 => ['bg-orange-100','bg-orange-600'], 2 => ['bg-yellow-100','bg-yellow-600'], 3 => ['bg-green-100','bg-green-600']] as $val => [$bgVazio, $bgCheio])
                                         @php $count = $q['dist'][$val]; @endphp
                                         <div class="w-8 h-6 rounded flex items-center justify-center text-[10px] font-bold
-                                                    {{ $count > 0 ? $bgCheio . ' text-white' : $bgVazio . ' ' . $textCor }}">
-                                            {{ $count > 0 ? $count : '·' }}
+                                                    {{ $count > 0 ? $bgCheio . ' text-white' : $bgVazio }}">
+                                            {{ $count > 0 ? $count : '' }}
                                         </div>
                                     @endforeach
                                 </div>
