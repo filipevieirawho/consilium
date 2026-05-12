@@ -118,7 +118,7 @@ class DiagnosticoSessaoController extends Controller
         })->values()->toArray();
 
         // IPMs individuais para distribuição de score geral
-        $ipms = $concluidos->map(fn($d) => IpmCalculator::calcular($d)['ipm'])->sort()->values();
+        $ipms = $concluidos->map(fn($d) => IpmCalculator::calcular($d->respostas, $d)['ipm'])->sort()->values();
 
         // Score de alinhamento: 1 - desvio padrão normalizado médio por questão
         $desvioPorQuestao = $questoesData->filter(fn($q) => $q['avg'] !== null)->map(function ($q) use ($concluidos) {
