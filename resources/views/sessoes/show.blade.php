@@ -138,12 +138,12 @@
 
                         <div class="grid grid-cols-3 gap-3 flex-1">
                             <div class="bg-gray-50 rounded-lg border border-gray-100 flex flex-col items-center justify-center text-center p-3">
-                                <div class="text-2xl font-bold text-gray-900">{{ $ipmMedia }}</div>
-                                <div class="text-[10px] text-gray-400 uppercase tracking-wide mt-1">Média</div>
-                            </div>
-                            <div class="bg-gray-50 rounded-lg border border-gray-100 flex flex-col items-center justify-center text-center p-3">
                                 <div class="text-2xl font-bold text-gray-500">{{ $ipmMin }}</div>
                                 <div class="text-[10px] text-gray-400 uppercase tracking-wide mt-1">Mínimo</div>
+                            </div>
+                            <div class="bg-gray-50 rounded-lg border border-gray-100 flex flex-col items-center justify-center text-center p-3">
+                                <div class="text-2xl font-bold text-gray-900">{{ $ipmMedia }}</div>
+                                <div class="text-[10px] text-gray-400 uppercase tracking-wide mt-1">Média</div>
                             </div>
                             <div class="bg-gray-50 rounded-lg border border-gray-100 flex flex-col items-center justify-center text-center p-3">
                                 <div class="text-2xl font-bold text-gray-500">{{ $ipmMax }}</div>
