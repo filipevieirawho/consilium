@@ -443,7 +443,8 @@ class DiagnosticoController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Diagnostico::query()->with('questionario')->latest();
+        // Diagnósticos de sessão coletiva ficam apenas em /sessoes — excluir aqui
+        $query = Diagnostico::query()->with('questionario')->whereNull('sessao_id')->latest();
 
         if ($request->filled('search')) {
             $s = $request->input('search');
