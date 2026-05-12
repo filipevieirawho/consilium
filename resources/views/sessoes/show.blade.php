@@ -194,10 +194,19 @@
                                     </p>
                                 </div>
                                 <div class="flex items-center gap-0.5 flex-shrink-0">
-                                    @foreach([0 => ['bg-red-100','bg-red-600'], 1 => ['bg-orange-100','bg-orange-600'], 2 => ['bg-yellow-100','bg-yellow-600'], 3 => ['bg-green-100','bg-green-600']] as $val => [$bgVazio, $bgCheio])
+                                    @php
+                                        $maxCount = max($q['dist']);
+                                        $cores = [
+                                            0 => ['sat' => 'bg-red-500 text-white',    'soft' => 'bg-red-50 text-red-500'],
+                                            1 => ['sat' => 'bg-orange-500 text-white',  'soft' => 'bg-orange-50 text-orange-500'],
+                                            2 => ['sat' => 'bg-yellow-500 text-white',  'soft' => 'bg-yellow-50 text-yellow-600'],
+                                            3 => ['sat' => 'bg-green-500 text-white',   'soft' => 'bg-green-50 text-green-600'],
+                                        ];
+                                    @endphp
+                                    @foreach($cores as $val => $c)
                                         @php $count = $q['dist'][$val]; @endphp
                                         <div class="w-8 h-6 rounded flex items-center justify-center text-[10px] font-bold
-                                                    {{ $count > 0 ? $bgCheio . ' text-white' : $bgVazio }}">
+                                                    {{ $maxCount > 0 && $count === $maxCount ? $c['sat'] : $c['soft'] }}">
                                             {{ $count > 0 ? $count : '' }}
                                         </div>
                                     @endforeach
